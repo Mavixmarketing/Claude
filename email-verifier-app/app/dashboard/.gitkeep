@@ -1,0 +1,2 @@
+Logged-in area: upload a list, see results, download, manage API keys, billing.
+Build this AFTER the background worker - results need somewhere to come from.

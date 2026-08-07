@@ -1,0 +1,28 @@
+# SECRETS - never commit these.
+# If you ever accidentally commit a real key, treat it as leaked:
+# rotate it immediately. Removing the commit is not enough.
+.env
+.env.local
+.env*.local
+
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+build/
+
+# Logs and debug
+*.log
+npm-debug.log*
+
+# Editor / OS noise
+.DS_Store
+.vscode/
+.idea/
+
+# Customer data must never end up in the repo
+/uploads/
+*.csv
+!docs/**/*.csv

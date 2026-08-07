@@ -1,0 +1,2 @@
+Create, list and revoke API keys.
+Use generateApiKey() from lib/db/auth.ts. Show the real key ONCE, never again.

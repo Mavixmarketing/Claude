@@ -1,0 +1,2 @@
+GET /api/v1/jobs/{id} - 'is my list finished yet?'
+Returns progress and counts. The dashboard polls this while a job runs.
