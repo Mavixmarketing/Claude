@@ -131,6 +131,25 @@ export async function verifyEmail(
   const providers = getProviders()
   const opinions: EngineOpinion[] = []
 
+  // No supplier keys configured yet. Say so honestly rather than
+  // crashing, and never charge for it.
+  if (providers.length === 0) {
+    return finish({
+      email: normalized,
+      verdict: 'unknown',
+      confidence: 30,
+      recommendation: 'send_with_caution',
+      reasoning:
+        'Free checks passed, but no verification engine is configured. ' +
+        'Mailbox existence was not tested.',
+      details,
+      flags,
+      engines: [],
+      creditsCharged: 0,
+      startedAt,
+    })
+  }
+
   const first = await providers[0].verify(normalized)
   opinions.push(first)
   details.push({

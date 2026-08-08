@@ -73,24 +73,23 @@ export async function chargeCredits(
 
   const db = createServiceClient()
 
-  // TODO(build): do this inside a Postgres function so the balance
-  // update and the ledger row happen together. If the app crashes
-  // between the two, a customer is charged with no record of why.
+  // spend_credits() lives in migration 0002. It updates the balance AND
+  // writes the ledger row inside one transaction, with a row lock so two
+  // parallel requests can't spend the same credits twice.
   //
-  // TODO(build): make this idempotent. If a request is retried, it must
-  // not charge twice. Pass a request id and refuse duplicates.
-
-  await db.rpc('spend_credits', {
+  // TODO(build): make this idempotent. If a request is retried after a
+  // timeout it must not charge twice. Pass a request id and refuse
+  // duplicates.
+  const { error } = await db.rpc('spend_credits', {
     p_account_id: accountId,
     p_amount: amount,
+    p_reason: reason,
+    p_job_id: jobId ?? null,
   })
 
-  await db.from('credit_ledger').insert({
-    account_id: accountId,
-    amount: -amount,
-    reason,
-    job_id: jobId ?? null,
-  })
+  if (error) {
+    throw new Error(`Failed to charge credits: ${error.message}`)
+  }
 }
 
 /** Add credits - a purchase, a monthly grant, or a promo. */
@@ -102,14 +101,17 @@ export async function grantCredits(
 ): Promise<void> {
   const db = createServiceClient()
 
-  await db.rpc('add_credits', { p_account_id: accountId, p_amount: amount })
-
-  await db.from('credit_ledger').insert({
-    account_id: accountId,
-    amount,
-    reason,
-    note: note ?? null,
+  // add_credits() lives in migration 0002 - balance + ledger in one go.
+  const { error } = await db.rpc('add_credits', {
+    p_account_id: accountId,
+    p_amount: amount,
+    p_reason: reason,
+    p_note: note ?? null,
   })
+
+  if (error) {
+    throw new Error(`Failed to grant credits: ${error.message}`)
+  }
 }
 
 /**
