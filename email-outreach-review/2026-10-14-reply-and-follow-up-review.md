@@ -280,5 +280,5 @@ All three workflows were tested in test mode (nothing sent) and then published.
 - Richard (allcarehomes) and Chad (septic.ca) are back on automatic, with their history showing the audit and roadmap were already sent.
 - John (jftgroup) stays on automatic.
 
-**Open point for Farhan**
-- The reply agent says "running since 2019, 500+ clients served". The website says "150+ businesses, 7 years". One of them needs correcting.
+**Fixed after reading all past chats and docs**
+- The reply agent said "500+ clients served". No source backs that number (earlier chats said 150+ and 50+, and the proposal rules ban client counts). It now says "running since 2019 (7 years)" and never gives a client count. The website still says "150+ businesses": worth checking.
