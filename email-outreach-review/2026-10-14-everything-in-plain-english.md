@@ -188,3 +188,11 @@ So people in Australia got the email in the middle of the night, and by morning 
   - Tonya: the clearer price, plus the financial advisory firm case study.
   - Sudenifox: "sorry, my last email was a mistake on my side. we are happy to take a look. what is your website, and which countries are your customers in?" Farhan should check this business before the audit.
 - **URGENT:** OpenRouter (which pays for the AI that writes the replies) said "this request would exceed your available credits" during the last test. Top it up, or replies and follow-ups will stop being written.
+
+## 12. Saying no, made clear (14 Oct night)
+
+- **A plain no, stop or unsubscribe:** no reply. Unsubscribe requests are still removed from the list.
+- **A second no after we already pushed:** a short, warm thank-you with no offer. Example: they say they have someone, we offer the free audit, and they say they are happy with what they have. The audit is never offered a second time.
+- **Sent by hand:** a thank-you to Amanda (Powerband).
+- **Munir (theacctaxco):** his record now has Farhan's 11 Oct audit and proposal email. His first follow-up is on 15 Oct at 12:30pm IST.
+- **OpenRouter:** Farhan topped it up on 14 Oct.
