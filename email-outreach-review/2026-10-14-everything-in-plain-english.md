@@ -178,3 +178,13 @@ So people in Australia got the email in the middle of the night, and by morning 
   - biracs.com: asked whether the empty email was on purpose.
   - homeofchemicals: asked for the e-bike website link, so the audit can start.
 - **Saskia:** her phone number (860 694 8118) is a US number; 860 is a Connecticut area code. She came in through the Aus/UK/NZ/Singapore list. SalesBlink has no city or country saved for her.
+
+## 11. Changes, 14 Oct late night
+
+- **The agent never turns a business away.** Only Farhan decides who we don't work with. If a business looks risky, the agent replies normally and adds a note for Farhan: "check this business before the audit".
+- **Price wording:** "we have 3 plans, starting from $349 a month, with no setup fee and no long contract. the free audit shows which plan fits your site, so you know your exact price before you decide anything." The confusing "your own price is set after the free audit" is gone.
+- **Proof:** the agent never says "we have no case study for you". It shares the closest real one and says it is the closest.
+- **Sent by hand:**
+  - Tonya: the clearer price, plus the financial advisory firm case study.
+  - Sudenifox: "sorry, my last email was a mistake on my side. we are happy to take a look. what is your website, and which countries are your customers in?" Farhan should check this business before the audit.
+- **URGENT:** OpenRouter (which pays for the AI that writes the replies) said "this request would exceed your available credits" during the last test. Top it up, or replies and follow-ups will stop being written.
