@@ -157,3 +157,11 @@ So people in Australia got the email in the middle of the night, and by morning 
 - **homeofchemicals (e-bike site in Germany):** no change needed.
 - **Saskia:** Farhan calls her. Her email follow-ups are paused until she writes again.
 - **Archiving:** the system never archives anything. It only skips chats Farhan archived himself.
+
+## 9. Fix, 14 Oct evening: never ask for the website
+
+- **What went wrong:** dctherapyonline's follow-up asked "what is your website". An older email in that conversation had asked it, and the follow-up writer copied the question. The safety check caught it and held the email, so nothing went out.
+- **Fixed in 3 ways:**
+  1. The follow-up writer now always asks only our two questions (which services, which area), and is told never to ask for the website, even if an older email did.
+  2. If any reply or follow-up still asks for the website, the check takes that question out and sends the rest, instead of holding the whole email.
+  3. dctherapyonline's follow-up was sent by hand from Claude without the website question.
