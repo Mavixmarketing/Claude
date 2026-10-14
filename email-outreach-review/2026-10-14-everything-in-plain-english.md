@@ -165,3 +165,16 @@ So people in Australia got the email in the middle of the night, and by morning 
   1. The follow-up writer now always asks only our two questions (which services, which area), and is told never to ask for the website, even if an older email did.
   2. If any reply or follow-up still asks for the website, the check takes that question out and sends the rest, instead of holding the whole email.
   3. dctherapyonline's follow-up was sent by hand from Claude without the website question.
+
+## 10. Changes, 14 Oct night
+
+- **Case studies once:** each conversation gets one case study, once. After that, follow-ups and replies bring a different useful point instead, with no new case study link.
+- **Asking for the website:**
+  - If we already know their website or can work it out, we don't ask for it.
+  - If we really don't know it (a personal email with no business name, or a new or different website we were never given), asking is fine.
+  - The safety check only takes the website question out when we already know the site.
+- **Empty emails:** if someone sends an empty email or just a signature, the agent now kindly asks whether something didn't come through.
+- **Sent by hand tonight:**
+  - biracs.com: asked whether the empty email was on purpose.
+  - homeofchemicals: asked for the e-bike website link, so the audit can start.
+- **Saskia:** her phone number (860 694 8118) is a US number; 860 is a Connecticut area code. She came in through the Aus/UK/NZ/Singapore list. SalesBlink has no city or country saved for her.
