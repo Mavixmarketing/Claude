@@ -253,3 +253,32 @@ One message with three columns: **yesterday / last 7 days / month to date**.
 1. Before adding leads to a new sequence, remove anyone who has replied, is in a live
    conversation, unsubscribed or said no in any earlier sequence.
 2. Look into the 12–14 Oct unsubscribe and bounce spike, and the 147 send errors.
+
+---
+
+## Update, 14 Oct (before the 7:30pm IST run): changes made after Farhan's corrections
+
+All three workflows were tested in test mode (nothing sent) and then published.
+
+**Follow-ups (💬 SEO Follow-ups)**
+- Every follow-up from 1 to 5 now has three parts: the case study closest to their kind of business (from mavixmarketing.com/case-studies, nearest one if none matches), one line about more enquiries, calls or bookings for their kind of business, and a low-friction ending (free, nothing to prepare, no call needed, a few words is enough).
+- Follow-ups know where the person is: A) not said yes yet, B) said yes but has not answered the two questions (asks them again, simpler, never "reply go"), C) Farhan sent something by hand (asks about it, never offers the audit again).
+- When Farhan sends an audit or case studies by hand, the follow-up about it now goes out on the next day's run, even if the normal timetable would wait longer. The hand-sent email is also kept in the log history.
+- Never a call or booking link in a follow-up. Up to 60 words, at most 2 links, all links checked against the case study list.
+
+**Reply agent (💬 SEO Reply Agent)**
+- A "yes" with no details gets two very simple questions: which services, which area. A few words is enough.
+- Once they answer: "great, i will start preparing your audit and send it over when it is ready", then the booking link offered only as an option, with "it is not a pitch. i just want to understand your business, what you need and where you stand, so i can see how we can help." This is the only time the link goes out unasked.
+- The full case study list from the website replaces the old three examples.
+
+**Morning report (☀️)**
+- "Emails still not answered" now lists each one once, on the morning after it came in.
+- On the 1st of each month: last month in full (sent, reply rate, bounce rate, unsubscribe rate, replies by kind) next to published cold email standards: reply rate about 1.4% to 9% (Woodpecker average 3.43%), bounces under 2% (over 3% is a risk), no reliable public standard for unsubscribes.
+- September 2026 for reference: 21,655 sent, 1.06% reply rate (below the usual range), 0.64% bounces (healthy), 0.68% unsubscribes.
+
+**People**
+- Richard (allcarehomes) and Chad (septic.ca) are back on automatic, with their history showing the audit and roadmap were already sent.
+- John (jftgroup) stays on automatic.
+
+**Open point for Farhan**
+- The reply agent says "running since 2019, 500+ clients served". The website says "150+ businesses, 7 years". One of them needs correcting.
