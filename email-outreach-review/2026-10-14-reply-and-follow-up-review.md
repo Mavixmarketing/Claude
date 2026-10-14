@@ -280,5 +280,30 @@ All three workflows were tested in test mode (nothing sent) and then published.
 - Richard (allcarehomes) and Chad (septic.ca) are back on automatic, with their history showing the audit and roadmap were already sent.
 - John (jftgroup) stays on automatic.
 
-**Fixed after reading all past chats and docs**
-- The reply agent said "500+ clients served". No source backs that number (earlier chats said 150+ and 50+, and the proposal rules ban client counts). It now says "running since 2019 (7 years)" and never gives a client count. The website still says "150+ businesses": worth checking.
+**Client count**
+- The reply agent says "running since 2019, 500+ clients served". Farhan confirmed 500+ is correct.
+
+---
+
+## Update 2, 14 Oct (afternoon): Farhan's second round of changes
+
+**Follow-ups now go out at each person's own time**
+- The follow-up workflow runs every hour instead of once a day at 7:30pm IST.
+- Each person gets their follow-up in the hour of the day they usually reply to us. It uses the real reply times from SalesBlink, covering replies back to 29 July.
+- If we have no reply time for someone, it uses the busiest reply hour for their list (UK, USA, Canada, Australia).
+- People on the mixed "Aus, UK, NZ, Singapore" list count as UK if they reply during the UK working day, and as Australia or NZ if not.
+- Nothing goes out on the person's local Sunday.
+- Example from 15 Oct: Scott (UK) at 12:30pm IST, Bushtroop (Kenya) at 9:30am IST, Charese (Colorado) at 2:30am IST (her afternoon).
+
+**Writing: what owners care about**
+- Replies and follow-ups no longer stop at "show up on google" or clicks. They always say what it means for the owner: more calls, enquiries, appointments, bookings and customers.
+- A yes or any interest gets the 2 simple questions, after answering anything they asked.
+- The "start preparing your audit" email is now written to fit what they said, not as fixed text. It still offers the meeting link only as an option and says it is not a pitch.
+
+**Audits Farhan already sent**
+- These 7 people had been stuck as "waiting on us", so they got no follow-ups: 719 Cleaning (Charese), Bushtroop, Acomara, Dracuherbs, theacctaxco, CQB Training and fellinlovewithslovenia.
+- Each is now marked as having received the audit. Their follow-ups ask about it, starting from 15 Oct.
+
+**Proposal skills**
+- Farhan agreed to use the real website case studies in proposal PDFs, instead of invented client names.
+- The SEO proposal's 3 Search Console screenshots match the website's construction firm (9.94K clicks), HR software (326K) and home goods store (470K) case studies.
