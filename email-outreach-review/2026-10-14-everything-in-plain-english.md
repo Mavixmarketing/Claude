@@ -148,3 +148,12 @@ So people in Australia got the email in the middle of the night, and by morning 
 
 - **"+11,087"** means 11,087 lines of text were added to your GitHub folder. Almost all of it is copies of your proposal skills, plus these reports. **Nothing in n8n or SalesBlink runs from GitHub**, so nothing there can affect your emails.
 - **"Create PR"** (pull request) is a button that asks to merge this work into the main copy of the folder. You do not need it. Everything is already saved on GitHub. Click it only if you want this work in the main copy.
+
+## 8. Farhan's decisions (14 Oct, afternoon) and what was done
+
+- **Scott (UK):** prices stay in US dollars. His next follow-up will say so once, plainly, with no joke.
+- **elkangroup (Australia):** we work through Upwork. Sent: "no problem at all, we are happy to work through upwork. post the job there and send me the link, and i will apply so you can send the offer and we can get things going."
+- **franks:** sent a short note with their new address (marketing@franksbasements.com) in copy, offering the free audit. Automatic follow-ups still go to the old address, so reply by hand if they answer from the new one.
+- **homeofchemicals (e-bike site in Germany):** no change needed.
+- **Saskia:** Farhan calls her. Her email follow-ups are paused until she writes again.
+- **Archiving:** the system never archives anything. It only skips chats Farhan archived himself.
