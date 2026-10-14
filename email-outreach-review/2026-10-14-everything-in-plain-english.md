@@ -196,3 +196,9 @@ So people in Australia got the email in the middle of the night, and by morning 
 - **Sent by hand:** a thank-you to Amanda (Powerband).
 - **Munir (theacctaxco):** his record now has Farhan's 11 Oct audit and proposal email. His first follow-up is on 15 Oct at 12:30pm IST.
 - **OpenRouter:** Farhan topped it up on 14 Oct.
+
+## 13. Fix: "I'll wait for your email" threads (14 Oct night)
+
+- **What went wrong:** when someone wrote "I'll just wait for your email", the system marked the chat "nothing to answer" and stopped watching it. When Farhan later sent the audit by hand, nothing followed up. That is what happened with fellinlovewithslovenia.
+- **Fix:** these chats stay watched at the person's usual hour. Once Farhan sends anything by hand (an audit, a proposal), the follow-up about it goes out the next day. Anyone missed this way in the past gets picked up within the next 24 hours.
+- **fellinlovewithslovenia:** follow-up sent by hand from Claude on 14 Oct.
