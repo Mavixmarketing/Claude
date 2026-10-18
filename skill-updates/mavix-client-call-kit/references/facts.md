@@ -48,7 +48,7 @@ Clients mostly USA and UK.
 |---|---|---|
 | **Starter** | **$349/mo** | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report |
 | **Growth** ⭐ | **$549/mo** (was $799) | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **2-month money-back** · **price locked for life** |
-| **Premium** | **$1,099/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **3-month money-back** |
+| **Premium** | **$1,699/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **3-month money-back** |
 
 **Lead with Growth.** The price lock is a real reason to decide today — it does not expire tonight, it just stops applying when rates go up.
 

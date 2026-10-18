@@ -298,13 +298,13 @@ cs3 = case_study("13", {
 
 P.update({
  "seo_tiers": [
-  {"name":"Starter","price":"399 USD","points":[
+  {"name":"Starter","price":"349 USD","points":[
     "Keyword and competitor research","2 blog articles a month","Directory and profile listings",
     "Social bookmarking and Q&A","Monthly report and call"]},
   {"name":"Growth","price":"549 USD","was":"was 799 USD","reco":True,"points":[
     "Everything in Starter","3 to 4 blog articles a month","2 guest posts a month",
     "1 PR placement a month","Google Business Profile management","Infographics and PDF assets"]},
-  {"name":"Premium","price":"1,199 USD","points":[
+  {"name":"Premium","price":"1,699 USD","points":[
     "Everything in Growth","8 or more blogs and guest posts","Full on-page audit and the fixes",
     "Technical SEO: speed, schema, links","Quarterly competitor gap analysis",
     "Priority support and strategy calls"]},
