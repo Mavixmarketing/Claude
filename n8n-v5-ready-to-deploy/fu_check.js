@@ -49,6 +49,6 @@ return $input.all().map((it, i) => {
   const label = c.date_followup ? 'Date follow-up (asked for ' + c.follow_up_on + ')' : 'Follow-up ' + c.number + ' of 8';
   const text = ok
     ? (cfg.SEND_FOR_REAL ? '🔁 ' + label + ' sent' : '🧪 ' + label + ' NOT sent (test)') + ' · ' + c.email + '\n↩️ *We sent:* ' + t
-    : '⚠️ *Follow-up held, nothing sent* · ' + c.email + '\n✏️ *Draft:* ' + t + '\n❗ *Why:* ' + problems.join('; ');
+    : '⚠️ *Follow-up held, nothing sent* · ' + c.email + '\n✏️ *Draft:* ' + t + '\n❗ *Why:* ' + (problems.join('; ') || String(r.why || ''));
   return { json: { ...c, send, ok, reply: t, reply_html: html, why: String(r.why || ''), problems: problems.join('; '), words, slack_text: text } };
 });
