@@ -1,7 +1,7 @@
 # n8n version 5: ready to deploy
 
 These are the finished code files for version 5 (see `email-outreach-review/2026-10-18-v5-changes.md`).
-They are NOT live yet: the n8n connector stopped working on 18 Oct before they could be loaded.
+Deployed and published on 19 Oct at about 1:33am IST, after test runs passed. Kept here as the source and for any re-deploy.
 
 How to deploy (for Claude in a new session with the n8n connector working):
 1. For each workflow in `deploy_manifest.json`, update each listed Code node with
