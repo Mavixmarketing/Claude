@@ -1,0 +1,43 @@
+[
+ {
+  "workflowId": "W8ou5vT7aQu8q8zO",
+  "activeVersionId": "3bb8c89a-af9d-4b08-853e-84f6cd6006fd",
+  "nodes": {
+   "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js"
+  }
+ },
+ {
+  "workflowId": "KMRwc4kovheNY2zI",
+  "activeVersionId": "1f3fc6dc-d0ed-4ed6-9469-3d2277acf6b5",
+  "nodes": {
+   "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js"
+  }
+ },
+ {
+  "workflowId": "4jvATMqNUMchMEc5",
+  "activeVersionId": "2e61a504-136f-45d1-aa24-429c29b83f74",
+  "nodes": {
+   "Build Report": "n8n-v5-ready-to-deploy/report.js"
+  }
+ },
+ {
+  "workflowId": "WNHqMnyuHz2n42sL",
+  "activeVersionId": "aeafcbd5-6286-4c4b-997e-f715c540c71f",
+  "nodes": {
+   "Opus Request": "n8n-v5-ready-to-deploy/li_opus.built.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/li_check.js",
+   "Settings": "n8n-v5-ready-to-deploy/li_settings.js"
+  }
+ },
+ {
+  "workflowId": "G0THBksF367XBBXb",
+  "activeVersionId": "4ed99b3a-7cd2-488b-8896-43dbaf8c91bb",
+  "nodes": {
+   "Follow-up Request": "n8n-v5-ready-to-deploy/lifu_request.built.js",
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/lifu_check.js",
+   "Settings": "n8n-v5-ready-to-deploy/lifu_settings.js"
+  }
+ }
+]

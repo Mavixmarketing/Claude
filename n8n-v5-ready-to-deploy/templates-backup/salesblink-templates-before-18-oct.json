@@ -1,0 +1,3276 @@
+{
+  "backup_created": "2026-10-18",
+  "source": "SalesBlink get_all_sequences(status=running) + get_template per id (read-only)",
+  "field_map": {
+    "subject": "subject_line",
+    "body": "content",
+    "name": "name",
+    "id": "id"
+  },
+  "sequences": [
+    {
+      "id": "1d220234-278b-403c-9606-d1a701e41de0",
+      "_id": "6abe3acd50f35b62d6092005",
+      "name": "Scraped | Aus - UK - New Zea - Sing | Tue - Thu - Sat",
+      "status": "running",
+      "settings": {
+        "validEmail": true,
+        "riskyEmail": true,
+        "invalidEmail": false,
+        "sendToOnlyVerifiedEmail": false,
+        "checkEmailOpen": false,
+        "checkEmailClick": false,
+        "checkEmailReply": true,
+        "checkEmailBeforeSending": false,
+        "stopWhenReplyRecieved": true,
+        "stopWhenReplyRecievedWhen": "contact-with-same-domain",
+        "delayEnabled": true,
+        "delayFrom": 5,
+        "delayTo": 15,
+        "plainText": true,
+        "emailSendingHours": [
+          {
+            "enabled": false,
+            "name": "Monday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          },
+          {
+            "enabled": true,
+            "name": "Tuesday",
+            "fromTime": "11:00",
+            "toTime": "20:00",
+            "estimate": "36 - 108"
+          },
+          {
+            "enabled": false,
+            "name": "Wednesday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          },
+          {
+            "enabled": true,
+            "name": "Thursday",
+            "fromTime": "11:00",
+            "toTime": "20:00",
+            "estimate": "36 - 108"
+          },
+          {
+            "enabled": false,
+            "name": "Friday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          },
+          {
+            "enabled": true,
+            "name": "Saturday",
+            "fromTime": "11:00",
+            "toTime": "20:00",
+            "estimate": "36 - 108"
+          },
+          {
+            "enabled": false,
+            "name": "Sunday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          }
+        ],
+        "evergreen": true,
+        "evergreenType": false,
+        "launchTimingMode": "schedule",
+        "autoPause": false,
+        "bounceThreshold": 2,
+        "bouncePause": false,
+        "autoTagReplies": true,
+        "auto_reply": false,
+        "matchProvider": false,
+        "scheduledAt": 1792456200000,
+        "skip_esg": false,
+        "timezone": "Australia/Sydney",
+        "paused": false,
+        "archived": false,
+        "integrations": [],
+        "lists": [
+          "3cff9467-b5ce-457a-bd44-116976918daa"
+        ],
+        "senders": "abce6b16-22c7-4b26-80c6-9ceb473a548e,979603cd-8ccc-4e1c-a691-a33456039f67,633ebc21-a9b6-4a41-82bc-95b806742513,ecc0b6b2-cbe9-45f4-9acb-a84227d1e48e,78a1b136-11ea-4457-8691-56137efe0117,fd8b610c-39dd-4552-b676-b74a0523ca4d,f256782f-4065-4acb-8291-2fafa8a4ee2f,1051b811-0de6-4340-a014-0d03539ab3f9,4b4947fe-a471-4e1f-abbb-05ea233762aa,5cc8ffcc-ae9a-411f-87d7-78c95a1f36c3,cdd74001-dcb6-4ad7-ba93-7113dc37aa16,f3866415-b010-4357-9195-7e796bbaeeb5,26bbac59-a3ec-4a88-a1cd-4e6e053edf03,f9d326d4-0829-4c9d-b0ca-dda067d806fb,d38eb242-c349-42e1-9c7d-c2e60a54d98a,b1e34995-df60-4004-9513-786bffb2f190,9726f22d-7f72-4809-9002-93fb17f335c9,55f8a65f-7a73-491b-857a-b712ac90ba29,6c55756c-9a7c-4820-84cc-a3c61d17160c,961fe9ae-7899-4bd6-99ce-ecd828a33b00,30a486d4-1093-41a7-8fce-3b937b82e1af,9526e9a4-d26f-44ab-9ad4-7965be0ebbaf,c9ddea89-645d-4d64-bf1b-67a1b51a66b1,e15bb137-b6f8-4b3c-89a5-a92b98f707b3,ec937012-ddc7-4f20-8ef9-7e44be78f674,e1d62847-b8d6-49af-b29c-9fd787a2f7c2,fed502fc-2b45-4356-9a04-36fb70aa51e2,f8da8887-d6a3-40eb-991b-0d8e74dec32f,7586c8a4-dd6a-483c-bc21-f775751e396e,1e9bb1c5-1ca0-45e6-9fcc-234ab8c358d1,9030761a-506c-4552-a8d1-c35aa29c5028,c7466206-d25f-476c-9ddf-9acef6014e36,faddbb0c-e9f9-407b-8dcc-2d625836dff2,05d9c0c5-dd48-44e0-ab5b-d0e7c8e25886,7f40e559-3ee9-45fb-83b2-c4a3a7289c83,d5da3b90-6c85-475c-9a68-f31341fda53e,5e2921f4-d810-4922-a0bd-b01e7b136427,620ab0cb-fb33-4d2a-81cf-6366d8785fc7,fd7b5a07-609e-49fa-b998-4d35029ea28d,6df522f0-3992-4fc0-bd53-6f786fcb9812,9f69f7a5-ef81-4a07-b311-69a7ee18373c,08155851-3fc3-4c37-a3ee-5f69ea1290a7,b4be08af-45c9-430c-a808-28c21b401b2a,5475b3db-31fd-413f-aec7-9812b833f603,f0d74c5a-df51-4814-87e2-12fef4a580e7,a1aafef5-5f25-407f-a19d-7a1391c7a4d9,eb90faa2-e0e4-4529-86f8-82c6150ef5c7,f50c85fe-ce21-475d-a6a2-22191c9a45ed,013bf170-6d1b-40e5-8069-a5ce83cd0597,7a4a40b1-075e-4746-8727-8b9e2dbd63c9,08ec5022-e3a7-46b3-933b-5c452d5007c1,e8279dce-9945-4c93-9dee-0cd5ece6e7d1,85ddfac4-9d31-4586-bc57-b1afda6793cd,e73fc49d-ade0-4803-a616-93e5f581f77a,523f554e-b2c8-44b3-b1fd-df11db4b80ea,2aba71f6-3c87-444b-ae48-9071c131f4d2,8381a089-529c-49e0-9f7f-2ebc7e4d0267,2d7e31c1-53fa-4997-a4e3-e16aef1e92f9,4beeec9a-4888-4259-bd05-774bfd078fe5,5a6d9de7-b6b3-4242-aa2b-31fffdb19fd2,a2f68677-c09f-42d0-9471-e9dd7b5fc7e0,a34508b1-6073-491c-8eb8-32672c74a427,956e3c10-2886-4cee-af05-634d66ff080c,a4d32be8-70aa-4b1c-9ac7-339de6b71cbe,ebd5c42a-7551-4628-b1b9-2e7b9afe6201",
+        "emailSenders": [
+          {
+            "key": "abce6b16-22c7-4b26-80c6-9ceb473a548e",
+            "label": "farhanmohd@mavixmarketinghq.com",
+            "value": "abce6b16-22c7-4b26-80c6-9ceb473a548e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "979603cd-8ccc-4e1c-a691-a33456039f67",
+            "label": "mohdfarhan@mavixmarketinghq.com",
+            "value": "979603cd-8ccc-4e1c-a691-a33456039f67",
+            "serviceName": "Google"
+          },
+          {
+            "key": "633ebc21-a9b6-4a41-82bc-95b806742513",
+            "label": "farhan@mavixmarketinghq.com",
+            "value": "633ebc21-a9b6-4a41-82bc-95b806742513",
+            "serviceName": "Google"
+          },
+          {
+            "key": "ecc0b6b2-cbe9-45f4-9acb-a84227d1e48e",
+            "label": "mfarhan@mavixmarketinghq.com",
+            "value": "ecc0b6b2-cbe9-45f4-9acb-a84227d1e48e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "78a1b136-11ea-4457-8691-56137efe0117",
+            "label": "mdfarhan@mavixmarketinghq.com",
+            "value": "78a1b136-11ea-4457-8691-56137efe0117",
+            "serviceName": "Google"
+          },
+          {
+            "key": "fd8b610c-39dd-4552-b676-b74a0523ca4d",
+            "label": "farhan@mavixmarketingco.com",
+            "value": "fd8b610c-39dd-4552-b676-b74a0523ca4d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f256782f-4065-4acb-8291-2fafa8a4ee2f",
+            "label": "farhanmohd@mavixmarketingco.com",
+            "value": "f256782f-4065-4acb-8291-2fafa8a4ee2f",
+            "serviceName": "Google"
+          },
+          {
+            "key": "1051b811-0de6-4340-a014-0d03539ab3f9",
+            "label": "mdfarhan@mavixmarketingco.com",
+            "value": "1051b811-0de6-4340-a014-0d03539ab3f9",
+            "serviceName": "Google"
+          },
+          {
+            "key": "4b4947fe-a471-4e1f-abbb-05ea233762aa",
+            "label": "mohdfarhan@mavixmarketingco.com",
+            "value": "4b4947fe-a471-4e1f-abbb-05ea233762aa",
+            "serviceName": "Google"
+          },
+          {
+            "key": "5cc8ffcc-ae9a-411f-87d7-78c95a1f36c3",
+            "label": "mfarhan@mavixmarketingco.com",
+            "value": "5cc8ffcc-ae9a-411f-87d7-78c95a1f36c3",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cdd74001-dcb6-4ad7-ba93-7113dc37aa16",
+            "label": "farhan@mavixmarketting.com",
+            "value": "cdd74001-dcb6-4ad7-ba93-7113dc37aa16",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f3866415-b010-4357-9195-7e796bbaeeb5",
+            "label": "mfarhan@mavixmarketting.com",
+            "value": "f3866415-b010-4357-9195-7e796bbaeeb5",
+            "serviceName": "Google",
+            "provider": "google.com"
+          },
+          {
+            "key": "26bbac59-a3ec-4a88-a1cd-4e6e053edf03",
+            "label": "farhanmohd@mavixmarketting.com",
+            "value": "26bbac59-a3ec-4a88-a1cd-4e6e053edf03",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f9d326d4-0829-4c9d-b0ca-dda067d806fb",
+            "label": "mdfarhan@mavixmarketting.com",
+            "value": "f9d326d4-0829-4c9d-b0ca-dda067d806fb",
+            "serviceName": "Google"
+          },
+          {
+            "key": "d38eb242-c349-42e1-9c7d-c2e60a54d98a",
+            "label": "mohdfarhan@mavixmarketting.com",
+            "value": "d38eb242-c349-42e1-9c7d-c2e60a54d98a",
+            "serviceName": "Google"
+          },
+          {
+            "key": "b1e34995-df60-4004-9513-786bffb2f190",
+            "label": "farhan@mavixmarkting.com",
+            "value": "b1e34995-df60-4004-9513-786bffb2f190",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9726f22d-7f72-4809-9002-93fb17f335c9",
+            "label": "mfarhan@mavixmarkting.com",
+            "value": "9726f22d-7f72-4809-9002-93fb17f335c9",
+            "serviceName": "Google"
+          },
+          {
+            "key": "55f8a65f-7a73-491b-857a-b712ac90ba29",
+            "label": "mohdfarhan@mavixmarkting.com",
+            "value": "55f8a65f-7a73-491b-857a-b712ac90ba29",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6c55756c-9a7c-4820-84cc-a3c61d17160c",
+            "label": "farhanmohd@mavixmarkting.com",
+            "value": "6c55756c-9a7c-4820-84cc-a3c61d17160c",
+            "serviceName": "Google"
+          },
+          {
+            "key": "961fe9ae-7899-4bd6-99ce-ecd828a33b00",
+            "label": "mdfarhan@mavixmarkting.com",
+            "value": "961fe9ae-7899-4bd6-99ce-ecd828a33b00",
+            "serviceName": "Google"
+          },
+          {
+            "key": "30a486d4-1093-41a7-8fce-3b937b82e1af",
+            "label": "farhan@mavixmaketing.com",
+            "value": "30a486d4-1093-41a7-8fce-3b937b82e1af",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9526e9a4-d26f-44ab-9ad4-7965be0ebbaf",
+            "label": "mfarhan@mavixmaketing.com",
+            "value": "9526e9a4-d26f-44ab-9ad4-7965be0ebbaf",
+            "serviceName": "Google"
+          },
+          {
+            "key": "c9ddea89-645d-4d64-bf1b-67a1b51a66b1",
+            "label": "mohdfarhan@mavixmaketing.com",
+            "value": "c9ddea89-645d-4d64-bf1b-67a1b51a66b1",
+            "serviceName": "Google"
+          },
+          {
+            "key": "e15bb137-b6f8-4b3c-89a5-a92b98f707b3",
+            "label": "mdfarhan@mavixmaketing.com",
+            "value": "e15bb137-b6f8-4b3c-89a5-a92b98f707b3",
+            "serviceName": "Google"
+          },
+          {
+            "key": "ec937012-ddc7-4f20-8ef9-7e44be78f674",
+            "label": "farhanmohd@mavixmaketing.com",
+            "value": "ec937012-ddc7-4f20-8ef9-7e44be78f674",
+            "serviceName": "Google"
+          },
+          {
+            "key": "e1d62847-b8d6-49af-b29c-9fd787a2f7c2",
+            "label": "farhan@mavixmarketingg.com",
+            "value": "e1d62847-b8d6-49af-b29c-9fd787a2f7c2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "fed502fc-2b45-4356-9a04-36fb70aa51e2",
+            "label": "mfarhan@mavixmarketingg.com",
+            "value": "fed502fc-2b45-4356-9a04-36fb70aa51e2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f8da8887-d6a3-40eb-991b-0d8e74dec32f",
+            "label": "mohdfarhan@mavixmarketingg.com",
+            "value": "f8da8887-d6a3-40eb-991b-0d8e74dec32f",
+            "serviceName": "Google"
+          },
+          {
+            "key": "7586c8a4-dd6a-483c-bc21-f775751e396e",
+            "label": "farhanmohd@mavixmarketingg.com",
+            "value": "7586c8a4-dd6a-483c-bc21-f775751e396e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "1e9bb1c5-1ca0-45e6-9fcc-234ab8c358d1",
+            "label": "mdfarhan@mavixmarketingg.com",
+            "value": "1e9bb1c5-1ca0-45e6-9fcc-234ab8c358d1",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9030761a-506c-4552-a8d1-c35aa29c5028",
+            "label": "farhan@mavicmarketing.com",
+            "value": "9030761a-506c-4552-a8d1-c35aa29c5028",
+            "serviceName": "Google"
+          },
+          {
+            "key": "c7466206-d25f-476c-9ddf-9acef6014e36",
+            "label": "mfarhan@mavicmarketing.com",
+            "value": "c7466206-d25f-476c-9ddf-9acef6014e36",
+            "serviceName": "Google"
+          },
+          {
+            "key": "faddbb0c-e9f9-407b-8dcc-2d625836dff2",
+            "label": "farhanmohd@mavicmarketing.com",
+            "value": "faddbb0c-e9f9-407b-8dcc-2d625836dff2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "05d9c0c5-dd48-44e0-ab5b-d0e7c8e25886",
+            "label": "mohdfarhan@mavicmarketing.com",
+            "value": "05d9c0c5-dd48-44e0-ab5b-d0e7c8e25886",
+            "serviceName": "Google"
+          },
+          {
+            "key": "7f40e559-3ee9-45fb-83b2-c4a3a7289c83",
+            "label": "mdfarhan@mavicmarketing.com",
+            "value": "7f40e559-3ee9-45fb-83b2-c4a3a7289c83",
+            "serviceName": "Google"
+          },
+          {
+            "key": "d5da3b90-6c85-475c-9a68-f31341fda53e",
+            "label": "farhan@mavvixmarketing.com",
+            "value": "d5da3b90-6c85-475c-9a68-f31341fda53e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "5e2921f4-d810-4922-a0bd-b01e7b136427",
+            "label": "mfarhan@mavvixmarketing.com",
+            "value": "5e2921f4-d810-4922-a0bd-b01e7b136427",
+            "serviceName": "Google"
+          },
+          {
+            "key": "620ab0cb-fb33-4d2a-81cf-6366d8785fc7",
+            "label": "mdfarhan@mavvixmarketing.com",
+            "value": "620ab0cb-fb33-4d2a-81cf-6366d8785fc7",
+            "serviceName": "Google"
+          },
+          {
+            "key": "fd7b5a07-609e-49fa-b998-4d35029ea28d",
+            "label": "farhanmohd@mavvixmarketing.com",
+            "value": "fd7b5a07-609e-49fa-b998-4d35029ea28d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6df522f0-3992-4fc0-bd53-6f786fcb9812",
+            "label": "mohdfarhan@mavvixmarketing.com",
+            "value": "6df522f0-3992-4fc0-bd53-6f786fcb9812",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9f69f7a5-ef81-4a07-b311-69a7ee18373c",
+            "label": "farhan@maviksmarketing.com",
+            "value": "9f69f7a5-ef81-4a07-b311-69a7ee18373c",
+            "serviceName": "Google"
+          },
+          {
+            "key": "08155851-3fc3-4c37-a3ee-5f69ea1290a7",
+            "label": "mfarhan@maviksmarketing.com",
+            "value": "08155851-3fc3-4c37-a3ee-5f69ea1290a7",
+            "serviceName": "Google"
+          },
+          {
+            "key": "b4be08af-45c9-430c-a808-28c21b401b2a",
+            "label": "mohdfarhan@maviksmarketing.com",
+            "value": "b4be08af-45c9-430c-a808-28c21b401b2a",
+            "serviceName": "Google"
+          },
+          {
+            "key": "5475b3db-31fd-413f-aec7-9812b833f603",
+            "label": "farhanmohd@maviksmarketing.com",
+            "value": "5475b3db-31fd-413f-aec7-9812b833f603",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f0d74c5a-df51-4814-87e2-12fef4a580e7",
+            "label": "mdfarhan@maviksmarketing.com",
+            "value": "f0d74c5a-df51-4814-87e2-12fef4a580e7",
+            "serviceName": "Google"
+          },
+          {
+            "key": "a1aafef5-5f25-407f-a19d-7a1391c7a4d9",
+            "label": "farhan@mavixmarketingagency.com",
+            "value": "a1aafef5-5f25-407f-a19d-7a1391c7a4d9",
+            "serviceName": "Google",
+            "provider": "google.com"
+          },
+          {
+            "key": "eb90faa2-e0e4-4529-86f8-82c6150ef5c7",
+            "label": "mfarhan@mavixmarketingagency.com",
+            "value": "eb90faa2-e0e4-4529-86f8-82c6150ef5c7",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f50c85fe-ce21-475d-a6a2-22191c9a45ed",
+            "label": "mdfarhan@mavixmarketingagency.com",
+            "value": "f50c85fe-ce21-475d-a6a2-22191c9a45ed",
+            "serviceName": "Google"
+          },
+          {
+            "key": "013bf170-6d1b-40e5-8069-a5ce83cd0597",
+            "label": "mohdfarhan@mavixmarketingagency.com",
+            "value": "013bf170-6d1b-40e5-8069-a5ce83cd0597",
+            "serviceName": "Google"
+          },
+          {
+            "key": "7a4a40b1-075e-4746-8727-8b9e2dbd63c9",
+            "label": "farhanmohd@mavixmarketingagency.com",
+            "value": "7a4a40b1-075e-4746-8727-8b9e2dbd63c9",
+            "serviceName": "Google"
+          },
+          {
+            "key": "08ec5022-e3a7-46b3-933b-5c452d5007c1",
+            "label": "farhanmohd@maavixmarketing.com",
+            "value": "08ec5022-e3a7-46b3-933b-5c452d5007c1",
+            "serviceName": "Google"
+          },
+          {
+            "key": "e8279dce-9945-4c93-9dee-0cd5ece6e7d1",
+            "label": "mfarhan@maavixmarketing.com",
+            "value": "e8279dce-9945-4c93-9dee-0cd5ece6e7d1",
+            "serviceName": "Google"
+          },
+          {
+            "key": "85ddfac4-9d31-4586-bc57-b1afda6793cd",
+            "label": "farhan@maavixmarketing.com",
+            "value": "85ddfac4-9d31-4586-bc57-b1afda6793cd",
+            "serviceName": "Google"
+          },
+          {
+            "key": "e73fc49d-ade0-4803-a616-93e5f581f77a",
+            "label": "mohdfarhan@maavixmarketing.com",
+            "value": "e73fc49d-ade0-4803-a616-93e5f581f77a",
+            "serviceName": "Google"
+          },
+          {
+            "key": "523f554e-b2c8-44b3-b1fd-df11db4b80ea",
+            "label": "mdfarhan@maavixmarketing.com",
+            "value": "523f554e-b2c8-44b3-b1fd-df11db4b80ea",
+            "serviceName": "Google"
+          },
+          {
+            "key": "2aba71f6-3c87-444b-ae48-9071c131f4d2",
+            "label": "farhan@mavixgrowth.com",
+            "value": "2aba71f6-3c87-444b-ae48-9071c131f4d2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "8381a089-529c-49e0-9f7f-2ebc7e4d0267",
+            "label": "mohdfarhan@mavixgrowth.com",
+            "value": "8381a089-529c-49e0-9f7f-2ebc7e4d0267",
+            "serviceName": "Google"
+          },
+          {
+            "key": "2d7e31c1-53fa-4997-a4e3-e16aef1e92f9",
+            "label": "mfarhan@mavixgrowth.com",
+            "value": "2d7e31c1-53fa-4997-a4e3-e16aef1e92f9",
+            "serviceName": "Google"
+          },
+          {
+            "key": "4beeec9a-4888-4259-bd05-774bfd078fe5",
+            "label": "farhanmohd@mavixgrowth.com",
+            "value": "4beeec9a-4888-4259-bd05-774bfd078fe5",
+            "serviceName": "Google"
+          },
+          {
+            "key": "5a6d9de7-b6b3-4242-aa2b-31fffdb19fd2",
+            "label": "mdfarhan@mavixgrowth.com",
+            "value": "5a6d9de7-b6b3-4242-aa2b-31fffdb19fd2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "a2f68677-c09f-42d0-9471-e9dd7b5fc7e0",
+            "label": "farhan@mavixmarketinggroup.com",
+            "value": "a2f68677-c09f-42d0-9471-e9dd7b5fc7e0",
+            "serviceName": "Google"
+          },
+          {
+            "key": "a34508b1-6073-491c-8eb8-32672c74a427",
+            "label": "mohdfarhan@mavixmarketinggroup.com",
+            "value": "a34508b1-6073-491c-8eb8-32672c74a427",
+            "serviceName": "Google"
+          },
+          {
+            "key": "956e3c10-2886-4cee-af05-634d66ff080c",
+            "label": "farhanmohd@mavixmarketinggroup.com",
+            "value": "956e3c10-2886-4cee-af05-634d66ff080c",
+            "serviceName": "Google"
+          },
+          {
+            "key": "a4d32be8-70aa-4b1c-9ac7-339de6b71cbe",
+            "label": "mdfarhan@mavixmarketinggroup.com",
+            "value": "a4d32be8-70aa-4b1c-9ac7-339de6b71cbe",
+            "serviceName": "Google"
+          },
+          {
+            "key": "ebd5c42a-7551-4628-b1b9-2e7b9afe6201",
+            "label": "mfarhan@mavixmarketinggroup.com",
+            "value": "ebd5c42a-7551-4628-b1b9-2e7b9afe6201",
+            "serviceName": "Google"
+          }
+        ],
+        "sent": 6042,
+        "opens": 0,
+        "clicks": 0,
+        "replies": 57,
+        "sequenceStats": {
+          "leadsTotal": 3365,
+          "leadsNotStarted": 1275,
+          "leadsCompleted": 1988,
+          "leadsInProgress": 65,
+          "leadsBlocked": 29
+        },
+        "last_modified": "2026-10-17T19:36:44.356Z",
+        "created_date": 1790851789479,
+        "owned_by": "mavixmarketing@gmail.com"
+      },
+      "steps": [
+        {
+          "step": 1,
+          "node_id": "node-chf6y6ktp1k",
+          "delay": {
+            "delay": "0",
+            "unit": "days",
+            "note": "first step, sends on start"
+          },
+          "send_as": "new",
+          "enabled_az_testing": true,
+          "ai_distribution": true,
+          "winning_metrics": "reply",
+          "test_group": 20,
+          "email_templates_default": null,
+          "templates": [
+            "6abe3ef350f35b62d6099eea",
+            "6abe3fff50f35b62d609ad3c",
+            "6abe40bf50f35b62d609bbdf",
+            "6abe419850f35b62d60a0054",
+            "6abe420550f35b62d60a1897",
+            "6abe428e50f35b62d60a2d3d",
+            "6abe42d450f35b62d60a33e5",
+            "6abe4328ec09579a5d93c0b1",
+            "6abe4349ec09579a5d93c3d8",
+            "6abe43cfec09579a5d93d154"
+          ],
+          "template_labels": {
+            "6abe3ef350f35b62d6099eea": "Initiail 1",
+            "6abe3fff50f35b62d609ad3c": "Initiail 2",
+            "6abe40bf50f35b62d609bbdf": "Initiail 3",
+            "6abe419850f35b62d60a0054": "Initiail 4",
+            "6abe420550f35b62d60a1897": "Initiail 5",
+            "6abe428e50f35b62d60a2d3d": "Initiail 6",
+            "6abe42d450f35b62d60a33e5": "Initiail 7",
+            "6abe4328ec09579a5d93c0b1": "Initiail 8",
+            "6abe4349ec09579a5d93c3d8": "Initiail 9",
+            "6abe43cfec09579a5d93d154": "Initiail 10"
+          },
+          "raw_node_data": {
+            "label": "email",
+            "test_group": 20,
+            "delay_unit": {
+              "label": "Days",
+              "value": "days"
+            },
+            "ai_distribution": true,
+            "enabled_az_testing": true,
+            "winning_metrics": "reply",
+            "email_template_variants": [
+              {
+                "key": "6abe3ef350f35b62d6099eea",
+                "label": "Initiail 1",
+                "value": "6abe3ef350f35b62d6099eea"
+              },
+              {
+                "key": "6abe3fff50f35b62d609ad3c",
+                "label": "Initiail 2",
+                "value": "6abe3fff50f35b62d609ad3c"
+              },
+              {
+                "key": "6abe40bf50f35b62d609bbdf",
+                "label": "Initiail 3",
+                "value": "6abe40bf50f35b62d609bbdf"
+              },
+              {
+                "key": "6abe419850f35b62d60a0054",
+                "label": "Initiail 4",
+                "value": "6abe419850f35b62d60a0054"
+              },
+              {
+                "key": "6abe420550f35b62d60a1897",
+                "label": "Initiail 5",
+                "value": "6abe420550f35b62d60a1897"
+              },
+              {
+                "key": "6abe428e50f35b62d60a2d3d",
+                "label": "Initiail 6",
+                "value": "6abe428e50f35b62d60a2d3d"
+              },
+              {
+                "key": "6abe42d450f35b62d60a33e5",
+                "label": "Initiail 7",
+                "value": "6abe42d450f35b62d60a33e5"
+              },
+              {
+                "key": "6abe4328ec09579a5d93c0b1",
+                "label": "Initiail 8",
+                "value": "6abe4328ec09579a5d93c0b1"
+              },
+              {
+                "key": "6abe4349ec09579a5d93c3d8",
+                "label": "Initiail 9",
+                "value": "6abe4349ec09579a5d93c3d8"
+              },
+              {
+                "key": "6abe43cfec09579a5d93d154",
+                "label": "Initiail 10",
+                "value": "6abe43cfec09579a5d93d154"
+              }
+            ]
+          }
+        },
+        {
+          "step": 2,
+          "node_id": "node-wc4sbds78v",
+          "delay": {
+            "delay": "1",
+            "unit": "days"
+          },
+          "send_as": "followup",
+          "enabled_az_testing": true,
+          "ai_distribution": true,
+          "winning_metrics": "reply",
+          "test_group": 20,
+          "email_templates_default": null,
+          "templates": [
+            "6abe62485a64721dcabec879",
+            "6abe63dd5a64721dcabeea57",
+            "6abe64565a64721dcabef4c3",
+            "6abe64ed5a64721dcabefcf3",
+            "6abe65815a64721dcabf081a",
+            "6abe66245a64721dcabf139e",
+            "6abe67775a64721dcabf445b"
+          ],
+          "template_labels": {
+            "6abe62485a64721dcabec879": "1st Follow Up (a)",
+            "6abe63dd5a64721dcabeea57": "1st Follow Up (b)",
+            "6abe64565a64721dcabef4c3": "1st Follow Up (c)",
+            "6abe64ed5a64721dcabefcf3": "1st Follow Up (d)",
+            "6abe65815a64721dcabf081a": "1st Follow Up (e)",
+            "6abe66245a64721dcabf139e": "1st Follow Up (f)",
+            "6abe67775a64721dcabf445b": "1st Follow Up (g)"
+          },
+          "raw_node_data": {
+            "label": "email",
+            "test_group": 20,
+            "delay_unit": {
+              "label": "Days",
+              "value": "days"
+            },
+            "send_as": {
+              "label": "RE: Follow Up",
+              "value": "followup"
+            },
+            "ai_distribution": true,
+            "enabled_az_testing": true,
+            "winning_metrics": "reply",
+            "email_template_variants": [
+              {
+                "key": "6abe62485a64721dcabec879",
+                "label": "1st Follow Up (a)",
+                "value": "6abe62485a64721dcabec879"
+              },
+              {
+                "key": "6abe63dd5a64721dcabeea57",
+                "label": "1st Follow Up (b)",
+                "value": "6abe63dd5a64721dcabeea57"
+              },
+              {
+                "key": "6abe64565a64721dcabef4c3",
+                "label": "1st Follow Up (c)",
+                "value": "6abe64565a64721dcabef4c3"
+              },
+              {
+                "key": "6abe64ed5a64721dcabefcf3",
+                "label": "1st Follow Up (d)",
+                "value": "6abe64ed5a64721dcabefcf3"
+              },
+              {
+                "key": "6abe65815a64721dcabf081a",
+                "label": "1st Follow Up (e)",
+                "value": "6abe65815a64721dcabf081a"
+              },
+              {
+                "key": "6abe66245a64721dcabf139e",
+                "label": "1st Follow Up (f)",
+                "value": "6abe66245a64721dcabf139e"
+              },
+              {
+                "key": "6abe67775a64721dcabf445b",
+                "label": "1st Follow Up (g)",
+                "value": "6abe67775a64721dcabf445b"
+              }
+            ]
+          }
+        },
+        {
+          "step": 3,
+          "node_id": "node-hkampzfkjah",
+          "delay": {
+            "delay": "1",
+            "unit": "days"
+          },
+          "send_as": "followup",
+          "enabled_az_testing": true,
+          "ai_distribution": true,
+          "winning_metrics": "reply",
+          "test_group": 20,
+          "email_templates_default": {
+            "label": "2nd Follow Up (a)",
+            "value": "6abe68495a64721dcabf56be"
+          },
+          "templates": [
+            "6abe68495a64721dcabf56be",
+            "6abe69f95a64721dcabf7823",
+            "6abe6a905a64721dcabf81bf",
+            "6abe6bb05a64721dcabfa58d",
+            "6abe6c6b5a64721dcabfb4be"
+          ],
+          "template_labels": {
+            "6abe68495a64721dcabf56be": "2nd Follow Up (a)",
+            "6abe69f95a64721dcabf7823": "2nd Follow Up (b)",
+            "6abe6a905a64721dcabf81bf": "2nd Follow Up (c)",
+            "6abe6bb05a64721dcabfa58d": "2nd Follow Up (d)",
+            "6abe6c6b5a64721dcabfb4be": "2nd Follow Up (e)"
+          },
+          "raw_node_data": {
+            "label": "email",
+            "test_group": 20,
+            "delay_unit": {
+              "label": "Days",
+              "value": "days"
+            },
+            "send_as": {
+              "label": "RE: Follow Up",
+              "value": "followup"
+            },
+            "email_templates": {
+              "label": "2nd Follow Up (a)",
+              "value": "6abe68495a64721dcabf56be"
+            },
+            "ai_distribution": true,
+            "enabled_az_testing": true,
+            "email_template_variants": [
+              {
+                "key": "6abe68495a64721dcabf56be",
+                "label": "2nd Follow Up (a)",
+                "value": "6abe68495a64721dcabf56be"
+              },
+              {
+                "key": "6abe69f95a64721dcabf7823",
+                "label": "2nd Follow Up (b)",
+                "value": "6abe69f95a64721dcabf7823"
+              },
+              {
+                "key": "6abe6a905a64721dcabf81bf",
+                "label": "2nd Follow Up (c)",
+                "value": "6abe6a905a64721dcabf81bf"
+              },
+              {
+                "key": "6abe6bb05a64721dcabfa58d",
+                "label": "2nd Follow Up (d)",
+                "value": "6abe6bb05a64721dcabfa58d"
+              },
+              {
+                "key": "6abe6c6b5a64721dcabfb4be",
+                "label": "2nd Follow Up (e)",
+                "value": "6abe6c6b5a64721dcabfb4be"
+              }
+            ],
+            "winning_metrics": "reply"
+          }
+        }
+      ],
+      "raw_flowchart": {
+        "nodes": [
+          {
+            "id": "node-rrv9l8931x",
+            "sourcePosition": "top",
+            "type": "source_entry_list",
+            "draggable": false,
+            "group": "source",
+            "data": {
+              "label": "source_entry_list",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "lists": {
+                "label": "listLabel",
+                "value": [
+                  {
+                    "key": "3cff9467-b5ce-457a-bd44-116976918daa",
+                    "label": "Scraped | Aus - UK - New Zea - Singa",
+                    "value": "3cff9467-b5ce-457a-bd44-116976918daa"
+                  }
+                ]
+              },
+              "contacts_count": 3328
+            },
+            "position": {
+              "x": 150,
+              "y": 80
+            },
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-97vqprlhyy",
+            "sourcePosition": "top",
+            "type": "add_source_block",
+            "draggable": false,
+            "group": "source",
+            "position": {
+              "x": 425,
+              "y": 80
+            },
+            "width": 250,
+            "height": 99,
+            "selected": true
+          },
+          {
+            "id": "node-8c8foh41y1",
+            "sourcePosition": "top",
+            "type": "source_connect",
+            "draggable": false,
+            "data": {
+              "first": true
+            },
+            "position": {
+              "x": 150,
+              "y": 279
+            },
+            "width": 250,
+            "height": 50
+          },
+          {
+            "id": "node-chf6y6ktp1k",
+            "sourcePosition": "top",
+            "type": "email",
+            "group": "outreach",
+            "data": {
+              "label": "email",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "ai_distribution": true,
+              "enabled_az_testing": true,
+              "winning_metrics": "reply",
+              "email_template_variants": [
+                {
+                  "key": "6abe3ef350f35b62d6099eea",
+                  "label": "Initiail 1",
+                  "value": "6abe3ef350f35b62d6099eea"
+                },
+                {
+                  "key": "6abe3fff50f35b62d609ad3c",
+                  "label": "Initiail 2",
+                  "value": "6abe3fff50f35b62d609ad3c"
+                },
+                {
+                  "key": "6abe40bf50f35b62d609bbdf",
+                  "label": "Initiail 3",
+                  "value": "6abe40bf50f35b62d609bbdf"
+                },
+                {
+                  "key": "6abe419850f35b62d60a0054",
+                  "label": "Initiail 4",
+                  "value": "6abe419850f35b62d60a0054"
+                },
+                {
+                  "key": "6abe420550f35b62d60a1897",
+                  "label": "Initiail 5",
+                  "value": "6abe420550f35b62d60a1897"
+                },
+                {
+                  "key": "6abe428e50f35b62d60a2d3d",
+                  "label": "Initiail 6",
+                  "value": "6abe428e50f35b62d60a2d3d"
+                },
+                {
+                  "key": "6abe42d450f35b62d60a33e5",
+                  "label": "Initiail 7",
+                  "value": "6abe42d450f35b62d60a33e5"
+                },
+                {
+                  "key": "6abe4328ec09579a5d93c0b1",
+                  "label": "Initiail 8",
+                  "value": "6abe4328ec09579a5d93c0b1"
+                },
+                {
+                  "key": "6abe4349ec09579a5d93c3d8",
+                  "label": "Initiail 9",
+                  "value": "6abe4349ec09579a5d93c3d8"
+                },
+                {
+                  "key": "6abe43cfec09579a5d93d154",
+                  "label": "Initiail 10",
+                  "value": "6abe43cfec09579a5d93d154"
+                }
+              ]
+            },
+            "position": {
+              "x": 153,
+              "y": 429
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-656nb3sg81",
+            "sourcePosition": "top",
+            "type": "delay",
+            "group": "condition",
+            "data": {
+              "label": "delay",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "delay": "1"
+            },
+            "position": {
+              "x": 153,
+              "y": 628
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-wc4sbds78v",
+            "sourcePosition": "top",
+            "type": "email",
+            "group": "outreach",
+            "data": {
+              "label": "email",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "send_as": {
+                "label": "RE: Follow Up",
+                "value": "followup"
+              },
+              "ai_distribution": true,
+              "enabled_az_testing": true,
+              "winning_metrics": "reply",
+              "email_template_variants": [
+                {
+                  "key": "6abe62485a64721dcabec879",
+                  "label": "1st Follow Up (a)",
+                  "value": "6abe62485a64721dcabec879"
+                },
+                {
+                  "key": "6abe63dd5a64721dcabeea57",
+                  "label": "1st Follow Up (b)",
+                  "value": "6abe63dd5a64721dcabeea57"
+                },
+                {
+                  "key": "6abe64565a64721dcabef4c3",
+                  "label": "1st Follow Up (c)",
+                  "value": "6abe64565a64721dcabef4c3"
+                },
+                {
+                  "key": "6abe64ed5a64721dcabefcf3",
+                  "label": "1st Follow Up (d)",
+                  "value": "6abe64ed5a64721dcabefcf3"
+                },
+                {
+                  "key": "6abe65815a64721dcabf081a",
+                  "label": "1st Follow Up (e)",
+                  "value": "6abe65815a64721dcabf081a"
+                },
+                {
+                  "key": "6abe66245a64721dcabf139e",
+                  "label": "1st Follow Up (f)",
+                  "value": "6abe66245a64721dcabf139e"
+                },
+                {
+                  "key": "6abe67775a64721dcabf445b",
+                  "label": "1st Follow Up (g)",
+                  "value": "6abe67775a64721dcabf445b"
+                }
+              ]
+            },
+            "position": {
+              "x": 153,
+              "y": 827
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 134,
+            "selected": false,
+            "dragging": false
+          },
+          {
+            "id": "node-zm8ohi06jx",
+            "sourcePosition": "top",
+            "type": "delay",
+            "group": "condition",
+            "data": {
+              "label": "delay",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "delay": "1"
+            },
+            "position": {
+              "x": 153,
+              "y": 1061
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-hkampzfkjah",
+            "sourcePosition": "top",
+            "type": "email",
+            "group": "outreach",
+            "data": {
+              "label": "email",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "send_as": {
+                "label": "RE: Follow Up",
+                "value": "followup"
+              },
+              "email_templates": {
+                "label": "2nd Follow Up (a)",
+                "value": "6abe68495a64721dcabf56be"
+              },
+              "ai_distribution": true,
+              "enabled_az_testing": true,
+              "email_template_variants": [
+                {
+                  "key": "6abe68495a64721dcabf56be",
+                  "label": "2nd Follow Up (a)",
+                  "value": "6abe68495a64721dcabf56be"
+                },
+                {
+                  "key": "6abe69f95a64721dcabf7823",
+                  "label": "2nd Follow Up (b)",
+                  "value": "6abe69f95a64721dcabf7823"
+                },
+                {
+                  "key": "6abe6a905a64721dcabf81bf",
+                  "label": "2nd Follow Up (c)",
+                  "value": "6abe6a905a64721dcabf81bf"
+                },
+                {
+                  "key": "6abe6bb05a64721dcabfa58d",
+                  "label": "2nd Follow Up (d)",
+                  "value": "6abe6bb05a64721dcabfa58d"
+                },
+                {
+                  "key": "6abe6c6b5a64721dcabfb4be",
+                  "label": "2nd Follow Up (e)",
+                  "value": "6abe6c6b5a64721dcabfb4be"
+                }
+              ],
+              "winning_metrics": "reply"
+            },
+            "position": {
+              "x": 153,
+              "y": 1260
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 134
+          },
+          {
+            "id": "node-7se1ghmpze",
+            "sourcePosition": "top",
+            "isSource": false,
+            "type": "add",
+            "position": {
+              "x": 255,
+              "y": 1494
+            },
+            "draggable": true,
+            "width": 40,
+            "height": 40
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge-qmwt1ndsz9",
+            "animated": false,
+            "source": "node-8c8foh41y1",
+            "sourceHandle": "",
+            "target": "node-chf6y6ktp1k",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-oh4aeqdtcp",
+            "animated": false,
+            "source": "node-chf6y6ktp1k",
+            "sourceHandle": "",
+            "target": "node-656nb3sg81",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-dtv4li5i6fk",
+            "animated": false,
+            "source": "node-656nb3sg81",
+            "sourceHandle": "",
+            "target": "node-wc4sbds78v",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-oyb24v5s3",
+            "animated": false,
+            "source": "node-wc4sbds78v",
+            "sourceHandle": "",
+            "target": "node-zm8ohi06jx",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-chnlvg3h02",
+            "animated": false,
+            "source": "node-zm8ohi06jx",
+            "sourceHandle": "",
+            "target": "node-hkampzfkjah",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-v8tkt9zk83j",
+            "animated": false,
+            "sourceHandle": "",
+            "source": "node-hkampzfkjah",
+            "target": "node-7se1ghmpze",
+            "type": "default"
+          },
+          {
+            "id": "edge-rctohgivr9",
+            "animated": false,
+            "source": "node-rrv9l8931x",
+            "sourceHandle": "",
+            "target": "node-8c8foh41y1",
+            "type": "default"
+          }
+        ]
+      }
+    },
+    {
+      "id": "c4697abb-1c97-4cfb-b56b-eb9f1781ed6c",
+      "_id": "6abe3a8750f35b62d6091bb3",
+      "name": "Scraped | USA - Canada | Tue - Thu - Sat",
+      "status": "running",
+      "settings": {
+        "validEmail": true,
+        "riskyEmail": true,
+        "invalidEmail": false,
+        "sendToOnlyVerifiedEmail": false,
+        "checkEmailOpen": false,
+        "checkEmailClick": false,
+        "checkEmailReply": true,
+        "checkEmailBeforeSending": false,
+        "stopWhenReplyRecieved": true,
+        "stopWhenReplyRecievedWhen": "contact-with-same-domain",
+        "delayEnabled": true,
+        "delayFrom": 5,
+        "delayTo": 15,
+        "plainText": true,
+        "emailSendingHours": [
+          {
+            "enabled": false,
+            "name": "Monday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          },
+          {
+            "enabled": true,
+            "name": "Tuesday",
+            "fromTime": "08:00",
+            "toTime": "17:00",
+            "estimate": "36 - 108"
+          },
+          {
+            "enabled": false,
+            "name": "Wednesday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          },
+          {
+            "enabled": true,
+            "name": "Thursday",
+            "fromTime": "08:00",
+            "toTime": "17:00",
+            "estimate": "36 - 108"
+          },
+          {
+            "enabled": false,
+            "name": "Friday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          },
+          {
+            "enabled": true,
+            "name": "Saturday",
+            "fromTime": "08:00",
+            "toTime": "17:00",
+            "estimate": "36 - 108"
+          },
+          {
+            "enabled": false,
+            "name": "Sunday",
+            "fromTime": "09:00",
+            "toTime": "17:00",
+            "estimate": "32 - 96"
+          }
+        ],
+        "evergreen": true,
+        "evergreenType": false,
+        "launchTimingMode": "schedule",
+        "autoPause": false,
+        "bounceThreshold": 2,
+        "bouncePause": false,
+        "autoTagReplies": true,
+        "auto_reply": false,
+        "matchProvider": false,
+        "scheduledAt": 1791892800000,
+        "skip_esg": false,
+        "timezone": "America/New_York",
+        "paused": false,
+        "archived": false,
+        "integrations": [],
+        "lists": [
+          "1ef5f9cb-600a-4bd2-b7ec-42297c3ba96e"
+        ],
+        "senders": "1ed6f511-3645-4fdb-8c76-5b15cf3135f2,2285ec6c-59e3-4839-ae2c-89964e0485bb,600e061f-d890-425e-9044-e635a2029593,d3c074f2-7af8-4419-96a6-7e38d76cd57f,07f88092-613f-40db-b6b4-94519a8c59f7,44a378ae-ef1c-464a-8be5-0f2d0e26677e,3f31c5f5-b7cf-4170-8855-81b7fcdbb63f,fbc79e8e-7e23-4d1e-a6c5-d01683248f76,63a0b5e4-7ced-4193-904e-a4e4861f8bfc,287fa2e0-2ce9-4009-a292-f936f613c339,18d65cf9-8fb5-4378-8dd7-d0061d54def5,6ff45891-3956-4a07-9085-ade4123e8573,d065fc14-ffa3-4676-b957-b72f6ff0fd67,cda222c9-a88a-4943-83e8-3268a5dcd4bb,6b61c6ea-a0df-4146-8b2d-e76691b7a30d,b8275ad6-b94b-4160-a5df-077b3ccfa48c,6a01364b-afda-4871-b87a-c0563eb3729e,6ed8194a-fc81-4fbb-ad31-14f4ecd465a6,93679ce1-41bd-4ad8-92d9-942ff2c37281,57bf405b-692e-4d94-b7a6-ab4bca1e9e09,967ae3c8-4361-4799-94d3-629b4a918ae5,03946558-0898-48de-9af4-9a5354895edc,cc0398ee-4007-4fbe-8394-2fa971b6523e,9749a08b-bc2b-4f53-a2d3-0924616aa7ea,d653f53f-807f-4fae-bc13-c98f295a5500,eddd1e83-659b-4571-941a-590145a98996,cbf141fd-5a76-437f-9b72-526b59c2b9c7,f77cb418-4885-44ee-9e80-23b27a6c9ff6,ab859878-6608-438d-9c58-103154ff6d5d,236e16eb-863e-4a6f-9077-0d9e8dcb8093,3e979947-0e8d-4106-8b3d-9eae63f51836,3f09f15a-1331-4591-97c8-acecdd50d954,d9c4a440-6d28-420e-8ddb-82a16da160c8,9c5817e6-5bd2-425f-b5ab-db6fdb12b605,124536b9-cc61-4a5c-bd8f-12707dac9f4e,63cb2186-6b48-4a12-8fff-2ab8eda30604,20cd155f-3a2c-4692-9740-5d38915145e5,155c9de6-ec7f-43c9-b509-4d8fd41d917d,b4e00ec1-f16d-49a1-b63c-272ca8bafb25,6aad8955-bf17-4a76-8dde-118a9e73fdb8,cd9247d0-ce35-4841-be12-d8326568c866,433861e1-201a-493a-b885-b1eaa5e3c0b5,4546b258-8bf1-46b8-9304-0f960d80d97d,c0f1171d-72fb-447d-9f7b-5a71a046f5fd,cbc67216-73e7-44ee-a184-b23d3a32bb5d,30bab223-9e4d-4373-a1c0-c5379b48e61e,83e47b14-73ee-45db-a572-ca466a05d414,cd6f9e7f-0142-4891-b5f6-f13f2cd93fae,fac23d81-305e-4058-8e8f-85c8c2eecc7e,a6934a86-6192-40ff-b858-65638fa9ec5c,66dff269-dacd-4ede-b172-348751dc9c9d,239bae27-a52a-4c88-a6b8-02ce54680509,df0ad416-e484-4fc6-8c86-a7fcae41d82c,5cdd7abc-6dd6-401a-9609-764581e5f2f2,279da445-382e-4704-bd98-408fdce08736,2dac68a3-6d5a-48d8-8d5b-76208cf8832e,e9b34ab4-d523-41f3-a589-f942b050dbae,6983560d-e7f0-4700-a260-79e7f2f22f91,5c4f2cdb-d044-43cc-9634-c09c5efac450,4ab0bbee-5c3f-4cc7-b278-6c1d96a9f258,407d4544-b1cb-40fb-9924-140969375ecb,9922979f-b3dd-49de-90eb-33ccdbafb68e,61396023-be47-46ee-a057-9019d3667b03,30ddd71d-73f5-4d79-af0f-2ac97fdce2ae,ca7b5de7-c1f3-4c89-8d6e-16aab8cd2258",
+        "emailSenders": [
+          {
+            "key": "1ed6f511-3645-4fdb-8c76-5b15cf3135f2",
+            "label": "farhan@mavixmarketinghub.com",
+            "value": "1ed6f511-3645-4fdb-8c76-5b15cf3135f2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "2285ec6c-59e3-4839-ae2c-89964e0485bb",
+            "label": "mdfarhan@mavixmarketinghub.com",
+            "value": "2285ec6c-59e3-4839-ae2c-89964e0485bb",
+            "serviceName": "Google"
+          },
+          {
+            "key": "600e061f-d890-425e-9044-e635a2029593",
+            "label": "mohdfarhan@mavixmarketinghub.com",
+            "value": "600e061f-d890-425e-9044-e635a2029593",
+            "serviceName": "Google"
+          },
+          {
+            "key": "d3c074f2-7af8-4419-96a6-7e38d76cd57f",
+            "label": "farhanmohd@mavixmarketinghub.com",
+            "value": "d3c074f2-7af8-4419-96a6-7e38d76cd57f",
+            "serviceName": "Google"
+          },
+          {
+            "key": "07f88092-613f-40db-b6b4-94519a8c59f7",
+            "label": "mfarhan@mavixmarketinghub.com",
+            "value": "07f88092-613f-40db-b6b4-94519a8c59f7",
+            "serviceName": "Google"
+          },
+          {
+            "key": "44a378ae-ef1c-464a-8be5-0f2d0e26677e",
+            "label": "farhan@mavixmarketinglab.com",
+            "value": "44a378ae-ef1c-464a-8be5-0f2d0e26677e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "3f31c5f5-b7cf-4170-8855-81b7fcdbb63f",
+            "label": "mfarhan@mavixmarketinglab.com",
+            "value": "3f31c5f5-b7cf-4170-8855-81b7fcdbb63f",
+            "serviceName": "Google"
+          },
+          {
+            "key": "fbc79e8e-7e23-4d1e-a6c5-d01683248f76",
+            "label": "mdfarhan@mavixmarketinglab.com",
+            "value": "fbc79e8e-7e23-4d1e-a6c5-d01683248f76",
+            "serviceName": "Google"
+          },
+          {
+            "key": "63a0b5e4-7ced-4193-904e-a4e4861f8bfc",
+            "label": "farhanmohd@mavixmarketinglab.com",
+            "value": "63a0b5e4-7ced-4193-904e-a4e4861f8bfc",
+            "serviceName": "Google"
+          },
+          {
+            "key": "287fa2e0-2ce9-4009-a292-f936f613c339",
+            "label": "mohdfarhan@mavixmarketinglab.com",
+            "value": "287fa2e0-2ce9-4009-a292-f936f613c339",
+            "serviceName": "Google"
+          },
+          {
+            "key": "18d65cf9-8fb5-4378-8dd7-d0061d54def5",
+            "label": "farhan@mavixmarketingpartners.com",
+            "value": "18d65cf9-8fb5-4378-8dd7-d0061d54def5",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6ff45891-3956-4a07-9085-ade4123e8573",
+            "label": "mfarhan@mavixmarketingpartners.com",
+            "value": "6ff45891-3956-4a07-9085-ade4123e8573",
+            "serviceName": "Google"
+          },
+          {
+            "key": "d065fc14-ffa3-4676-b957-b72f6ff0fd67",
+            "label": "mohdfarhan@mavixmarketingpartners.com",
+            "value": "d065fc14-ffa3-4676-b957-b72f6ff0fd67",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cda222c9-a88a-4943-83e8-3268a5dcd4bb",
+            "label": "farhanmohd@mavixmarketingpartners.com",
+            "value": "cda222c9-a88a-4943-83e8-3268a5dcd4bb",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6b61c6ea-a0df-4146-8b2d-e76691b7a30d",
+            "label": "mdfarhan@mavixmarketingpartners.com",
+            "value": "6b61c6ea-a0df-4146-8b2d-e76691b7a30d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "b8275ad6-b94b-4160-a5df-077b3ccfa48c",
+            "label": "farhan@mavixmarketingplus.com",
+            "value": "b8275ad6-b94b-4160-a5df-077b3ccfa48c",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6a01364b-afda-4871-b87a-c0563eb3729e",
+            "label": "mfarhan@mavixmarketingplus.com",
+            "value": "6a01364b-afda-4871-b87a-c0563eb3729e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6ed8194a-fc81-4fbb-ad31-14f4ecd465a6",
+            "label": "mohdfarhan@mavixmarketingplus.com",
+            "value": "6ed8194a-fc81-4fbb-ad31-14f4ecd465a6",
+            "serviceName": "Google"
+          },
+          {
+            "key": "93679ce1-41bd-4ad8-92d9-942ff2c37281",
+            "label": "farhanmohd@mavixmarketingplus.com",
+            "value": "93679ce1-41bd-4ad8-92d9-942ff2c37281",
+            "serviceName": "Google"
+          },
+          {
+            "key": "57bf405b-692e-4d94-b7a6-ab4bca1e9e09",
+            "label": "mdfarhan@mavixmarketingplus.com",
+            "value": "57bf405b-692e-4d94-b7a6-ab4bca1e9e09",
+            "serviceName": "Google"
+          },
+          {
+            "key": "967ae3c8-4361-4799-94d3-629b4a918ae5",
+            "label": "farhan@mavixmarketingpro.com",
+            "value": "967ae3c8-4361-4799-94d3-629b4a918ae5",
+            "serviceName": "Google"
+          },
+          {
+            "key": "03946558-0898-48de-9af4-9a5354895edc",
+            "label": "mfarhan@mavixmarketingpro.com",
+            "value": "03946558-0898-48de-9af4-9a5354895edc",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cc0398ee-4007-4fbe-8394-2fa971b6523e",
+            "label": "mohdfarhan@mavixmarketingpro.com",
+            "value": "cc0398ee-4007-4fbe-8394-2fa971b6523e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9749a08b-bc2b-4f53-a2d3-0924616aa7ea",
+            "label": "farhanmohd@mavixmarketingpro.com",
+            "value": "9749a08b-bc2b-4f53-a2d3-0924616aa7ea",
+            "serviceName": "Google"
+          },
+          {
+            "key": "d653f53f-807f-4fae-bc13-c98f295a5500",
+            "label": "mdfarhan@mavixmarketingpro.com",
+            "value": "d653f53f-807f-4fae-bc13-c98f295a5500",
+            "serviceName": "Google"
+          },
+          {
+            "key": "eddd1e83-659b-4571-941a-590145a98996",
+            "label": "farhan@mavixmarketingservices.com",
+            "value": "eddd1e83-659b-4571-941a-590145a98996",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cbf141fd-5a76-437f-9b72-526b59c2b9c7",
+            "label": "mfarhan@mavixmarketingservices.com",
+            "value": "cbf141fd-5a76-437f-9b72-526b59c2b9c7",
+            "serviceName": "Google"
+          },
+          {
+            "key": "f77cb418-4885-44ee-9e80-23b27a6c9ff6",
+            "label": "mohdfarhan@mavixmarketingservices.com",
+            "value": "f77cb418-4885-44ee-9e80-23b27a6c9ff6",
+            "serviceName": "Google"
+          },
+          {
+            "key": "ab859878-6608-438d-9c58-103154ff6d5d",
+            "label": "mdfarhan@mavixmarketingservices.com",
+            "value": "ab859878-6608-438d-9c58-103154ff6d5d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "236e16eb-863e-4a6f-9077-0d9e8dcb8093",
+            "label": "farhanmohd@mavixmarketingservices.com",
+            "value": "236e16eb-863e-4a6f-9077-0d9e8dcb8093",
+            "serviceName": "Google"
+          },
+          {
+            "key": "3e979947-0e8d-4106-8b3d-9eae63f51836",
+            "label": "farhan@mavixmarketingsolutions.com",
+            "value": "3e979947-0e8d-4106-8b3d-9eae63f51836",
+            "serviceName": "Google"
+          },
+          {
+            "key": "3f09f15a-1331-4591-97c8-acecdd50d954",
+            "label": "mfarhan@mavixmarketingsolutions.com",
+            "value": "3f09f15a-1331-4591-97c8-acecdd50d954",
+            "serviceName": "Google"
+          },
+          {
+            "key": "d9c4a440-6d28-420e-8ddb-82a16da160c8",
+            "label": "mohdfarhan@mavixmarketingsolutions.com",
+            "value": "d9c4a440-6d28-420e-8ddb-82a16da160c8",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9c5817e6-5bd2-425f-b5ab-db6fdb12b605",
+            "label": "farhanmohd@mavixmarketingsolutions.com",
+            "value": "9c5817e6-5bd2-425f-b5ab-db6fdb12b605",
+            "serviceName": "Google"
+          },
+          {
+            "key": "124536b9-cc61-4a5c-bd8f-12707dac9f4e",
+            "label": "mdfarhan@mavixmarketingsolutions.com",
+            "value": "124536b9-cc61-4a5c-bd8f-12707dac9f4e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "63cb2186-6b48-4a12-8fff-2ab8eda30604",
+            "label": "farhan@mavixmarketingteam.com",
+            "value": "63cb2186-6b48-4a12-8fff-2ab8eda30604",
+            "serviceName": "Google"
+          },
+          {
+            "key": "20cd155f-3a2c-4692-9740-5d38915145e5",
+            "label": "mfarhan@mavixmarketingteam.com",
+            "value": "20cd155f-3a2c-4692-9740-5d38915145e5",
+            "serviceName": "Google"
+          },
+          {
+            "key": "155c9de6-ec7f-43c9-b509-4d8fd41d917d",
+            "label": "mohdfarhan@mavixmarketingteam.com",
+            "value": "155c9de6-ec7f-43c9-b509-4d8fd41d917d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "b4e00ec1-f16d-49a1-b63c-272ca8bafb25",
+            "label": "farhanmohd@mavixmarketingteam.com",
+            "value": "b4e00ec1-f16d-49a1-b63c-272ca8bafb25",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6aad8955-bf17-4a76-8dde-118a9e73fdb8",
+            "label": "mdfarhan@mavixmarketingteam.com",
+            "value": "6aad8955-bf17-4a76-8dde-118a9e73fdb8",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cd9247d0-ce35-4841-be12-d8326568c866",
+            "label": "farhan@mavixmarketingworks.com",
+            "value": "cd9247d0-ce35-4841-be12-d8326568c866",
+            "serviceName": "Google"
+          },
+          {
+            "key": "433861e1-201a-493a-b885-b1eaa5e3c0b5",
+            "label": "mfarhan@mavixmarketingworks.com",
+            "value": "433861e1-201a-493a-b885-b1eaa5e3c0b5",
+            "serviceName": "Google"
+          },
+          {
+            "key": "4546b258-8bf1-46b8-9304-0f960d80d97d",
+            "label": "mohdfarhan@mavixmarketingworks.com",
+            "value": "4546b258-8bf1-46b8-9304-0f960d80d97d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "c0f1171d-72fb-447d-9f7b-5a71a046f5fd",
+            "label": "farhanmohd@mavixmarketingworks.com",
+            "value": "c0f1171d-72fb-447d-9f7b-5a71a046f5fd",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cbc67216-73e7-44ee-a184-b23d3a32bb5d",
+            "label": "mdfarhan@mavixmarketingworks.com",
+            "value": "cbc67216-73e7-44ee-a184-b23d3a32bb5d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "30bab223-9e4d-4373-a1c0-c5379b48e61e",
+            "label": "mohdfarhan@mavexmarketing.com",
+            "value": "30bab223-9e4d-4373-a1c0-c5379b48e61e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "83e47b14-73ee-45db-a572-ca466a05d414",
+            "label": "mfarhan@mavexmarketing.com",
+            "value": "83e47b14-73ee-45db-a572-ca466a05d414",
+            "serviceName": "Google"
+          },
+          {
+            "key": "cd6f9e7f-0142-4891-b5f6-f13f2cd93fae",
+            "label": "farhanmohd@mavexmarketing.com",
+            "value": "cd6f9e7f-0142-4891-b5f6-f13f2cd93fae",
+            "serviceName": "Google"
+          },
+          {
+            "key": "fac23d81-305e-4058-8e8f-85c8c2eecc7e",
+            "label": "mdfarhan@mavexmarketing.com",
+            "value": "fac23d81-305e-4058-8e8f-85c8c2eecc7e",
+            "serviceName": "Google",
+            "provider": "google.com"
+          },
+          {
+            "key": "a6934a86-6192-40ff-b858-65638fa9ec5c",
+            "label": "farhan@mavexmarketing.com",
+            "value": "a6934a86-6192-40ff-b858-65638fa9ec5c",
+            "serviceName": "Google"
+          },
+          {
+            "key": "66dff269-dacd-4ede-b172-348751dc9c9d",
+            "label": "mfarhan@mavixmarkeeting.com",
+            "value": "66dff269-dacd-4ede-b172-348751dc9c9d",
+            "serviceName": "Google"
+          },
+          {
+            "key": "239bae27-a52a-4c88-a6b8-02ce54680509",
+            "label": "farhanmohd@mavixmarkeeting.com",
+            "value": "239bae27-a52a-4c88-a6b8-02ce54680509",
+            "serviceName": "Google"
+          },
+          {
+            "key": "df0ad416-e484-4fc6-8c86-a7fcae41d82c",
+            "label": "mohdfarhan@mavixmarkeeting.com",
+            "value": "df0ad416-e484-4fc6-8c86-a7fcae41d82c",
+            "serviceName": "Google"
+          },
+          {
+            "key": "5cdd7abc-6dd6-401a-9609-764581e5f2f2",
+            "label": "mdfarhan@mavixmarkeeting.com",
+            "value": "5cdd7abc-6dd6-401a-9609-764581e5f2f2",
+            "serviceName": "Google"
+          },
+          {
+            "key": "279da445-382e-4704-bd98-408fdce08736",
+            "label": "farhan@mavixmarkeeting.com",
+            "value": "279da445-382e-4704-bd98-408fdce08736",
+            "serviceName": "Google",
+            "provider": "google.com"
+          },
+          {
+            "key": "2dac68a3-6d5a-48d8-8d5b-76208cf8832e",
+            "label": "mohdfarhan@mavixmarketings.com",
+            "value": "2dac68a3-6d5a-48d8-8d5b-76208cf8832e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "e9b34ab4-d523-41f3-a589-f942b050dbae",
+            "label": "farhanmohd@mavixmarketings.com",
+            "value": "e9b34ab4-d523-41f3-a589-f942b050dbae",
+            "serviceName": "Google"
+          },
+          {
+            "key": "6983560d-e7f0-4700-a260-79e7f2f22f91",
+            "label": "farhan@mavixmarketings.com",
+            "value": "6983560d-e7f0-4700-a260-79e7f2f22f91",
+            "serviceName": "Google",
+            "provider": "google.com"
+          },
+          {
+            "key": "5c4f2cdb-d044-43cc-9634-c09c5efac450",
+            "label": "mfarhan@mavixmarketings.com",
+            "value": "5c4f2cdb-d044-43cc-9634-c09c5efac450",
+            "serviceName": "Google"
+          },
+          {
+            "key": "4ab0bbee-5c3f-4cc7-b278-6c1d96a9f258",
+            "label": "mdfarhan@mavixmarketings.com",
+            "value": "4ab0bbee-5c3f-4cc7-b278-6c1d96a9f258",
+            "serviceName": "Google"
+          },
+          {
+            "key": "407d4544-b1cb-40fb-9924-140969375ecb",
+            "label": "farhan@mavixxmarketing.com",
+            "value": "407d4544-b1cb-40fb-9924-140969375ecb",
+            "serviceName": "Google"
+          },
+          {
+            "key": "9922979f-b3dd-49de-90eb-33ccdbafb68e",
+            "label": "mohdfarhan@mavixxmarketing.com",
+            "value": "9922979f-b3dd-49de-90eb-33ccdbafb68e",
+            "serviceName": "Google"
+          },
+          {
+            "key": "61396023-be47-46ee-a057-9019d3667b03",
+            "label": "mfarhan@mavixxmarketing.com",
+            "value": "61396023-be47-46ee-a057-9019d3667b03",
+            "serviceName": "Google"
+          },
+          {
+            "key": "30ddd71d-73f5-4d79-af0f-2ac97fdce2ae",
+            "label": "mdfarhan@mavixxmarketing.com",
+            "value": "30ddd71d-73f5-4d79-af0f-2ac97fdce2ae",
+            "serviceName": "Google"
+          },
+          {
+            "key": "ca7b5de7-c1f3-4c89-8d6e-16aab8cd2258",
+            "label": "farhanmohd@mavixxmarketing.com",
+            "value": "ca7b5de7-c1f3-4c89-8d6e-16aab8cd2258",
+            "serviceName": "Google"
+          }
+        ],
+        "sent": 5893,
+        "opens": 0,
+        "clicks": 0,
+        "replies": 38,
+        "sequenceStats": {
+          "leadsTotal": 2357,
+          "leadsNotStarted": 363,
+          "leadsCompleted": 1943,
+          "leadsInProgress": 50,
+          "leadsBlocked": 32
+        },
+        "last_modified": "2026-10-13T11:26:13.038Z",
+        "created_date": 1790851719403,
+        "owned_by": "mavixmarketing@gmail.com"
+      },
+      "steps": [
+        {
+          "step": 1,
+          "node_id": "node-ss4334evh6",
+          "delay": {
+            "delay": "0",
+            "unit": "days",
+            "note": "first step, sends on start"
+          },
+          "send_as": "new",
+          "enabled_az_testing": true,
+          "ai_distribution": true,
+          "winning_metrics": "reply",
+          "test_group": 20,
+          "email_templates_default": {
+            "label": "Initiail 1",
+            "value": "6abe3ef350f35b62d6099eea"
+          },
+          "templates": [
+            "6abe3ef350f35b62d6099eea",
+            "6abe3fff50f35b62d609ad3c",
+            "6abe40bf50f35b62d609bbdf",
+            "6abe419850f35b62d60a0054",
+            "6abe420550f35b62d60a1897",
+            "6abe428e50f35b62d60a2d3d",
+            "6abe42d450f35b62d60a33e5",
+            "6abe4328ec09579a5d93c0b1",
+            "6abe4349ec09579a5d93c3d8",
+            "6abe43cfec09579a5d93d154"
+          ],
+          "template_labels": {
+            "6abe3ef350f35b62d6099eea": "Initiail 1",
+            "6abe3fff50f35b62d609ad3c": "Initiail 2",
+            "6abe40bf50f35b62d609bbdf": "Initiail 3",
+            "6abe419850f35b62d60a0054": "Initiail 4",
+            "6abe420550f35b62d60a1897": "Initiail 5",
+            "6abe428e50f35b62d60a2d3d": "Initiail 6",
+            "6abe42d450f35b62d60a33e5": "Initiail 7",
+            "6abe4328ec09579a5d93c0b1": "Initiail 8",
+            "6abe4349ec09579a5d93c3d8": "Initiail 9",
+            "6abe43cfec09579a5d93d154": "Initiail 10"
+          },
+          "raw_node_data": {
+            "label": "email",
+            "test_group": 20,
+            "delay_unit": {
+              "label": "Days",
+              "value": "days"
+            },
+            "email_templates": {
+              "label": "Initiail 1",
+              "value": "6abe3ef350f35b62d6099eea"
+            },
+            "ai_distribution": true,
+            "enabled_az_testing": true,
+            "winning_metrics": "reply",
+            "email_template_variants": [
+              {
+                "key": "6abe3ef350f35b62d6099eea",
+                "label": "Initiail 1",
+                "value": "6abe3ef350f35b62d6099eea"
+              },
+              {
+                "key": "6abe3fff50f35b62d609ad3c",
+                "label": "Initiail 2",
+                "value": "6abe3fff50f35b62d609ad3c"
+              },
+              {
+                "key": "6abe40bf50f35b62d609bbdf",
+                "label": "Initiail 3",
+                "value": "6abe40bf50f35b62d609bbdf"
+              },
+              {
+                "key": "6abe419850f35b62d60a0054",
+                "label": "Initiail 4",
+                "value": "6abe419850f35b62d60a0054"
+              },
+              {
+                "key": "6abe420550f35b62d60a1897",
+                "label": "Initiail 5",
+                "value": "6abe420550f35b62d60a1897"
+              },
+              {
+                "key": "6abe428e50f35b62d60a2d3d",
+                "label": "Initiail 6",
+                "value": "6abe428e50f35b62d60a2d3d"
+              },
+              {
+                "key": "6abe42d450f35b62d60a33e5",
+                "label": "Initiail 7",
+                "value": "6abe42d450f35b62d60a33e5"
+              },
+              {
+                "key": "6abe4328ec09579a5d93c0b1",
+                "label": "Initiail 8",
+                "value": "6abe4328ec09579a5d93c0b1"
+              },
+              {
+                "key": "6abe4349ec09579a5d93c3d8",
+                "label": "Initiail 9",
+                "value": "6abe4349ec09579a5d93c3d8"
+              },
+              {
+                "key": "6abe43cfec09579a5d93d154",
+                "label": "Initiail 10",
+                "value": "6abe43cfec09579a5d93d154"
+              }
+            ]
+          }
+        },
+        {
+          "step": 2,
+          "node_id": "node-ih202fpe7x",
+          "delay": {
+            "delay": "1",
+            "unit": "days"
+          },
+          "send_as": "followup",
+          "enabled_az_testing": true,
+          "ai_distribution": true,
+          "winning_metrics": "reply",
+          "test_group": 20,
+          "email_templates_default": {
+            "label": "1st Follow Up (a)",
+            "value": "6abe62485a64721dcabec879"
+          },
+          "templates": [
+            "6abe62485a64721dcabec879",
+            "6abe63dd5a64721dcabeea57",
+            "6abe64565a64721dcabef4c3",
+            "6abe64ed5a64721dcabefcf3",
+            "6abe65815a64721dcabf081a",
+            "6abe66245a64721dcabf139e",
+            "6abe67775a64721dcabf445b"
+          ],
+          "template_labels": {
+            "6abe62485a64721dcabec879": "1st Follow Up (a)",
+            "6abe63dd5a64721dcabeea57": "1st Follow Up (b)",
+            "6abe64565a64721dcabef4c3": "1st Follow Up (c)",
+            "6abe64ed5a64721dcabefcf3": "1st Follow Up (d)",
+            "6abe65815a64721dcabf081a": "1st Follow Up (e)",
+            "6abe66245a64721dcabf139e": "1st Follow Up (f)",
+            "6abe67775a64721dcabf445b": "1st Follow Up (g)"
+          },
+          "raw_node_data": {
+            "label": "email",
+            "test_group": 20,
+            "delay_unit": {
+              "label": "Days",
+              "value": "days"
+            },
+            "send_as": {
+              "label": "RE: Follow Up",
+              "value": "followup"
+            },
+            "email_templates": {
+              "label": "1st Follow Up (a)",
+              "value": "6abe62485a64721dcabec879"
+            },
+            "ai_distribution": true,
+            "enabled_az_testing": true,
+            "winning_metrics": "reply",
+            "email_template_variants": [
+              {
+                "key": "6abe62485a64721dcabec879",
+                "label": "1st Follow Up (a)",
+                "value": "6abe62485a64721dcabec879"
+              },
+              {
+                "key": "6abe63dd5a64721dcabeea57",
+                "label": "1st Follow Up (b)",
+                "value": "6abe63dd5a64721dcabeea57"
+              },
+              {
+                "key": "6abe64565a64721dcabef4c3",
+                "label": "1st Follow Up (c)",
+                "value": "6abe64565a64721dcabef4c3"
+              },
+              {
+                "key": "6abe64ed5a64721dcabefcf3",
+                "label": "1st Follow Up (d)",
+                "value": "6abe64ed5a64721dcabefcf3"
+              },
+              {
+                "key": "6abe65815a64721dcabf081a",
+                "label": "1st Follow Up (e)",
+                "value": "6abe65815a64721dcabf081a"
+              },
+              {
+                "key": "6abe66245a64721dcabf139e",
+                "label": "1st Follow Up (f)",
+                "value": "6abe66245a64721dcabf139e"
+              },
+              {
+                "key": "6abe67775a64721dcabf445b",
+                "label": "1st Follow Up (g)",
+                "value": "6abe67775a64721dcabf445b"
+              }
+            ]
+          }
+        },
+        {
+          "step": 3,
+          "node_id": "node-wk5e94y2zt",
+          "delay": {
+            "delay": "1",
+            "unit": "days"
+          },
+          "send_as": "followup",
+          "enabled_az_testing": true,
+          "ai_distribution": true,
+          "winning_metrics": "reply",
+          "test_group": 20,
+          "email_templates_default": {
+            "label": "2nd Follow Up (a)",
+            "value": "6abe68495a64721dcabf56be"
+          },
+          "templates": [
+            "6abe68495a64721dcabf56be",
+            "6abe69f95a64721dcabf7823",
+            "6abe6a905a64721dcabf81bf",
+            "6abe6bb05a64721dcabfa58d",
+            "6abe6c6b5a64721dcabfb4be"
+          ],
+          "template_labels": {
+            "6abe68495a64721dcabf56be": "2nd Follow Up (a)",
+            "6abe69f95a64721dcabf7823": "2nd Follow Up (b)",
+            "6abe6a905a64721dcabf81bf": "2nd Follow Up (c)",
+            "6abe6bb05a64721dcabfa58d": "2nd Follow Up (d)",
+            "6abe6c6b5a64721dcabfb4be": "2nd Follow Up (e)"
+          },
+          "raw_node_data": {
+            "label": "email",
+            "test_group": 20,
+            "delay_unit": {
+              "label": "Days",
+              "value": "days"
+            },
+            "send_as": {
+              "label": "RE: Follow Up",
+              "value": "followup"
+            },
+            "email_templates": {
+              "label": "2nd Follow Up (a)",
+              "value": "6abe68495a64721dcabf56be"
+            },
+            "ai_distribution": true,
+            "enabled_az_testing": true,
+            "email_template_variants": [
+              {
+                "key": "6abe68495a64721dcabf56be",
+                "label": "2nd Follow Up (a)",
+                "value": "6abe68495a64721dcabf56be"
+              },
+              {
+                "key": "6abe69f95a64721dcabf7823",
+                "label": "2nd Follow Up (b)",
+                "value": "6abe69f95a64721dcabf7823"
+              },
+              {
+                "key": "6abe6a905a64721dcabf81bf",
+                "label": "2nd Follow Up (c)",
+                "value": "6abe6a905a64721dcabf81bf"
+              },
+              {
+                "key": "6abe6bb05a64721dcabfa58d",
+                "label": "2nd Follow Up (d)",
+                "value": "6abe6bb05a64721dcabfa58d"
+              },
+              {
+                "key": "6abe6c6b5a64721dcabfb4be",
+                "label": "2nd Follow Up (e)",
+                "value": "6abe6c6b5a64721dcabfb4be"
+              }
+            ],
+            "winning_metrics": "reply"
+          }
+        }
+      ],
+      "raw_flowchart": {
+        "nodes": [
+          {
+            "id": "node-wmfi6uztty",
+            "sourcePosition": "top",
+            "type": "source_entry_list",
+            "draggable": false,
+            "group": "source",
+            "data": {
+              "label": "source_entry_list",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "lists": {
+                "label": "listLabel",
+                "value": [
+                  {
+                    "key": "1ef5f9cb-600a-4bd2-b7ec-42297c3ba96e",
+                    "label": "Scraped | USA - Canada",
+                    "value": "1ef5f9cb-600a-4bd2-b7ec-42297c3ba96e"
+                  }
+                ]
+              },
+              "contacts_count": 2493
+            },
+            "position": {
+              "x": 150,
+              "y": 80
+            },
+            "width": 250,
+            "height": 99,
+            "selected": true
+          },
+          {
+            "id": "node-v8zzxl1bw5k",
+            "sourcePosition": "top",
+            "type": "add_source_block",
+            "draggable": false,
+            "group": "source",
+            "position": {
+              "x": 425,
+              "y": 80
+            },
+            "width": 250,
+            "height": 99,
+            "selected": false
+          },
+          {
+            "id": "node-ke25jtt8bf",
+            "sourcePosition": "top",
+            "type": "source_connect",
+            "draggable": false,
+            "data": {
+              "first": true
+            },
+            "position": {
+              "x": 150,
+              "y": 279
+            },
+            "width": 250,
+            "height": 50
+          },
+          {
+            "id": "node-ss4334evh6",
+            "sourcePosition": "top",
+            "type": "email",
+            "group": "outreach",
+            "data": {
+              "label": "email",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "email_templates": {
+                "label": "Initiail 1",
+                "value": "6abe3ef350f35b62d6099eea"
+              },
+              "ai_distribution": true,
+              "enabled_az_testing": true,
+              "winning_metrics": "reply",
+              "email_template_variants": [
+                {
+                  "key": "6abe3ef350f35b62d6099eea",
+                  "label": "Initiail 1",
+                  "value": "6abe3ef350f35b62d6099eea"
+                },
+                {
+                  "key": "6abe3fff50f35b62d609ad3c",
+                  "label": "Initiail 2",
+                  "value": "6abe3fff50f35b62d609ad3c"
+                },
+                {
+                  "key": "6abe40bf50f35b62d609bbdf",
+                  "label": "Initiail 3",
+                  "value": "6abe40bf50f35b62d609bbdf"
+                },
+                {
+                  "key": "6abe419850f35b62d60a0054",
+                  "label": "Initiail 4",
+                  "value": "6abe419850f35b62d60a0054"
+                },
+                {
+                  "key": "6abe420550f35b62d60a1897",
+                  "label": "Initiail 5",
+                  "value": "6abe420550f35b62d60a1897"
+                },
+                {
+                  "key": "6abe428e50f35b62d60a2d3d",
+                  "label": "Initiail 6",
+                  "value": "6abe428e50f35b62d60a2d3d"
+                },
+                {
+                  "key": "6abe42d450f35b62d60a33e5",
+                  "label": "Initiail 7",
+                  "value": "6abe42d450f35b62d60a33e5"
+                },
+                {
+                  "key": "6abe4328ec09579a5d93c0b1",
+                  "label": "Initiail 8",
+                  "value": "6abe4328ec09579a5d93c0b1"
+                },
+                {
+                  "key": "6abe4349ec09579a5d93c3d8",
+                  "label": "Initiail 9",
+                  "value": "6abe4349ec09579a5d93c3d8"
+                },
+                {
+                  "key": "6abe43cfec09579a5d93d154",
+                  "label": "Initiail 10",
+                  "value": "6abe43cfec09579a5d93d154"
+                }
+              ]
+            },
+            "position": {
+              "x": 153,
+              "y": 429
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-k492ucdj0w",
+            "sourcePosition": "top",
+            "type": "delay",
+            "group": "condition",
+            "data": {
+              "label": "delay",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "delay": "1"
+            },
+            "position": {
+              "x": 153,
+              "y": 628
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-ih202fpe7x",
+            "sourcePosition": "top",
+            "type": "email",
+            "group": "outreach",
+            "data": {
+              "label": "email",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "send_as": {
+                "label": "RE: Follow Up",
+                "value": "followup"
+              },
+              "email_templates": {
+                "label": "1st Follow Up (a)",
+                "value": "6abe62485a64721dcabec879"
+              },
+              "ai_distribution": true,
+              "enabled_az_testing": true,
+              "winning_metrics": "reply",
+              "email_template_variants": [
+                {
+                  "key": "6abe62485a64721dcabec879",
+                  "label": "1st Follow Up (a)",
+                  "value": "6abe62485a64721dcabec879"
+                },
+                {
+                  "key": "6abe63dd5a64721dcabeea57",
+                  "label": "1st Follow Up (b)",
+                  "value": "6abe63dd5a64721dcabeea57"
+                },
+                {
+                  "key": "6abe64565a64721dcabef4c3",
+                  "label": "1st Follow Up (c)",
+                  "value": "6abe64565a64721dcabef4c3"
+                },
+                {
+                  "key": "6abe64ed5a64721dcabefcf3",
+                  "label": "1st Follow Up (d)",
+                  "value": "6abe64ed5a64721dcabefcf3"
+                },
+                {
+                  "key": "6abe65815a64721dcabf081a",
+                  "label": "1st Follow Up (e)",
+                  "value": "6abe65815a64721dcabf081a"
+                },
+                {
+                  "key": "6abe66245a64721dcabf139e",
+                  "label": "1st Follow Up (f)",
+                  "value": "6abe66245a64721dcabf139e"
+                },
+                {
+                  "key": "6abe67775a64721dcabf445b",
+                  "label": "1st Follow Up (g)",
+                  "value": "6abe67775a64721dcabf445b"
+                }
+              ]
+            },
+            "position": {
+              "x": 153,
+              "y": 827
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 134
+          },
+          {
+            "id": "node-3gidzyflcj",
+            "sourcePosition": "top",
+            "type": "delay",
+            "group": "condition",
+            "data": {
+              "label": "delay",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "delay": "1"
+            },
+            "position": {
+              "x": 153,
+              "y": 1061
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 99
+          },
+          {
+            "id": "node-wk5e94y2zt",
+            "sourcePosition": "top",
+            "type": "email",
+            "group": "outreach",
+            "data": {
+              "label": "email",
+              "test_group": 20,
+              "delay_unit": {
+                "label": "Days",
+                "value": "days"
+              },
+              "send_as": {
+                "label": "RE: Follow Up",
+                "value": "followup"
+              },
+              "email_templates": {
+                "label": "2nd Follow Up (a)",
+                "value": "6abe68495a64721dcabf56be"
+              },
+              "ai_distribution": true,
+              "enabled_az_testing": true,
+              "email_template_variants": [
+                {
+                  "key": "6abe68495a64721dcabf56be",
+                  "label": "2nd Follow Up (a)",
+                  "value": "6abe68495a64721dcabf56be"
+                },
+                {
+                  "key": "6abe69f95a64721dcabf7823",
+                  "label": "2nd Follow Up (b)",
+                  "value": "6abe69f95a64721dcabf7823"
+                },
+                {
+                  "key": "6abe6a905a64721dcabf81bf",
+                  "label": "2nd Follow Up (c)",
+                  "value": "6abe6a905a64721dcabf81bf"
+                },
+                {
+                  "key": "6abe6bb05a64721dcabfa58d",
+                  "label": "2nd Follow Up (d)",
+                  "value": "6abe6bb05a64721dcabfa58d"
+                },
+                {
+                  "key": "6abe6c6b5a64721dcabfb4be",
+                  "label": "2nd Follow Up (e)",
+                  "value": "6abe6c6b5a64721dcabfb4be"
+                }
+              ],
+              "winning_metrics": "reply"
+            },
+            "position": {
+              "x": 153,
+              "y": 1260
+            },
+            "draggable": true,
+            "width": 250,
+            "height": 134
+          },
+          {
+            "id": "node-dw98e50cxih",
+            "sourcePosition": "top",
+            "isSource": false,
+            "type": "add",
+            "position": {
+              "x": 255,
+              "y": 1494
+            },
+            "draggable": true,
+            "width": 40,
+            "height": 40
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge-iqu9ogifsng",
+            "animated": false,
+            "source": "node-ke25jtt8bf",
+            "sourceHandle": "",
+            "target": "node-ss4334evh6",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-la2mwijfuy",
+            "animated": false,
+            "source": "node-ss4334evh6",
+            "sourceHandle": "",
+            "target": "node-k492ucdj0w",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-61itm1zr1j",
+            "animated": false,
+            "source": "node-k492ucdj0w",
+            "sourceHandle": "",
+            "target": "node-ih202fpe7x",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-j12x9rzkls",
+            "animated": false,
+            "source": "node-ih202fpe7x",
+            "sourceHandle": "",
+            "target": "node-3gidzyflcj",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-rm8bo5k7tf",
+            "animated": false,
+            "source": "node-3gidzyflcj",
+            "sourceHandle": "",
+            "target": "node-wk5e94y2zt",
+            "type": "buttonedge"
+          },
+          {
+            "id": "edge-zsd05henya",
+            "animated": false,
+            "sourceHandle": "",
+            "source": "node-wk5e94y2zt",
+            "target": "node-dw98e50cxih",
+            "type": "default"
+          },
+          {
+            "id": "edge-gt9o90yoll",
+            "animated": false,
+            "source": "node-wmfi6uztty",
+            "sourceHandle": "",
+            "target": "node-ke25jtt8bf",
+            "type": "default"
+          }
+        ]
+      }
+    }
+  ],
+  "templates": {
+    "6abe3ef350f35b62d6099eea": {
+      "name": "Initiail 1",
+      "subject": "{{ Where is your Google traffic going? | Where's your Google traffic going? | Is your Google traffic going to waste? }}",
+      "body": "<p>{{ Hi | Hey | Hey there }},</p>\n<p>I'll keep this simple.</p>\n<p>We help businesses {{ improve their Google rankings | rank higher on Google | improve their visibility on Google }} so more people can {{ find them and contact them | find them and get in touch | discover them and reach out }}.</p>\n<p>Before we start, we agree on a {{ clear target | specific target | clear goal }} for the results we want to achieve within 90 days.</p>\n<p>If we don't reach that target, we give you {{ 100% of your money back | a full refund | all your money back }} and pay you another $1,000 ourselves.</p>\n<p>So you don't have to take all the risk.</p>\n<p>{{ Want to see if this could work for your business? | Want to see if this could work for you? | Would you like to see if this could work for your business? }}</p>\n<p>Reply &ldquo;yes&rdquo; and I'll check your website and send you a free audit showing where you may be losing Google traffic.</p>\n<p>{{ Best | Thanks | Regards }},<br>Farhan</p>\n<p>{{ Not interested? Just reply &ldquo;no&rdquo; and I'll close this out. | Not for you? Just reply &ldquo;no&rdquo; and I'll close this out. }}</p>",
+      "replies": 5,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 1",
+        "content": "<p>{{ Hi | Hey | Hey there }},</p>\n<p>I'll keep this simple.</p>\n<p>We help businesses {{ improve their Google rankings | rank higher on Google | improve their visibility on Google }} so more people can {{ find them and contact them | find them and get in touch | discover them and reach out }}.</p>\n<p>Before we start, we agree on a {{ clear target | specific target | clear goal }} for the results we want to achieve within 90 days.</p>\n<p>If we don't reach that target, we give you {{ 100% of your money back | a full refund | all your money back }} and pay you another $1,000 ourselves.</p>\n<p>So you don't have to take all the risk.</p>\n<p>{{ Want to see if this could work for your business? | Want to see if this could work for you? | Would you like to see if this could work for your business? }}</p>\n<p>Reply &ldquo;yes&rdquo; and I'll check your website and send you a free audit showing where you may be losing Google traffic.</p>\n<p>{{ Best | Thanks | Regards }},<br>Farhan</p>\n<p>{{ Not interested? Just reply &ldquo;no&rdquo; and I'll close this out. | Not for you? Just reply &ldquo;no&rdquo; and I'll close this out. }}</p>",
+        "subject_line": "{{ Where is your Google traffic going? | Where's your Google traffic going? | Is your Google traffic going to waste? }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 5,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:07:31.130Z",
+        "last_updated": "2026-10-01T11:33:57.199Z",
+        "id": "6abe3ef350f35b62d6099eea",
+        "cold_email_score": {
+          "score": 38,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 210,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 5,
+            "spam_word_count": 9,
+            "spam_categories": {
+              "Over Promise": 1,
+              "Urgency": 0,
+              "Shady": 5,
+              "Money": 3,
+              "Unnatural": 0
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe3fff50f35b62d609ad3c": {
+      "name": "Initiail 2",
+      "subject": "{{ What if the risk was all mine? | What if I took all the risk? | What if the risk was on me, not you? }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>I'm Farhan, and I do SEO. In simple terms, I help your website {{ appear higher on Google | rank higher on Google | show up higher on Google }} so more people can find your business.</p>\n<p>More people finding your website means more chances to get {{ inquiries, customers, and orders | inquiries, customers, or orders | customers, inquiries, and orders }}.</p>\n<p>Before we start, we agree on a specific number of {{ inquiries, traffic, or rankings | inquiries, visitors, or rankings | new inquiries, traffic, or rankings }} to reach within 90 days. If we miss it, you get {{ everything you paid back | all of your payment back | your full payment back }}, plus one thousand dollars from me personally.</p>\n<p>So I'm the one taking the chance, not you.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll check your website and send you an audit, on me, showing where you may be missing out on visitors from Google.</p>\n<p>Best,<br>Farhan</p>\n<p>{{ If this isn't for you, no worries. Just say \"no\" and I'll stop sending these. | Not for you? Just say \"no\" and I'll stop sending these. | If you're not interested, no worries. Just say \"no\" and I'll stop sending these. }}</p>",
+      "replies": 8,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 2",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>I'm Farhan, and I do SEO. In simple terms, I help your website {{ appear higher on Google | rank higher on Google | show up higher on Google }} so more people can find your business.</p>\n<p>More people finding your website means more chances to get {{ inquiries, customers, and orders | inquiries, customers, or orders | customers, inquiries, and orders }}.</p>\n<p>Before we start, we agree on a specific number of {{ inquiries, traffic, or rankings | inquiries, visitors, or rankings | new inquiries, traffic, or rankings }} to reach within 90 days. If we miss it, you get {{ everything you paid back | all of your payment back | your full payment back }}, plus one thousand dollars from me personally.</p>\n<p>So I'm the one taking the chance, not you.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll check your website and send you an audit, on me, showing where you may be missing out on visitors from Google.</p>\n<p>Best,<br>Farhan</p>\n<p>{{ If this isn't for you, no worries. Just say \"no\" and I'll stop sending these. | Not for you? Just say \"no\" and I'll stop sending these. | If you're not interested, no worries. Just say \"no\" and I'll stop sending these. }}</p>",
+        "subject_line": "{{ What if the risk was all mine? | What if I took all the risk? | What if the risk was on me, not you? }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 8,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:11:59.829Z",
+        "last_updated": "2026-10-01T11:39:42.041Z",
+        "id": "6abe3fff50f35b62d609ad3c",
+        "cold_email_score": {
+          "score": 45,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 212,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 1,
+            "spam_word_count": 11,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 4,
+              "Money": 4,
+              "Unnatural": 3
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe40bf50f35b62d609bbdf": {
+      "name": "Initiail 3",
+      "subject": "{{ Who gets the click when people search for you? | Who are your customers clicking instead? | Who's getting your customers on Google? }}",
+      "body": "<p>{{ Hi | Hey | Hey there }},</p>\n<p>When people search on Google for a service, they usually open one of the {{ first few results they see | first few results that come up | top few results they see }}. They rarely go through {{ page after page | page after page of results | multiple pages of results }}.</p>\n<p>If your website isn't near the top, those customers may {{ go to another business instead | choose another business instead | end up with another business instead }}.</p>\n<p>I help businesses {{ improve their Google ranking | rank higher on Google | appear higher on Google }} so more potential customers can {{ find them | find your business | discover their business }}.</p>\n<p>We agree on a specific number of {{ new enquiries | new inquiries | new customer inquiries }}. I work for 90 days to {{ reach that target | achieve that target | hit that target }}.</p>\n<p>If we miss it, you get {{ everything you paid back | all of your payment back | your full payment back }}, plus one thousand dollars from me personally.</p>\n<p>{{ You're not the one taking the chance. | The chance is all on me, not you. | I'm the one taking the chance, not you. }}</p>\n<p>Want to see where your website stands? Reply &ldquo;yes&rdquo; and I'll send you a website audit, on me.</p>\n<p>Farhan</p>\n<p>{{ If this isn't for you, just reply &ldquo;no&rdquo; and I'll stop emailing you. | If this isn't relevant, just reply &ldquo;no&rdquo; and I'll stop emailing you. }}</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 3",
+        "content": "<p>{{ Hi | Hey | Hey there }},</p>\n<p>When people search on Google for a service, they usually open one of the {{ first few results they see | first few results that come up | top few results they see }}. They rarely go through {{ page after page | page after page of results | multiple pages of results }}.</p>\n<p>If your website isn't near the top, those customers may {{ go to another business instead | choose another business instead | end up with another business instead }}.</p>\n<p>I help businesses {{ improve their Google ranking | rank higher on Google | appear higher on Google }} so more potential customers can {{ find them | find your business | discover their business }}.</p>\n<p>We agree on a specific number of {{ new enquiries | new inquiries | new customer inquiries }}. I work for 90 days to {{ reach that target | achieve that target | hit that target }}.</p>\n<p>If we miss it, you get {{ everything you paid back | all of your payment back | your full payment back }}, plus one thousand dollars from me personally.</p>\n<p>{{ You're not the one taking the chance. | The chance is all on me, not you. | I'm the one taking the chance, not you. }}</p>\n<p>Want to see where your website stands? Reply &ldquo;yes&rdquo; and I'll send you a website audit, on me.</p>\n<p>Farhan</p>\n<p>{{ If this isn't for you, just reply &ldquo;no&rdquo; and I'll stop emailing you. | If this isn't relevant, just reply &ldquo;no&rdquo; and I'll stop emailing you. }}</p>",
+        "subject_line": "{{ Who gets the click when people search for you? | Who are your customers clicking instead? | Who's getting your customers on Google? }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:15:11.713Z",
+        "last_updated": "2026-10-01T11:41:21.703Z",
+        "id": "6abe40bf50f35b62d609bbdf",
+        "cold_email_score": {
+          "score": 45,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 268,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 1,
+            "spam_word_count": 13,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 8,
+              "Money": 3,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe419850f35b62d60a0054": {
+      "name": "Initiail 4",
+      "subject": "{{ A or B? | Which is it, A or B? | Pick one: A or B }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} and get more people to their website.</p>\n<p>But more visitors only matter when they turn into {{ enquiries, customers, or orders | customers, enquiries, or orders | orders, customers, or enquiries }}.</p>\n<p>I can check your website and find where you may be {{ losing potential customers from Google | missing potential customers from Google | losing potential customers who come from Google }}.</p>\n<p>What would you rather see first?</p>\n<p>{{ A | A) }} Missed Google traffic<br>{{ B | B) }} Problems hurting your rankings</p>\n<p>Reply with {{ A or B | A or B }} and I&rsquo;ll send you an audit based on that.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>Farhan</p>\n<p>{{ Not interested? Just reply &ldquo;no&rdquo; and I&rsquo;ll stop reaching out. | Not for you? Just reply &ldquo;no&rdquo; and I&rsquo;ll stop reaching out. }}</p>",
+      "replies": 4,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 4",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} and get more people to their website.</p>\n<p>But more visitors only matter when they turn into {{ enquiries, customers, or orders | customers, enquiries, or orders | orders, customers, or enquiries }}.</p>\n<p>I can check your website and find where you may be {{ losing potential customers from Google | missing potential customers from Google | losing potential customers who come from Google }}.</p>\n<p>What would you rather see first?</p>\n<p>{{ A | A) }} Missed Google traffic<br>{{ B | B) }} Problems hurting your rankings</p>\n<p>Reply with {{ A or B | A or B }} and I&rsquo;ll send you an audit based on that.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>Farhan</p>\n<p>{{ Not interested? Just reply &ldquo;no&rdquo; and I&rsquo;ll stop reaching out. | Not for you? Just reply &ldquo;no&rdquo; and I&rsquo;ll stop reaching out. }}</p>",
+        "subject_line": "{{ A or B? | Which is it, A or B? | Pick one: A or B }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 4,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:18:48.269Z",
+        "last_updated": "2026-10-01T11:42:27.229Z",
+        "id": "6abe419850f35b62d60a0054",
+        "cold_email_score": {
+          "score": 38,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 186,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 7,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 1,
+              "Shady": 3,
+              "Money": 1,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe420550f35b62d60a1897": {
+      "name": "Initiail 5",
+      "subject": "{{ You don't know me, so I'll make this easy | We've never met, so I'll make this easy | You don't know me, so let me make this easy }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>You don't know me, so I'll {{ keep this simple | keep this short | keep things simple }}.</p>\n<p>I'm Farhan, and I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} and get more traffic to their websites using SEO.</p>\n<p>More people finding your website means more chances to get {{ inquiries, customers, and orders | customers, inquiries, and orders | inquiries, orders, and customers }}.</p>\n<p>Before we start, we agree on a specific number of {{ inquiries, traffic, or rankings | inquiries, visitors, or rankings | traffic, inquiries, or rankings }} to get within 90 days. If we miss it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>So I'm the one taking the chance, not you.</p>\n<p>Reply &ldquo;yes&rdquo; and I'll check your website and send you an audit, on me, showing where you may be {{ losing Google traffic and inquiries | losing traffic and inquiries from Google | missing Google traffic and inquiries }}.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I'll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I'll stop emailing you. }}</p>",
+      "replies": 3,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 5",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>You don't know me, so I'll {{ keep this simple | keep this short | keep things simple }}.</p>\n<p>I'm Farhan, and I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} and get more traffic to their websites using SEO.</p>\n<p>More people finding your website means more chances to get {{ inquiries, customers, and orders | customers, inquiries, and orders | inquiries, orders, and customers }}.</p>\n<p>Before we start, we agree on a specific number of {{ inquiries, traffic, or rankings | inquiries, visitors, or rankings | traffic, inquiries, or rankings }} to get within 90 days. If we miss it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>So I'm the one taking the chance, not you.</p>\n<p>Reply &ldquo;yes&rdquo; and I'll check your website and send you an audit, on me, showing where you may be {{ losing Google traffic and inquiries | losing traffic and inquiries from Google | missing Google traffic and inquiries }}.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I'll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I'll stop emailing you. }}</p>",
+        "subject_line": "{{ You don't know me, so I'll make this easy | We've never met, so I'll make this easy | You don't know me, so let me make this easy }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 3,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:20:37.879Z",
+        "last_updated": "2026-10-01T11:43:21.749Z",
+        "id": "6abe420550f35b62d60a1897",
+        "cold_email_score": {
+          "score": 45,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 206,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 2,
+            "spam_word_count": 13,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 9,
+              "Money": 2,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe428e50f35b62d60a2d3d": {
+      "name": "Initiail 6",
+      "subject": "{{ 3 questions you're probably asking | Three questions you'll have after reading this | The three questions you're about to ask }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>People search Google when they need a product or service. Businesses at the top usually get the most {{ visits and traffic | traffic and visits | visits and website traffic }}, which {{ means more inquiries and orders | can mean more inquiries and orders | means more chances for inquiries and orders }}.</p>\n<p>Who am I? Farhan. I do SEO and help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }}.</p>\n<p>What do you get? We agree on a clear target for {{ traffic, rankings, or inquiries | rankings, traffic, or inquiries | inquiries, traffic, or rankings }}, then I work toward it for 90 days.</p>\n<p>What if we miss it? You get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Want to see where you stand? Reply &ldquo;yes&rdquo; and I&rsquo;ll send you an audit, on me, showing what may be {{ holding your website back | keeping your website from performing better | holding your website back on Google }}.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 6",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>People search Google when they need a product or service. Businesses at the top usually get the most {{ visits and traffic | traffic and visits | visits and website traffic }}, which {{ means more inquiries and orders | can mean more inquiries and orders | means more chances for inquiries and orders }}.</p>\n<p>Who am I? Farhan. I do SEO and help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }}.</p>\n<p>What do you get? We agree on a clear target for {{ traffic, rankings, or inquiries | rankings, traffic, or inquiries | inquiries, traffic, or rankings }}, then I work toward it for 90 days.</p>\n<p>What if we miss it? You get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Want to see where you stand? Reply &ldquo;yes&rdquo; and I&rsquo;ll send you an audit, on me, showing what may be {{ holding your website back | keeping your website from performing better | holding your website back on Google }}.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+        "subject_line": "{{ 3 questions you're probably asking | Three questions you'll have after reading this | The three questions you're about to ask }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:22:54.338Z",
+        "last_updated": "2026-10-01T11:43:59.996Z",
+        "id": "6abe428e50f35b62d60a2d3d",
+        "cold_email_score": {
+          "score": 38,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 205,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 6,
+            "spam_word_count": 9,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 6,
+              "Money": 1,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe42d450f35b62d60a33e5": {
+      "name": "Initiail 7",
+      "subject": "{{ Would this help your business? | A yes or no question | Yes or no: would this help? }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>If Google brought you more customers, would that {{ help your business | be helpful for your business | make a difference to your business }}?</p>\n<p>I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} so more people find their website, bringing more {{ traffic, inquiries, and orders | inquiries, traffic, and orders | orders, inquiries, and traffic }}.</p>\n<p>I can first check your website, on me, and show you where you may be {{ losing Google traffic | missing Google traffic | losing traffic from Google }} and what can be improved.</p>\n<p>If we work together, we agree on a clear number of new inquiries for 90 days.</p>\n<p>If we miss that target, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send you the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+      "replies": 7,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 7",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>If Google brought you more customers, would that {{ help your business | be helpful for your business | make a difference to your business }}?</p>\n<p>I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} so more people find their website, bringing more {{ traffic, inquiries, and orders | inquiries, traffic, and orders | orders, inquiries, and traffic }}.</p>\n<p>I can first check your website, on me, and show you where you may be {{ losing Google traffic | missing Google traffic | losing traffic from Google }} and what can be improved.</p>\n<p>If we work together, we agree on a clear number of new inquiries for 90 days.</p>\n<p>If we miss that target, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send you the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+        "subject_line": "{{ Would this help your business? | A yes or no question | Yes or no: would this help? }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 7,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:24:04.376Z",
+        "last_updated": "2026-10-01T11:44:51.338Z",
+        "id": "6abe42d450f35b62d60a33e5",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 179,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 11,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 7,
+              "Money": 2,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe4328ec09579a5d93c0b1": {
+      "name": "Initiail 8",
+      "subject": "{{ Is your website leaking customers? | Is your site leaking customers? | Is your website losing customers? }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>Your website may already get visitors from Google. The question is whether those visitors are turning into {{ customers, inquiries, or orders | inquiries, customers, or orders | orders, customers, or inquiries }}.</p>\n<p>I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} and get more of the right people to their website.</p>\n<p>I can check your website and show you where you may be {{ losing potential customers | missing potential customers | losing potential customers from Google }} and what can be improved.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>If we work together, we agree on a clear target for {{ customers, inquiries, or orders | inquiries, customers, or orders | orders, customers, or inquiries }} within 90 days.</p>\n<p>If we miss it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 8",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>Your website may already get visitors from Google. The question is whether those visitors are turning into {{ customers, inquiries, or orders | inquiries, customers, or orders | orders, customers, or inquiries }}.</p>\n<p>I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} and get more of the right people to their website.</p>\n<p>I can check your website and show you where you may be {{ losing potential customers | missing potential customers | losing potential customers from Google }} and what can be improved.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>If we work together, we agree on a clear target for {{ customers, inquiries, or orders | inquiries, customers, or orders | orders, customers, or inquiries }} within 90 days.</p>\n<p>If we miss it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+        "subject_line": "{{ Is your website leaking customers? | Is your site leaking customers? | Is your website losing customers? }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:25:28.826Z",
+        "last_updated": "2026-10-01T11:45:53.164Z",
+        "id": "6abe4328ec09579a5d93c0b1",
+        "cold_email_score": {
+          "score": 48,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 210,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 2,
+            "spam_word_count": 9,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 5,
+              "Money": 2,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe4349ec09579a5d93c3d8": {
+      "name": "Initiail 9",
+      "subject": "{{ What if your website got more enquiries? | What if Google sent you more enquiries? | What if you got more enquiries from Google? }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>What if your website could bring you more enquiries from Google?</p>\n<p>I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} so more people find them and become {{ enquiries or customers | customers or enquiries | enquiries and customers }}.</p>\n<p>I can check your website and show you what may be {{ stopping you from getting more from Google | keeping you from getting more from Google | holding you back from getting more from Google }}.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>If we work together, we agree on a clear target for {{ new enquiries | new enquiries from Google }} within 90 days.</p>\n<p>If we miss it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+      "replies": 7,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 9",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>What if your website could bring you more enquiries from Google?</p>\n<p>I do SEO. I help businesses {{ rank higher on Google | get higher on Google | improve their Google rankings }} so more people find them and become {{ enquiries or customers | customers or enquiries | enquiries and customers }}.</p>\n<p>I can check your website and show you what may be {{ stopping you from getting more from Google | keeping you from getting more from Google | holding you back from getting more from Google }}.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>If we work together, we agree on a clear target for {{ new enquiries | new enquiries from Google }} within 90 days.</p>\n<p>If we miss it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+        "subject_line": "{{ What if your website got more enquiries? | What if Google sent you more enquiries? | What if you got more enquiries from Google? }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 7,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:26:01.153Z",
+        "last_updated": "2026-10-01T11:46:18.651Z",
+        "id": "6abe4349ec09579a5d93c3d8",
+        "cold_email_score": {
+          "score": 38,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 196,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 9,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 5,
+              "Money": 2,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe43cfec09579a5d93d154": {
+      "name": "Initiail 10",
+      "subject": "{{ Not another “you need SEO” email | I won't tell you that you need SEO | I'm not going to tell you to get SEO }}",
+      "body": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>I&rsquo;m not going to tell you that you &ldquo;need SEO.&rdquo;</p>\n<p>Instead, I want to show you how many people may be searching for what you sell but {{ never finding your business | not finding your business | are not finding your business }}.</p>\n<p>I&rsquo;ll check your website, find the gaps, and send you an SEO audit showing what I&rsquo;d {{ fix first | look at first | improve first }}.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>If we work together, we agree on a clear target for new inquiries within 90 days.</p>\n<p>If I don&rsquo;t hit it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+      "replies": 6,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "Initiail 10",
+        "content": "<p>{{ Hey there | Hi | Hey }},</p>\n<p>I&rsquo;m not going to tell you that you &ldquo;need SEO.&rdquo;</p>\n<p>Instead, I want to show you how many people may be searching for what you sell but {{ never finding your business | not finding your business | are not finding your business }}.</p>\n<p>I&rsquo;ll check your website, find the gaps, and send you an SEO audit showing what I&rsquo;d {{ fix first | look at first | improve first }}.</p>\n<p>{{ It's on me, and there's nothing to sign. | It's on me, with nothing to sign. | It's all on me, and there's nothing to sign. }}</p>\n<p>If we work together, we agree on a clear target for new inquiries within 90 days.</p>\n<p>If I don&rsquo;t hit it, you get everything you paid back, plus one thousand dollars from me personally.</p>\n<p>Reply &ldquo;yes&rdquo; and I&rsquo;ll send the audit.</p>\n<p>Farhan</p>\n<p>{{ Not interested? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. | Not for you? Reply &ldquo;no&rdquo; and I&rsquo;ll stop emailing you. }}</p>",
+        "subject_line": "{{ Not another “you need SEO” email | I won't tell you that you need SEO | I'm not going to tell you to get SEO }}",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 6,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T11:28:15.707Z",
+        "last_updated": "2026-10-01T11:46:37.302Z",
+        "id": "6abe43cfec09579a5d93d154",
+        "cold_email_score": {
+          "score": 48,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 171,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 2,
+            "spam_word_count": 8,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 3,
+              "Money": 2,
+              "Unnatural": 3
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe62485a64721dcabec879": {
+      "name": "1st Follow Up (a)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I know you are busy, so I will be quick | I will keep this short | Just a quick note }}.</p>\n<p>{{ Do you still want me to check your website? | Should I still take a quick look at your website? | Did you want that quick review of your website? }}</p>\n<p>{{ You do not have to do anything | It takes no work from you | You just sit back }}. {{ I will just find out why other businesses get your calls | I will find out why Google hides your site | I will find out why people go to other businesses instead of yours }}.</p>\n<p>{{ Then I will send a short note about it | Then I will send a quick list of what to fix | Then I will send a simple summary }}. {{ There is no catch | You do not have to buy anything | You do not owe me anything }}.</p>\n<p>{{ Just reply \"yes\" to see it | Reply with \"yes\" and I will send it | Type \"yes\" if you want me to do it }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If you do not want this, just reply \"no\" | Or reply \"no\" and I will stop emailing you | Reply \"no\" and I will leave you alone }}.</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (a)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I know you are busy, so I will be quick | I will keep this short | Just a quick note }}.</p>\n<p>{{ Do you still want me to check your website? | Should I still take a quick look at your website? | Did you want that quick review of your website? }}</p>\n<p>{{ You do not have to do anything | It takes no work from you | You just sit back }}. {{ I will just find out why other businesses get your calls | I will find out why Google hides your site | I will find out why people go to other businesses instead of yours }}.</p>\n<p>{{ Then I will send a short note about it | Then I will send a quick list of what to fix | Then I will send a simple summary }}. {{ There is no catch | You do not have to buy anything | You do not owe me anything }}.</p>\n<p>{{ Just reply \"yes\" to see it | Reply with \"yes\" and I will send it | Type \"yes\" if you want me to do it }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If you do not want this, just reply \"no\" | Or reply \"no\" and I will stop emailing you | Reply \"no\" and I will leave you alone }}.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T13:38:16.418Z",
+        "last_updated": "2026-10-01T13:41:42.782Z",
+        "id": "6abe62485a64721dcabec879",
+        "cold_email_score": {
+          "score": 38,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 238,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 6,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 1,
+              "Shady": 2,
+              "Money": 1,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe63dd5a64721dcabeea57": {
+      "name": "1st Follow Up (b)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ When you read my last email, you probably had one big question | You might have one big question about my last email | You might be wondering something about my last message }}:</p>\n<p>\"{{ Why would he pay me $1,000 if he fails? What is the trick? | Why would he offer $1,000 out of pocket? Is there a catch? | Why give away $1,000 if things go wrong? What is the secret? }}\"</p>\n<p>{{ The answer is easy | The reason is simple | It is very simple }}. {{ I do not guess | I do not play guessing games | I never guess }}.</p>\n<p>{{ I only team up with you if I know for sure I can get you more calls | I only work with you after I know I can bring you more customers | I only help if I am sure I can make your phone ring }}.</p>\n<p>{{ If I look at your site and cannot help, I will tell you right away | If I check your website and see I cannot hit the goal, I will say so | If I do not think I can win for you, I will tell you the truth }}.</p>\n<p>{{ You want to know things will work before you pay | You want to feel safe when growing your business | You want to be sure before you spend money }}. {{ That is what I give you | That is exactly what I do | I give you that safety }}.</p>\n<p>{{ Reply \"yes\" and I will check your website at no cost | Just reply \"yes\" and I will look at your site for you | Type \"yes\" and I will do a quick review of your website }}. {{ We will see if you are missing out on customers | I will see if you are losing phone calls | We will find out if people are going to other businesses instead }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If you have enough customers right now, just reply \"no\" | If you do not need more phone calls, reply \"no\" | Just reply \"no\" if you are fully booked }}.</p>",
+      "replies": 35,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (b)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ When you read my last email, you probably had one big question | You might have one big question about my last email | You might be wondering something about my last message }}:</p>\n<p>\"{{ Why would he pay me $1,000 if he fails? What is the trick? | Why would he offer $1,000 out of pocket? Is there a catch? | Why give away $1,000 if things go wrong? What is the secret? }}\"</p>\n<p>{{ The answer is easy | The reason is simple | It is very simple }}. {{ I do not guess | I do not play guessing games | I never guess }}.</p>\n<p>{{ I only team up with you if I know for sure I can get you more calls | I only work with you after I know I can bring you more customers | I only help if I am sure I can make your phone ring }}.</p>\n<p>{{ If I look at your site and cannot help, I will tell you right away | If I check your website and see I cannot hit the goal, I will say so | If I do not think I can win for you, I will tell you the truth }}.</p>\n<p>{{ You want to know things will work before you pay | You want to feel safe when growing your business | You want to be sure before you spend money }}. {{ That is what I give you | That is exactly what I do | I give you that safety }}.</p>\n<p>{{ Reply \"yes\" and I will check your website at no cost | Just reply \"yes\" and I will look at your site for you | Type \"yes\" and I will do a quick review of your website }}. {{ We will see if you are missing out on customers | I will see if you are losing phone calls | We will find out if people are going to other businesses instead }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If you have enough customers right now, just reply \"no\" | If you do not need more phone calls, reply \"no\" | Just reply \"no\" if you are fully booked }}.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 35,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T13:45:01.314Z",
+        "last_updated": "2026-10-01T13:47:43.225Z",
+        "id": "6abe63dd5a64721dcabeea57",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 383,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 6,
+            "spam_word_count": 15,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 3,
+              "Shady": 6,
+              "Money": 5,
+              "Unnatural": 1
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe64565a64721dcabef4c3": {
+      "name": "1st Follow Up (c)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I am just moving this to the top of your inbox | Just a quick reminder about my last note | I am just putting this at the top of your list }}.</p>\n<p>{{ I know most marketing emails are all talk | I know you get a lot of emails that make big claims | I know most people just talk and do little }}. {{ That is why I risk my own money | So I put my own cash on the line instead | That is why my own money is on the line }}.</p>\n<p>{{ If we team up and miss our 90-day goal, you get your payment back plus $1,000 | If we set a 3-month goal and fail, I return your payment and add $1,000 | If we do not hit our target in 90 days, you get your money back and $1,000 from my pocket }}.</p>\n<p>{{ Can I send you a quick check of your website at no cost? | Would it be okay if I send a quick review of your site? | Do you want me to look at your website and send a short note? }} {{ This will show you exactly what to fix | This will show you what is missing right now | This shows how you are doing today }}.</p>\n<p>{{ Just reply \"yes\" and I will start | Type \"yes\" and I will get to work | Reply with \"yes\" and I will check it }}.</p>\n<p>{{ Thanks | Best | Talk soon }},&nbsp;<br>Farhan</p>\n<p>{{ If you do not want this, just reply \"no\" | Reply \"no\" and I will stop emailing you | Not a good fit? Just reply \"no\" }}.</p>",
+      "replies": 1,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (c)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I am just moving this to the top of your inbox | Just a quick reminder about my last note | I am just putting this at the top of your list }}.</p>\n<p>{{ I know most marketing emails are all talk | I know you get a lot of emails that make big claims | I know most people just talk and do little }}. {{ That is why I risk my own money | So I put my own cash on the line instead | That is why my own money is on the line }}.</p>\n<p>{{ If we team up and miss our 90-day goal, you get your payment back plus $1,000 | If we set a 3-month goal and fail, I return your payment and add $1,000 | If we do not hit our target in 90 days, you get your money back and $1,000 from my pocket }}.</p>\n<p>{{ Can I send you a quick check of your website at no cost? | Would it be okay if I send a quick review of your site? | Do you want me to look at your website and send a short note? }} {{ This will show you exactly what to fix | This will show you what is missing right now | This shows how you are doing today }}.</p>\n<p>{{ Just reply \"yes\" and I will start | Type \"yes\" and I will get to work | Reply with \"yes\" and I will check it }}.</p>\n<p>{{ Thanks | Best | Talk soon }},&nbsp;<br>Farhan</p>\n<p>{{ If you do not want this, just reply \"no\" | Reply \"no\" and I will stop emailing you | Not a good fit? Just reply \"no\" }}.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 1,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T13:47:02.057Z",
+        "last_updated": "2026-10-01T13:47:02.058Z",
+        "id": "6abe64565a64721dcabef4c3",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 297,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 4,
+            "spam_word_count": 19,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 2,
+              "Shady": 7,
+              "Money": 8,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe64ed5a64721dcabefcf3": {
+      "name": "1st Follow Up (d)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ Before I ask you to choose anything | You do not have to decide right now | Before you make any choices }},</p>\n<p>{{ my team can check your website and tell you what we see | we can look at your website and send you a short note | my team can do a quick check of your site and show you what is wrong }}.</p>\n<p>{{ We will show you the best ways to get more calls and what to fix first | We will show you how to get more customers and what to do first | We will point out the easiest ways to get more people to call you }}.</p>\n<p>{{ You pay nothing, you do not have to buy anything, and you keep the notes | There is no charge, you owe us nothing, and the list is yours to keep | It takes zero dollars, there is no catch, and you keep what we find }}.</p>\n<p>{{ If you like it, we can talk about our 90-day promise | If it looks good, we can talk about our 3-month goal | If it helps, we can talk about how we put our money on the line for 90 days }}.</p>\n<p>{{ Should my team take a quick look? | Want us to check it out for you? | Should we start looking? }}</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If this is not for you, just reply \"no\" | Reply \"no\" and I will stop emailing you | Just reply \"no\" and I will leave you alone }}.</p>",
+      "replies": 0,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (d)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ Before I ask you to choose anything | You do not have to decide right now | Before you make any choices }},</p>\n<p>{{ my team can check your website and tell you what we see | we can look at your website and send you a short note | my team can do a quick check of your site and show you what is wrong }}.</p>\n<p>{{ We will show you the best ways to get more calls and what to fix first | We will show you how to get more customers and what to do first | We will point out the easiest ways to get more people to call you }}.</p>\n<p>{{ You pay nothing, you do not have to buy anything, and you keep the notes | There is no charge, you owe us nothing, and the list is yours to keep | It takes zero dollars, there is no catch, and you keep what we find }}.</p>\n<p>{{ If you like it, we can talk about our 90-day promise | If it looks good, we can talk about our 3-month goal | If it helps, we can talk about how we put our money on the line for 90 days }}.</p>\n<p>{{ Should my team take a quick look? | Want us to check it out for you? | Should we start looking? }}</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If this is not for you, just reply \"no\" | Reply \"no\" and I will stop emailing you | Just reply \"no\" and I will leave you alone }}.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 0,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T13:49:33.029Z",
+        "last_updated": "2026-10-01T13:49:33.030Z",
+        "id": "6abe64ed5a64721dcabefcf3",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 277,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 14,
+            "spam_categories": {
+              "Over Promise": 1,
+              "Urgency": 3,
+              "Shady": 4,
+              "Money": 4,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe65815a64721dcabf081a": {
+      "name": "1st Follow Up (e)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ You might have missed my last note | This might have gotten lost | I am just moving this up in your list }}.</p>\n<p>{{ I just have one quick question | Just one short question | Let me just ask you this }}:</p>\n<p>{{ Do you need more phone calls right now? | would more qualified inquiries actually be useful right now? | Do you want more people to call your business today? }}</p>\n<p>{{ A simple yes or no is fine | Either answer is fine with me | A quick yes or no works for me }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>Not&nbsp;relevant, just say &ldquo;no&rdquo; and I&rsquo;ll stop emailing you.</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (e)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ You might have missed my last note | This might have gotten lost | I am just moving this up in your list }}.</p>\n<p>{{ I just have one quick question | Just one short question | Let me just ask you this }}:</p>\n<p>{{ Do you need more phone calls right now? | would more qualified inquiries actually be useful right now? | Do you want more people to call your business today? }}</p>\n<p>{{ A simple yes or no is fine | Either answer is fine with me | A quick yes or no works for me }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>Not&nbsp;relevant, just say &ldquo;no&rdquo; and I&rsquo;ll stop emailing you.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T13:52:01.334Z",
+        "last_updated": "2026-10-01T13:52:01.335Z",
+        "id": "6abe65815a64721dcabf081a",
+        "cold_email_score": {
+          "score": 51,
+          "rating": "Poor",
+          "details": {
+            "word_count": 127,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 4,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 1,
+              "Shady": 2,
+              "Money": 0,
+              "Unnatural": 1
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe66245a64721dcabf139e": {
+      "name": "1st Follow Up (f)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I can also look at your website next to 2 or 3 other businesses in your town | I can check your site against 2 or 3 guys you compete with | I can look at your website and compare it to 2 or 3 of your rivals }}.</p>\n<p>{{ I will see why Google likes them more and why you are losing phone calls | I will find out what they do right and what your site is missing | I will check why they show up first and get your customers }}.</p>\n<p>{{ I will send you this list at no cost, even if we never team up | I will send you my notes and you pay nothing, even if we never talk again | I will send you what I find and it costs zero dollars, even if we do not work together }}.</p>\n<p>{{ Do you want me to do this? | Should I take a look? | Want me to send this over? }}</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If you do not want this, just reply \"no\" | Reply \"no\" and I will stop emailing you | Just reply \"no\" and I will leave you alone }}.</p>",
+      "replies": 0,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (f)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I can also look at your website next to 2 or 3 other businesses in your town | I can check your site against 2 or 3 guys you compete with | I can look at your website and compare it to 2 or 3 of your rivals }}.</p>\n<p>{{ I will see why Google likes them more and why you are losing phone calls | I will find out what they do right and what your site is missing | I will check why they show up first and get your customers }}.</p>\n<p>{{ I will send you this list at no cost, even if we never team up | I will send you my notes and you pay nothing, even if we never talk again | I will send you what I find and it costs zero dollars, even if we do not work together }}.</p>\n<p>{{ Do you want me to do this? | Should I take a look? | Want me to send this over? }}</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>\n<p>{{ If you do not want this, just reply \"no\" | Reply \"no\" and I will stop emailing you | Just reply \"no\" and I will leave you alone }}.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 0,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T13:54:44.480Z",
+        "last_updated": "2026-10-01T13:54:44.480Z",
+        "id": "6abe66245a64721dcabf139e",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 217,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 11,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 4,
+              "Money": 3,
+              "Unnatural": 4
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe67775a64721dcabf445b": {
+      "name": "1st Follow Up (g)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ Just following up. We can start with a quick check of your website at no cost | Just checking in. If you want, we can do a simple review of your site for zero dollars | Just circling back. We can look at your website and charge you nothing }}.</p>\n<p>{{ We will show you where you are losing customers. You keep the notes and owe us nothing | We will point out the easiest ways to get more calls. There is no catch and you do not have to buy anything | We will show you what is missing right now. You keep the list and it costs zero dollars }}.</p>\n<p>{{ If we ever team up, we back our work with a 90-day target for new calls | If we work together later, we set a strict 3-month goal to get your phone ringing | If you ever hire us, we promise to hit a clear target in 90 days or return your payment }}.</p>\n<p>{{ Should I put one together for you? | Want me to make one for your site? | Should I run this check for you? }}</p>\n<p>{{ Thanks | Best | Talk soon }},&nbsp;<br>Farhan</p>\n<p>{{ Not interested? Just reply \"no\" | Reply \"no\" and I will stop emailing you | Just reply \"no\" and I will leave you alone }}.</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "1st Follow Up (g)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ Just following up. We can start with a quick check of your website at no cost | Just checking in. If you want, we can do a simple review of your site for zero dollars | Just circling back. We can look at your website and charge you nothing }}.</p>\n<p>{{ We will show you where you are losing customers. You keep the notes and owe us nothing | We will point out the easiest ways to get more calls. There is no catch and you do not have to buy anything | We will show you what is missing right now. You keep the list and it costs zero dollars }}.</p>\n<p>{{ If we ever team up, we back our work with a 90-day target for new calls | If we work together later, we set a strict 3-month goal to get your phone ringing | If you ever hire us, we promise to hit a clear target in 90 days or return your payment }}.</p>\n<p>{{ Should I put one together for you? | Want me to make one for your site? | Should I run this check for you? }}</p>\n<p>{{ Thanks | Best | Talk soon }},&nbsp;<br>Farhan</p>\n<p>{{ Not interested? Just reply \"no\" | Reply \"no\" and I will stop emailing you | Just reply \"no\" and I will leave you alone }}.</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T14:00:23.023Z",
+        "last_updated": "2026-10-01T14:00:36.911Z",
+        "id": "6abe67775a64721dcabf445b",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 236,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 4,
+            "spam_word_count": 16,
+            "spam_categories": {
+              "Over Promise": 1,
+              "Urgency": 1,
+              "Shady": 5,
+              "Money": 7,
+              "Unnatural": 2
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe68495a64721dcabf56be": {
+      "name": "2nd Follow Up (a)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I have not heard back, so I guess getting more calls is not a big deal right now | Since we have not talked, I assume you have enough customers right now | I am guessing you are too busy to worry about your website right now }}. {{ I will stop emailing you after this | This is my last note to you | I will leave you alone after this }}.</p>\n<p>{{ Just a quick reminder | Just so you know | Before I go, remember this }}: {{ I do not just sell marketing | I do things differently | I do not just ask for money }}. {{ We set a 90-day goal for new calls | We pick a 3-month target for new customers | We agree on a 90-day goal for your phone to ring }}.</p>\n<p>{{ If I fail, I return your payment plus $1,000 of my own money | If I miss it, you get your money back and $1,000 extra | If we do not hit it, I give your payment back and add $1,000 }}.</p>\n<p>{{ If you want me to do a quick check of your site to see what you are missing, just reply \"yes\" | Reply \"yes\" if you want me to look at your website and show you how to get more calls | If you want a quick review of your website for zero dollars, type \"yes\" }}. {{ You do not have to do any work | It takes no work from you | You can just sit back }}.</p>\n<p>{{ If not, take care and have a great year | If you do not need this, I wish you the best | If you are good for now, take care }}!<br>Farhan</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "2nd Follow Up (a)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I have not heard back, so I guess getting more calls is not a big deal right now | Since we have not talked, I assume you have enough customers right now | I am guessing you are too busy to worry about your website right now }}. {{ I will stop emailing you after this | This is my last note to you | I will leave you alone after this }}.</p>\n<p>{{ Just a quick reminder | Just so you know | Before I go, remember this }}: {{ I do not just sell marketing | I do things differently | I do not just ask for money }}. {{ We set a 90-day goal for new calls | We pick a 3-month target for new customers | We agree on a 90-day goal for your phone to ring }}.</p>\n<p>{{ If I fail, I return your payment plus $1,000 of my own money | If I miss it, you get your money back and $1,000 extra | If we do not hit it, I give your payment back and add $1,000 }}.</p>\n<p>{{ If you want me to do a quick check of your site to see what you are missing, just reply \"yes\" | Reply \"yes\" if you want me to look at your website and show you how to get more calls | If you want a quick review of your website for zero dollars, type \"yes\" }}. {{ You do not have to do any work | It takes no work from you | You can just sit back }}.</p>\n<p>{{ If not, take care and have a great year | If you do not need this, I wish you the best | If you are good for now, take care }}!<br>Farhan</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T14:03:53.487Z",
+        "last_updated": "2026-10-01T14:04:11.351Z",
+        "id": "6abe68495a64721dcabf56be",
+        "cold_email_score": {
+          "score": 37,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 306,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 0,
+            "spam_word_count": 20,
+            "spam_categories": {
+              "Over Promise": 1,
+              "Urgency": 3,
+              "Shady": 6,
+              "Money": 7,
+              "Unnatural": 3
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe69f95a64721dcabf7823": {
+      "name": "2nd Follow Up (b)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ Should I leave this alone? | Should I stop emailing you? | Should I cross you off my list? }}</p>\n<p>{{ I emailed you because there are easy ways to get more customers from Google | I reached out because I see simple ways for you to get more phone calls | I wrote to you because you could easily get more people calling you from Google }}.</p>\n<p>{{ But I do not want to bug you if this is not important right now | But I will stop bothering you if you are too busy right now | But I will leave you alone if you have enough work right now }}.</p>\n<p>{{ If you want, I can still do a quick check of your website for zero dollars and send you my notes | If you want, I can still take a short look at your site and show you what I find at no cost | If you like, I can still review your website and send it to you, and you pay nothing }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>",
+      "replies": 49,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "2nd Follow Up (b)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ Should I leave this alone? | Should I stop emailing you? | Should I cross you off my list? }}</p>\n<p>{{ I emailed you because there are easy ways to get more customers from Google | I reached out because I see simple ways for you to get more phone calls | I wrote to you because you could easily get more people calling you from Google }}.</p>\n<p>{{ But I do not want to bug you if this is not important right now | But I will stop bothering you if you are too busy right now | But I will leave you alone if you have enough work right now }}.</p>\n<p>{{ If you want, I can still do a quick check of your website for zero dollars and send you my notes | If you want, I can still take a short look at your site and show you what I find at no cost | If you like, I can still review your website and send it to you, and you pay nothing }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 49,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T14:11:05.477Z",
+        "last_updated": "2026-10-01T14:11:05.478Z",
+        "id": "6abe69f95a64721dcabf7823",
+        "cold_email_score": {
+          "score": 35,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 195,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 16,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 3,
+              "Shady": 6,
+              "Money": 3,
+              "Unnatural": 4
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe6a905a64721dcabf81bf": {
+      "name": "2nd Follow Up (c)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ No answer is an answer, but I want to be sure | Getting no reply tells me a lot, but I just want to check one last time | I know silence means you are busy, but I want to ask just in case, last time }}.</p>\n<p>{{ Is this a bad time, or should I talk to someone else? | Are you just really busy, or did I email the wrong person? | Is this a bad week, or is someone else in charge of this? }}</p>\n<p>{{ If it is not you, just let me know who to ask | If someone else handles this, please tell me their name | If I should email someone else, just point me to them }}.</p>\n<p>{{ Any answer helps me out | Just a quick reply helps me a lot | Either way, just letting me know helps }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>",
+      "replies": 1,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "2nd Follow Up (c)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ No answer is an answer, but I want to be sure | Getting no reply tells me a lot, but I just want to check one last time | I know silence means you are busy, but I want to ask just in case, last time }}.</p>\n<p>{{ Is this a bad time, or should I talk to someone else? | Are you just really busy, or did I email the wrong person? | Is this a bad week, or is someone else in charge of this? }}</p>\n<p>{{ If it is not you, just let me know who to ask | If someone else handles this, please tell me their name | If I should email someone else, just point me to them }}.</p>\n<p>{{ Any answer helps me out | Just a quick reply helps me a lot | Either way, just letting me know helps }}.</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 1,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T14:13:36.275Z",
+        "last_updated": "2026-10-01T14:13:36.275Z",
+        "id": "6abe6a905a64721dcabf81bf",
+        "cold_email_score": {
+          "score": 41,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 166,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 4,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 3,
+              "Money": 1,
+              "Unnatural": 0
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe6bb05a64721dcabfa58d": {
+      "name": "2nd Follow Up (d)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ This will be my last email | I will not email you again after this | This is my last note to you }}.</p>\n<p>{{ Usually when people do not reply, it means two things | If I do not hear back, it usually means one of two things | When I get no answer, it mostly means two things }}: {{ you are very busy, or you are tired of marketers | you have too much work, or you had a bad time with marketing people before | you are fully booked, or you are sick of people selling you things }}.</p>\n<p>{{ I understand both | I totally get it | Both make sense to me }}.</p>\n<p>{{ If you ever want an easy way to get more customers from Google | If you ever want a simple way to get more phone calls | If things change and you want more people calling you }}, {{ you know where to find me | you have my email | you know how to reach me }}.</p>\n<p>{{ If you want a quick check of your website at no cost, just reply \"yes\" | Reply \"yes\" if you want me to send a short review of your site for zero dollars | Type \"yes\" if you want a simple look at your website and I will send it over }}.</p>\n<p>{{ If not, no problem. I will stop emailing you | Otherwise, I will leave you alone | If not, that is okay. I will cross you off my list }}.</p>\n<p>{{ Wishing you the best | Take care | Have a great year }}!<br>Farhan</p>",
+      "replies": 2,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "2nd Follow Up (d)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ This will be my last email | I will not email you again after this | This is my last note to you }}.</p>\n<p>{{ Usually when people do not reply, it means two things | If I do not hear back, it usually means one of two things | When I get no answer, it mostly means two things }}: {{ you are very busy, or you are tired of marketers | you have too much work, or you had a bad time with marketing people before | you are fully booked, or you are sick of people selling you things }}.</p>\n<p>{{ I understand both | I totally get it | Both make sense to me }}.</p>\n<p>{{ If you ever want an easy way to get more customers from Google | If you ever want a simple way to get more phone calls | If things change and you want more people calling you }}, {{ you know where to find me | you have my email | you know how to reach me }}.</p>\n<p>{{ If you want a quick check of your website at no cost, just reply \"yes\" | Reply \"yes\" if you want me to send a short review of your site for zero dollars | Type \"yes\" if you want a simple look at your website and I will send it over }}.</p>\n<p>{{ If not, no problem. I will stop emailing you | Otherwise, I will leave you alone | If not, that is okay. I will cross you off my list }}.</p>\n<p>{{ Wishing you the best | Take care | Have a great year }}!<br>Farhan</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 2,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T14:18:24.887Z",
+        "last_updated": "2026-10-01T14:18:24.887Z",
+        "id": "6abe6bb05a64721dcabfa58d",
+        "cold_email_score": {
+          "score": 37,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 284,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 0,
+            "spam_word_count": 12,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 7,
+              "Money": 2,
+              "Unnatural": 3
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    },
+    "6abe6c6b5a64721dcabfb4be": {
+      "name": "2nd Follow Up (e)",
+      "subject": "Re:",
+      "body": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I will leave you alone after this email | This is the last time I will write to you | I will stop bothering you after this }}.</p>\n<p>{{ If getting more customers is not a big deal right now, that is okay | If showing up on Google is not important to you today, no problem | If you are just too busy to think about your website, no worries }}.</p>\n<p>{{ But if you want, I can still send you a short note on what to fix | If you are curious, I can still show you what your website is missing | I can still send a quick check to show you why you might be losing phone calls }}.</p>\n<p>{{ Should I take a quick look? | Want me to send it to you? | Should I check it out? }}</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>",
+      "replies": 0,
+      "raw": {
+        "user": "9c68efc8-569c-43fe-a8f1-48b841823323",
+        "account_id": "53c429fd-1b22-4da1-8982-ed5f98acacb4",
+        "name": "2nd Follow Up (e)",
+        "content": "<p>{{ Hey | Hi | Hello }},</p>\n<p>{{ I will leave you alone after this email | This is the last time I will write to you | I will stop bothering you after this }}.</p>\n<p>{{ If getting more customers is not a big deal right now, that is okay | If showing up on Google is not important to you today, no problem | If you are just too busy to think about your website, no worries }}.</p>\n<p>{{ But if you want, I can still send you a short note on what to fix | If you are curious, I can still show you what your website is missing | I can still send a quick check to show you why you might be losing phone calls }}.</p>\n<p>{{ Should I take a quick look? | Want me to send it to you? | Should I check it out? }}</p>\n<p>{{ Thanks | Best | Talk soon }}, <br>Farhan</p>",
+        "subject_line": "Re:",
+        "task_type_id": null,
+        "type": "Email",
+        "opens": 0,
+        "clicks": 0,
+        "replies": 0,
+        "completed": 0,
+        "archived": false,
+        "date_created": "2026-10-01T14:21:31.742Z",
+        "last_updated": "2026-10-01T14:21:31.742Z",
+        "id": "6abe6c6b5a64721dcabfb4be",
+        "cold_email_score": {
+          "score": 38,
+          "rating": "Very Poor",
+          "details": {
+            "word_count": 162,
+            "personalization_count": 0,
+            "link_count": 0,
+            "image_count": 0,
+            "question_count": 3,
+            "spam_word_count": 8,
+            "spam_categories": {
+              "Over Promise": 0,
+              "Urgency": 0,
+              "Shady": 2,
+              "Money": 3,
+              "Unnatural": 3
+            }
+          }
+        },
+        "owned_by": "mavixmarketing@gmail.com"
+      }
+    }
+  }
+}
