@@ -1,5 +1,14 @@
 # What changed, and what the numbers say (18 Oct 2026)
 
+> **Corrections, 18 Oct (later the same day).** Some parts of this file are out of date:
+> - Prices: before the audit the price is personalised (Farhan sets it after looking at the site). The range $349 to $1,699 is given only if they insist. After the audit: Starter $349, Growth $549 (the one we push), Premium $1,699. Premium was wrongly listed as $1,099 below.
+> - Money back: Growth 2 months, Premium 3 months, plus $1,000 if we miss the agreed target. Starter has none.
+> - Audits already go out almost the same day, so the "send audits within 48 hours" advice below doesn't apply.
+> - Warm-up is on in Instantly.ai, so "turn on warm-up" below doesn't apply.
+> - "Next year" replies now give solid reasons to start now, not one gentle sentence.
+> See `2026-10-18-v5-changes.md` for the current version.
+
+
 Written for Farhan, in plain English. Covers your notes file, your answers to my questions, the 22 sales videos, your SalesBlink numbers and every conversation the reply agent has had since 29 Sep.
 
 ---

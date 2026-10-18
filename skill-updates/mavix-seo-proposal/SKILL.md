@@ -150,11 +150,11 @@ client's real business, then tell Farhan the drafted quotes need sign-off before
 
 Three tiers, deliverables as **bullet lists inside the card**, never a paragraph.
 
-- **Starter 399 USD/mo:** keyword and competitor research, 2 blogs a month, directory and
+- **Starter 349 USD/mo:** keyword and competitor research, 2 blogs a month, directory and
   profile listings, social bookmarking and Q&A, monthly report and call.
 - **Growth 549 USD/mo, marked recommended, was 799:** everything in Starter, 3 to 4 blogs,
   2 guest posts, 1 PR placement, Google Business Profile management, infographics.
-- **Premium 1,199 USD/mo:** everything in Growth, 8 or more blogs and guest posts, full
+- **Premium 1,699 USD/mo:** everything in Growth, 8 or more blogs and guest posts, full
   on-page audit and fixes, technical SEO, quarterly competitor gap analysis, priority calls.
 
 Month to month, 30 days notice, no setup fee. Publishers are paid directly by the client for

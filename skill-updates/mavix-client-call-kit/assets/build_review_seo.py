@@ -390,7 +390,7 @@ def p13_pricing():
     ts = [("Starter", "$349", "a month", "No guarantee on this one.", False, None),
           ("Growth", "$549", "a month, locked for life",
            "Guarantee runs for two months. Normally $799.", True, "What we would pick"),
-          ("Premium", "$1,099", "a month", "Guarantee runs for three months.", False, None)]
+          ("Premium", "$1,699", "a month", "Guarantee runs for three months.", False, None)]
     terms = ["No setup fee", "No contract", "30 days notice", "Every account in your name"]
     return (head_block("WHAT IT COSTS", 'Three ways to run this, <em>one we would pick</em>',
                        "The only difference between these three is how much work we do each month. "
