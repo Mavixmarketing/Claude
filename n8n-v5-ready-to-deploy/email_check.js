@@ -1,0 +1,81 @@
+// CHECK THE REPLY before anything is sent. Small slips are fixed here
+// (a stray greeting or sign-off, dashes, exclamation marks, one long block). Normal capitals are kept.
+// Anything more serious is not sent: it goes to Slack for Farhan instead.
+const cfg = $('Settings').first().json;
+const ctx = $('Opus Request').all();
+const ALLOWED = ["https://mavixmarketing.com/case-studies", "https://mavixmarketing.com/case-studies/all-dogs-rock", "https://mavixmarketing.com/case-studies/construction-management-seo", "https://mavixmarketing.com/case-studies/dental-clinic-seo", "https://mavixmarketing.com/case-studies/edtech-software-seo", "https://mavixmarketing.com/case-studies/exam-prep-platform-seo", "https://mavixmarketing.com/case-studies/financial-advisers-seo", "https://mavixmarketing.com/case-studies/freight-forwarding-seo", "https://mavixmarketing.com/case-studies/home-goods-retailer-seo", "https://mavixmarketing.com/case-studies/hr-software-seo", "https://mavixmarketing.com/case-studies/la-vela-coffee", "https://mavixmarketing.com/case-studies/lead-gen-volume", "https://mavixmarketing.com/case-studies/martial-arts-academy-seo", "https://mavixmarketing.com/case-studies/meta-lead-gen", "https://mavixmarketing.com/case-studies/my-favorite-therapists", "https://mavixmarketing.com/case-studies/news-portal-seo", "https://mavixmarketing.com/case-studies/online-pharmacy-seo", "https://mavixmarketing.com/case-studies/orthopaedic-clinic-seo", "https://mavixmarketing.com/case-studies/plumbing-company-seo", "https://mavixmarketing.com/case-studies/property-classifieds-seo", "https://mavixmarketing.com/case-studies/real-estate-brokerage-seo", "https://mavixmarketing.com/case-studies/skincare-brand-seo", "https://mavixmarketing.com/seo-pricing", "https://mavixmarketing.com/ads-pricing", "https://mavixmarketing.com", cfg.BOOKING_LINK];
+const linkify = p => p.replace(/(https?:\/\/[^\s<]+?)([.,;:]?)(?=\s|$)/g, '<a href="$1">$1</a>$2');
+// one long block: break it into paragraphs of at most two sentences
+function paragraphs(t) {
+  if (/\n\s*\n/.test(t)) return t;
+  const sentences = t.replace(/\n/g, ' ').match(/[^.?]+(?:[.?]+(?=\s|$)|$)/g) || [t];
+  if (sentences.length <= 2) return t;
+  const out = [];
+  for (let k = 0; k < sentences.length; k += 2) out.push(sentences.slice(k, k + 2).join(' ').replace(/\s+/g, ' ').trim());
+  return out.join('\n\n');
+}
+return $input.all().map((it, i) => {
+  const { opus_body, transcript, ...c } = ctx[i] ? ctx[i].json : {};
+  let r = {};
+  const raw = (((it.json.choices || [])[0] || {}).message || {}).content || '';
+  try { r = JSON.parse(String(raw).replace(/^[\s\S]*?(\{[\s\S]*\})[\s\S]*$/, '$1')); } catch (e) { r = {}; }
+  const problems = [];
+  let t = String(r.reply || '').trim();
+  const send = r.send !== false && t.length > 0;
+  if (!raw) problems.push('no answer from the writing model');
+  // keep links exactly as they are while fixing the text
+  const links = [];
+  t = t.replace(/https?:\/\/[^\s)<>"]+/g, u => { const tail = (u.match(/[.,;:]+$/) || [''])[0]; links.push(u.slice(0, u.length - tail.length)); return '\u0000' + (links.length - 1) + '\u0000' + tail; });
+  t = t.replace(/^(hi|hey|hello|dear|good (morning|afternoon|evening))\b[^\n,]{0,40},?\s*/i, '');
+  t = t.replace(/\n+\s*(best|thanks|thank you|regards|cheers|kind regards|best regards|warm regards)[^\n]{0,20}(\n+\s*farhan\.?)?\s*$/i, '');
+  t = t.replace(/\n+\s*farhan\.?\s*$/i, '');
+  t = t.replace(/\s*[—–]\s*/g, ', ').replace(/\s+-\s+/g, ', ').replace(/!/g, '.');
+  t = paragraphs(t);
+  t = t.replace(/\u0000(\d+)\u0000/g, (_, n) => links[Number(n)]);
+  t = t.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  // NEVER ASK FOR THE WEBSITE (Farhan's rule). Any website question is taken out of the email
+  // (the rest of the sentence stays); if we still do not know the site, Farhan is told to find it.
+  const SEP = '(\\s*,\\s*and\\s+|\\s+and\\s+|\\s*,\\s*|\\s*\\?\\s*(and\\s+)?)';
+  t = t.replace(new RegExp("(what is|what's|which is) (your|the) (website|site|url|web address|link)( of [a-z0-9 -]{1,30})?" + SEP, 'gi'), '')
+       .replace(new RegExp('(could you |can you |please |just )?(share|send|paste|drop)( me| over)? (your|the) (website|site|url|web address|link)( link| address)?( here)?' + SEP + '?', 'gi'), '')
+       .replace(/\n{3,}/g, '\n\n').trim();
+  // a sentence that now starts mid-way gets its capital letter back (links stay as they are)
+  t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
+  if (!c.website_known && /prepare the audit/.test(String(r.flag || '')) && !/website not known/.test(String(r.flag || ''))) r.flag = (String(r.flag || '').trim() ? String(r.flag).trim() + '; ' : '') + 'website not known, please find it';
+  for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
+  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/ai search|ai results|ai answers/gi, ''))) problems.push('uses a banned word');
+  if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
+  if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
+  // NO PRICE NUMBERS BEFORE THE AUDIT (pay per lead has its own price, and after the audit the plans may be named)
+  const convo = String((ctx[i] && ctx[i].json.transcript) || '');
+  const auditDelivered = /(audit|proposal|roadmap|pricing|plan)[^\n]{0,60}(attached|enclosed|pdf|docs\.google|drive\.google)|attached[^\n]{0,60}(audit|proposal|roadmap|plan)|here is (your|the) (audit|proposal|roadmap|plan)|(sent|sending) you the (audit|proposal|roadmap)/i.test(convo);
+  const ppl = /per (qualified )?(lead|appointment|consultation|booking)|pay per lead|cost per lead/i.test(convo);
+  // PRICES: only our own numbers. Before the audit only the range ($349 to $1,699), Growth at $549 and
+  // the $1,000 of the money back promise may appear (the writer gives the range only if they insist).
+  // A currency question about a price we already mentioned is fine. Pay per lead has its own prices.
+  const dollarsIn = x => (x.match(/\$\s*[\d,]+(\.\d+)?/g) || []).map(v => Number(v.replace(/[^\d.]/g, '')));
+  const dollars = dollarsIn(t);
+  const OURS = [349, 549, 1699, 1000].concat(ppl ? [15, 35] : []);
+  const priceSeen = /\$\s*(349|549|1,?699)/.test(convo);
+  // a sentence about our plans may only carry our own numbers (rough job values sit in other sentences)
+  for (const sent of t.split(/(?<=[.?])\s+/)) {
+    if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
+    for (const d of dollarsIn(sent)) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + '), check it');
+  }
+  if (dollars.some(d => d === 349 || d === 1699) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?699/.test(t)) problems.push('gives plan prices before the audit without the range');
+  const words = t.split(/\s+/).filter(Boolean).length;
+  if (send && words < 4) problems.push('too short');
+  // the booking link and talk of a call only when THEY asked to talk
+  const askedToTalk = /\b(call|calls|phone|talk|speak|meet|meeting|zoom|teams|chat|whatsapp|calendar|schedule)\b/i.test(String(c.their_latest || ''));
+  // the one exception: the "i will start preparing your audit" email may offer the link as an option
+  const auditEmail = /start (preparing|on|working on) (your|the) (free )?audit/i.test(t) || (/\baudit\b/i.test(t) && /not (a|going to be a) (sales )?pitch/i.test(t));
+  if (!askedToTalk && !auditEmail && (t.includes(cfg.BOOKING_LINK) || /cal\.id|calendly|(grab|book|schedule) a (time|call)|(short|quick) (call|chat)|hop on a call/i.test(t))) problems.push('suggests a call they did not ask for');
+  // prices only in us dollars
+  // our prices only in US dollars; a rough job value in their own currency is fine
+  for (const sent of t.split(/(?<=[.?])\s+/)) if (/(£|€)\s*\d|\b\d[\d,.]*\s*(cad|aud|nzd|gbp|eur|pounds|euros)\b|\b(cad|aud|nzd|gbp|eur|a\$|c\$)\s*\d/i.test(sent) && /(a|per) month|our (plan|price|fee)|we charge|the (growth|starter|premium) plan/i.test(sent)) problems.push('our price not in usd');
+  const fu = String(r.follow_up_on || '').trim();
+  const follow_up_on = /^\d{4}-\d{2}-\d{2}$/.test(fu) && Date.parse(fu) > Date.now() ? fu : '';
+  const html = t.split(/\n{2,}/).map(p => '<p>' + linkify(p.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')) + '</p>').join('');
+  return { json: { ...c, send, reply: t, reply_html: html, flag: String(r.flag || '').trim(), follow_up_on, ok: send && problems.length === 0, problems: problems.join('; '), words } };
+});
+
