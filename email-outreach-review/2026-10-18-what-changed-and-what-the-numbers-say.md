@@ -19,7 +19,23 @@ Written for Farhan, in plain English. Covers your notes file, your answers to my
 | Summaries | Every morning: yesterday only. Mondays: last week as well. The 1st of the month: last month in full. A new daily list, "Audits you still owe", shows who is waiting on you and for how many days. Follow-ups now wait for you, so this list is your reminder. |
 | Same on LinkedIn | All of the above is in the LinkedIn reply agent and the LinkedIn follow-ups too. |
 
-I tested the email reply agent on 9 real past conversations, in test mode (nothing sent). It now:
+All of this went live on 18 Oct at about 8:20am IST, in five automations:
+- the email reply agent
+- the email follow-ups
+- the morning report
+- the LinkedIn reply agent
+- the LinkedIn follow-ups
+
+The first live follow-up run at 8:30am IST finished with no errors.
+
+I tested in test mode, with nothing sent:
+- the email follow-ups and the LinkedIn follow-ups, on sample chats
+- the morning report, on your real numbers
+- the email reply agent, on 9 real past conversations
+
+The LinkedIn reply agent only runs when a real LinkedIn reply arrives, so it couldn't be tested in advance; its first real reply will show in Slack as usual.
+
+On those 9 conversations, the email reply agent now:
 - gives no price before the audit
 - never asks for a website
 - writes a warm thank-you on a second "no"
