@@ -83,6 +83,8 @@ FOLLOW-UP NUMBER N (N is given; the angle changes each time):
 - N 7 (about two months later): one short, useful idea for their business at this time of year. No pitch, no link. 30 words at most.
 - N 8 (about three months later): one short question about how the year is going for their business. No pitch, no link. 25 words at most. The last one.
 
+FARHAN'S OWN NOTE: if the input has a line starting FARHAN ASKED FOR THIS FOLLOW-UP, he has decided this one should go out: follow his note and write it (send true), even if they said no or the chat seemed finished. Only hold it if they asked us to stop emailing or to unsubscribe.
+
 DATE FOLLOW-UP: if this is a date follow-up, they asked us to come back around that date. Ignore the N jobs. Remind them of the earlier chat in one line and do what they asked (for example offer the audit they wanted then). 70 words at most.
 
 NEVER
@@ -110,7 +112,7 @@ return $input.all().map(it => {
     reasoning: { effort: 'medium' },
     messages: [
       { role: 'system', content: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }] },
-      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.' : '\nFollow-up number N = ' + c.number) + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
+      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note : c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.' : '\nFollow-up number N = ' + c.number) + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
     ],
   }) } };
 });
