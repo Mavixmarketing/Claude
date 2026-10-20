@@ -49,13 +49,12 @@ return $input.all().map((it, i) => {
   // NO PRICE NUMBERS BEFORE THE AUDIT (pay per lead has its own price, and after the audit the plans may be named)
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|roadmap|pricing|plan)[^\n]{0,60}(attached|enclosed|pdf|docs\.google|drive\.google)|attached[^\n]{0,60}(audit|proposal|roadmap|plan)|here is (your|the) (audit|proposal|roadmap|plan)|(sent|sending) you the (audit|proposal|roadmap)/i.test(convo);
-  const ppl = /per (qualified )?(lead|appointment|consultation|booking)|pay per lead|cost per lead/i.test(convo);
   // PRICES: only our own numbers. Before the audit only the range ($349 to $1,699), Growth at $549 and
   // the $1,000 of the money back promise may appear (the writer gives the range only if they insist).
   // A currency question about a price we already mentioned is fine. Pay per lead has its own prices.
   const dollarsIn = x => (x.match(/\$\s*[\d,]+(\.\d+)?/g) || []).map(v => Number(v.replace(/[^\d.]/g, '')));
   const dollars = dollarsIn(t);
-  const OURS = [349, 549, 1699, 1000].concat(ppl ? [15, 35] : []);
+  const OURS = [349, 549, 1699, 1000];
   const priceSeen = /\$\s*(349|549|1,?699)/.test(convo);
   // a sentence about our plans may only carry our own numbers (rough job values sit in other sentences)
   for (const sent of t.split(/(?<=[.?])\s+/)) {
@@ -63,6 +62,11 @@ return $input.all().map((it, i) => {
     for (const d of dollarsIn(sent)) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + '), check it');
   }
   if (dollars.some(d => d === 349 || d === 1699) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?699/.test(t)) problems.push('gives plan prices before the audit without the range');
+  // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it
+  for (const sent of t.split(/(?<=[.?!])\s+|\n+|[,;]?\s*\b(?:but|however|though|although|where|while)\b\s*|;\s*/i).filter(Boolean)) {
+    const offers = (/\bper (qualified |warm )?(lead|appointment|consultation|call|booking)\b/i.test(sent) && /\$\s*\d/.test(sent)) || /\b(you only pay|only pay (for|per|when)|pay only (for|per|when)|pay per (qualified |warm )?lead|lead generation through|commission)\b/i.test(sent);
+    if (offers && !/\b(don't|doesn't|do not|does not|never|not|isn't|aren't|can't|cannot|won't|wouldn't)\b/i.test(sent)) { problems.push('offers pay per lead or pay on results (we never do)'); break; }
+  }
   const words = t.split(/\s+/).filter(Boolean).length;
   if (send && words < 4) problems.push('too short');
   // the booking link and talk of a call only when THEY asked to talk

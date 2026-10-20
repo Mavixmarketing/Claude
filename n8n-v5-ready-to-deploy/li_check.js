@@ -59,6 +59,11 @@ return $input.all().map((it, i) => {
   if (asked > 2) problems.push('asks ' + asked + ' questions');
   if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/ai search|ai results/gi, ''))) problems.push('uses a banned word');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
+  // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it
+  for (const sent of t.split(/(?<=[.?!])\s+|\n+|[,;]?\s*\b(?:but|however|though|although|where|while)\b\s*|;\s*/i).filter(Boolean)) {
+    const offers = (/\bper (qualified |warm )?(lead|appointment|consultation|call|booking)\b/i.test(sent) && /\$\s*\d/.test(sent)) || /\b(you only pay|only pay (for|per|when)|pay only (for|per|when)|pay per (qualified |warm )?lead|lead generation through|commission)\b/i.test(sent);
+    if (offers && !/\b(don't|doesn't|do not|does not|never|not|isn't|aren't|can't|cannot|won't|wouldn't)\b/i.test(sent)) { problems.push('offers pay per lead or pay on results (we never do)'); break; }
+  }
   const words = t.split(/\s+/).filter(Boolean).length;
   if (send && words > 80) problems.push('too long (' + words + ' words)');
   if (send && words < 4) problems.push('too short');

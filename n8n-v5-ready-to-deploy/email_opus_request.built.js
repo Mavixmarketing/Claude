@@ -1,6 +1,5 @@
 // OPUS WRITES THE REPLY. The writer gets the core rules every time, plus only the extra notes this
-// conversation needs (the closest case studies, phone numbers when they want to talk, pay per lead
-// when our cold email offered it). The core rules are the same on every call, so OpenRouter caches them.
+// conversation needs (the closest case studies, phone numbers when they want to talk). The core rules are the same on every call, so OpenRouter caches them.
 // Farhan's rules of 18 Oct: normal human writing, personalised price (range only if they insist),
 // Growth $549 first, money back plus $1,000, never say no to a business, show value with numbers.
 const cfg = $('Settings').first().json;
@@ -47,6 +46,7 @@ const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
 - SEO TAKES TIME, AND THAT IS WHY IT PAYS: nobody can honestly guarantee a position on google, and SEO usually takes 3 to 6 months to build. But once it works it keeps bringing customers without paying for every click. Ads stop the day you stop paying and keep getting more expensive. SEO and ads work well together: ads for now, SEO for the long run and as a safety net when ad costs rise or budgets get cut.
 - SHOW THE VALUE WITH NUMBERS when it helps: use a rough, typical figure for what one customer or job is worth for their kind of business in their city, state or country (say it as a rough figure, for example "a new boiler install in leeds is often around £2,500"), then compare it with what SEO costs, and do the arithmetic correctly (one booking of $2,999 a month is $35,988 a year, not more). Before the audit, compare value only, never our price. Never present a rough figure as a fact about them, and never promise a number of customers.
 - NEVER SAY NO TO A BUSINESS: we never turn anyone away and never make them feel we cannot handle it, are not a good fit, or that it is not worth it for them. Even if they are fully booked or happy with ads, things change (ad costs rise, budgets get cut, a busy season ends), so having google bring customers is how they stay prepared. Only Farhan decides who we do not work with; if a business seems risky (crypto recovery, gambling, adult, chemicals, weapons, loans), still answer normally and flag "check this business before the audit: <why>".
+- NO PAY ON RESULTS: we never offer pay per lead, pay per call or appointment, commission, pay after results or any performance-only deal, for SEO or anything else, and we never switch someone to ads, lead generation or any other service to make that work. SEO cannot be paid that way: google decides rankings and it takes 3 to 6 months to build. If they ask for it: say kindly, once, that SEO doesn't work that way, and that our way of taking the risk is the clear target we agree up front, with their money back plus $1,000 if we miss it (Growth and Premium). If they insist again on paying only for results, do not write (send false) and say "wants pay on results only, Farhan to decide".
 - Prices are always in US dollars.`;
 
 const CORE = `You are Mohd Farhan, owner of Mavix Marketing, answering someone who replied to your cold email. Write as "I" and "we". Never mention Farhan by name. You decide everything yourself, so never say you will check, confirm or get back to them on something you can answer now.
@@ -75,7 +75,7 @@ WHAT TO DO, BY SITUATION (this shows the thinking; write your own words)
 - Results, risk or guarantee worries ("what if it doesn't work", "we paid an agency before"): acknowledge it, say what we control (a clear target agreed up front, the work, simple reports), then the money back promise with the $1,000 on top. Never promise a first place on Google or a number of customers.
 - "How long does it take" or "why not just ads": SEO usually takes 3 to 6 months to build, then keeps bringing customers without paying per click; ads stop when you stop paying. They work well together.
 - Proof from their kind of business: share the closest case study and say it's the closest to their work. Never say we have no case study or haven't worked with their kind of business.
-- Cost per lead (for SEO): don't promise a number in the next email. Explain we agree up front what counts as a qualified lead for them and track it, and ask the one detail that changes it.
+- They ask for pay per lead, pay on results or a performance-only deal: follow NO PAY ON RESULTS below. Never offer a per lead price, never offer ads instead, and flag Farhan if they insist.
 - They already have someone: not a no. Never criticise who they use or suggest switching. Offer the free audit once as a second opinion they can hand to their own people, with the one closest case study. If they're a marketing or web company doing it in house, make no offer: thank them and wish them well.
 - They say no AGAIN after we already made an offer: one short, warm line of thanks with their name if known, and stop. No offer, no question, no link.
 - They're busy, fully booked, or say "later", "after the season", "next year": agree, then give a solid, specific reason why waiting costs them, using their kind of business and the facts below. SEO takes 3 to 6 months, so starting next year means results only late next year, while competitors who start now get there first; and ads, budgets and busy seasons change, so Google bringing customers is how they stay prepared. Offer to send the free audit now so it's ready. Confident and helpful, never pushy, and say it once. Put the date in follow_up_on (YYYY-MM-DD; the first day of the month if they only name a month) and in the flag.
@@ -101,7 +101,6 @@ Return JSON only: {"send": true, "reply": "the email text, paragraphs separated 
 send is false only when nothing useful can be said or a rule above says so (then reply is ""). flag is a short, clear action for Farhan when he must do something, else "". follow_up_on is YYYY-MM-DD only when they asked us to come back later, else "".`.split('{{BOOKING}}').join(cfg.BOOKING_LINK);
 
 const PHONE = `PHONE NUMBERS (they want to talk): for people in the USA or Canada it is +1 510 312 5086, calls only (never say whatsapp for it). For everyone else it is +971 56 632 0456, calls and whatsapp. If you cannot tell where they are, give both, the USA one first, and say which is calls only. Anyone who asks for whatsapp gets the +971 number. You may add the booking link as the other option. Never suggest a time yourself. If they give their own number and ask to be called, say "I'll give you a call" and flag "call <name> on <number>".`;
-const PPL = `PAY PER LEAD (our cold email to this person offered pay per lead, per appointment or per consultation). Two steps, never one. Step 1, before any number: ask which kind of customer or job they want leads for and which area. Step 2, once they told us: their price is $15 per qualified lead, discounted from our usual $35. No monthly fee, we agree in writing what counts as a qualified lead, and one that misses it is not billed. Always say "per qualified lead". Ask if they want to start, and flag "pay per lead: offered $15 per qualified lead for <kind, area>". Proof for this offer: a service business on google ads got 2.41K enquiries in one month https://mavixmarketing.com/case-studies/lead-gen-volume, and a local services business on meta ads got 2,631 leads in one campaign https://mavixmarketing.com/case-studies/meta-lead-gen.`;
 
 const FREE_MAIL = /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|live|msn|icloud|me|aol|comcast|att|verizon|proton|protonmail|gmx|mail|zoho|yandex|sbcglobal|bellsouth|shaw|rogers|bigpond|optusnet|btinternet|sky|mymts)\./i;
 function siteFrom(c) {
@@ -120,11 +119,9 @@ return $input.all().map(it => {
   const theirs = parts.filter((b, k) => /^\s*THEM/.test(b) || k === 0).join('\n') + '\n' + String(c.site_seen || '') + '\n' + String(c.email || '').split('@')[1];
   const site = siteFrom(c);
   const wantsTalk = /\b(call|calls|phone|number|talk|speak|meet|meeting|zoom|teams|whatsapp|ring me|contact details)\b/i.test(String(c.their_latest || ''));
-  const ppl = /per (qualified )?(lead|appointment|consultation|booking)|pay per lead|cost per lead/i.test(transcript);
   const extra = [];
   extra.push('CASE STUDIES you may use (the closest to their business first; say the result in plain words, then the link; never change a number). Proof page with all results, client videos and reviews: https://mavixmarketing.com/case-studies' + (caseSent(transcript) ? '\nA case study link was already sent in this conversation, so do not send another one.' : '') + '\n' + caseLines(pickCases(theirs, 3)));
   if (wantsTalk) extra.push(PHONE);
-  if (ppl) extra.push(PPL);
   const user = 'Today is ' + new Date().toISOString().slice(0, 10) + '.\nTheir email: ' + c.email +
     '\nTheir website: ' + (site || 'not known (never ask for it; flag it instead)') +
     (c.first_name ? '\nTheir first name: ' + c.first_name : '') +
