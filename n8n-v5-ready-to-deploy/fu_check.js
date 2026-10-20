@@ -43,7 +43,7 @@ return $input.all().map((it, i) => {
     if (/(£|€)\s*\d|\b(cad|aud|nzd|gbp|eur)\b/i.test(sent)) problems.push('our price not in usd');
   }
   const words = t.split(/\s+/).filter(Boolean).length;
-  if (words > 85) problems.push('too long (' + words + ' words)');
+  if (words > 130) problems.push('too long (' + words + ' words)'); // only a runaway email is held; a little over the usual length still goes
   const html = t.split(/\n{2,}/).map(p => '<p>' + linkify(p.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')) + '</p>').join('');
   const ok = send && problems.length === 0;
   const label = c.date_followup ? 'Date follow-up (asked for ' + c.follow_up_on + ')' : 'Follow-up ' + c.number + ' of 8';
