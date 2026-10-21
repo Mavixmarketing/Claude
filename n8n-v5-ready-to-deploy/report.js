@@ -78,15 +78,25 @@ function sbStats(w) {
 const pct = (a, b) => b ? (100 * a / b).toFixed(2) + '%' : '-';
 
 // one block of numbers for a period: plain sentences, no columns
-function block(w) {
+function block(w, withRate) {
   const L = [];
   const s = sbStats(w);
   const m = logStats(w);
-  if (s) L.push('• Emails sent: ' + s.sent + ' · replies: ' + s.replies + ' (' + pct(s.replies, s.sent) + ') · bounces: ' + s.bounces + ' (' + pct(s.bounces, s.sent) + ') · unsubscribes: ' + s.unsubscribes + ' (' + pct(s.unsubscribes, s.sent) + ')');
-  else L.push('• SalesBlink sending numbers were not available.');
-  L.push('• Replies sorted by the agent: ' + m.total + (m.total ? ' (' + KINDS.filter(([k]) => m[k]).map(([k, label]) => label.split(' (')[0].toLowerCase() + ' ' + m[k]).join(', ') + ')' : ''));
-  L.push('• Agent replies sent: ' + m.answered + ' · follow-ups sent: ' + m.followups);
-  if (s && s.sent) L.push('• Interested or asking a question, per 1,000 emails sent: ' + (1000 * ((m.interested || 0) + (m.question || 0)) / s.sent).toFixed(1));
+  if (s) {
+    L.push('Sent: ' + s.sent + ' · replies: ' + s.replies + ' (' + pct(s.replies, s.sent) + ')');
+    L.push('Bounces: ' + s.bounces + ' (' + pct(s.bounces, s.sent) + ')');
+    L.push('Unsubscribes: ' + s.unsubscribes + ' (' + pct(s.unsubscribes, s.sent) + ')');
+  } else L.push('SalesBlink sending numbers were not available.');
+  L.push('');
+  L.push('Replies sorted by the agent: ' + m.total);
+  L.push('Asked a question & interested: ' + ((m.question || 0) + (m.interested || 0)));
+  L.push('Not interested & unsubscribe: ' + ((m.not_interested || 0) + (m.unsubscribe || 0)));
+  L.push('Automated & nothing to answer: ' + ((m.automated || 0) + (m.nothing_to_answer || 0)));
+  if (m.error) L.push('Errors or held for you: ' + m.error);
+  L.push('');
+  L.push('Replies: ' + m.answered);
+  L.push('Follow-ups: ' + m.followups);
+  if (withRate && s && s.sent) L.push('Interested or asking a question, per 1,000 emails sent: ' + (1000 * ((m.interested || 0) + (m.question || 0)) / s.sent).toFixed(1));
   return L;
 }
 
@@ -95,6 +105,7 @@ function block(w) {
 const PROMISE = /(start(ed|ing)? (preparing|on|working on)|prepar(e|ing) (your|the)|put (your|the) (free )?audit together|work on (your|the)) (free )?audit|audit (is )?on its way|send it (over )?(to you )?when it is ready|send (it|the audit) (again|over again)|resend/i;
 const PROMISE_NOTE = /^(prepare|resend) the audit/i;
 const DELIVERED_NOTE = /(audit|proposal|roadmap|plan)( pdf| and (the )?(proposal|pricing|lead plan))? (was |were )?(already )?sent|sent the (audit|proposal|roadmap)|hand-sent (audit|proposal)|(already )?has the audit/i;
+const WAITING = /focus not given|not given yet|no site yet|(site|website) (is )?(still )?(being built|in progress|under construction|not live)|when (it is|it's|its) live|once (they|he|she) (send|share)|never (shared|sent) the (website|link|site)|still need (their|the|his|her|a|town|website|area)|waiting (on|for) (them|their|him|her)/i;
 function owed(list, history) {
   let promiseRow = -1, deliveredRow = -1, promiseNote = '', promiseAt = -1;
   for (const r of list) {
@@ -109,9 +120,35 @@ function owed(list, history) {
   if (promiseAt < 0 && /(^|\n\n)FARHAN/.test(String(history || ''))) return null;
   if (promiseRow < 0 && deliveredRow >= 0) return null;
   if (promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b))) return null;
+  // we are waiting on them, not the other way round: a note says so, or our last message after the promise asked them something they never answered
+  if (list.some(r => Number(r.id) >= promiseRow && WAITING.test(String(r.note || '')))) return null;
+  if (promiseAt >= 0) {
+    const after = blocks.slice(promiseAt + 1);
+    let lastUs = -1; after.forEach((b, i) => { if (/^(US|FARHAN)/.test(b)) lastUs = i; });
+    if (lastUs >= 0 && /\?/.test(after[lastUs]) && !after.slice(lastUs + 1).some(b => /^THEM/.test(b))) return null;
+  }
   const since = list.filter(r => Number(r.id) === promiseRow).map(r => t(r.createdAt))[0];
   return { note: promiseNote, since: isFinite(since) ? since : NaN };
 }
+// AUDITS SENT: the first time each person got an audit, from notes ("audit was sent") and Farhan's hand-sent lines
+const MON = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+const firstAudit = {};
+for (const j of all) {
+  const k = String(j.email).toLowerCase();
+  const seen = x => { if (isFinite(x) && (!firstAudit[k] || x < firstAudit[k])) firstAudit[k] = x; };
+  if (DELIVERED_NOTE.test(String(j.note || ''))) seen(t(j.createdAt));
+  const re = /FARHAN \((?:sent )?by hand(?: from gmail)?(?:,| on) (\d{4}-\d{2}-\d{2}|\d{1,2} [a-z]{3})([^)]*)\):([^\n]*)/gi;
+  let m;
+  while ((m = re.exec(String(j.history || '')))) {
+    if (!/audit|proposal|attached|pdf/i.test(m[2] + m[3])) continue;
+    let x = NaN;
+    if (/^\d{4}/.test(m[1])) x = Date.parse(m[1] + 'T12:00:00Z');
+    else { const [d, mo] = m[1].toLowerCase().split(' '); if (MON[mo] !== undefined) x = Date.UTC(ist.getUTCFullYear() - (MON[mo] > ist.getUTCMonth() ? 1 : 0), MON[mo], Number(d), 12); }
+    seen(x);
+  }
+}
+const auditsSent = w => Object.values(firstAudit).filter(x => inW(x, w)).length;
+
 const owing = [];
 for (const k of Object.keys(latest)) {
   const j = latest[k];
@@ -124,38 +161,37 @@ for (const k of Object.keys(latest)) {
 owing.sort((a, b) => (a.since || 0) - (b.since || 0));
 
 const L = [];
-L.push('☀️ *Cold email report for ' + day(todayStart - DAY) + '*');
+const clean = n => String(n || '').replace(/website not known[^,;.]*(\([^)]*\))?[,;.]?\s*/gi, '').replace(/,?\s*please find it[^,;.]*[,;.]?/gi, '').replace(/^\s*[,;.]\s*/, '').trim();
+L.push('*Cold email report for ' + day(todayStart - DAY) + '*');
 L.push('');
-L.push(...block(YESTERDAY));
-L.push('');
-
-// REMINDERS: flags from yesterday, shown once (uses the time the reply came in)
-const flags = rows.filter(j => String(j.note || '').trim() && ['replied', 'followed_up'].includes(String(j.status)) && inW(t(j.createdAt), YESTERDAY));
-L.push('*🚩 Reminders from yesterday (shown once)*');
-if (flags.length) for (const j of flags) L.push('• ' + j.email + ': ' + short(j.note, 220));
-else L.push('• none');
+L.push(...block(YESTERDAY, false));
 L.push('');
 
-// UNANSWERED: replies from yesterday still waiting on us, each listed once
-const stuck = Object.values(latest).filter(j => {
-  const s = String(j.status || '');
-  const c = t(j.createdAt);
-  if (!inW(c, YESTERDAY)) return false;
-  return ['send_failed', 'held', 'gave_up', 'not_in_inbox'].includes(s) || (s === 'working' && now - c > 3600000);
-});
-L.push('*❗ Emails from yesterday still not answered (shown once)*');
-if (stuck.length) for (const j of stuck) L.push('• ' + j.email + ' (' + String(j.status) + '): ' + short(j.their_message || j.note, 160));
-else L.push('• none, every reply from yesterday has been answered or correctly skipped');
+// AUDITS TO PREPARE: people who told us everything we asked and became owed yesterday (each shown once)
+const owedNew = owing.filter(o => inW(o.since, YESTERDAY));
+L.push('*Audits to prepare*');
+if (owedNew.length) for (const o of owedNew) L.push(o.email); else L.push('none');
 L.push('');
 
-// AUDITS OWED: no follow-ups go out to these people until you send the audit
-L.push('*📝 Audits you still owe (' + owing.length + '). No follow-ups go to these people until you send it*');
-if (owing.length) for (const o of owing.slice(0, 20)) L.push('• ' + o.email + (isFinite(o.since) ? ' · waiting ' + Math.max(0, Math.floor((now - o.since) / DAY)) + ' days' : '') + (o.note ? ': ' + short(o.note.replace(/^(prepare|resend) the audit for /i, ''), 140) : ''));
-else L.push('• none');
+// IMPORTANT FLAGS from yesterday: one line per person (the newest), never for a no or a stop,
+// never the audit (that is above) and never "website not known" (you find the site yourself)
+const DEAD = /said no|remove .{0,30}(from|off) (the|our|my) list|not interested|unsubscribe|do not (contact|email|follow)|stop (emailing|contacting)|declined/i;
+const flagBy = {};
+for (const j of rows) {
+  const note = clean(j.note);
+  if (!note || !['replied', 'followed_up'].includes(String(j.status)) || !inW(t(j.createdAt), YESTERDAY)) continue;
+  if (/^(prepare|resend) the audit/i.test(String(j.note || '')) || DEAD.test(note)) continue;
+  const k = String(j.email).toLowerCase();
+  const lt = latest[k] && String(latest[k].status);
+  if (['skipped: not_interested', 'unsubscribed', 'closed'].includes(lt)) continue;
+  if (!flagBy[k] || Number(j.id) > Number(flagBy[k].id)) flagBy[k] = { ...j, note };
+}
+const flags = Object.values(flagBy);
+L.push('*Flags from yesterday*');
+if (flags.length) for (const j of flags) L.push(j.email + ': ' + short(j.note, 200)); else L.push('none');
 L.push('');
 
-// REACH OUT YOURSELF: people who have the audit and stayed quiet through all 5 follow-ups (the last one
-// is the polite close a week after the 4th). Shown on the two mornings after follow-up 5 went out.
+// REACH OUT YOURSELF: had the audit, quiet through all 5 follow-ups (shown on the two mornings after the 5th)
 const auditSentTo = list => list.some(r => DELIVERED_NOTE.test(String(r.note || ''))) || list.some(r => /(^|\n\n)FARHAN/.test(String(r.history || '')));
 const nudge = [];
 for (const k of Object.keys(latest)) {
@@ -163,45 +199,63 @@ for (const k of Object.keys(latest)) {
   if (String(j.status) !== 'followed_up' || Number(j.followups) !== 5 || !/\n\nUS \(follow-up 5\)/.test(String(j.history || ''))) continue;
   const sent = t(j.handled_at);
   if (!isFinite(sent)) continue;
-  const ago = Math.round((todayStart - (Date.UTC(new Date(sent + IST).getUTCFullYear(), new Date(sent + IST).getUTCMonth(), new Date(sent + IST).getUTCDate()) - IST)) / DAY);
+  const d0 = new Date(sent + IST);
+  const ago = Math.round((todayStart - (Date.UTC(d0.getUTCFullYear(), d0.getUTCMonth(), d0.getUTCDate()) - IST)) / DAY);
   if (ago !== 1 && ago !== 2) continue;
   if (!auditSentTo(byPerson[k] || [j])) continue;
-  const site = (String(j.site_notes || '').match(/the page is called: ([^\n]+)/) || [])[1] || '';
-  nudge.push('• ' + j.email + (site ? ' (' + short(site, 60) + ')' : '') + (ago === 2 ? ' · second reminder' : ''));
+  nudge.push(j.email + (ago === 2 ? ' (second reminder)' : ''));
 }
-L.push('*📲 Reach out on WhatsApp and LinkedIn (had the audit, no reply after all 5 follow-ups)*');
-if (nudge.length) L.push(...nudge); else L.push('• none today');
-L.push('');
+if (nudge.length) {
+  L.push('*Reach out on WhatsApp and LinkedIn (had the audit, no reply after 5 follow-ups)*');
+  L.push(...nudge);
+  L.push('');
+}
 
-// COMING UP: date follow-ups in the next 15 days (people who asked us to come back on a date), so there
-// is time to prepare an audit or write to them yourself first. Uses the newest row that has a date.
+// COMING UP: date follow-ups in the next 15 days (they asked us to come back), time to prepare first
 const dated = {};
 for (const j of all) { const k = String(j.email).toLowerCase(); if (j.follow_up_on && (!dated[k] || Number(j.id) > Number(dated[k].id))) dated[k] = j; }
 const soon = Object.values(dated).filter(j => { const f = t(j.follow_up_on); return isFinite(f) && f >= todayStart && f < todayStart + 15 * DAY; }).sort((a, b) => t(a.follow_up_on) - t(b.follow_up_on));
 if (soon.length) {
-  L.push('*📅 Coming up in the next 15 days (they asked us to come back; the email goes out on that day)*');
-  for (const j of soon) L.push('• ' + day(t(j.follow_up_on)) + ' · ' + j.email + ': ' + short(j.note, 140));
+  L.push('*Coming up in the next 15 days (they asked us to come back)*');
+  for (const j of soon) L.push(day(t(j.follow_up_on)) + ': ' + j.email);
   L.push('');
 }
 
-// THREE SEPARATE SLACK POSTS: the daily one every morning, a weekly one on Mondays (last week,
-// Monday to Sunday), and a monthly one on the 1st (last month, next to the usual cold email standards).
+// UNANSWERED: replies from yesterday still waiting on us (last, each listed once)
+const stuck = Object.values(latest).filter(j => {
+  const st = String(j.status || '');
+  const c = t(j.createdAt);
+  if (!inW(c, YESTERDAY)) return false;
+  return ['send_failed', 'held', 'gave_up', 'not_in_inbox'].includes(st) || (st === 'working' && now - c > 3600000);
+});
+L.push('*Emails from yesterday still not answered*');
+if (stuck.length) for (const j of stuck) L.push(j.email + ': ' + short(j.their_message || j.note, 160)); else L.push('none');
+
+// THREE SEPARATE SLACK POSTS: daily every morning, weekly on Mondays (with every audit still owed),
+// monthly on the 1st (with audits sent and the usual cold email standards).
 const posts = [{ json: { text: L.join('\n').trim() } }];
 if (showWeekly) {
-  const Wk = ['*🗓️ Weekly report: ' + day(LAST_WEEK[1]) + ' to ' + day(LAST_WEEK[2] - DAY) + '*', ''];
-  Wk.push(...block(LAST_WEEK));
+  const Wk = ['*Weekly report: ' + day(LAST_WEEK[1]) + ' to ' + day(LAST_WEEK[2] - DAY) + '*', ''];
+  Wk.push(...block(LAST_WEEK, true));
+  Wk.push('Audits sent: ' + auditsSent(LAST_WEEK));
+  Wk.push('');
+  Wk.push('*Audits still to prepare (' + owing.length + ')*');
+  if (owing.length) for (const o of owing) Wk.push(o.email + (isFinite(o.since) ? ' · waiting ' + Math.max(0, Math.floor((now - o.since) / DAY)) + ' days' : ''));
+  else Wk.push('none');
   posts.push({ json: { text: Wk.join('\n').trim() } });
 }
 if (showMonthly) {
   const s = sbStats(LAST_MONTH);
   const name = new Date(LAST_MONTH[1] + IST).toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
-  const M = ['*📊 Monthly report: ' + name + ', against the usual cold email standards*', ''];
-  M.push(...block(LAST_MONTH));
+  const M = ['*Monthly report: ' + name + '*', ''];
+  M.push(...block(LAST_MONTH, true));
+  M.push('Audits sent: ' + auditsSent(LAST_MONTH));
   if (s && s.sent) {
     const rr = 100 * s.replies / s.sent, br = 100 * s.bounces / s.sent;
-    M.push('• Reply rate ' + rr.toFixed(2) + '%: usual range in published studies is about 1.4% to 9%, averages around 3.4% (Woodpecker: 3.43%). ' + (rr < 1.4 ? '⚠️ below the usual range' : rr < 3.4 ? 'inside the range, below average' : 'at or above average'));
-    M.push('• Bounce rate ' + br.toFixed(2) + '%: keep it under 2%; over 3% puts your domains at risk. ' + (br < 2 ? '✅ healthy' : br < 3 ? '⚠️ getting high' : '🚨 too high, clean the lists'));
-    M.push('• Unsubscribes: there is no reliable public standard; watch it month to month. More unsubscribes than replies is a warning sign.');
+    M.push('');
+    M.push('Reply rate ' + rr.toFixed(2) + '%: the usual range is about 1.4% to 9%, average around 3.4%. ' + (rr < 1.4 ? 'Below the usual range.' : rr < 3.4 ? 'Inside the range, below average.' : 'At or above average.'));
+    M.push('Bounce rate ' + br.toFixed(2) + '%: keep it under 2%, over 3% puts your domains at risk. ' + (br < 2 ? 'Healthy.' : br < 3 ? 'Getting high.' : 'Too high, clean the lists.'));
+    M.push('Unsubscribes: no reliable public standard. More unsubscribes than replies is a warning sign.');
   }
   posts.push({ json: { text: M.join('\n').trim() } });
 }
