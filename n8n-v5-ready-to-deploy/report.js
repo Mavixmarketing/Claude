@@ -173,10 +173,13 @@ L.push('*📲 Reach out on WhatsApp and LinkedIn (had the audit, no reply after 
 if (nudge.length) L.push(...nudge); else L.push('• none today');
 L.push('');
 
-// COMING UP: date follow-ups in the next 7 days
-const soon = Object.values(latest).filter(j => { const f = t(j.follow_up_on); return isFinite(f) && f >= todayStart && f < todayStart + 7 * DAY; });
+// COMING UP: date follow-ups in the next 15 days (people who asked us to come back on a date), so there
+// is time to prepare an audit or write to them yourself first. Uses the newest row that has a date.
+const dated = {};
+for (const j of all) { const k = String(j.email).toLowerCase(); if (j.follow_up_on && (!dated[k] || Number(j.id) > Number(dated[k].id))) dated[k] = j; }
+const soon = Object.values(dated).filter(j => { const f = t(j.follow_up_on); return isFinite(f) && f >= todayStart && f < todayStart + 15 * DAY; }).sort((a, b) => t(a.follow_up_on) - t(b.follow_up_on));
 if (soon.length) {
-  L.push('*📅 Coming up this week (they asked us to come back)*');
+  L.push('*📅 Coming up in the next 15 days (they asked us to come back; the email goes out on that day)*');
   for (const j of soon) L.push('• ' + day(t(j.follow_up_on)) + ' · ' + j.email + ': ' + short(j.note, 140));
   L.push('');
 }
