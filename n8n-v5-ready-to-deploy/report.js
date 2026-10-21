@@ -244,12 +244,52 @@ if (showWeekly) {
   else Wk.push('none');
   posts.push({ json: { text: Wk.join('\n').trim() } });
 }
+// TEMPLATES THAT GOT REPLIES: SalesBlink's reply events (one event per first reply, with the template name).
+// "Interested" means our log sorted that person as interested or asking a question.
+const events = [];
+try {
+  for (const it of $('Read Reply Events').all()) {
+    const j = it.json || {};
+    const list = Array.isArray(j.result) ? j.result : (Array.isArray(j.data) ? j.data : (j.time ? [j] : []));
+    for (const e of list) if (e && e.time && e.email) events.push(e);
+  }
+} catch (e) { /* no events, the ranking is left out */ }
+const goodEmail = {};
+for (const j of replies) { const k = kind(j); if (k === 'interested' || k === 'question') goodEmail[String(j.email).toLowerCase()] = true; }
+function templateRanking(w) {
+  const seenEv = new Set();
+  const tally = {};
+  for (const e of events) {
+    if (seenEv.has(e.id)) continue; seenEv.add(e.id);
+    if (!inW(Number(e.time), w)) continue;
+    const name = String(e.template_name || 'unknown template').trim();
+    const camp = String(e.sequence_name || '').trim();
+    const key = name + '|' + camp;
+    const x = tally[key] || (tally[key] = { name, camp, replies: 0, good: 0, followup: /follow|follwo|\bfu\b/i.test(name) });
+    x.replies++;
+    if (goodEmail[String(e.email).toLowerCase()]) x.good++;
+  }
+  const line = x => x.name + ' (' + x.camp + '): ' + x.replies + ' replies, ' + x.good + ' interested';
+  const sorted = Object.values(tally).sort((a, b) => b.good - a.good || b.replies - a.replies);
+  const L = [];
+  L.push('');
+  L.push('*First emails, most interested replies first*');
+  const first = sorted.filter(x => !x.followup);
+  if (first.length) L.push(...first.slice(0, 10).map(line)); else L.push('no data');
+  L.push('');
+  L.push('*Follow-up emails, most interested replies first*');
+  const fus = sorted.filter(x => x.followup);
+  if (fus.length) L.push(...fus.slice(0, 10).map(line)); else L.push('no data');
+  return L;
+}
+
 if (showMonthly) {
   const s = sbStats(LAST_MONTH);
   const name = new Date(LAST_MONTH[1] + IST).toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
   const M = ['*Monthly report: ' + name + '*', ''];
   M.push(...block(LAST_MONTH, true));
   M.push('Audits sent: ' + auditsSent(LAST_MONTH));
+  if (events.length) M.push(...templateRanking(LAST_MONTH));
   if (s && s.sent) {
     const rr = 100 * s.replies / s.sent, br = 100 * s.bounces / s.sent;
     M.push('');
