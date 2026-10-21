@@ -154,12 +154,13 @@ Three tiers, deliverables as **bullet lists inside the card**, never a paragraph
   profile listings, social bookmarking and Q&A, monthly report and call.
 - **Growth 549 USD/mo, marked recommended, was 799:** everything in Starter, 3 to 4 blogs,
   2 guest posts, 1 PR placement, Google Business Profile management, infographics.
-- **Premium 1,699 USD/mo:** everything in Growth, 8 or more blogs and guest posts, full
+- **Premium 1,649 USD/mo:** everything in Growth, 8 or more blogs and guest posts, full
   on-page audit and fixes, technical SEO, quarterly competitor gap analysis, priority calls.
 
-Month to month, 30 days notice, no setup fee. Publishers are paid directly by the client for
+No long contract: the agreement has no time limit and only ties us, to deliver. No setup fee. Publishers are paid directly by the client for
 PR and backlinks, usually 100 to 300 USD a month, at no markup. Close with the 90-day
-money-back guarantee: every fee back plus 1,000 USD if the month-six targets are missed.
+money-back guarantee on Growth and Premium (Starter has none): every fee back plus 1,000 USD if
+the 90-day target we agree up front is missed. The month-six scorecards are goals, not the guarantee.
 
 Whatever is said about notice and cancellation here must match section 17 and the actual
 contract. If the three disagree, the contract wins and the other two change.

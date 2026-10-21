@@ -47,8 +47,8 @@ Clients mostly USA and UK.
 | Package | Price | What's in it |
 |---|---|---|
 | **Starter** | **$349/mo** | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report |
-| **Growth** ⭐ | **$549/mo** (was $799) | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **2-month money-back** · **price locked for life** |
-| **Premium** | **$1,699/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **3-month money-back** |
+| **Growth** ⭐ | **$549/mo** (was $799) | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **90-day money-back guarantee** · **price locked for life** |
+| **Premium** | **$1,649/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **90-day money-back guarantee** |
 
 **Lead with Growth.** The price lock is a real reason to decide today — it does not expire tonight, it just stops applying when rates go up.
 
@@ -70,7 +70,7 @@ Ad budget is always the client's, on their card, direct to the platform. Never t
 
 ## Guarantee
 
-**50% more traffic, rankings and visitors, or money back.** Growth = 2-month window. Premium = 3-month window. **Starter has none — never imply otherwise, including in the intro.**
+**50% more traffic, rankings and visitors, or money back.** Growth and Premium: 90 days, plus $1,000 if we miss the target. **Starter has none — never imply otherwise, including in the intro.**
 
 **This guarantee is for search work only.** It names traffic, rankings and visitors. It has no meaning on an ads deal and must never appear in an ads document or an ads call.
 

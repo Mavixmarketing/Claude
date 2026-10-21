@@ -374,7 +374,7 @@ def p12_howwework():
             ("Accounts opened in the agency's name.",
              "Every account stays in your name, forever."),
             ("A twelve month contract you cannot leave.",
-             "No contract. 30 days notice, any time."),
+             "No long contract. No time limit; it only ties us, to deliver."),
             ("A setup fee before anything happens.",
              "No setup fee.")]
     return (head_block("HOW WE WORK", 'You will always know <em>what happened this week</em>')
@@ -389,9 +389,9 @@ def p12_howwework():
 def p13_pricing():
     ts = [("Starter", "$349", "a month", "No guarantee on this one.", False, None),
           ("Growth", "$549", "a month, locked for life",
-           "Guarantee runs for two months. Normally $799.", True, "What we would pick"),
-          ("Premium", "$1,699", "a month", "Guarantee runs for three months.", False, None)]
-    terms = ["No setup fee", "No contract", "30 days notice", "Every account in your name"]
+           "90-day money-back guarantee. Normally $799.", True, "What we would pick"),
+          ("Premium", "$1,649", "a month", "90-day money-back guarantee.", False, None)]
+    terms = ["No setup fee", "No long contract", "No time limit", "Every account in your name"]
     return (head_block("WHAT IT COSTS", 'Three ways to run this, <em>one we would pick</em>',
                        "The only difference between these three is how much work we do each month. "
                        "We work that out on the call, once you tell us where you want to start.")
@@ -399,7 +399,7 @@ def p13_pricing():
             + '<div class="gap"></div>'
             + callout("The guarantee",
                       "50% more traffic, rankings and visitors, or you get your money back. That "
-                      "runs for two months on Growth and three months on Premium. Starter has no "
+                      "runs for 90 days on Growth and Premium. Starter has no "
                       "guarantee. On top of the refund, Farhan writes you a $1,000 cheque out of "
                       "his own pocket.",
                       blue=True)
@@ -420,7 +420,7 @@ def p14_hire():
              "No insurance, no payroll to run.",
              "No recruiting. Work starts the week you say go.",
              "Nothing to train. We have done this before.",
-             "30 days notice ends it, with no argument.",
+             "No long contract. You can stop, with no argument.",
              "Every account stays in your name, so nothing walks out of the door."]
     return (head_block("THE OTHER OPTION", 'Hire one person, <em>or use a whole team</em>',
                        "The other way to get this done is to hire somebody in house. It is only "

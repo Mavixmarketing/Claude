@@ -268,7 +268,7 @@ def pricing_seo(num, P):
                   f'<ul>{li}</ul></div>')
     return section(num, "Investment",
         'What it costs, <span class="accent">and what protects you.</span>', f'''
-  <p class="lead">Month to month. No lock-in contract, no setup fee. Cancel with 30 days notice.</p>
+  <p class="lead">No long contract. The agreement has no time limit and only ties us, to deliver. No setup fee.</p>
   <div class="price">{tiers}</div>
   <p class="note">Full deliverables for each plan are on the Scope of Work page. For PR and backlink
   placements you pay publishers directly, usually 100 to 300 USD a month. We do the research, the

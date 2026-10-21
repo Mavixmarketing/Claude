@@ -34,7 +34,7 @@ return $input.all().map((it, i) => {
   // prices: none before the audit; after the audit only our own plan prices (rough job values are fine)
   const convo = String((ctx[i] && ctx[i].json.transcript) || c.history || '');
   const auditSent = /^FARHAN/m.test(convo) || /(audit|proposal|roadmap)[^\n]{0,60}(attached|enclosed|pdf)|here is (your|the) (audit|proposal)/i.test(convo);
-  const OURS = [349, 549, 1699, 1000];
+  const OURS = [349, 549, 1649, 1000];
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
     const nums = (sent.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));

@@ -160,8 +160,8 @@ outreach at no markup, so you see the real cost.</p>''')
 
 s08 = section("08", "The Fix, Measured",
   'The numbers we <span class="accent">sign up to.</span>', '''
-<p class="lead">These are the targets for month six. If we miss them, the guarantee on the
-investment page applies. No renegotiating after the fact.</p>
+<p class="lead">These are the targets for month six. The guarantee covers the 90-day target we
+agree first (see the investment page). No renegotiating after the fact.</p>
 ''' + scorecards([
  ("Organic visits / mo", "310", "1,450", 78), ("Page one keywords", "0", "18", 72),
  ("Mobile load time", "9.4s", "2.4s", 85), ("Booked calls / mo", "6", "34", 68),
@@ -304,13 +304,13 @@ P.update({
   {"name":"Growth","price":"549 USD","was":"was 799 USD","reco":True,"points":[
     "Everything in Starter","3 to 4 blog articles a month","2 guest posts a month",
     "1 PR placement a month","Google Business Profile management","Infographics and PDF assets"]},
-  {"name":"Premium","price":"1,699 USD","points":[
+  {"name":"Premium","price":"1,649 USD","points":[
     "Everything in Growth","8 or more blogs and guest posts","Full on-page audit and the fixes",
     "Technical SEO: speed, schema, links","Quarterly competitor gap analysis",
     "Priority support and strategy calls"]},
  ],
  "guarantee_title": "90-day money-back guarantee",
- "guarantee_text": "If we miss the month-six targets on the measurement page, you get every fee "
+ "guarantee_text": "On Growth and Premium, if we miss the 90-day target we agree with you, you get every fee "
    "back plus 1,000 USD for the time you spent with us. We have never had to pay it and we would "
    "rather keep it that way.",
 })
@@ -339,7 +339,7 @@ s15 = section("15", "Questions",
   "Sites built on real content and clean links tend to gain in core updates. The ones that get hit "
   "are built on the kind of spam links currently pointing at your domain."),
  ("Is there a contract, and can I pause?",
-  "Month to month, 30 days notice, no setup fee. You can pause for a month if cash flow tightens, "
+  "No long contract: no time limit, it only ties us to deliver. No setup fee. You can pause for a month if cash flow tightens, "
   "though rankings drift if it runs longer than that. The guarantee is the only fixed term."),
  ("Will you write about treatments we do not offer?",
   "No. We only build pages for what you actually sell, priced the way you actually price it. "

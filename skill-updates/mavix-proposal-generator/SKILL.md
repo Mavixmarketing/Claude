@@ -188,7 +188,7 @@ section, bridge on the shared problem, and offer a reference call.
 
 ### Section 06 — Investment
 - **Ads pricing (4 phases, low-to-high on purpose):** Phase 1 & 2 (Setup + Warm up) **249 USD/mo**, Phase 3 (Convert, when sales start) **349 USD/mo**, Phase 4 (Scale) **449 USD/mo**. Always explain the rationale: ads need spend before sales arrive, so the client is already funding ad budget; the fee starts low so their money goes into ad spend, and rises only once results show. The 249 simply covers our costs. Ad budget is separate and always the client's; 1,000 USD Google ad credit included.
-- **SEO pricing:** 3 Pricing Cards — Starter **349 USD/mo**, Growth **549 USD/mo** (highlighted, was 799), Premium **1,699 USD/mo**. Put the full SEO deliverables on a **separate Scope of Work page**, not in the pricing cards (keep pricing lean). SEO scope tiers — Starter: keyword & competitor research, 2 blogs/mo, Pinterest 8, directory 12, social bookmarking 8, profile creation 8, multi-link 16, Q&A 8, monthly report. Growth: everything in Starter + 3-4 blogs/mo, guest posts 2, PPT/PDF 8, article/blog 8, infographic 8, PR 1, GMB optimisation 2. Premium: everything in Growth + 8+ blogs, 8+ guest posts, full on-page audit & fixes, technical SEO (speed/schema/broken links), competitor gap analysis, priority support & strategy calls, money-back guarantee. Across all plans we also fix website content, backend tech, and on-page & off-page SEO, run by a dedicated human team (no AI content).
+- **SEO pricing:** 3 Pricing Cards — Starter **349 USD/mo**, Growth **549 USD/mo** (highlighted, was 799), Premium **1,649 USD/mo**. Put the full SEO deliverables on a **separate Scope of Work page**, not in the pricing cards (keep pricing lean). SEO scope tiers — Starter: keyword & competitor research, 2 blogs/mo, Pinterest 8, directory 12, social bookmarking 8, profile creation 8, multi-link 16, Q&A 8, monthly report. Growth: everything in Starter + 3-4 blogs/mo, guest posts 2, PPT/PDF 8, article/blog 8, infographic 8, PR 1, GMB optimisation 2. Premium: everything in Growth + 8+ blogs, 8+ guest posts, full on-page audit & fixes, technical SEO (speed/schema/broken links), competitor gap analysis, priority support & strategy calls, money-back guarantee. Across all plans we also fix website content, backend tech, and on-page & off-page SEO, run by a dedicated human team (no AI content).
 - End with a neon callout guarantee; Google Partner 1,000 USD ad credit badge.
 - **If the user says "no pricing" / "remove pricing":** omit this section entirely and drop it from the contents list.
 
@@ -212,7 +212,7 @@ section, bridge on the shared problem, and offer a reference call.
   Drive folder, one written report a month plus a call. Name the person they deal with, not a role.
 - **Who owns what:** every account stays in the client's name, Mavix holds access and never ownership,
   and any account created from scratch is created in their name.
-- **If you decide to stop:** month to month, 30 days notice, no penalty, accounts and data stay theirs,
+- **If you decide to stop:** no long contract and no time limit, no penalty, accounts and data stay theirs,
   access removable at any time, final report and handover. Must match the signed contract exactly.
 - Full wording in `reference/TRUST_SECTIONS.md`.
 
@@ -274,7 +274,7 @@ Read the document by eye for rule-of-three lists, duplicated paragraphs, and pro
 
 ## Step 5: Pricing Reference
 
-**SEO:** Starter 349 USD/mo · Growth 549 USD/mo highlighted, was 799 · Premium 1,699 USD/mo. Full deliverables go on a separate Scope of Work page, not the pricing cards. Client pays 100–300 USD/mo directly to publishers for PR/backlinks; Mavix handles curation, writing, placement.
+**SEO:** Starter 349 USD/mo · Growth 549 USD/mo highlighted, was 799 · Premium 1,649 USD/mo. Full deliverables go on a separate Scope of Work page, not the pricing cards. Client pays 100–300 USD/mo directly to publishers for PR/backlinks; Mavix handles curation, writing, placement.
 
 **Ads (4 phases):** Phase 1 & 2 (Setup + Warm up) 249 USD/mo · Phase 3 (Convert) 349 USD/mo · Phase 4 (Scale) 449 USD/mo. Fee starts low so client budget goes to ad spend; rises only once results show. 1,000 USD Google ad credit included. Budget guide: Awareness 10–20 USD/day/platform + Lead Gen 30–50 USD/day/platform.
 

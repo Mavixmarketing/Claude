@@ -49,19 +49,19 @@ return $input.all().map((it, i) => {
   // NO PRICE NUMBERS BEFORE THE AUDIT (pay per lead has its own price, and after the audit the plans may be named)
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|roadmap|pricing|plan)[^\n]{0,60}(attached|enclosed|pdf|docs\.google|drive\.google)|attached[^\n]{0,60}(audit|proposal|roadmap|plan)|here is (your|the) (audit|proposal|roadmap|plan)|(sent|sending) you the (audit|proposal|roadmap)/i.test(convo);
-  // PRICES: only our own numbers. Before the audit only the range ($349 to $1,699), Growth at $549 and
+  // PRICES: only our own numbers. Before the audit only the range ($349 to $1,649), Growth at $549 and
   // the $1,000 of the money back promise may appear (the writer gives the range only if they insist).
   // A currency question about a price we already mentioned is fine. Pay per lead has its own prices.
   const dollarsIn = x => (x.match(/\$\s*[\d,]+(\.\d+)?/g) || []).map(v => Number(v.replace(/[^\d.]/g, '')));
   const dollars = dollarsIn(t);
-  const OURS = [349, 549, 1699, 1000];
-  const priceSeen = /\$\s*(349|549|1,?699)/.test(convo);
+  const OURS = [349, 549, 1649, 1000];
+  const priceSeen = /\$\s*(349|549|1,?649)/.test(convo);
   // a sentence about our plans may only carry our own numbers (rough job values sit in other sentences)
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
     for (const d of dollarsIn(sent)) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + '), check it');
   }
-  if (dollars.some(d => d === 349 || d === 1699) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?699/.test(t)) problems.push('gives plan prices before the audit without the range');
+  if (dollars.some(d => d === 349 || d === 1649) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?649/.test(t)) problems.push('gives plan prices before the audit without the range');
   // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it
   for (const sent of t.split(/(?<=[.?!])\s+|\n+|[,;]?\s*\b(?:but|however|though|although|where|while)\b\s*|;\s*/i).filter(Boolean)) {
     const offers = (/\bper (qualified |warm )?(lead|appointment|consultation|call|booking)\b/i.test(sent) && /\$\s*\d/.test(sent)) || /\b(you only pay|only pay (for|per|when)|pay only (for|per|when)|pay per (qualified |warm )?lead|lead generation through|commission)\b/i.test(sent);
