@@ -36,7 +36,7 @@ return $input.all().map((it, i) => {
   if (send && words > 60) problems.push('too long (' + words + ' words)');
   const ok = send && problems.length === 0;
   const text = ok
-    ? (cfg.SEND_FOR_REAL ? '🔁 LinkedIn follow-up ' + c.number + ' of 5 sent' : '🧪 LinkedIn follow-up ' + c.number + ' of 5 NOT sent (test)') + ' · ' + who + '\n↩️ *We sent:* ' + t
-    : '⚠️ *LinkedIn follow-up held, nothing sent* · ' + who + '\n✏️ *Draft:* ' + t + '\n❗ *Why:* ' + (problems.join('; ') || String(r.why || ''));
+    ? (cfg.SEND_FOR_REAL ? '' : 'TEST, not sent. ') + 'LinkedIn follow-up ' + c.number + ' sent to: ' + who + '\n' + t
+    : 'LinkedIn follow-up held, nothing sent: ' + who + '\nDraft: ' + t + '\nWhy: ' + (problems.join('; ') || String(r.why || ''));
   return { json: { ...c, send, ok, reply: t, why: String(r.why || ''), problems: problems.join('; '), words, slack_text: text } };
 });

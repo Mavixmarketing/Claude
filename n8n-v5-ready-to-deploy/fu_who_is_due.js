@@ -82,6 +82,7 @@ const localDaytime = em => { const h = new Date(now + offsetOf(em) * 3600000).ge
 const PROMISE = /(start(ed|ing)? (preparing|on|working on)|prepar(e|ing) (your|the)|put (your|the) (free )?audit together|work on (your|the)) (free )?audit|audit (is )?on its way|send it (over )?(to you )?when it is ready|send (it|the audit) (again|over again)|resend/i;
 const PROMISE_NOTE = /^(prepare|resend) the audit/i;
 const DELIVERED_NOTE = /(audit|proposal|roadmap|plan)( pdf| and (the )?(proposal|pricing|lead plan))? (was |were )?(already )?sent|sent the (audit|proposal|roadmap)|hand-sent (audit|proposal)|(already )?has the audit/i;
+const WAITING = /focus not given|not given yet|no site yet|(site|website) (is )?(still )?(being built|in progress|under construction|not live)|when (it is|it's|its) live|once (they|he|she) (send|share)|never (shared|sent) the (website|link|site)|still need (their|the|his|her|a|town|website|area)|waiting (on|for) (them|their|him|her)/i;
 function auditOwed(rowsOfPerson, history) {
   let promiseRow = -1, deliveredRow = -1;
   for (const r of rowsOfPerson) {
@@ -96,6 +97,13 @@ function auditOwed(rowsOfPerson, history) {
   if (deliveredRow > promiseRow && promiseRow >= 0) return false;
   if (promiseAt < 0 && /(^|\n\n)FARHAN/.test(String(history || ''))) return false;
   if (promiseRow < 0 && deliveredRow >= 0) return false;
+  // we are waiting on them, not the other way round: a note says so, or our last message after the promise asked them something they never answered
+  if (rowsOfPerson.some(r => Number(r.id) >= promiseRow && WAITING.test(String(r.note || '')))) return false;
+  if (promiseAt >= 0) {
+    const after = blocks.slice(promiseAt + 1);
+    let lastUs = -1; after.forEach((b, i) => { if (/^(US|FARHAN)/.test(b)) lastUs = i; });
+    if (lastUs >= 0 && /\?/.test(after[lastUs]) && !after.slice(lastUs + 1).some(b => /^THEM/.test(b))) return false;
+  }
   // anything Farhan sent, or anything they wrote, after the promise in the conversation
   return !(promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b)));
 }
@@ -136,6 +144,8 @@ for (const key of Object.keys(latest)) {
     continue;
   }
   if (!['replied', 'followed_up'].includes(String(j.status)) || !j.message_id) continue;
+  // we already closed the conversation (a warm goodbye after a second no, with no question): nothing more to send
+  if (String(j.status) === 'replied' && !/\?/.test(String(j.our_reply || '')) && /(all the best|best of luck|wish(ing)? you|take care|good luck)/i.test(String(j.our_reply || ''))) continue;
   const em = String(j.email).toLowerCase();
   if (localSunday(em)) continue; // never on their Sunday
   const hour = sendHour(em);
