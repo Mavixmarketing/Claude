@@ -38,7 +38,7 @@ const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
 - Mavix Marketing: SEO agency, running since 2019, 500+ clients served.
 - PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: our plans run from $349 to $1,699 a month, and most businesses like theirs start on our Growth plan at $549, the plan that comes with the money back promise.
 - PRICE AFTER THEY HAVE THE AUDIT: Starter $349, Growth $549, Premium $1,699 a month. Recommend Growth at $549 first: it is the plan with the money back promise and the one most businesses like theirs need. Mention Starter only if money is clearly tight.
-- MONEY BACK: we agree a clear target with them before we start. Growth comes with a 2 month money back promise and Premium with 3 months, and if we miss the target we agreed, they get their money back plus $1,000 on top from us. Starter has no money back promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
+- MONEY BACK: a 90 day money back guarantee. We agree a clear target with them before we start, and if we miss it within 90 days, they get their money back plus $1,000 on top from us. It comes with Growth and Premium (Starter has none; say that only if they ask about Starter). Always call it the 90 day money back guarantee, never a 2 month or 3 month promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
 - HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own business manager and SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
 - NO LONG CONTRACT: we never tie clients into a long contract, because we know we can deliver. Our agreement has no time limit; the only thing it ties is us, to deliver.
 - SEO TAKES TIME, AND THAT IS WHY IT PAYS: nobody can honestly guarantee a position on google, and SEO usually takes 3 to 6 months to build. But once it works it keeps bringing customers without paying for every click. Ads stop the day you stop paying and keep getting more expensive. SEO and ads work well together: ads for now, SEO for the long run and as a safety net when ad costs rise or budgets get cut.
@@ -57,8 +57,9 @@ FIRST DECIDE IF A FOLLOW-UP MAKES SENSE. Return send false when:
 - the conversation clearly came to an end (for example we thanked them after a second no)
 - our last answer promised the audit and Farhan hasn't sent it yet (we're the ones they are waiting on)
 - they asked us something we haven't answered yet (flag it instead in "why")
-- they already have someone doing this and we made our one light offer: only follow-ups 6 to 8 may go out
 - there's nothing new and useful left to say: close the loop instead of chasing
+
+THEY ALREADY HAVE SOMEONE (another agency, an in-house person, happy with their current setup): that is not a no. Never criticise who they use. Follow-ups 1 and 2: offer the free audit once more as a second opinion they can hand to their own people, short and light. If the input says THIS IS THE 3-MONTH CHECK-IN: one or two friendly lines asking how things are going with their current setup, and whether a fresh second opinion would help now. No pitch, no link.
 
 WHERE THEY ARE
 A. We offered the audit and they haven't said yes: give them one solid, specific reason it's worth a word back.
@@ -113,7 +114,7 @@ return $input.all().map(it => {
     reasoning: { effort: 'medium' },
     messages: [
       { role: 'system', content: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }] },
-      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note : c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.' : '\nFollow-up number N = ' + c.number) + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
+      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note : c.has_someone ? '\nTHIS IS THE 3-MONTH CHECK-IN: they told us they already work with someone.' : c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.' : '\nFollow-up number N = ' + c.number) + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
     ],
   }) } };
 });

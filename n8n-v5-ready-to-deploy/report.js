@@ -154,6 +154,25 @@ if (owing.length) for (const o of owing.slice(0, 20)) L.push('• ' + o.email + 
 else L.push('• none');
 L.push('');
 
+// REACH OUT YOURSELF: people who have the audit and stayed quiet through all 5 follow-ups (the last one
+// is the polite close a week after the 4th). Shown on the two mornings after follow-up 5 went out.
+const auditSentTo = list => list.some(r => DELIVERED_NOTE.test(String(r.note || ''))) || list.some(r => /(^|\n\n)FARHAN/.test(String(r.history || '')));
+const nudge = [];
+for (const k of Object.keys(latest)) {
+  const j = latest[k];
+  if (String(j.status) !== 'followed_up' || Number(j.followups) !== 5 || !/\n\nUS \(follow-up 5\)/.test(String(j.history || ''))) continue;
+  const sent = t(j.handled_at);
+  if (!isFinite(sent)) continue;
+  const ago = Math.round((todayStart - (Date.UTC(new Date(sent + IST).getUTCFullYear(), new Date(sent + IST).getUTCMonth(), new Date(sent + IST).getUTCDate()) - IST)) / DAY);
+  if (ago !== 1 && ago !== 2) continue;
+  if (!auditSentTo(byPerson[k] || [j])) continue;
+  const site = (String(j.site_notes || '').match(/the page is called: ([^\n]+)/) || [])[1] || '';
+  nudge.push('• ' + j.email + (site ? ' (' + short(site, 60) + ')' : '') + (ago === 2 ? ' · second reminder' : ''));
+}
+L.push('*📲 Reach out on WhatsApp and LinkedIn (had the audit, no reply after all 5 follow-ups)*');
+if (nudge.length) L.push(...nudge); else L.push('• none today');
+L.push('');
+
 // COMING UP: date follow-ups in the next 7 days
 const soon = Object.values(latest).filter(j => { const f = t(j.follow_up_on); return isFinite(f) && f >= todayStart && f < todayStart + 7 * DAY; });
 if (soon.length) {
