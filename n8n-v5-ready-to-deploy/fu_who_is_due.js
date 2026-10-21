@@ -13,6 +13,8 @@
 // after Farhan sends the audit by hand, the follow-up about it goes out (stage C).
 // DATE FOLLOW-UPS: if the row has follow_up_on (someone asked us to come back on a date),
 // nothing is sent before that date, and on that date one follow-up goes out for it.
+// THEY ALREADY HAVE SOMEONE (another agency, an in-house person, happy with their current setup): the
+// first two follow-ups go as normal, then nothing until one check-in about 3 months after our last email.
 // FARHAN'S OWN CHOICES (Settings): STOP = never follow up these people. PLAN = nothing before the
 // date he set, then one follow-up that carries his note, then the light monthly check-ins.
 const cfg = $('Settings').first().json;
@@ -98,6 +100,9 @@ function auditOwed(rowsOfPerson, history) {
   return !(promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b)));
 }
 
+const HAS_SOMEONE = /\b(already|currently)\s+(have|has|got|use|using|work(ing)? with|employ)\b|\b(another|other|current|existing) (seo )?(company|agency|firm|provider|team|arrangements?)\b|\bin[- ]house\b|\bwe (have|use) (an? |our own )?(seo|marketing|web) (company|agency|team|person|guy|firm)\b|\bhappy with (our|my|the) (current|existing)/i;
+const hasSomeone = history => String(history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).some(b => /^THEM/.test(b) && HAS_SOMEONE.test(b));
+
 // 3. Who is due this hour.
 const latest = {};
 const lastThread = {}; // newest row per person that still has a conversation (message_id)
@@ -150,6 +155,13 @@ for (const key of Object.keys(latest)) {
     continue;
   }
   if (n >= GAP_DAYS.length) continue;
+  if (!plan && n >= 2 && hasSomeone(j.history)) {
+    if (n >= 8) continue; // the 3-month check-in has gone
+    if (hour !== hourNow) continue;
+    if (days < 90 - 0.5) { if (days < 100) out.push({ json: { ...base, number: 8, days_quiet: Math.round(days), not_due: true, has_someone: true } }); continue; }
+    out.push({ json: { ...base, number: 8, days_quiet: Math.round(days), has_someone: true } });
+    continue;
+  }
   if (n === 0) { // follow-up 1: four hours after our email, in their daytime (after the first day, once a day at their hour)
     const fresh = days < 1;
     if (days >= GAP_DAYS[0] && (fresh ? localDaytime(em) : hour === hourNow)) out.push({ json: { ...base, number: 1, days_quiet: Math.round(days) } });
