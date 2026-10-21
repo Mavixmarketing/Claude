@@ -80,7 +80,7 @@ Then: *"The two-month money-back window on Growth is there for exactly that reas
 
 Say no. Saying no here wins more calls than any yes. *"No. Google's own words are that nobody can guarantee a number one ranking, and anyone who tells you otherwise is selling you something."*
 
-Then say what is actually promised: *"What's in writing is fifty percent more traffic, rankings and visitors inside two months on Growth, or your money back, plus a thousand-dollar cheque out of my own pocket. That's a promise I can keep. Does that land differently?"*
+Then say what is actually promised: *"What's in writing is fifty percent more traffic, rankings and visitors inside 90 days on Growth or Premium, or your money back, plus a thousand-dollar cheque out of my own pocket. That's a promise I can keep. Does that land differently?"*
 
 ### "We've already got someone doing it."
 

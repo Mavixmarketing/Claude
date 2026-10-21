@@ -1,7 +1,7 @@
 // WHO IS DUE A FOLLOW-UP, read from our own log (seo_reply_log).
 // A prospect is due when the newest row for their email is one we replied to or followed up,
 // they have not written since, and the gap has passed. Farhan's timetable (17 oct):
-//   follow-up 1: 4 hours after our last email (in their daytime, never on their Sunday)
+//   follow-up 1: 4 hours after our last email (in their daytime, never on their weekend)
 //   follow-up 2: the next day          follow-up 3: 3 days after that (two quiet days in between)
 //   follow-up 4: 4 days after that      follow-up 5: a week after that (a polite close)
 //   then light check-ins about 1, 2 and 3 months after our first answer.
@@ -74,7 +74,7 @@ function sendHour(em) {
   return DEFAULT_HOUR;
 }
 function offsetOf(em) { const r = personRegion[em] || regionOf('', em) || 'usa'; return REGION_OFFSET[r] === undefined ? -5 : REGION_OFFSET[r]; }
-const localSunday = em => new Date(now + offsetOf(em) * 3600000).getUTCDay() === 0;
+const localSunday = em => { const d = new Date(now + offsetOf(em) * 3600000).getUTCDay(); return d === 0 || d === 6; }; // their weekend: Saturday and Sunday
 const localDaytime = em => { const h = new Date(now + offsetOf(em) * 3600000).getUTCHours(); return h >= 8 && h < 20; };
 
 // 2. Do we owe them the audit? Our last answer promised it (or promised to send it again) and
@@ -108,6 +108,8 @@ function auditOwed(rowsOfPerson, history) {
   return !(promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b)));
 }
 
+const SOFT_NO = /\b(at this (time|moment|stage|point)|right now|at the moment|for now|not now|this year|currently|not yet|maybe later|in the future|down the (road|line))\b/i;
+const HARD_NO = /\b(stop|remove|unsubscribe|do not (contact|email)|don'?t (contact|email)|never|leave (me|us) alone|spam)\b/i;
 const HAS_SOMEONE = /\b(already|currently)\s+(have|has|got|use|using|work(ing)? with|employ)\b|\b(another|other|current|existing) (seo )?(company|agency|firm|provider|team|arrangements?)\b|\bin[- ]house\b|\bwe (have|use) (an? |our own )?(seo|marketing|web) (company|agency|team|person|guy|firm)\b|\bhappy with (our|my|the) (current|existing)/i;
 const hasSomeone = history => String(history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).some(b => /^THEM/.test(b) && HAS_SOMEONE.test(b));
 
@@ -143,11 +145,24 @@ for (const key of Object.keys(latest)) {
     out.push({ json: { email: t.email, messageId: t.message_id, history: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), transcript: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: 0, not_due: true } });
     continue;
   }
+  // A POLITE "NOT RIGHT NOW" (no reason, no stop): one friendly check-in about 80 days later, before
+  // SalesBlink deletes the archived chat at 90 days. Never for "stop", "remove me" or "never".
+  if (!plan && String(j.status) === 'skipped: not_interested' && j.message_id) {
+    const said = String(j.their_message || '');
+    if (!SOFT_NO.test(said) || HARD_NO.test(said)) continue;
+    const at = Date.parse(j.handled_at || j.createdAt);
+    const due = at + 80 * 86400000;
+    const em1 = String(j.email).toLowerCase();
+    if (!isFinite(at) || now < due || now > due + 30 * 86400000 || sendHour(em1) !== hourNow || localSunday(em1)) continue;
+    const h = String(j.history || ('THEM: ' + said));
+    out.push({ json: { email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: hourNow, number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
+    continue;
+  }
   if (!['replied', 'followed_up'].includes(String(j.status)) || !j.message_id) continue;
   // we already closed the conversation (a warm goodbye after a second no, with no question): nothing more to send
   if (String(j.status) === 'replied' && !/\?/.test(String(j.our_reply || '')) && /(all the best|best of luck|wish(ing)? you|take care|good luck)/i.test(String(j.our_reply || ''))) continue;
   const em = String(j.email).toLowerCase();
-  if (localSunday(em)) continue; // never on their Sunday
+  if (localSunday(em)) continue; // never on their weekend
   const hour = sendHour(em);
   const n = Number(j.followups || 0);
   const last = Date.parse(j.handled_at || j.updatedAt || j.createdAt);
@@ -165,6 +180,7 @@ for (const key of Object.keys(latest)) {
     continue;
   }
   if (n >= GAP_DAYS.length) continue;
+  if (/\n\nUS \(follow-up 8\)/.test(String(j.history || ''))) continue; // the last check-in has gone
   if (!plan && n >= 2 && hasSomeone(j.history)) {
     if (n >= 8) continue; // the 3-month check-in has gone
     if (hour !== hourNow) continue;

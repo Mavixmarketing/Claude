@@ -42,14 +42,14 @@ return $input.all().map((it, i) => {
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|which (website|site) should/i.test(t)) problems.push('asks for the website');
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|check)[^.\n]{0,40}(attached|enclosed)|here is (your|the) (audit|proposal|check)|(sent|sending) you the (audit|proposal)/i.test(convo);
-  // prices: only our own numbers; before the audit only the range ($349 to $1,699) or Growth at $549
-  const OURS = [349, 549, 1699, 1000];
-  const priceSeen = /\$\s*(349|549|1,?699)/.test(convo);
+  // prices: only our own numbers; before the audit only the range ($349 to $1,649) or Growth at $549
+  const OURS = [349, 549, 1649, 1000];
+  const priceSeen = /\$\s*(349|549|1,?649)/.test(convo);
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
     const nums = (sent.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
     for (const d of nums) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
-    if (nums.some(d => d === 349 || d === 1699) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?699/.test(sent)) problems.push('gives plan prices before the audit without the range');
+    if (nums.some(d => d === 349 || d === 1649) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?649/.test(sent)) problems.push('gives plan prices before the audit without the range');
     if (/(£|€)\s*\d|\b(cad|aud|nzd|gbp|eur)\b/i.test(sent)) problems.push('our price not in usd');
   }
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);

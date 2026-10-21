@@ -141,7 +141,7 @@ line to close. Keep every cell to one or two lines. Ten tight rows fit a page. T
 | No strategy, just a stream of tasks | Strategy first, then execution, then measurement, then change what the numbers say to change |
 | The same plan every client gets, with the name swapped | Section 01 of this document is the research. It exists because the plan comes after the homework |
 | Costs appear that were never mentioned | What is included and what is not, both written down, in the scope section |
-| A long contract, and nothing to show for the first three months | Month to month, 30 days notice, no penalty for leaving |
+| A long contract, and nothing to show for the first three months | No long contract, no time limit, no penalty for leaving |
 | The agency owns the ad account and you lose everything if you go | Every account is yours, in your name, from day one. We hold access, not ownership |
 | Promises of page one, or a fixed number of leads, that nobody can keep | We tell you what we control and what we do not, and we put a guarantee behind the part we control |
 
@@ -191,7 +191,7 @@ Say it flatly, because this is where most trust is won:
 
 Do not hide the exit. An agency that makes leaving hard is telling you something.
 
-- Month to month. 30 days notice. No penalty, no cancellation fee.
+- No long contract. The agreement has no time limit and only ties us, to deliver. No penalty, no cancellation fee.
 - Every account stays yours, along with everything inside it.
 - Your data, campaigns, content and reporting history stay where they are.
 - You can remove our access whenever you want, without asking.
