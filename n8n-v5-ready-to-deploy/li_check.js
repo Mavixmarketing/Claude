@@ -4,6 +4,28 @@
 const cfg = $('Settings').first().json;
 const ctx = $('Opus Request').all();
 const ALLOWED = cfg.ALLOWED_LINKS;
+// AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// never called Google's, and we never promise a spot in AI answers.
+function aiProblems(text) {
+  const out = [];
+  const plainText = String(text || '').replace(/https?:\/\/\S+/g, ' ');
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) {
+    if (!/\b(ai|chatgpt|chat gpt|gemini|perplexity|copilot|chatbots?|llms?)\b/i.test(sent)) continue;
+    const s = sent.replace(/\$\s*[\d,]+(\.\d+)?/g, ' ').replace(/#\s*1\b/g, ' ').replace(/\b(19|20)\d\d\b/g, ' ')
+      .replace(/\b\d+\s*(to|-|–)\s*\d+\s*(months?|weeks?|days?)\b/gi, ' ').replace(/\b\d+[- ]?(minutes?|mins?|months?|weeks?|days?|hours?|years?)\b/gi, ' ');
+    for (const m of s.matchAll(/(\d[\d,.]*\d|\d)\s*(%|percent\b|billion\b|million\b|thousand\b|bn\b|m\b|k\b|x\b|times\b)?/gi)) {
+      const v = (m[1] + (m[2] ? ' ' + m[2] : '')).toLowerCase();
+      if (/^2 billion$/.test(v) || /^(8|15) (%|percent)$/.test(v)) continue;
+      if (!m[2] && Number(m[1].replace(/,/g, '')) < 10) continue; // "top 3", "page 1"
+      out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
+    }
+    if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+  }
+  if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  return [...new Set(out)];
+}
 // one long block: break it into paragraphs of at most two sentences
 function paragraphs(t) {
   if (/\n\s*\n/.test(t)) return t;
@@ -42,14 +64,17 @@ return $input.all().map((it, i) => {
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|which (website|site) should/i.test(t)) problems.push('asks for the website');
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|check)[^.\n]{0,40}(attached|enclosed)|here is (your|the) (audit|proposal|check)|(sent|sending) you the (audit|proposal)/i.test(convo);
-  // prices: only our own numbers; before the audit only the range ($349 to $1,649) or Growth at $549
-  const OURS = [349, 549, 1649, 1000];
-  const priceSeen = /\$\s*(349|549|1,?649)/.test(convo);
+  // prices (22 Oct): only our own numbers, $999, $1,349, $1,999 and the $1,000 of the money back guarantee;
+  // before the audit only the range ($999 to $1,999) or Growth at $1,349; older prices are always an error
+  const OURS = [999, 1349, 1999, 1000];
+  const OLD = [349, 549, 799, 1649, 1099, 1699];
+  const priceSeen = /\$\s*(999|1,?349|1,?999)\b/.test(convo);
+  for (const d of new Set((t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, ''))))) if (OLD.includes(d)) problems.push('an old price ($' + d + '); our prices are now $999, $1,349 and $1,999');
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
     const nums = (sent.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
-    for (const d of nums) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
-    if (nums.some(d => d === 349 || d === 1649) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?649/.test(sent)) problems.push('gives plan prices before the audit without the range');
+    for (const d of nums) if (!OURS.includes(d) && !OLD.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
+    if (nums.some(d => d === 999 || d === 1999) && !auditDelivered && !priceSeen && !/\$\s*999\s*(to|and|-|–)\s*\$\s*1,?999/.test(sent)) problems.push('gives plan prices before the audit without the range');
     if (/(£|€)\s*\d|\b(cad|aud|nzd|gbp|eur)\b/i.test(sent)) problems.push('our price not in usd');
   }
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
@@ -57,7 +82,9 @@ return $input.all().map((it, i) => {
   if (/[{}\[\]]/.test(t)) problems.push('has an unfilled blank such as {site}');
   const asked = (t.match(/\?/g) || []).length;
   if (asked > 2) problems.push('asks ' + asked + ' questions');
-  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/ai search|ai results/gi, ''))) problems.push('uses a banned word');
+  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
+  problems.push(...aiProblems(t));
+  if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
   // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it
   for (const sent of t.split(/(?<=[.?!])\s+|\n+|[,;]?\s*\b(?:but|however|though|although|where|while)\b\s*|;\s*/i).filter(Boolean)) {

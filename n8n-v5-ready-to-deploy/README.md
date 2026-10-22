@@ -12,3 +12,7 @@ How to deploy (for Claude in a new session with the n8n connector working):
 4. Publish all 5 workflows.
 
 `templates-backup/` holds the SalesBlink templates as they were before the 18 Oct fine-tune, in case any need to be put back.
+
+## 22 Oct changes
+- New prices ($999 / $1,349 / $1,999, 90 day guarantee on Growth and Premium only) and the "how search works now" (AI search) section live in the shared FACTS block of `email_opus_request.built.js`, `fu_request.built.js` and `li_opus.built.js` (keep the three identical; there is no build script). The LinkedIn follow-up writer has its own short version. All four checkers flag old prices, any AI number other than 2 billion / 8% / 15%, AI jargon, and "2 or 3 month" guarantee wording.
+- The SEO follow-ups workflow has nodes that are not code files: `Read Thread` (SalesBlink thread for each person, between "Still In SalesBlink?" and "Skip Archived"), `Log Hand-sent` (data table update by event_id: writes Farhan's hand-sent message into the row's history and handled_at), `Due List` (code, `fu_due_list.js`), and `Unseen Reply?` + `Alert Unseen Reply` (Slack, when a reply is hidden behind one of our later emails).

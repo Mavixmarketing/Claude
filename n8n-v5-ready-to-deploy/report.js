@@ -102,7 +102,14 @@ function block(w, withRate) {
 
 // AUDITS YOU STILL OWE: our last answer promised the audit (or to send it again) and nothing was sent
 // since. The follow-ups wait for you on these, so this list is the reminder.
-const PROMISE = /(start(ed|ing)? (preparing|on|working on)|prepar(e|ing) (your|the)|put (your|the) (free )?audit together|work on (your|the)) (free )?audit|audit (is )?on its way|send it (over )?(to you )?when it is ready|send (it|the audit) (again|over again)|resend/i;
+// 22 Oct: the same promise check as the follow-ups (Who Is Due); a promise counts even when the email also asked a question.
+// A PROMISE TO SEND THE AUDIT: a first-person "I'll / we're / let me" sentence about preparing, putting
+// together, sending or doing an audit, review, breakdown, plan or report (with a/your/the/free in between),
+// or "I'll put it together" / "I'll take a (proper) look". Offers and conditions ("would you like me to...",
+// "if you want...", "once you confirm...") and questions are not promises.
+const PROMISE = /\b(i['’]?ll|i will|we['’]?ll|we will|i['’]?m|i am|we['’]?re|we are|let me|i['’]?ve|we['’]?ve)( now| also| just| happily| go ahead and| get going and)? (start(ed|ing)? (preparing|on|working on) |prepar(e|ing) |put(ting)? together |work(ing)? on |finish(ing)? |send(ing)? (you |over )?|build(ing)? |do(ing)? |get(ting)? |creat(e|ing) )(you )?(a |an |your |the |free |quick |short |proper |full |simple |personali[sz]ed |detailed )*(seo )?(audit|review|breakdown|plan|report)\b|\b(i['’]?ll|i will|we['’]?ll|we will|i['’]?m|i am|we['’]?re|we are|let me) (put(ting)? (it|this|that|one|them) together|take a (proper |quick |closer |good |real |careful )?look|(put(ting)?|get(ting)?) (a |an |your |the |free |quick |short |proper |full |simple )*(seo )?(audit|review|breakdown|plan|report) together|send [^.?!]{0,40} with (your|the) (free )?(audit|review|breakdown|plan|report))|audit (is )?on its way|send it (over )?(to you )?when it['’]?s? (is )?ready|send (it|the audit) (again|over again)|\bresend|(start(ed|ing)? (preparing|on|working on)|prepar(e|ing) (your|the)|work on (your|the)) (free )?audit/i;
+const CONDITION = /\b(if you|if it|if that|would you|do you want|want me to|shall i|should i|once you|as soon as you|when you|happy to .* if)\b/i;
+const isPromise = text => String(text || '').split(/(?<=[.?!])\s+|\n+/).some(s => PROMISE.test(s) && !/\?\s*$/.test(s.trim()) && !CONDITION.test(s));
 const PROMISE_NOTE = /^(prepare|resend) the audit/i;
 const DELIVERED_NOTE = /(audit|proposal|roadmap|plan)( pdf| and (the )?(proposal|pricing|lead plan))? (was |were )?(already )?sent|sent the (audit|proposal|roadmap)|hand-sent (audit|proposal)|(already )?has the audit/i;
 const WAITING = /focus not given|not given yet|no site yet|(site|website) (is )?(still )?(being built|in progress|under construction|not live)|when (it is|it's|its) live|once (they|he|she) (send|share)|never (shared|sent) the (website|link|site)|still need (their|the|his|her|a|town|website|area)|waiting (on|for) (them|their|him|her)/i;
@@ -110,23 +117,18 @@ function owed(list, history) {
   let promiseRow = -1, deliveredRow = -1, promiseNote = '', promiseAt = -1;
   for (const r of list) {
     const id = Number(r.id), note = String(r.note || ''), ours = String(r.our_reply || '');
-    if (PROMISE_NOTE.test(note) || (PROMISE.test(ours) && !/\?/.test(ours))) { if (id > promiseRow) { promiseRow = id; promiseNote = note; } }
+    if (PROMISE_NOTE.test(note) || isPromise(ours)) { if (id > promiseRow) { promiseRow = id; promiseNote = note; } }
     if (DELIVERED_NOTE.test(note)) deliveredRow = Math.max(deliveredRow, id);
   }
   const blocks = String(history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/);
-  blocks.forEach((b, k) => { if (/^US[ (:]/.test(b) && !/^US \(follow-up/.test(b) && PROMISE.test(b) && !/\?/.test(b)) promiseAt = k; });
+  blocks.forEach((b, k) => { if (/^US[ (:]/.test(b) && !/^US \(follow-up/.test(b) && isPromise(b)) promiseAt = k; });
   if (promiseRow < 0 && promiseAt < 0) return null;
   if (deliveredRow > promiseRow && promiseRow >= 0) return null;
   if (promiseAt < 0 && /(^|\n\n)FARHAN/.test(String(history || ''))) return null;
   if (promiseRow < 0 && deliveredRow >= 0) return null;
   if (promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b))) return null;
-  // we are waiting on them, not the other way round: a note says so, or our last message after the promise asked them something they never answered
+  // we are waiting on them, not the other way round: a note says so (our own follow-ups never count)
   if (list.some(r => Number(r.id) >= promiseRow && WAITING.test(String(r.note || '')))) return null;
-  if (promiseAt >= 0) {
-    const after = blocks.slice(promiseAt + 1);
-    let lastUs = -1; after.forEach((b, i) => { if (/^(US|FARHAN)/.test(b)) lastUs = i; });
-    if (lastUs >= 0 && /\?/.test(after[lastUs]) && !after.slice(lastUs + 1).some(b => /^THEM/.test(b))) return null;
-  }
   const since = list.filter(r => Number(r.id) === promiseRow).map(r => t(r.createdAt))[0];
   return { note: promiseNote, since: isFinite(since) ? since : NaN };
 }
