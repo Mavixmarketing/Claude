@@ -27,8 +27,11 @@ if (cfg.TEST) {
     { email: 'charesemb@gmail.com', history: 'THEM: yes please\n\nUS: great, i will put the audit together for 719cleaningcompany.com.\n\nwhich cleaning services do you most want more enquiries for?' },
     { email: 'mariflores2412@gmail.com', history: 'THEM: we would like to wait until next year, budgets are set in january.\n\nUS: that makes sense. google takes a few months to trust a site, so many owners start the groundwork a little before their busy season. i will write again in january.' },
     { email: 'hello@nevuu.com', history: 'THEM: yes, send it\n\nUS: great, which services do you want more customers for, and which area do you cover?\n\nTHEM: corporate events, london\n\nUS: great, i will start preparing your audit for nevuu.com, focused on corporate events in london, and send it over when it is ready.\n\nFARHAN (sent by hand on 2026-10-16, may have had the audit, case studies or a proposal attached): here is your audit. the short version: people in london searching for corporate event venues are not finding you yet.' },
+    { n: 4, q: 4, email: 'owner@example-roofing.com', history: 'THEM: we already rank number 1 on google for roofing in plano, so not sure we need this\n\nUS: that is a strong spot to hold. a free audit would show whether that carries over to nearby towns like frisco and allen, where people search for the same job. would you like me to send it over?\n\nUS (follow-up 1): would frisco or allen be the better town to check first?\n\nUS (follow-up 2): a local plumbing company we worked with went from showing up on google under 200 times a day to about 1,000 a day in eight weeks. https://mavixmarketing.com/case-studies/plumbing-company-seo\n\nUS (follow-up 3): a new roof is one of the biggest jobs a homeowner pays for, so one extra booking a month adds up over a year.' },
+    { n: 5, q: 7, email: 'info@example-dentalcare.com', history: 'THEM: what would the audit cover?\n\nUS: it shows how people near you searching for a dentist find you on google and google maps, and the first things that would bring more of them to book. would you like me to put it together?\n\nUS (follow-up 1): would implants or general check-ups be the better focus?\n\nUS (follow-up 2): a dental clinic we worked with went from under 15 clicks a day from google to over 100 a day. https://mavixmarketing.com/case-studies/dental-clinic-seo\n\nUS (follow-up 3): most patients who find a dentist they trust stay for years.\n\nUS (follow-up 4): bringing this back to the top of your inbox in case it slipped through the cracks. more people now get their answer from google ai overviews before they click anything.' },
   ];
-  return samples.map((x, k) => ({ json: { site_notes: '', email: x.email, messageId: 'test', number: k === 2 ? 1 : (k === 1 ? 6 : 2), days_quiet: k === 2 ? 1 : (k === 1 ? 30 : 1), history: x.history, transcript: x.history, handled_at: new Date(now - 86400000).toISOString() } }));
+  const NUM = [2, 6, 1], QUIET = [1, 30, 1];
+  return samples.map((x, k) => ({ json: { site_notes: '', email: x.email, messageId: 'test', number: x.n || NUM[k], days_quiet: x.q || QUIET[k], history: x.history, transcript: x.history, handled_at: new Date(now - 86400000).toISOString() } }));
 }
 
 // 1. Real reply times from SalesBlink: each person's own reply hours, and each list's busiest hour.
@@ -79,7 +82,16 @@ const localDaytime = em => { const h = new Date(now + offsetOf(em) * 3600000).ge
 
 // 2. Do we owe them the audit? Our last answer promised it (or promised to send it again) and
 // nothing was sent since: no note saying it was sent, no FARHAN line and no new message from them after it.
-const PROMISE = /(start(ed|ing)? (preparing|on|working on)|prepar(e|ing) (your|the)|put (your|the) (free )?audit together|work on (your|the)) (free )?audit|audit (is )?on its way|send it (over )?(to you )?when it is ready|send (it|the audit) (again|over again)|resend/i;
+// 22 Oct: a promise counts even when the same email also asked them a question (for example "I'll put it
+// together. Which patients do you want more of?"): Farhan builds the audit anyway, so we never chase them
+// while we owe it. Our own follow-ups after the promise never count as us waiting on them.
+// A PROMISE TO SEND THE AUDIT: a first-person "I'll / we're / let me" sentence about preparing, putting
+// together, sending or doing an audit, review, breakdown, plan or report (with a/your/the/free in between),
+// or "I'll put it together" / "I'll take a (proper) look". Offers and conditions ("would you like me to...",
+// "if you want...", "once you confirm...") and questions are not promises.
+const PROMISE = /\b(i['’]?ll|i will|we['’]?ll|we will|i['’]?m|i am|we['’]?re|we are|let me|i['’]?ve|we['’]?ve)( now| also| just| happily| go ahead and| get going and)? (start(ed|ing)? (preparing|on|working on) |prepar(e|ing) |put(ting)? together |work(ing)? on |finish(ing)? |send(ing)? (you |over )?|build(ing)? |do(ing)? |get(ting)? |creat(e|ing) )(you )?(a |an |your |the |free |quick |short |proper |full |simple |personali[sz]ed |detailed )*(seo )?(audit|review|breakdown|plan|report)\b|\b(i['’]?ll|i will|we['’]?ll|we will|i['’]?m|i am|we['’]?re|we are|let me) (put(ting)? (it|this|that|one|them) together|take a (proper |quick |closer |good |real |careful )?look|(put(ting)?|get(ting)?) (a |an |your |the |free |quick |short |proper |full |simple )*(seo )?(audit|review|breakdown|plan|report) together|send [^.?!]{0,40} with (your|the) (free )?(audit|review|breakdown|plan|report))|audit (is )?on its way|send it (over )?(to you )?when it['’]?s? (is )?ready|send (it|the audit) (again|over again)|\bresend|(start(ed|ing)? (preparing|on|working on)|prepar(e|ing) (your|the)|work on (your|the)) (free )?audit/i;
+const CONDITION = /\b(if you|if it|if that|would you|do you want|want me to|shall i|should i|once you|as soon as you|when you|happy to .* if)\b/i;
+const isPromise = text => String(text || '').split(/(?<=[.?!])\s+|\n+/).some(s => PROMISE.test(s) && !/\?\s*$/.test(s.trim()) && !CONDITION.test(s));
 const PROMISE_NOTE = /^(prepare|resend) the audit/i;
 const DELIVERED_NOTE = /(audit|proposal|roadmap|plan)( pdf| and (the )?(proposal|pricing|lead plan))? (was |were )?(already )?sent|sent the (audit|proposal|roadmap)|hand-sent (audit|proposal)|(already )?has the audit/i;
 const WAITING = /focus not given|not given yet|no site yet|(site|website) (is )?(still )?(being built|in progress|under construction|not live)|when (it is|it's|its) live|once (they|he|she) (send|share)|never (shared|sent) the (website|link|site)|still need (their|the|his|her|a|town|website|area)|waiting (on|for) (them|their|him|her)/i;
@@ -87,23 +99,18 @@ function auditOwed(rowsOfPerson, history) {
   let promiseRow = -1, deliveredRow = -1;
   for (const r of rowsOfPerson) {
     const id = Number(r.id), note = String(r.note || ''), ours = String(r.our_reply || '');
-    if (PROMISE_NOTE.test(note) || (PROMISE.test(ours) && !/\?/.test(ours))) promiseRow = Math.max(promiseRow, id);
+    if (PROMISE_NOTE.test(note) || isPromise(ours)) promiseRow = Math.max(promiseRow, id);
     if (DELIVERED_NOTE.test(note)) deliveredRow = Math.max(deliveredRow, id);
   }
   const blocks = String(history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/);
   let promiseAt = -1;
-  blocks.forEach((b, k) => { if (/^US[ (:]/.test(b) && !/^US \(follow-up/.test(b) && PROMISE.test(b) && !/\?/.test(b)) promiseAt = k; });
+  blocks.forEach((b, k) => { if (/^US[ (:]/.test(b) && !/^US \(follow-up/.test(b) && isPromise(b)) promiseAt = k; });
   if (promiseRow < 0 && promiseAt < 0) return false;
   if (deliveredRow > promiseRow && promiseRow >= 0) return false;
   if (promiseAt < 0 && /(^|\n\n)FARHAN/.test(String(history || ''))) return false;
   if (promiseRow < 0 && deliveredRow >= 0) return false;
-  // we are waiting on them, not the other way round: a note says so, or our last message after the promise asked them something they never answered
+  // we are waiting on them, not the other way round: a note says so
   if (rowsOfPerson.some(r => Number(r.id) >= promiseRow && WAITING.test(String(r.note || '')))) return false;
-  if (promiseAt >= 0) {
-    const after = blocks.slice(promiseAt + 1);
-    let lastUs = -1; after.forEach((b, i) => { if (/^(US|FARHAN)/.test(b)) lastUs = i; });
-    if (lastUs >= 0 && /\?/.test(after[lastUs]) && !after.slice(lastUs + 1).some(b => /^THEM/.test(b))) return false;
-  }
   // anything Farhan sent, or anything they wrote, after the promise in the conversation
   return !(promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b)));
 }
@@ -126,6 +133,9 @@ for (const r of $('Read Log').all()) {
   if (j.message_id && ['replied', 'followed_up'].includes(String(j.status)) && (!lastThread[k] || Number(j.id) > Number(lastThread[k].id))) lastThread[k] = j;
 }
 for (const k of Object.keys(byPerson)) byPerson[k].sort((a, b) => Number(a.id) - Number(b.id));
+// the newest row we logged for each person (every row is made when one of their messages is handled, or by hand):
+// a message from them in the thread newer than this has not been seen by the reply agent (Skip Archived checks)
+const loggedAt = k => new Date(Math.max(...(byPerson[k] || []).map(r => Date.parse(r.createdAt || '')).filter(isFinite), 0)).toISOString();
 const out = [];
 const STOP = (cfg.STOP || []).map(e => String(e).toLowerCase());
 const PLAN = cfg.PLAN || {};
@@ -142,7 +152,7 @@ for (const key of Object.keys(latest)) {
     const em0 = String(t.email).toLowerCase();
     if (sendHour(em0) !== hourNow || localSunday(em0)) continue;
     const seen = Date.parse(j.handled_at || j.createdAt);
-    out.push({ json: { email: t.email, messageId: t.message_id, history: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), transcript: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: 0, not_due: true } });
+    out.push({ json: { them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), transcript: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: 0, not_due: true } });
     continue;
   }
   // A POLITE "NOT RIGHT NOW" (no reason, no stop): one friendly check-in about 80 days later, before
@@ -155,7 +165,7 @@ for (const key of Object.keys(latest)) {
     const em1 = String(j.email).toLowerCase();
     if (!isFinite(at) || now < due || now > due + 30 * 86400000 || sendHour(em1) !== hourNow || localSunday(em1)) continue;
     const h = String(j.history || ('THEM: ' + said));
-    out.push({ json: { email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: hourNow, number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
+    out.push({ json: { them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: hourNow, number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
     continue;
   }
   if (!['replied', 'followed_up'].includes(String(j.status)) || !j.message_id) continue;
@@ -167,7 +177,7 @@ for (const key of Object.keys(latest)) {
   const n = Number(j.followups || 0);
   const last = Date.parse(j.handled_at || j.updatedAt || j.createdAt);
   if (!isFinite(last)) continue;
-  const base = { email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, farhan_note: plan ? String(plan.note || '') : '' };
+  const base = { row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, farhan_note: plan ? String(plan.note || '') : '' };
   const days = (now - last) / 86400000;
   const fu = plan ? Date.parse(plan.from) : (j.follow_up_on ? Date.parse(j.follow_up_on) : NaN);
   if (isFinite(fu)) {
@@ -180,6 +190,12 @@ for (const key of Object.keys(latest)) {
     continue;
   }
   if (n >= GAP_DAYS.length) continue;
+  // Farhan's hand-sent message (written back to the log by Skip Archived) is the newest thing and went out
+  // less than 18 hours ago: the follow-up about it waits for the next day's run
+  if (/^FARHAN/.test(String(j.history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).pop()) && days < 0.75) {
+    if (hour === hourNow) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true } });
+    continue;
+  }
   if (/\n\nUS \(follow-up 8\)/.test(String(j.history || ''))) continue; // the last check-in has gone
   if (!plan && n >= 2 && hasSomeone(j.history)) {
     if (n >= 8) continue; // the 3-month check-in has gone

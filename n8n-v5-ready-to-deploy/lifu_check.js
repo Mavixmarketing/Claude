@@ -2,6 +2,28 @@
 const cfg = $('Settings').first().json;
 const ctx = $('Follow-up Request').all();
 const ALLOWED = cfg.ALLOWED_LINKS;
+// AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// never called Google's, and we never promise a spot in AI answers.
+function aiProblems(text) {
+  const out = [];
+  const plainText = String(text || '').replace(/https?:\/\/\S+/g, ' ');
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) {
+    if (!/\b(ai|chatgpt|chat gpt|gemini|perplexity|copilot|chatbots?|llms?)\b/i.test(sent)) continue;
+    const s = sent.replace(/\$\s*[\d,]+(\.\d+)?/g, ' ').replace(/#\s*1\b/g, ' ').replace(/\b(19|20)\d\d\b/g, ' ')
+      .replace(/\b\d+\s*(to|-|–)\s*\d+\s*(months?|weeks?|days?)\b/gi, ' ').replace(/\b\d+[- ]?(minutes?|mins?|months?|weeks?|days?|hours?|years?)\b/gi, ' ');
+    for (const m of s.matchAll(/(\d[\d,.]*\d|\d)\s*(%|percent\b|billion\b|million\b|thousand\b|bn\b|m\b|k\b|x\b|times\b)?/gi)) {
+      const v = (m[1] + (m[2] ? ' ' + m[2] : '')).toLowerCase();
+      if (/^2 billion$/.test(v) || /^(8|15) (%|percent)$/.test(v)) continue;
+      if (!m[2] && Number(m[1].replace(/,/g, '')) < 10) continue; // "top 3", "page 1"
+      out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
+    }
+    if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+  }
+  if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  return [...new Set(out)];
+}
 return $input.all().map((it, i) => {
   const { opus_body, transcript, ...c } = ctx[i] ? ctx[i].json : {};
   let r = {};
@@ -29,7 +51,9 @@ return $input.all().map((it, i) => {
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
   if (new Set(links).size > 1) problems.push('more than one link');
   if (/[{}\[\]]/.test(t)) problems.push('has an unfilled blank such as {site}');
-  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/ai search|ai results/gi, ''))) problems.push('uses a banned word');
+  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
+  problems.push(...aiProblems(t));
+  if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|which (website|site) should/i.test(t)) problems.push('asks for the website');
   if (/\$\s*\d|refund|money back/i.test(t)) problems.push('gives a price or talks about refunds (follow-ups never do)');
   const words = t.split(/\s+/).filter(Boolean).length;

@@ -2,6 +2,30 @@
 const cfg = $('Settings').first().json;
 const ctx = $('Follow-up Request').all();
 const ALLOWED = ["https://mavixmarketing.com/case-studies", "https://mavixmarketing.com/case-studies/all-dogs-rock", "https://mavixmarketing.com/case-studies/construction-management-seo", "https://mavixmarketing.com/case-studies/dental-clinic-seo", "https://mavixmarketing.com/case-studies/edtech-software-seo", "https://mavixmarketing.com/case-studies/exam-prep-platform-seo", "https://mavixmarketing.com/case-studies/financial-advisers-seo", "https://mavixmarketing.com/case-studies/freight-forwarding-seo", "https://mavixmarketing.com/case-studies/home-goods-retailer-seo", "https://mavixmarketing.com/case-studies/hr-software-seo", "https://mavixmarketing.com/case-studies/la-vela-coffee", "https://mavixmarketing.com/case-studies/lead-gen-volume", "https://mavixmarketing.com/case-studies/martial-arts-academy-seo", "https://mavixmarketing.com/case-studies/meta-lead-gen", "https://mavixmarketing.com/case-studies/my-favorite-therapists", "https://mavixmarketing.com/case-studies/news-portal-seo", "https://mavixmarketing.com/case-studies/online-pharmacy-seo", "https://mavixmarketing.com/case-studies/orthopaedic-clinic-seo", "https://mavixmarketing.com/case-studies/plumbing-company-seo", "https://mavixmarketing.com/case-studies/property-classifieds-seo", "https://mavixmarketing.com/case-studies/real-estate-brokerage-seo", "https://mavixmarketing.com/case-studies/skincare-brand-seo", "https://mavixmarketing.com/seo-pricing", "https://mavixmarketing.com"];
+const BOOKING = 'https://cal.id/mavixmarketing/strategy-call'; // allowed only in the first follow-up after the audit
+// AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// never called Google's, and we never promise a spot in AI answers.
+function aiProblems(text) {
+  const out = [];
+  const plainText = String(text || '').replace(/https?:\/\/\S+/g, ' ');
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) {
+    if (!/\b(ai|chatgpt|chat gpt|gemini|perplexity|copilot|chatbots?|llms?)\b/i.test(sent)) continue;
+    const s = sent.replace(/\$\s*[\d,]+(\.\d+)?/g, ' ').replace(/#\s*1\b/g, ' ').replace(/\b(19|20)\d\d\b/g, ' ')
+      .replace(/\b\d+\s*(to|-|–)\s*\d+\s*(months?|weeks?|days?)\b/gi, ' ').replace(/\b\d+[- ]?(minutes?|mins?|months?|weeks?|days?|hours?|years?)\b/gi, ' ');
+    for (const m of s.matchAll(/(\d[\d,.]*\d|\d)\s*(%|percent\b|billion\b|million\b|thousand\b|bn\b|m\b|k\b|x\b|times\b)?/gi)) {
+      const v = (m[1] + (m[2] ? ' ' + m[2] : '')).toLowerCase();
+      if (/^2 billion$/.test(v) || /^(8|15) (%|percent)$/.test(v)) continue;
+      if (!m[2] && Number(m[1].replace(/,/g, '')) < 10) continue; // "top 3", "page 1"
+      out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
+    }
+    if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+  }
+  if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  return [...new Set(out)];
+}
+const words0 = x => String(x || '').split(/\s+/).filter(Boolean).length;
 const linkify = p => p.replace(/(https?:\/\/[^\s<]+?)([.,;:]?)(?=\s|$)/g, '<a href="$1">$1</a>$2');
 return $input.all().map((it, i) => {
   const { opus_body, transcript, site_notes, ...c } = ctx[i] ? ctx[i].json : {};
@@ -25,21 +49,41 @@ return $input.all().map((it, i) => {
        .replace(new RegExp('(could you |can you |please |just )?(share|send|paste|drop)( me| over)? (your|the) (website|site|url|web address|link)( link| address)?( here)?' + SEP + '?', 'gi'), '')
        .replace(/\n{3,}/g, '\n\n').trim();
   t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
-  for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
+  for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/') && !(c.audit_nudge && (u === BOOKING || u === BOOKING + '/'))) problems.push('link not allowed: ' + u);
   if (links.length > 2) problems.push('more than two links');
-  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/(google )?ai (search|results|answers|overviews)|ai search/gi, ''))) problems.push('uses a banned word');
+  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
+  problems.push(...aiProblems(t));
+  if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
-  if (/just following up|bringing this back|checking in|top of your inbox|floating this/i.test(t)) problems.push('only chases, says nothing new');
-  if (/cal\.id|calendly|\b(call|meeting|zoom|chat)\b[^.\n]{0,40}\b(together|time|slot|book|schedule)|\b(book|grab|schedule|hop on|jump on)\b[^.\n]{0,20}\b(call|time|meeting|chat)|(short|quick|brief) (call|chat|meeting)/i.test(t.replace(/no call (is )?needed|no need (for|to) (a )?call|without a call/gi, ''))) problems.push('suggests a call');
+  // follow-up 4 may open with one light bump ("bringing this back to the top of your inbox..."), as long as something useful follows
+  const BUMP = /[^.?\n]*(just following up|bringing this back|checking in|top of your inbox|floating this|slipped through)[^.?\n]*[.?]?/gi;
+  if (BUMP.test(t)) {
+    BUMP.lastIndex = 0;
+    const rest = t.replace(BUMP, ' ').split(/\s+/).filter(Boolean).length;
+    if (Number(c.number) !== 4 || c.date_followup || c.farhan_note || c.has_someone || c.audit_nudge || rest < 10) problems.push('only chases, says nothing new');
+  }
+  // the light check-ins (6 to 8) come after "this is my last email": they never say it again
+  if (Number(c.number) >= 6 && !c.farhan_note && /\blast (email|message|note|one)\b|close (your|the) file/i.test(t)) problems.push('a check-in that says last email or close your file');
+  // the first follow-up after the audit is a short nudge with the call link, nothing more
+  if (c.audit_nudge && words0(t) > 60) problems.push('the after-audit nudge is too long (' + words0(t) + ' words, about 40 is the aim)');
+  if (!c.audit_nudge && /cal\.id|calendly|\b(call|meeting|zoom|chat)\b[^.\n]{0,40}\b(together|time|slot|book|schedule)|\b(book|grab|schedule|hop on|jump on)\b[^.\n]{0,20}\b(call|time|meeting|chat)|(short|quick|brief) (call|chat|meeting)/i.test(t.replace(/no call (is )?needed|no need (for|to) (a )?call|without a call/gi, ''))) problems.push('suggests a call');
   // prices: none before the audit; after the audit only our own plan prices (rough job values are fine)
   const convo = String((ctx[i] && ctx[i].json.transcript) || c.history || '');
   const auditSent = /^FARHAN/m.test(convo) || /(audit|proposal|roadmap)[^\n]{0,60}(attached|enclosed|pdf)|here is (your|the) (audit|proposal)/i.test(convo);
-  const OURS = [349, 549, 1649, 1000];
+  // our prices (22 Oct): $999, $1,349, $1,999 and the $1,000 of the money back guarantee; older prices are always an error
+  const OURS = [999, 1349, 1999, 1000];
+  const OLD = [349, 549, 799, 1649, 1099, 1699];
+  for (const d of new Set((t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, ''))))) if (OLD.includes(d)) problems.push('an old price ($' + d + '); our prices are now $999, $1,349 and $1,999');
+  // FOLLOW-UPS NEVER GUESS MONEY SUMS ("$52,000 a year", "£2,500 a job"): only our own plan prices may appear
+  for (const m of t.match(/[$£€]\s*[\d,]+(\.\d+)?\s*(k\b)?|\b[\d,]+(\.\d+)?\s*(dollars|pounds|euros|usd|cad|aud|gbp|nzd)\b/gi) || []) {
+    const d = Number(m.replace(/[^\d.]/g, ''));
+    if (!(/^\$/.test(m.trim()) && OURS.includes(d))) problems.push('a guessed money sum (' + m.trim() + '); follow-ups never guess sums');
+  }
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
     const nums = (sent.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
     if (nums.length && !auditSent) problems.push('gives a price before the audit');
-    for (const d of nums) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
+    for (const d of nums) if (!OURS.includes(d) && !OLD.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
     if (/(£|€)\s*\d|\b(cad|aud|nzd|gbp|eur)\b/i.test(sent)) problems.push('our price not in usd');
   }
   // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it

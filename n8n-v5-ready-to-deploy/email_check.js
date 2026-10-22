@@ -4,6 +4,28 @@
 const cfg = $('Settings').first().json;
 const ctx = $('Opus Request').all();
 const ALLOWED = ["https://mavixmarketing.com/case-studies", "https://mavixmarketing.com/case-studies/all-dogs-rock", "https://mavixmarketing.com/case-studies/construction-management-seo", "https://mavixmarketing.com/case-studies/dental-clinic-seo", "https://mavixmarketing.com/case-studies/edtech-software-seo", "https://mavixmarketing.com/case-studies/exam-prep-platform-seo", "https://mavixmarketing.com/case-studies/financial-advisers-seo", "https://mavixmarketing.com/case-studies/freight-forwarding-seo", "https://mavixmarketing.com/case-studies/home-goods-retailer-seo", "https://mavixmarketing.com/case-studies/hr-software-seo", "https://mavixmarketing.com/case-studies/la-vela-coffee", "https://mavixmarketing.com/case-studies/lead-gen-volume", "https://mavixmarketing.com/case-studies/martial-arts-academy-seo", "https://mavixmarketing.com/case-studies/meta-lead-gen", "https://mavixmarketing.com/case-studies/my-favorite-therapists", "https://mavixmarketing.com/case-studies/news-portal-seo", "https://mavixmarketing.com/case-studies/online-pharmacy-seo", "https://mavixmarketing.com/case-studies/orthopaedic-clinic-seo", "https://mavixmarketing.com/case-studies/plumbing-company-seo", "https://mavixmarketing.com/case-studies/property-classifieds-seo", "https://mavixmarketing.com/case-studies/real-estate-brokerage-seo", "https://mavixmarketing.com/case-studies/skincare-brand-seo", "https://mavixmarketing.com/seo-pricing", "https://mavixmarketing.com/ads-pricing", "https://mavixmarketing.com", cfg.BOOKING_LINK];
+// AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// never called Google's, and we never promise a spot in AI answers.
+function aiProblems(text) {
+  const out = [];
+  const plainText = String(text || '').replace(/https?:\/\/\S+/g, ' ');
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) {
+    if (!/\b(ai|chatgpt|chat gpt|gemini|perplexity|copilot|chatbots?|llms?)\b/i.test(sent)) continue;
+    const s = sent.replace(/\$\s*[\d,]+(\.\d+)?/g, ' ').replace(/#\s*1\b/g, ' ').replace(/\b(19|20)\d\d\b/g, ' ')
+      .replace(/\b\d+\s*(to|-|–)\s*\d+\s*(months?|weeks?|days?)\b/gi, ' ').replace(/\b\d+[- ]?(minutes?|mins?|months?|weeks?|days?|hours?|years?)\b/gi, ' ');
+    for (const m of s.matchAll(/(\d[\d,.]*\d|\d)\s*(%|percent\b|billion\b|million\b|thousand\b|bn\b|m\b|k\b|x\b|times\b)?/gi)) {
+      const v = (m[1] + (m[2] ? ' ' + m[2] : '')).toLowerCase();
+      if (/^2 billion$/.test(v) || /^(8|15) (%|percent)$/.test(v)) continue;
+      if (!m[2] && Number(m[1].replace(/,/g, '')) < 10) continue; // "top 3", "page 1"
+      out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
+    }
+    if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+  }
+  if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  return [...new Set(out)];
+}
 const linkify = p => p.replace(/(https?:\/\/[^\s<]+?)([.,;:]?)(?=\s|$)/g, '<a href="$1">$1</a>$2');
 // one long block: break it into paragraphs of at most two sentences
 function paragraphs(t) {
@@ -43,25 +65,29 @@ return $input.all().map((it, i) => {
   t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
   if (!c.website_known && /prepare the audit/.test(String(r.flag || '')) && !/website not known/.test(String(r.flag || ''))) r.flag = (String(r.flag || '').trim() ? String(r.flag).trim() + '; ' : '') + 'website not known, please find it';
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
-  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/ai search|ai results|ai answers/gi, ''))) problems.push('uses a banned word');
+  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
+  problems.push(...aiProblems(t));
+  if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
   // NO PRICE NUMBERS BEFORE THE AUDIT (pay per lead has its own price, and after the audit the plans may be named)
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|roadmap|pricing|plan)[^\n]{0,60}(attached|enclosed|pdf|docs\.google|drive\.google)|attached[^\n]{0,60}(audit|proposal|roadmap|plan)|here is (your|the) (audit|proposal|roadmap|plan)|(sent|sending) you the (audit|proposal|roadmap)/i.test(convo);
-  // PRICES: only our own numbers. Before the audit only the range ($349 to $1,649), Growth at $549 and
-  // the $1,000 of the money back promise may appear (the writer gives the range only if they insist).
-  // A currency question about a price we already mentioned is fine. Pay per lead has its own prices.
+  // PRICES (22 Oct): only our own numbers, $999, $1,349, $1,999 and the $1,000 of the money back
+  // guarantee. Before the audit the range ($999 to $1,999) and Growth at $1,349 may appear (the writer
+  // gives the range only if they insist). Any older price is always an error, even if it is in the thread.
   const dollarsIn = x => (x.match(/\$\s*[\d,]+(\.\d+)?/g) || []).map(v => Number(v.replace(/[^\d.]/g, '')));
   const dollars = dollarsIn(t);
-  const OURS = [349, 549, 1649, 1000];
-  const priceSeen = /\$\s*(349|549|1,?649)/.test(convo);
+  const OURS = [999, 1349, 1999, 1000];
+  const OLD = [349, 549, 799, 1649, 1099, 1699];
+  const priceSeen = /\$\s*(999|1,?349|1,?999)\b/.test(convo);
+  for (const d of new Set(dollars)) if (OLD.includes(d)) problems.push('an old price ($' + d + '); our prices are now $999, $1,349 and $1,999');
   // a sentence about our plans may only carry our own numbers (rough job values sit in other sentences)
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
-    for (const d of dollarsIn(sent)) if (!OURS.includes(d)) problems.push('a price that is not one of ours ($' + d + '), check it');
+    for (const d of dollarsIn(sent)) if (!OURS.includes(d) && !OLD.includes(d)) problems.push('a price that is not one of ours ($' + d + '), check it');
   }
-  if (dollars.some(d => d === 349 || d === 1649) && !auditDelivered && !priceSeen && !/\$\s*349\s*(to|and|-|–)\s*\$\s*1,?649/.test(t)) problems.push('gives plan prices before the audit without the range');
+  if (dollars.some(d => d === 999 || d === 1999) && !auditDelivered && !priceSeen && !/\$\s*999\s*(to|and|-|–)\s*\$\s*1,?999/.test(t)) problems.push('gives plan prices before the audit without the range');
   // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it
   for (const sent of t.split(/(?<=[.?!])\s+|\n+|[,;]?\s*\b(?:but|however|though|although|where|while)\b\s*|;\s*/i).filter(Boolean)) {
     const offers = (/\bper (qualified |warm )?(lead|appointment|consultation|call|booking)\b/i.test(sent) && /\$\s*\d/.test(sent)) || /\b(you only pay|only pay (for|per|when)|pay only (for|per|when)|pay per (qualified |warm )?lead|lead generation through|commission)\b/i.test(sent);
