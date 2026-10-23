@@ -32,14 +32,61 @@ function pickCases(text, n) {
 const caseLines = list => list.map(c => '- ' + c.t + ' ' + c.u).join('\n');
 const caseSent = text => /mavixmarketing\.com\/case-studies\/[a-z]/.test(String(text || '')) || /lnkd\.in\/p\/gMHV49kf/.test(String(text || ''));
 
+// PRICES BY CAMPAIGN (23 Oct). The AI Written campaign has the new prices; every other campaign
+// (USA/Canada, Aus/UK/NZ/Sing and the older lists) and LinkedIn keep the old prices. A price we already
+// quoted to someone earlier in the conversation is always honoured: if our earlier messages show a
+// price from one list, the whole conversation stays on that list. Keep this block the same in
+// email_opus_request.built.js, fu_request.built.js and li_opus.built.js; the checkers use the same rules.
+const AI_WRITTEN_SEQUENCES = ['38eb9458-6fd2-48e8-be34-fd88e328a183'];
+const PRICE_SETS = {
+  old: { name: 'old', starter: '$349', growth: '$549', premium: '$1,649', nums: [349, 549, 1649] },
+  new: { name: 'new', starter: '$999', growth: '$1,349', premium: '$1,999', nums: [999, 1349, 1999] },
+};
+const PRICE_SENT = /(a|per) month|\/mo\b|monthly|\bplans?\b|our (price|fee)|we charge|(starts?|starting|ranges?) (at|from)|\b(starter|growth|premium)\b/i;
+const VALUE_SENT = /worth|\bjob|customer|booking|install|patient|client|often around|roughly|typical|usually around/i;
+// every plan price we have ever used: found in any sentence of ours, even next to a rough job value
+const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+// dollar amounts in the price sentences of OUR earlier messages (never theirs, never rough job values)
+function quotedPrices(transcript) {
+  const found = new Set();
+  const blocks = String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/);
+  for (const b of blocks) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const sent of b.split(/(?<=[.?!])\s+|\n+/)) {
+      if (!PRICE_SENT.test(sent)) continue;
+      const value = VALUE_SENT.test(sent);
+      for (const v of sent.match(/\$\s*[\d,]+/g) || []) { const d = Number(v.replace(/[^\d]/g, '')); if (d >= 100 && d !== 1000 && (!value || KNOWN_PRICES.includes(d))) found.add(d); }
+    }
+  }
+  return [...found];
+}
+function pricesFor(sequence, sequenceName, transcript, forceOld) {
+  const quoted = quotedPrices(transcript);
+  const hits = k => PRICE_SETS[k].nums.filter(d => quoted.includes(d)).length;
+  let set;
+  if (hits('old') || hits('new')) set = hits('new') > hits('old') ? PRICE_SETS.new : PRICE_SETS.old;
+  else if (forceOld) set = PRICE_SETS.old;
+  else {
+    const id = String(sequence || '').trim();
+    set = (id ? AI_WRITTEN_SEQUENCES.includes(id) : /^\s*ai written/i.test(String(sequenceName || ''))) ? PRICE_SETS.new : PRICE_SETS.old;
+  }
+  const fmt = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
+  const lines = ['PRICES FOR THIS CONVERSATION (US dollars a month; prices depend on the campaign this person came from, so use only these numbers):',
+    '- Before they have the audit: the price is personalised (see the price rules in the facts). Only if they ask again or insist on a number: "it ranges from ' + set.starter + ' to ' + set.premium + ' a month", and most clients start on our Growth plan at ' + set.growth + ', the plan that comes with the 90 day money back guarantee.',
+    '- After they have the audit: Starter ' + set.starter + ' (no money back guarantee), Growth ' + set.growth + ' (the plan we recommend and where most clients start, with the 90 day money back guarantee), Premium ' + set.premium + ' (also with the 90 day money back guarantee).',
+    quoted.length ? '- ALREADY QUOTED to this person earlier in the conversation: ' + quoted.map(fmt).join(', ') + '. Keep to it: use the same number if price comes up, never contradict it, never put a different price next to it, and never say our prices changed or differ for anyone else.' : '- No price has been quoted to this person yet.'];
+  return { price_set: set.name, price_nums: set.nums, prices_quoted: quoted, prices_block: lines.join('\n') };
+}
+
 // FACTS AND SELLING RULES shared by every writer (email replies, email follow-ups, LinkedIn).
-// Farhan's rules from 18 Oct, prices from 22 Oct. Change prices or promises here only
+// Farhan's rules from 18 Oct, prices by campaign from 23 Oct (the numbers are in PRICES BY CAMPAIGN above
+// and reach the writer as the PRICES block in the message). Change promises here only
 // (and keep email_opus_request.built.js, fu_request.built.js and li_opus.built.js the same).
 const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
 - Mavix Marketing: SEO agency, running since 2019, 500+ clients served. We help businesses get found where people search now: Google, Google Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT.
-- PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: "it ranges from $999 to $1,999 a month", and most clients start on our Growth plan at $1,349, the plan that comes with the 90 day money back guarantee.
-- PRICE AFTER THEY HAVE THE AUDIT: Starter $999, Growth $1,349, Premium $1,999 a month. Recommend Growth at $1,349 first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
-- OLDER PRICES: our prices changed on 22 Oct. If the conversation shows an older price we quoted before (for example $349, $549 or $1,649), never repeat it, never confirm it and never put a new number next to it. Answer everything else normally and flag "an older price was quoted earlier, Farhan to confirm their price". If their question is about that price, do not write (send false) and use the same flag.
+- PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: give the range from the PRICES block in the message, and say most clients start on our Growth plan (its price is in the PRICES block), the plan that comes with the 90 day money back guarantee.
+- PRICE AFTER THEY HAVE THE AUDIT: the three plans, Starter, Growth and Premium, with the prices in the PRICES block in the message. Prices depend on which campaign the person came from, so never use any other numbers. Recommend Growth first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
+- PRICES ALREADY QUOTED: if we already quoted a price to this person earlier in the conversation, keep that same price. Use the same number if price comes up, never contradict it, never put a different number next to it, and never say our prices changed or differ for anyone else. The PRICES block lists any price already quoted.
 - MONEY BACK: a 90 day money back guarantee. We agree a clear target with them before we start, and if we miss it within 90 days, they get everything they paid back plus $1,000 on top from us. It comes with Growth and Premium (Starter has none; say that only if they ask about Starter or you offer Starter). Always call it the 90 day money back guarantee, never a 2 month or 3 month promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
 - HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own business manager and SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
 - NO LONG CONTRACT: we never tie clients into a long contract, because we know we can deliver. Our agreement has no time limit; the only thing it ties is us, to deliver.
@@ -79,7 +126,7 @@ BY SITUATION (write your own words)
 - "Tried it, didn't work": offer a free look and the first thing we'd fix; mention we agree a clear target up front and the money back promise if it fits.
 - "seo", "yes, take a look", "interested": ask which services they want more enquiries for (offer likely options). Never ask for their website.
 - They told us the services: "Great, I'll start on the audit and send it over when it's ready." Offer the booking link {{BOOKING}} once, as an option, saying it's not a pitch. Flag "prepare the audit for <website, or 'website not known, please find it'>, focus <services>".
-- Price, results, guarantee, "later" or "next year", "how does it work", "can't afford it", "fully booked": follow the facts below (personalised price, range only if they insist, Growth at $1,349 after the audit, money back plus $1,000, how we work, no long contract, SEO vs ads, value with rough numbers, never say no). For "later": give one solid reason waiting costs them and offer the free check now; put any date in the flag.
+- Price, results, guarantee, "later" or "next year", "how does it work", "can't afford it", "fully booked": follow the facts below (personalised price, range only if they insist, Growth at its price from the PRICES block after the audit, keep any price already quoted, money back plus $1,000, how we work, no long contract, SEO vs ads, value with rough numbers, never say no). For "later": give one solid reason waiting costs them and offer the free check now; put any date in the flag.
 - They want a call or WhatsApp: USA or Canada +1 510 312 5086 (calls only); everyone else +971 56 632 0456 (calls and WhatsApp); if unsure give both. Booking link as the other option. If they give their number, say "I'll give you a call" and flag "call <name> on <number>".
 - "Who are you" / "what's this about": I run Mavix Marketing, we do SEO for small businesses; I was curious how {company} gets enquiries from Google.
 - "How did you get my details": we came across their profile on LinkedIn while looking for businesses like theirs. No pitch.
@@ -102,11 +149,12 @@ return $input.all().map(it => {
   const about = [c.job_title, c.company, c.headline, c.bio, c.company_overview, c.site_summary].filter(Boolean).join('\n');
   const theirs = String(c.transcript || '').split(/\n\n(?=(?:THEM|US)[ (:])/).filter(b => /^THEM/.test(b)).join('\n') + '\n' + about;
   const cases = 'CASE STUDIES you may use (closest first; say the result in plain words, then the link; never change a number):' + (caseSent(c.transcript) ? '\nA case study link was already sent in this chat, so do not send another one.' : '') + '\n' + caseLines(pickCases(theirs, 3)) + '\nThe firm in Dublin (construction management): about 406,000 times shown on Google and 9,940 clicks in about five months, no ads. https://lnkd.in/p/gMHV49kf\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies';
-  const user = 'Their linkedin profile: ' + c.lead_url + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.job_title ? '\nTheir job: ' + c.job_title : '') + (c.company ? '\nTheir company: ' + c.company : '') + (c.website_guess ? '\nTheir website (from their profile): ' + c.website_guess : '\nTheir website: not known (never ask for it; flag it instead)') + (c.headline ? '\nTheir linkedin headline: ' + c.headline : '') + (c.bio ? '\nTheir linkedin about section: ' + c.bio : '') + (c.company_overview ? '\nAbout their company: ' + c.company_overview : '') + (c.site_summary ? '\nWhat their website home page says:\n' + c.site_summary : '') +
+  const pr = pricesFor('', '', c.transcript, true); // LinkedIn always uses the old prices (or a price already quoted)
+  const user = pr.prices_block + '\n\nTheir linkedin profile: ' + c.lead_url + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.job_title ? '\nTheir job: ' + c.job_title : '') + (c.company ? '\nTheir company: ' + c.company : '') + (c.website_guess ? '\nTheir website (from their profile): ' + c.website_guess : '\nTheir website: not known (never ask for it; flag it instead)') + (c.headline ? '\nTheir linkedin headline: ' + c.headline : '') + (c.bio ? '\nTheir linkedin about section: ' + c.bio : '') + (c.company_overview ? '\nAbout their company: ' + c.company_overview : '') + (c.site_summary ? '\nWhat their website home page says:\n' + c.site_summary : '') +
     (c.campaign ? '\nProsp campaign: ' + c.campaign : '') +
     '\n\n' + cases +
     '\n\nThe whole conversation (oldest first):\n\n' + c.transcript + '\n\nWrite the reply to their newest message.';
-  return { json: { ...c, opus_body: JSON.stringify({
+  return { json: { ...c, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, opus_body: JSON.stringify({
     model: cfg.WRITE_MODEL,
     max_tokens: 4000,
     reasoning: { effort: 'medium' },

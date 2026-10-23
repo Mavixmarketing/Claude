@@ -1,16 +1,20 @@
 [
  {
   "workflowId": "W8ou5vT7aQu8q8zO",
-  "activeVersionId": "3bb8c89a-af9d-4b08-853e-84f6cd6006fd",
+  "activeVersionId": "20d8d1e6-8836-4e82-a376-eb60268aaddd",
   "nodes": {
    "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
    "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
-   "Luna Request": "n8n-v5-ready-to-deploy/ra_luna_request.js"
+   "Luna Request": "n8n-v5-ready-to-deploy/ra_luna_request.js",
+   "Build Conversation": "n8n-v5-ready-to-deploy/ra_build_conversation.js",
+   "Slack Card": "n8n-v5-ready-to-deploy/ra_slack_card.js",
+   "Pick New Replies": "n8n-v5-ready-to-deploy/ra_pick_new_replies.js",
+   "Settings": "n8n-v5-ready-to-deploy/ra_settings.js"
   }
  },
  {
   "workflowId": "KMRwc4kovheNY2zI",
-  "activeVersionId": "1f3fc6dc-d0ed-4ed6-9469-3d2277acf6b5",
+  "activeVersionId": "3d395da4-5cf5-431b-b751-c768e9d6fb69",
   "nodes": {
    "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
@@ -22,14 +26,14 @@
  },
  {
   "workflowId": "4jvATMqNUMchMEc5",
-  "activeVersionId": "2e61a504-136f-45d1-aa24-429c29b83f74",
+  "activeVersionId": "a8a4606c-e604-4d97-9c72-835b7214911a",
   "nodes": {
    "Build Report": "n8n-v5-ready-to-deploy/report.js"
   }
  },
  {
   "workflowId": "WNHqMnyuHz2n42sL",
-  "activeVersionId": "aeafcbd5-6286-4c4b-997e-f715c540c71f",
+  "activeVersionId": "54d50cdb-d4e3-4bef-9923-813f9c13a200",
   "nodes": {
    "Opus Request": "n8n-v5-ready-to-deploy/li_opus.built.js",
    "Check The Reply": "n8n-v5-ready-to-deploy/li_check.js",
@@ -38,7 +42,7 @@
  },
  {
   "workflowId": "G0THBksF367XBBXb",
-  "activeVersionId": "4ed99b3a-7cd2-488b-8896-43dbaf8c91bb",
+  "activeVersionId": "dedcfae3-7ff4-495a-a08c-f31a788ba0ab",
   "nodes": {
    "Follow-up Request": "n8n-v5-ready-to-deploy/lifu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/lifu_check.js",

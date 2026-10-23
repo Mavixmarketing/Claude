@@ -2,7 +2,9 @@
 // conversation needs (the closest case studies, phone numbers when they want to talk). The core rules are the same on every call, so OpenRouter caches them.
 // Farhan's rules of 18 Oct: normal human writing, personalised price (range only if they insist),
 // Growth first, money back plus $1,000, never say no to a business, show value with numbers.
-// 22 Oct: new prices ($999 / $1,349 / $1,999) and the AI search angle (both in FACTS below).
+// 22 Oct: the AI search angle (in FACTS below). 23 Oct: prices by campaign (PRICES BY CAMPAIGN below): the
+// AI Written campaign has $999 / $1,349 / $1,999, every other campaign $349 / $549 / $1,649, and a price
+// already quoted to the person is kept.
 const cfg = $('Settings').first().json;
 // CASE STUDIES: the code picks the two or three closest to their business, so the writer only sees those.
 const CASES = [
@@ -35,14 +37,61 @@ function pickCases(text, n) {
 const caseLines = list => list.map(c => '- ' + c.t + ' ' + c.u).join('\n');
 const caseSent = text => /mavixmarketing\.com\/case-studies\/[a-z]/.test(String(text || '')) || /lnkd\.in\/p\/gMHV49kf/.test(String(text || ''));
 
+// PRICES BY CAMPAIGN (23 Oct). The AI Written campaign has the new prices; every other campaign
+// (USA/Canada, Aus/UK/NZ/Sing and the older lists) and LinkedIn keep the old prices. A price we already
+// quoted to someone earlier in the conversation is always honoured: if our earlier messages show a
+// price from one list, the whole conversation stays on that list. Keep this block the same in
+// email_opus_request.built.js, fu_request.built.js and li_opus.built.js; the checkers use the same rules.
+const AI_WRITTEN_SEQUENCES = ['38eb9458-6fd2-48e8-be34-fd88e328a183'];
+const PRICE_SETS = {
+  old: { name: 'old', starter: '$349', growth: '$549', premium: '$1,649', nums: [349, 549, 1649] },
+  new: { name: 'new', starter: '$999', growth: '$1,349', premium: '$1,999', nums: [999, 1349, 1999] },
+};
+const PRICE_SENT = /(a|per) month|\/mo\b|monthly|\bplans?\b|our (price|fee)|we charge|(starts?|starting|ranges?) (at|from)|\b(starter|growth|premium)\b/i;
+const VALUE_SENT = /worth|\bjob|customer|booking|install|patient|client|often around|roughly|typical|usually around/i;
+// every plan price we have ever used: found in any sentence of ours, even next to a rough job value
+const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+// dollar amounts in the price sentences of OUR earlier messages (never theirs, never rough job values)
+function quotedPrices(transcript) {
+  const found = new Set();
+  const blocks = String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/);
+  for (const b of blocks) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const sent of b.split(/(?<=[.?!])\s+|\n+/)) {
+      if (!PRICE_SENT.test(sent)) continue;
+      const value = VALUE_SENT.test(sent);
+      for (const v of sent.match(/\$\s*[\d,]+/g) || []) { const d = Number(v.replace(/[^\d]/g, '')); if (d >= 100 && d !== 1000 && (!value || KNOWN_PRICES.includes(d))) found.add(d); }
+    }
+  }
+  return [...found];
+}
+function pricesFor(sequence, sequenceName, transcript, forceOld) {
+  const quoted = quotedPrices(transcript);
+  const hits = k => PRICE_SETS[k].nums.filter(d => quoted.includes(d)).length;
+  let set;
+  if (hits('old') || hits('new')) set = hits('new') > hits('old') ? PRICE_SETS.new : PRICE_SETS.old;
+  else if (forceOld) set = PRICE_SETS.old;
+  else {
+    const id = String(sequence || '').trim();
+    set = (id ? AI_WRITTEN_SEQUENCES.includes(id) : /^\s*ai written/i.test(String(sequenceName || ''))) ? PRICE_SETS.new : PRICE_SETS.old;
+  }
+  const fmt = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
+  const lines = ['PRICES FOR THIS CONVERSATION (US dollars a month; prices depend on the campaign this person came from, so use only these numbers):',
+    '- Before they have the audit: the price is personalised (see the price rules in the facts). Only if they ask again or insist on a number: "it ranges from ' + set.starter + ' to ' + set.premium + ' a month", and most clients start on our Growth plan at ' + set.growth + ', the plan that comes with the 90 day money back guarantee.',
+    '- After they have the audit: Starter ' + set.starter + ' (no money back guarantee), Growth ' + set.growth + ' (the plan we recommend and where most clients start, with the 90 day money back guarantee), Premium ' + set.premium + ' (also with the 90 day money back guarantee).',
+    quoted.length ? '- ALREADY QUOTED to this person earlier in the conversation: ' + quoted.map(fmt).join(', ') + '. Keep to it: use the same number if price comes up, never contradict it, never put a different price next to it, and never say our prices changed or differ for anyone else.' : '- No price has been quoted to this person yet.'];
+  return { price_set: set.name, price_nums: set.nums, prices_quoted: quoted, prices_block: lines.join('\n') };
+}
+
 // FACTS AND SELLING RULES shared by every writer (email replies, email follow-ups, LinkedIn).
-// Farhan's rules from 18 Oct, prices from 22 Oct. Change prices or promises here only
+// Farhan's rules from 18 Oct, prices by campaign from 23 Oct (the numbers are in PRICES BY CAMPAIGN above
+// and reach the writer as the PRICES block in the message). Change promises here only
 // (and keep email_opus_request.built.js, fu_request.built.js and li_opus.built.js the same).
 const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
 - Mavix Marketing: SEO agency, running since 2019, 500+ clients served. We help businesses get found where people search now: Google, Google Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT.
-- PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: "it ranges from $999 to $1,999 a month", and most clients start on our Growth plan at $1,349, the plan that comes with the 90 day money back guarantee.
-- PRICE AFTER THEY HAVE THE AUDIT: Starter $999, Growth $1,349, Premium $1,999 a month. Recommend Growth at $1,349 first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
-- OLDER PRICES: our prices changed on 22 Oct. If the conversation shows an older price we quoted before (for example $349, $549 or $1,649), never repeat it, never confirm it and never put a new number next to it. Answer everything else normally and flag "an older price was quoted earlier, Farhan to confirm their price". If their question is about that price, do not write (send false) and use the same flag.
+- PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: give the range from the PRICES block in the message, and say most clients start on our Growth plan (its price is in the PRICES block), the plan that comes with the 90 day money back guarantee.
+- PRICE AFTER THEY HAVE THE AUDIT: the three plans, Starter, Growth and Premium, with the prices in the PRICES block in the message. Prices depend on which campaign the person came from, so never use any other numbers. Recommend Growth first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
+- PRICES ALREADY QUOTED: if we already quoted a price to this person earlier in the conversation, keep that same price. Use the same number if price comes up, never contradict it, never put a different number next to it, and never say our prices changed or differ for anyone else. The PRICES block lists any price already quoted.
 - MONEY BACK: a 90 day money back guarantee. We agree a clear target with them before we start, and if we miss it within 90 days, they get everything they paid back plus $1,000 on top from us. It comes with Growth and Premium (Starter has none; say that only if they ask about Starter or you offer Starter). Always call it the 90 day money back guarantee, never a 2 month or 3 month promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
 - HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own business manager and SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
 - NO LONG CONTRACT: we never tie clients into a long contract, because we know we can deliver. Our agreement has no time limit; the only thing it ties is us, to deliver.
@@ -82,8 +131,8 @@ WHAT TO DO, BY SITUATION (this shows the thinking; write your own words)
 - They said yes or showed interest but haven't told us what they want: answer any question first. Then ask ONE easy question about what they want more of, offering two or three likely options for their kind of business so they can just pick one (for example "is it mostly boiler installs, repairs, or servicing?"). Add the area only if we don't know it.
 - They told us what they want (a service, a kind of customer, an area or a goal): the "start preparing your audit" email, in your own words, tied to what they said. It must use the word "audit" and say the optional call is "not a pitch", just a chat to understand their business. Offer the booking link {{BOOKING}} once in the whole conversation, only as an option. Set flag to "prepare the audit for <website, or 'website not known, please find it'>, focus <what they said>".
 - "Go", "yes" or "carry on": check what came just before. If it answers our audit offer, confirm in one short line. If the audit was already sent, a "go" is not approval of paid work unless they already accepted a clear price and scope; ask in one line whether they want us to send the scope and start steps.
-- Price questions: follow the price facts below exactly. Before the audit: the price is personalised, set by Farhan after assessing their site, and comes with the free audit; give the range only if they ask again or insist. After the audit: recommend Growth at $1,349 and show the value with numbers. A currency question about a price already mentioned: just answer it (US dollars).
-- "Too expensive" or "can't afford it": agree it's real money; never argue and never lower the price. Put it next to the value: what one extra customer or job is worth to them (a rough figure). Before the audit, say the price is set to their site and goals, so it's often less than people expect. After the audit, if money is clearly tight, offer to start on Starter at $999 (it has no money back guarantee) or with just the first fix from the audit. Change the plan, never the number.
+- Price questions: follow the price facts below exactly. Before the audit: the price is personalised, set by Farhan after assessing their site, and comes with the free audit; give the range only if they ask again or insist. After the audit: recommend Growth at its price from the PRICES block and show the value with numbers. If a price was already quoted to them, keep to it. A currency question about a price already mentioned: just answer it (US dollars).
+- "Too expensive" or "can't afford it": agree it's real money; never argue and never lower the price. Put it next to the value: what one extra customer or job is worth to them (a rough figure). Before the audit, say the price is set to their site and goals, so it's often less than people expect. After the audit, if money is clearly tight, offer to start on Starter (its price is in the PRICES block; it has no money back guarantee) or with just the first fix from the audit. Change the plan, never the number.
 - Results, risk or guarantee worries ("what if it doesn't work", "we paid an agency before"): acknowledge it, say what we control (a clear target agreed up front, the work, simple reports), then the money back promise with the $1,000 on top. Never promise a first place on Google or a number of customers.
 - "How long does it take" or "why not just ads": SEO usually takes 3 to 6 months to build, then keeps bringing customers without paying per click; ads stop when you stop paying. They work well together.
 - Proof from their kind of business: share the closest case study and say it's the closest to their work. Never say we have no case study or haven't worked with their kind of business.
@@ -132,7 +181,9 @@ return $input.all().map(it => {
   const theirs = parts.filter((b, k) => /^\s*THEM/.test(b) || k === 0).join('\n') + '\n' + String(c.site_seen || '') + '\n' + String(c.email || '').split('@')[1];
   const site = siteFrom(c);
   const wantsTalk = /\b(call|calls|phone|number|talk|speak|meet|meeting|zoom|teams|whatsapp|ring me|contact details)\b/i.test(String(c.their_latest || ''));
+  const pr = pricesFor(c.sequence, c.sequence_name, transcript, false);
   const extra = [];
+  extra.push(pr.prices_block);
   extra.push('CASE STUDIES you may use (the closest to their business first; say the result in plain words, then the link; never change a number). Proof page with all results, client videos and reviews: https://mavixmarketing.com/case-studies' + (caseSent(transcript) ? '\nA case study link was already sent in this conversation, so do not send another one.' : '') + '\n' + caseLines(pickCases(theirs, 3)));
   if (wantsTalk) extra.push(PHONE);
   const user = 'Today is ' + new Date().toISOString().slice(0, 10) + '.\nTheir email: ' + c.email +
@@ -142,7 +193,7 @@ return $input.all().map(it => {
     '\n\n' + extra.join('\n\n') +
     '\n\nThe whole conversation (oldest first):\n\n' + transcript +
     '\n\nWrite the reply to their newest message.';
-  return { json: { ...c, website_known: site, opus_body: JSON.stringify({
+  return { json: { ...c, website_known: site, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, opus_body: JSON.stringify({
     model: cfg.WRITE_MODEL,
     max_tokens: 3000,
     reasoning: { effort: 'medium' },

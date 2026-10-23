@@ -64,17 +64,23 @@ return $input.all().map((it, i) => {
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|which (website|site) should/i.test(t)) problems.push('asks for the website');
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|check)[^.\n]{0,40}(attached|enclosed)|here is (your|the) (audit|proposal|check)|(sent|sending) you the (audit|proposal)/i.test(convo);
-  // prices (22 Oct): only our own numbers, $999, $1,349, $1,999 and the $1,000 of the money back guarantee;
-  // before the audit only the range ($999 to $1,999) or Growth at $1,349; older prices are always an error
-  const OURS = [999, 1349, 1999, 1000];
-  const OLD = [349, 549, 799, 1649, 1099, 1699];
-  const priceSeen = /\$\s*(999|1,?349|1,?999)\b/.test(convo);
-  for (const d of new Set((t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, ''))))) if (OLD.includes(d)) problems.push('an old price ($' + d + '); our prices are now $999, $1,349 and $1,999');
+  // PRICES (23 Oct): LinkedIn uses the old price list ($349, $549, $1,649) and the $1,000 of the money back
+  // guarantee; a plan price from the other list only if it was already quoted to this person earlier in the chat.
+  // Before the audit only the range ($349 to $1,649) or Growth.
+  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+  const SET = Array.isArray(c.price_nums) && c.price_nums.length === 3 ? c.price_nums.map(Number) : [349, 549, 1649];
+  const QUOTED = (Array.isArray(c.prices_quoted) ? c.prices_quoted : []).map(Number);
+  const OURS = SET.concat([1000], QUOTED);
+  const money = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
+  const amount = d => money(d).slice(1).replace(',', ',?');
+  const priceSeen = SET.concat(QUOTED).some(d => new RegExp('\\$\\s*' + amount(d) + '\\b').test(convo));
+  const rangeRe = new RegExp('\\$\\s*' + amount(SET[0]) + '\\s*(to|and|-|–)\\s*\\$\\s*' + amount(SET[2]));
+  for (const d of new Set((t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, ''))))) if (KNOWN_PRICES.includes(d) && !OURS.includes(d)) problems.push('a price from the other price list (' + money(d) + '); LinkedIn uses ' + SET.map(money).join(', '));
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;
     const nums = (sent.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
-    for (const d of nums) if (!OURS.includes(d) && !OLD.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
-    if (nums.some(d => d === 999 || d === 1999) && !auditDelivered && !priceSeen && !/\$\s*999\s*(to|and|-|–)\s*\$\s*1,?999/.test(sent)) problems.push('gives plan prices before the audit without the range');
+    for (const d of nums) if (!OURS.includes(d) && !KNOWN_PRICES.includes(d)) problems.push('a price that is not one of ours ($' + d + ')');
+    if (nums.some(d => (d === SET[0] || d === SET[2]) && !QUOTED.includes(d)) && !auditDelivered && !priceSeen && !rangeRe.test(sent)) problems.push('gives plan prices before the audit without the range');
     if (/(£|€)\s*\d|\b(cad|aud|nzd|gbp|eur)\b/i.test(sent)) problems.push('our price not in usd');
   }
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);

@@ -33,14 +33,61 @@ function pickCases(text, n) {
 const caseLines = list => list.map(c => '- ' + c.t + ' ' + c.u).join('\n');
 const caseSent = text => /mavixmarketing\.com\/case-studies\/[a-z]/.test(String(text || '')) || /lnkd\.in\/p\/gMHV49kf/.test(String(text || ''));
 
+// PRICES BY CAMPAIGN (23 Oct). The AI Written campaign has the new prices; every other campaign
+// (USA/Canada, Aus/UK/NZ/Sing and the older lists) and LinkedIn keep the old prices. A price we already
+// quoted to someone earlier in the conversation is always honoured: if our earlier messages show a
+// price from one list, the whole conversation stays on that list. Keep this block the same in
+// email_opus_request.built.js, fu_request.built.js and li_opus.built.js; the checkers use the same rules.
+const AI_WRITTEN_SEQUENCES = ['38eb9458-6fd2-48e8-be34-fd88e328a183'];
+const PRICE_SETS = {
+  old: { name: 'old', starter: '$349', growth: '$549', premium: '$1,649', nums: [349, 549, 1649] },
+  new: { name: 'new', starter: '$999', growth: '$1,349', premium: '$1,999', nums: [999, 1349, 1999] },
+};
+const PRICE_SENT = /(a|per) month|\/mo\b|monthly|\bplans?\b|our (price|fee)|we charge|(starts?|starting|ranges?) (at|from)|\b(starter|growth|premium)\b/i;
+const VALUE_SENT = /worth|\bjob|customer|booking|install|patient|client|often around|roughly|typical|usually around/i;
+// every plan price we have ever used: found in any sentence of ours, even next to a rough job value
+const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+// dollar amounts in the price sentences of OUR earlier messages (never theirs, never rough job values)
+function quotedPrices(transcript) {
+  const found = new Set();
+  const blocks = String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/);
+  for (const b of blocks) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const sent of b.split(/(?<=[.?!])\s+|\n+/)) {
+      if (!PRICE_SENT.test(sent)) continue;
+      const value = VALUE_SENT.test(sent);
+      for (const v of sent.match(/\$\s*[\d,]+/g) || []) { const d = Number(v.replace(/[^\d]/g, '')); if (d >= 100 && d !== 1000 && (!value || KNOWN_PRICES.includes(d))) found.add(d); }
+    }
+  }
+  return [...found];
+}
+function pricesFor(sequence, sequenceName, transcript, forceOld) {
+  const quoted = quotedPrices(transcript);
+  const hits = k => PRICE_SETS[k].nums.filter(d => quoted.includes(d)).length;
+  let set;
+  if (hits('old') || hits('new')) set = hits('new') > hits('old') ? PRICE_SETS.new : PRICE_SETS.old;
+  else if (forceOld) set = PRICE_SETS.old;
+  else {
+    const id = String(sequence || '').trim();
+    set = (id ? AI_WRITTEN_SEQUENCES.includes(id) : /^\s*ai written/i.test(String(sequenceName || ''))) ? PRICE_SETS.new : PRICE_SETS.old;
+  }
+  const fmt = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
+  const lines = ['PRICES FOR THIS CONVERSATION (US dollars a month; prices depend on the campaign this person came from, so use only these numbers):',
+    '- Before they have the audit: the price is personalised (see the price rules in the facts). Only if they ask again or insist on a number: "it ranges from ' + set.starter + ' to ' + set.premium + ' a month", and most clients start on our Growth plan at ' + set.growth + ', the plan that comes with the 90 day money back guarantee.',
+    '- After they have the audit: Starter ' + set.starter + ' (no money back guarantee), Growth ' + set.growth + ' (the plan we recommend and where most clients start, with the 90 day money back guarantee), Premium ' + set.premium + ' (also with the 90 day money back guarantee).',
+    quoted.length ? '- ALREADY QUOTED to this person earlier in the conversation: ' + quoted.map(fmt).join(', ') + '. Keep to it: use the same number if price comes up, never contradict it, never put a different price next to it, and never say our prices changed or differ for anyone else.' : '- No price has been quoted to this person yet.'];
+  return { price_set: set.name, price_nums: set.nums, prices_quoted: quoted, prices_block: lines.join('\n') };
+}
+
 // FACTS AND SELLING RULES shared by every writer (email replies, email follow-ups, LinkedIn).
-// Farhan's rules from 18 Oct, prices from 22 Oct. Change prices or promises here only
+// Farhan's rules from 18 Oct, prices by campaign from 23 Oct (the numbers are in PRICES BY CAMPAIGN above
+// and reach the writer as the PRICES block in the message). Change promises here only
 // (and keep email_opus_request.built.js, fu_request.built.js and li_opus.built.js the same).
 const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
 - Mavix Marketing: SEO agency, running since 2019, 500+ clients served. We help businesses get found where people search now: Google, Google Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT.
-- PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: "it ranges from $999 to $1,999 a month", and most clients start on our Growth plan at $1,349, the plan that comes with the 90 day money back guarantee.
-- PRICE AFTER THEY HAVE THE AUDIT: Starter $999, Growth $1,349, Premium $1,999 a month. Recommend Growth at $1,349 first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
-- OLDER PRICES: our prices changed on 22 Oct. If the conversation shows an older price we quoted before (for example $349, $549 or $1,649), never repeat it, never confirm it and never put a new number next to it. Answer everything else normally and flag "an older price was quoted earlier, Farhan to confirm their price". If their question is about that price, do not write (send false) and use the same flag.
+- PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: give the range from the PRICES block in the message, and say most clients start on our Growth plan (its price is in the PRICES block), the plan that comes with the 90 day money back guarantee.
+- PRICE AFTER THEY HAVE THE AUDIT: the three plans, Starter, Growth and Premium, with the prices in the PRICES block in the message. Prices depend on which campaign the person came from, so never use any other numbers. Recommend Growth first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
+- PRICES ALREADY QUOTED: if we already quoted a price to this person earlier in the conversation, keep that same price. Use the same number if price comes up, never contradict it, never put a different number next to it, and never say our prices changed or differ for anyone else. The PRICES block lists any price already quoted.
 - MONEY BACK: a 90 day money back guarantee. We agree a clear target with them before we start, and if we miss it within 90 days, they get everything they paid back plus $1,000 on top from us. It comes with Growth and Premium (Starter has none; say that only if they ask about Starter or you offer Starter). Always call it the 90 day money back guarantee, never a 2 month or 3 month promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
 - HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own business manager and SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
 - NO LONG CONTRACT: we never tie clients into a long contract, because we know we can deliver. Our agreement has no time limit; the only thing it ties is us, to deliver.
@@ -76,9 +123,11 @@ THEY ALREADY HAVE SOMEONE (another agency, an in-house person, happy with their 
 WHERE THEY ARE
 A. We offered the audit and they haven't said yes: give them one solid, specific reason it's worth a word back.
 B. They said yes but haven't told us what they want more of: ask again in an easier way, offering two or three likely options for their kind of business so they can just pick one.
+   - THEY SAID YES BUT GAVE NO DETAILS (the input says so; from follow-up 2 on): show them what the free audit will include, so they can see what they get. Pick what fits their business, and from one follow-up to the next use different parts and different words, never the same list twice: where they show up today on Google, Google Maps and Google's AI answers (AI Overviews) for their main services; what their top local competitors do better; what is stopping visitors from calling or booking; the first few things we would fix. Then a low-friction ask: a few words about their main service is enough, or they can simply reply "yes" and we'll pick the obvious service from their site. Never ask for their website. In N 2 and N 3 this is the whole job (instead of the case study or the other angle); in N 4 it follows the light bump; N 5 stays the polite close, where you may add in a few words that the audit offer stands and a "yes" is enough.
 C. Farhan sent the audit or a proposal: never offer the audit again and never repeat what he wrote.
-   - THE FIRST FOLLOW-UP AFTER THE AUDIT (the input says so; it replaces the N job): a short, friendly nudge of about 40 words at most, in two short paragraphs. Ask whether they got a chance to look at the audit, say you're happy to answer any questions, and offer a quick 15-minute call to walk through it together: {{BOOKING}} . No new pitch, no case study, no price, no AI search line. EXCEPTION: if the conversation shows a call is already booked for a time that hasn't come yet (for example "ready for our call on Thursday"), send false: we never nudge before that call.
-   - Later ones: make the next step obvious and small, for example "would you like me to send the scope and start steps for the Growth plan?" Use the facts below when they help: Growth at $1,349 with the 90 day money back guarantee, how we work (their own business manager and SEO manager, a shared channel, weekly updates, a monthly meeting, simple before and after reports), no long contract, and how search works now.
+   - THE FIRST FOLLOW-UP AFTER THE AUDIT (the input says so; it replaces the N job; it goes the day after Farhan sends the audit). These are Farhan's own words, follow them closely (you may add their first name and change a word or two so it reads naturally): "Did you get the time to go through the audit? If you like, I can walk you through it on a quick 15-minute call: {{BOOKING}} . And feel free to ask me if you have any questions." About 40 words at most, in two short paragraphs. No new pitch, no case study, no price, no AI search line. EXCEPTION: if the conversation shows a call is already booked for a time that hasn't come yet (for example "ready for our call on Thursday"), send false: nothing goes out before that call.
+   - THE SECOND FOLLOW-UP AFTER THE AUDIT (the input says so; it replaces the N job): ask again, lightly and in different words, whether they had a chance to look at the audit (for example "Did you get a chance to look through the audit for <their business>?"). You may add one short line of value from the audit or about their business, nothing more. No call link, no booking, no case study, no price, no new pitch, and never "just following up", "checking in" or "top of your inbox". About 40 words at most. Same EXCEPTION: if a call is booked for a time that hasn't come yet, send false.
+   - Later ones (after those two; N 4 and N 5 keep their own jobs below): make the next step obvious and small, for example "would you like me to send the scope and start steps for the Growth plan?" Use the facts below when they help: Growth at its price from the PRICES block (or the price already quoted to them) with the 90 day money back guarantee, how we work (their own business manager and SEO manager, a shared channel, weekly updates, a monthly meeting, simple before and after reports), no long contract, and how search works now.
 
 EVERY FOLLOW-UP
 - Bring one new, specific, useful thing each time, never the same point twice: something about how people search for a business like theirs (including AI answers), what a result means for them in calls and customers, why SEO pays off over ads in the long run, or the case study. One thing, said well.
@@ -106,7 +155,7 @@ DATE FOLLOW-UP: if this is a date follow-up, they asked us to come back around t
 NEVER
 - Never ask for their website, their link or their address, in any words.
 - Never suggest a call or a meeting, and never include a booking link, except in THE FIRST FOLLOW-UP AFTER THE AUDIT (stage C), and except going along with a call Farhan or they already set up.
-- Never give a price before they have the audit. After the audit, only the prices in the facts below.
+- Never give a price before they have the audit, except a price already quoted to them. After the audit, only the prices in the PRICES block (or a price already quoted to them).
 - Never write "just following up", "bringing this back", "checking in" or "top of your inbox", except the one light bump that opens N 4.
 - Never contradict or undo what Farhan wrote by hand (FARHAN lines). If he offered a call, a time or anything else, go along with it.
 - Never invent anything: use only the conversation, the glimpse of their home page, the facts and the case studies given. Never change a number. Label rough job values as rough.
@@ -117,27 +166,64 @@ STYLE: like a real business owner typing a short, clear email. Normal capital le
 ${FACTS}
 
 Return JSON only: {"send": true, "reply": "the follow-up text", "why": "one short reason, naming the stage A, B or C"}`.split('{{BOOKING}}').join(BOOKING);
-// THE FIRST FOLLOW-UP AFTER THE AUDIT: Farhan's hand-sent audit (or proposal) is the newest thing in the
-// conversation, with nothing from us or them after it. That follow-up is a short nudge with the call link.
-function firstAfterAudit(transcript) {
-  const blocks = String(transcript || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/);
+// THE FIRST AND SECOND FOLLOW-UPS AFTER THE AUDIT: Farhan's hand-sent audit (or proposal) is the newest thing
+// in the conversation (first), or only one follow-up of ours came after it (second). The first is Farhan's short
+// nudge with the 15-minute call link; the second asks again lightly, without the link. Then the normal run goes on.
+const BLOCK_SPLIT = /\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/;
+function afterAudit(transcript) {
+  const blocks = String(transcript || '').split(BLOCK_SPLIT);
   let at = -1;
   blocks.forEach((b, k) => { if (/^FARHAN/.test(b) && /audit|proposal|roadmap|attached|pdf/i.test(b)) at = k; });
-  return at >= 0 && blocks.slice(at + 1).every(b => /^(FARHAN|NOTE)/.test(b));
+  if (at < 0) return 0;
+  const after = blocks.slice(at + 1).filter(b => !/^(FARHAN|NOTE)/.test(b));
+  if (!after.length) return 1;
+  if (after.length === 1 && /^US \(follow-up/.test(after[0])) return 2;
+  return 0;
+}
+// THEY SAID YES BUT GAVE NO DETAILS (23 Oct): they said yes to the free audit, our last answer asked what they
+// want more of (services, area), and nothing came from them or from Farhan since. From follow-up 2 on, the
+// follow-up shows what the free audit will include, then a low-friction ask.
+const YES = /^(yes|yeah|yep|yup|sure|ok|okay|ok sure|go ahead|go for it|send it|send me|please do|please send|sounds good|that sounds good|interested|i'?m interested|why not|i'?d like|we'?d like|i would like|let'?s do it|happy to|absolutely|definitely|of course|please)\b/i;
+const NO = /\b(no thanks|not interested|stop|unsubscribe|remove me|don'?t|do not|not now|no need)\b/i;
+const ASK_DETAILS = /\b(which|what)\b[^?]{0,90}\b(services?|jobs?|work|customers?|clients?|patients?|treatments?|classes|products?|areas?|towns?|cit(y|ies)|more of|enquiries|inquiries|calls|bookings|focus)\b[^?]{0,90}\?/i;
+function yesNoDetails(transcript) {
+  const blocks = String(transcript || '').split(BLOCK_SPLIT);
+  let ask = -1;
+  blocks.forEach((b, k) => { if (/^US[ :]/.test(b) && !/^US \(follow-up/.test(b)) ask = k; });
+  if (ask < 0 || !ASK_DETAILS.test(blocks[ask])) return false;
+  if (blocks.slice(ask + 1).some(b => /^(THEM|FARHAN)/.test(b))) return false;
+  if (blocks.some(b => /^FARHAN/.test(b) && /audit|proposal|roadmap|attached|pdf/i.test(b))) return false;
+  return blocks.slice(0, ask).some(b => {
+    if (!/^THEM/.test(b)) return false;
+    const said = b.replace(/^THEM[^:\n]*:\s*/, '').trim().slice(0, 200);
+    return YES.test(said) && !NO.test(said);
+  });
 }
 return $input.all().map(it => {
   const c = it.json;
   const transcript = String(c.transcript || '');
-  const auditNudge = !c.farhan_note && !c.has_someone && !c.date_followup && firstAfterAudit(transcript);
-  const theirs = transcript.split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).filter(b => /^THEM/.test(b)).join('\n') + '\n' + String(c.site_notes || '') + '\n' + String(c.email || '').split('@')[1];
+  const special = c.farhan_note || c.has_someone || c.date_followup;
+  const stage = special ? 0 : afterAudit(transcript);
+  const auditNudge = stage === 1;
+  const auditNudge2 = stage === 2 && Number(c.number) <= 4;
+  const yesNoInfo = !special && !stage && Number(c.number) >= 2 && Number(c.number) <= 5 && yesNoDetails(transcript);
+  const pr = pricesFor(c.sequence, c.sequence_name, transcript, false);
+  const theirs = transcript.split(BLOCK_SPLIT).filter(b => /^THEM/.test(b)).join('\n') + '\n' + String(c.site_notes || '') + '\n' + String(c.email || '').split('@')[1];
   const cases = 'CASE STUDIES you may use (closest first; say the result in plain words, then the link; never change a number):' + (caseSent(transcript) ? '\nA case study link was already sent in this conversation, so do not send another one.' : '') + '\n' + caseLines(pickCases(theirs, 3)) + '\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies';
-  return { json: { ...c, audit_nudge: auditNudge, opus_body: JSON.stringify({
+  const situation = c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note
+    : c.has_someone ? '\nTHIS IS THE 3-MONTH CHECK-IN: they told us they already work with someone.'
+    : c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.'
+    : auditNudge ? '\nTHIS IS THE FIRST FOLLOW-UP AFTER THE AUDIT: Farhan sent the audit by hand and nothing has happened since. Write Farhan\'s short nudge from stage C, with the 15-minute call link (or send false if a call is already booked for a time that has not come yet). Follow-up number N = ' + c.number
+    : auditNudge2 ? '\nTHIS IS THE SECOND FOLLOW-UP AFTER THE AUDIT: they have not answered the first nudge. Ask again lightly, in different words, whether they had a chance to look at the audit; no call link (or send false if a call is already booked for a time that has not come yet). Follow-up number N = ' + c.number
+    : yesNoInfo ? '\nTHEY SAID YES BUT GAVE NO DETAILS: they said yes to the free audit, our last answer asked what they want more of, and they have not answered that. Follow the stage B rule for this case: show what the free audit will include, then the low-friction ask. Follow-up number N = ' + c.number
+    : '\nFollow-up number N = ' + c.number;
+  return { json: { ...c, audit_nudge: auditNudge, audit_nudge2: auditNudge2, yes_no_details: yesNoInfo, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, opus_body: JSON.stringify({
     model: cfg.WRITE_MODEL,
     max_tokens: 3000,
     reasoning: { effort: 'medium' },
     messages: [
       { role: 'system', content: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }] },
-      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note : c.has_someone ? '\nTHIS IS THE 3-MONTH CHECK-IN: they told us they already work with someone.' : c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.' : auditNudge ? '\nTHIS IS THE FIRST FOLLOW-UP AFTER THE AUDIT: Farhan sent the audit by hand and nothing has happened since. Write the short nudge from stage C (or send false if a call is already booked for a time that has not come yet). Follow-up number N = ' + c.number : '\nFollow-up number N = ' + c.number) + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
+      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + situation + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + pr.prices_block + '\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
     ],
   }) } };
 });
