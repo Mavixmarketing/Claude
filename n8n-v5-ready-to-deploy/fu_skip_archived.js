@@ -46,6 +46,9 @@ $input.all().forEach((it, i) => {
   if (!ours) { if (d.date_followup) out.push({ json: d }); return; } // they wrote last
   // 3. a reply from them hidden behind one of our later emails
   const thread = Array.isArray(it.json.data) ? it.json.data : [];
+  // the campaign this conversation belongs to (prices depend on it); the thread knows it best
+  const seqMsg = thread.find(x => x.sequence);
+  if (seqMsg) d.sequence = String(seqMsg.sequence);
   const loggedAt = Date.parse(d.them_logged_at || '');
   if (thread.length && isFinite(loggedAt)) {
     const hidden = thread.filter(x => !isOurs(x, them)).map(x => ({ when: Number(x.scheduled_time || x.completed_time || 0), text: ownWords((((x.data || {}).email || {}).body) || '') }))

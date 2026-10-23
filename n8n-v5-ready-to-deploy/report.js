@@ -285,6 +285,43 @@ function templateRanking(w) {
   return L;
 }
 
+// MAILBOXES DOING WORST (23 Oct, monthly post): SalesBlink's numbers per sending mailbox for the last 30 days
+// ("SalesBlink Mailbox Stats", analytics/mailbox-stats). Only mailboxes with at least 100 sent count; those with
+// 0 replies come first, then the lowest replies per 100 sent, up to 10. Then every mailbox SalesBlink shows with
+// a connection error ("SalesBlink Sender Errors", senders with filter has-error). If SalesBlink did not answer,
+// the section says so and the rest of the report is unchanged.
+function worstMailboxes() {
+  const L = ['*Mailboxes doing worst (last 30 days)*'];
+  let stats = null, errors = null;
+  try {
+    const raw = $('SalesBlink Mailbox Stats').first().json || {};
+    const list = Array.isArray(raw.data) ? raw.data : (raw.result && Array.isArray(raw.result.data) ? raw.result.data : null);
+    if (list) stats = list;
+  } catch (e) { stats = null; }
+  try {
+    const raw = $('SalesBlink Sender Errors').first().json || {};
+    const list = Array.isArray(raw.data) ? raw.data : (raw.result && Array.isArray(raw.result.data) ? raw.result.data : null);
+    if (list && raw.success !== false) errors = list;
+  } catch (e) { errors = null; }
+  if (!stats) L.push('SalesBlink mailbox numbers were not available.');
+  else {
+    const boxes = stats.map(m => ({ email: String((m.sender && m.sender.email) || m.email || m.sender_id || ''), sent: Number(m.sent || 0), replies: Number(m.replies || 0) }))
+      .filter(m => m.email && m.sent >= 100)
+      .map(m => ({ ...m, rate: 100 * m.replies / m.sent }))
+      .sort((a, b) => a.rate - b.rate || b.sent - a.sent);
+    const zero = boxes.filter(m => m.replies === 0).length;
+    if (!boxes.length) L.push('No mailbox sent 100 or more emails.');
+    for (const m of boxes.slice(0, 10)) L.push(m.email + ': ' + m.replies + ' ' + (m.replies === 1 ? 'reply' : 'replies') + ' from ' + m.sent + ' sent');
+    if (zero > 10) L.push('(' + zero + ' mailboxes in all had 0 replies from 100 or more sent)');
+  }
+  if (errors === null) L.push('Could not check SalesBlink for mailbox connection errors.');
+  else if (errors.length) {
+    L.push('Connection errors in SalesBlink:');
+    for (const x of errors) L.push(String(x.alias || x.google_email || x.email || x.smtp_username || x.id || 'unknown mailbox') + (x.error || x.errorMessage || x.last_error ? ': ' + short(x.error || x.errorMessage || x.last_error, 120) : ''));
+  } else L.push('No mailbox shows a connection error in SalesBlink.');
+  return L;
+}
+
 if (showMonthly) {
   const s = sbStats(LAST_MONTH);
   const name = new Date(LAST_MONTH[1] + IST).toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -299,6 +336,7 @@ if (showMonthly) {
     M.push('Bounce rate ' + br.toFixed(2) + '%: keep it under 2%, over 3% puts your domains at risk. ' + (br < 2 ? 'Healthy.' : br < 3 ? 'Getting high.' : 'Too high, clean the lists.'));
     M.push('Unsubscribes: no reliable public standard. More unsubscribes than replies is a warning sign.');
   }
+  M.push('', ...worstMailboxes());
   posts.push({ json: { text: M.join('\n').trim() } });
 }
 return posts;

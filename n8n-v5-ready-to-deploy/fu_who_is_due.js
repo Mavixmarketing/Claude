@@ -15,6 +15,8 @@
 // nothing is sent before that date, and on that date one follow-up goes out for it.
 // THEY ALREADY HAVE SOMEONE (another agency, an in-house person, happy with their current setup): the
 // first two follow-ups go as normal, then nothing until one check-in about 3 months after our last email.
+// CAMPAIGN (23 Oct): each person carries the campaign they came from (sequence id and name, from the reply
+// events), so the writer can pick the right price list.
 // FARHAN'S OWN CHOICES (Settings): STOP = never follow up these people. PLAN = nothing before the
 // date he set, then one follow-up that carries his note, then the light monthly check-ins.
 const cfg = $('Settings').first().json;
@@ -24,14 +26,18 @@ const now = Date.now();
 const hourNow = new Date(now).getUTCHours();
 if (cfg.TEST) {
   const samples = [
-    { email: 'charesemb@gmail.com', history: 'THEM: yes please\n\nUS: great, i will put the audit together for 719cleaningcompany.com.\n\nwhich cleaning services do you most want more enquiries for?' },
+    { seq: 'c4697abb-1c97-4cfb-b56b-eb9f1781ed6c', email: 'charesemb@gmail.com', history: 'THEM: yes please\n\nUS: great, i will put the audit together for 719cleaningcompany.com.\n\nwhich cleaning services do you most want more enquiries for?' },
     { email: 'mariflores2412@gmail.com', history: 'THEM: we would like to wait until next year, budgets are set in january.\n\nUS: that makes sense. google takes a few months to trust a site, so many owners start the groundwork a little before their busy season. i will write again in january.' },
-    { email: 'hello@nevuu.com', history: 'THEM: yes, send it\n\nUS: great, which services do you want more customers for, and which area do you cover?\n\nTHEM: corporate events, london\n\nUS: great, i will start preparing your audit for nevuu.com, focused on corporate events in london, and send it over when it is ready.\n\nFARHAN (sent by hand on 2026-10-16, may have had the audit, case studies or a proposal attached): here is your audit. the short version: people in london searching for corporate event venues are not finding you yet.' },
+    { seq: '38eb9458-6fd2-48e8-be34-fd88e328a183', email: 'hello@nevuu.com', history: 'THEM: yes, send it\n\nUS: great, which services do you want more customers for, and which area do you cover?\n\nTHEM: corporate events, london\n\nUS: great, i will start preparing your audit for nevuu.com, focused on corporate events in london, and send it over when it is ready.\n\nFARHAN (sent by hand on 2026-10-16, may have had the audit, case studies or a proposal attached): here is your audit. the short version: people in london searching for corporate event venues are not finding you yet.' },
     { n: 4, q: 4, email: 'owner@example-roofing.com', history: 'THEM: we already rank number 1 on google for roofing in plano, so not sure we need this\n\nUS: that is a strong spot to hold. a free audit would show whether that carries over to nearby towns like frisco and allen, where people search for the same job. would you like me to send it over?\n\nUS (follow-up 1): would frisco or allen be the better town to check first?\n\nUS (follow-up 2): a local plumbing company we worked with went from showing up on google under 200 times a day to about 1,000 a day in eight weeks. https://mavixmarketing.com/case-studies/plumbing-company-seo\n\nUS (follow-up 3): a new roof is one of the biggest jobs a homeowner pays for, so one extra booking a month adds up over a year.' },
     { n: 5, q: 7, email: 'info@example-dentalcare.com', history: 'THEM: what would the audit cover?\n\nUS: it shows how people near you searching for a dentist find you on google and google maps, and the first things that would bring more of them to book. would you like me to put it together?\n\nUS (follow-up 1): would implants or general check-ups be the better focus?\n\nUS (follow-up 2): a dental clinic we worked with went from under 15 clicks a day from google to over 100 a day. https://mavixmarketing.com/case-studies/dental-clinic-seo\n\nUS (follow-up 3): most patients who find a dentist they trust stay for years.\n\nUS (follow-up 4): bringing this back to the top of your inbox in case it slipped through the cracks. more people now get their answer from google ai overviews before they click anything.' },
+    // 23 Oct: the second follow-up after the audit (no call link), and the third one after the audit in each price list
+    { n: 2, q: 1, seq: 'c4697abb-1c97-4cfb-b56b-eb9f1781ed6c', email: 'office@example-hvac.com', history: 'THEM: sure, go ahead\n\nUS: Great, which do you want more of, new AC installs, repairs or maintenance plans?\n\nTHEM: ac installs in mesa and gilbert\n\nUS: Got it, AC installs in Mesa and Gilbert. I\'ll start preparing your free audit and send it over when it\'s ready.\n\nFARHAN (sent by hand on 2026-10-20, may have had the audit, case studies or a proposal attached): Here is your audit. The short version: people in Mesa searching for a new AC install mostly find three competitors on Google Maps before they find you, and your install page never says which towns you cover.\n\nUS (follow-up 1): Did you get the time to go through the audit? If you like, I can walk you through it on a quick 15-minute call: https://cal.id/mavixmarketing/strategy-call .\n\nAnd feel free to ask me if you have any questions.' },
+    { n: 3, q: 3, seq: '38eb9458-6fd2-48e8-be34-fd88e328a183', email: 'hello@example-smiledental.com', history: 'THEM: yes please\n\nUS: Great, which treatments do you want more patients for, implants, Invisalign or general check-ups?\n\nTHEM: implants mainly, in austin\n\nUS: Got it, implants in Austin. I\'ll start preparing your free audit and send it over when it\'s ready.\n\nFARHAN (sent by hand on 2026-10-17, may have had the audit, case studies or a proposal attached): Here is your audit. The short version: your implants page is not showing up for Austin searches and the Google listing has no implant photos.\n\nUS (follow-up 1): Did you get the time to go through the audit? If you like, I can walk you through it on a quick 15-minute call: https://cal.id/mavixmarketing/strategy-call .\n\nAnd feel free to ask me if you have any questions.\n\nUS (follow-up 2): Did you get a chance to look through the audit for the implants page? The Google listing photos are a quick win on their own.' },
+    { n: 3, q: 3, seq: 'c4697abb-1c97-4cfb-b56b-eb9f1781ed6c', email: 'info@example-plumbingpros.com', history: 'THEM: ok, send it\n\nUS: Great, which do you want more of, water heater installs, drain cleaning or emergency call outs?\n\nTHEM: water heaters, phoenix\n\nUS: Got it, water heaters in Phoenix. I\'ll start preparing your free audit and send it over when it\'s ready.\n\nFARHAN (sent by hand on 2026-10-17, may have had the audit, case studies or a proposal attached): Here is your audit. The short version: you are on page two for water heater installation in Phoenix and there is no page for tankless water heaters.\n\nUS (follow-up 1): Did you get the time to go through the audit? If you like, I can walk you through it on a quick 15-minute call: https://cal.id/mavixmarketing/strategy-call .\n\nAnd feel free to ask me if you have any questions.\n\nUS (follow-up 2): Did you get a chance to look at the audit? The tankless page alone could bring in a few more installs a month.' },
   ];
   const NUM = [2, 6, 1], QUIET = [1, 30, 1];
-  return samples.map((x, k) => ({ json: { site_notes: '', email: x.email, messageId: 'test', number: x.n || NUM[k], days_quiet: x.q || QUIET[k], history: x.history, transcript: x.history, handled_at: new Date(now - 86400000).toISOString() } }));
+  return samples.map((x, k) => ({ json: { site_notes: '', email: x.email, messageId: 'test', sequence: x.seq || '', number: x.n || NUM[k], days_quiet: x.q || QUIET[k], history: x.history, transcript: x.history, handled_at: new Date(now - 86400000).toISOString() } }));
 }
 
 // 1. Real reply times from SalesBlink: each person's own reply hours, and each list's busiest hour.
@@ -55,6 +61,7 @@ function regionOf(seq, email) {
 const settle = (r, h) => r === 'mixed' ? ((h >= 20 || h <= 6) ? 'aus' : 'uk') : r;
 const personHours = {};
 const personRegion = {};
+const personSeq = {}; // the campaign each person came from (prices depend on it)
 const regionHours = {};
 for (const it of $('Read Reply Times').all()) {
   const list = Array.isArray(it.json.result) ? it.json.result : (Array.isArray(it.json.data) ? it.json.data : [it.json]); // one reply per item
@@ -64,6 +71,7 @@ for (const it of $('Read Reply Times').all()) {
     const em = String(e.email).toLowerCase();
     const h = new Date(t).getUTCHours();
     (personHours[em] = personHours[em] || []).push(h);
+    if (e.sequence || e.sequence_name) personSeq[em] = { sequence: String(e.sequence || ''), sequence_name: String(e.sequence_name || '') };
     const r = settle(regionOf(e.sequence_name, em), h);
     if (r) { personRegion[em] = r; (regionHours[r] = regionHours[r] || []).push(h); }
   }
@@ -152,7 +160,7 @@ for (const key of Object.keys(latest)) {
     const em0 = String(t.email).toLowerCase();
     if (sendHour(em0) !== hourNow || localSunday(em0)) continue;
     const seen = Date.parse(j.handled_at || j.createdAt);
-    out.push({ json: { them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), transcript: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: 0, not_due: true } });
+    out.push({ json: { ...(personSeq[em0] || {}), them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), transcript: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: 0, not_due: true } });
     continue;
   }
   // A POLITE "NOT RIGHT NOW" (no reason, no stop): one friendly check-in about 80 days later, before
@@ -165,7 +173,7 @@ for (const key of Object.keys(latest)) {
     const em1 = String(j.email).toLowerCase();
     if (!isFinite(at) || now < due || now > due + 30 * 86400000 || sendHour(em1) !== hourNow || localSunday(em1)) continue;
     const h = String(j.history || ('THEM: ' + said));
-    out.push({ json: { them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: hourNow, number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
+    out.push({ json: { ...(personSeq[em1] || {}), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: hourNow, number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
     continue;
   }
   if (!['replied', 'followed_up'].includes(String(j.status)) || !j.message_id) continue;
@@ -177,7 +185,7 @@ for (const key of Object.keys(latest)) {
   const n = Number(j.followups || 0);
   const last = Date.parse(j.handled_at || j.updatedAt || j.createdAt);
   if (!isFinite(last)) continue;
-  const base = { row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, farhan_note: plan ? String(plan.note || '') : '' };
+  const base = { ...(personSeq[em] || {}), row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, farhan_note: plan ? String(plan.note || '') : '' };
   const days = (now - last) / 86400000;
   const fu = plan ? Date.parse(plan.from) : (j.follow_up_on ? Date.parse(j.follow_up_on) : NaN);
   if (isFinite(fu)) {
