@@ -15,6 +15,17 @@ CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 CLIENT = "The Creative Kitchen Co."
 OUT_PDF = os.path.join(ROOT, "Mavix-SEO-Review.pdf")  # rename per client
 
+# Search prices depend on the SalesBlink campaign the prospect came from (facts.md).
+# Set CAMPAIGN for this prospect. If a price was already quoted to them, put it in
+# QUOTED and it wins over the table. Never mix two campaigns' prices.
+CAMPAIGN_PRICES = {
+    "usa_canada":      {"Starter": "$349", "Growth": "$549",   "Premium": "$1,649"},
+    "aus_uk_nz_sing":  {"Starter": "$349", "Growth": "$549",   "Premium": "$1,649"},
+    "ai_written":      {"Starter": "$999", "Growth": "$1,349", "Premium": "$1,999"},
+}
+CAMPAIGN = "usa_canada"
+QUOTED = {}   # e.g. {"Growth": "$499"} when that number was already quoted to them
+
 IC = {
  "map": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11a7 7 0 10-14 0c0 4.7 7 11 7 11z" stroke="#005AFF" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="#005AFF" stroke-width="1.8"/></svg>',
  "search": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#005AFF" stroke-width="1.8"/><path d="M16.2 16.2L21 21" stroke="#005AFF" stroke-width="1.8" stroke-linecap="round"/></svg>',
@@ -389,10 +400,13 @@ def p12_howwework():
 
 
 def p13_pricing():
-    ts = [("Starter", "$999", "a month", "No money-back guarantee on this one.", False, None),
-          ("Growth", "$1,349", "a month, locked for life",
+    if CAMPAIGN not in CAMPAIGN_PRICES:
+        raise ValueError(f"unknown campaign {CAMPAIGN!r}: ask Farhan which campaign")
+    pr = dict(CAMPAIGN_PRICES[CAMPAIGN], **QUOTED)
+    ts = [("Starter", pr["Starter"], "a month", "No money-back guarantee on this one.", False, None),
+          ("Growth", pr["Growth"], "a month, locked for life",
            "90-day money-back guarantee.", True, "What we would pick"),
-          ("Premium", "$1,999", "a month", "90-day money-back guarantee.", False, None)]
+          ("Premium", pr["Premium"], "a month", "90-day money-back guarantee.", False, None)]
     terms = ["No setup fee", "No long contract", "No time limit", "Every account in your name"]
     return (head_block("WHAT IT COSTS", 'Three ways to run this, <em>one we would pick</em>',
                        "The only difference between these three is how much work we do each month. "

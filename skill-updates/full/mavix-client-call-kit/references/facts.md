@@ -4,11 +4,27 @@ Nothing may contradict this file. If something is not here it is a blank marked 
 
 ## The business
 
-**Farhan**, founder, **Mavix Marketing**. Headquartered in **Dubai**, **just over thirty people**, six years in. Never say "small team".
+**Farhan** (Mohd Farhan), founder, **Mavix Marketing**. Based in **Dubai**, a team of **30+ people**, working since 2019. Never say "small team", and never "Farhan runs your account himself": every account has one named account manager, and Farhan takes the first call and joins every monthly review.
 
 **Three services only: search, paid ads, email.** Nothing else.
 
 Clients mostly USA and UK.
+
+### The company story (the same words in all three skills)
+
+Facts from mavixmarketing.com (about page and home page, read 23 October 2026) plus Farhan's
+confirmation of Dubai and 30+ people. Shorten it to fit; never add to it.
+
+> Mavix Marketing is based in Dubai, with a team of 30+ people across Dubai, Los Angeles and
+> New Delhi. Everyone who does the work is employed by Mavix, not subcontracted. We do SEO, paid
+> ads and email, and have done since 2019. On search we are not a traditional SEO agency: we get
+> businesses found on Google, Google Maps, and in AI answers such as Google's AI Overviews and
+> ChatGPT. Every account has one named account manager for the day to day. Our founder, Mohd
+> Farhan, takes the first call with every new client and joins every monthly review. Reports
+> lead with enquiries, and every number comes from the client's own accounts.
+
+Not in the story on purpose: a client count (the website says 150+ on one page and 200+ on
+another, so it is not used), awards, and anything else the website does not say.
 
 ## The call
 
@@ -42,19 +58,37 @@ Clients mostly USA and UK.
 
 > I want founders sleeping properly instead of lying awake worrying about their marketing. That's why there's no contract, no setup fee, and thirty days' notice. Your ad budget stays on your own card, going straight to Google or Meta — it never comes through me. And every account, every pixel, every bit of the history stays in your name. If you walk, you walk with all of it. The risk of me being wrong sits on my shoulders, not yours.
 
-## SEO pricing
+## SEO pricing: it depends on the campaign
 
-| Package | Price | What's in it |
-|---|---|---|
-| **Starter** | **$999/mo** | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report |
-| **Growth** ⭐ recommended | **$1,349/mo** | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **90-day money-back guarantee** · **price locked for life** |
-| **Premium** | **$1,999/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **90-day money-back guarantee** |
+The emailed SEO audit carries no price. Prices are said on the call, shown on the review PDF's
+pricing page, and sent after a "yes". **Which prices apply depends on the SalesBlink campaign
+the prospect came from.** Read it from the thread or Farhan's notes. If it is not clear, ask
+Farhan before building: `[ASK FARHAN] which campaign`. Never mix the two sets.
 
-Starter has **no money-back guarantee**. There is no "was" price any more; never quote one.
+| Campaign | Starter | Growth (recommended) | Premium |
+|---|---|---|---|
+| **USA/Canada** and **Aus/UK/NZ/Sing** | **$349/mo** | **$549/mo** | **$1,649/mo** |
+| **AI Written** | **$999/mo** | **$1,349/mo** | **$1,999/mo** |
+
+**If a price was already quoted to this prospect, honour it.** Use the quoted number on the
+call, in the script and on the review PDF, even if the table above has changed since.
+
+What is in each package (the same on every campaign):
+
+| Package | What's in it |
+|---|---|
+| **Starter** | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report · **no money-back guarantee** |
+| **Growth** ⭐ recommended | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **90-day money-back guarantee** · **price locked for life** |
+| **Premium** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **90-day money-back guarantee** |
+
+Starter has **no money-back guarantee** on any campaign. Growth and Premium carry the same
+90-day guarantee on every campaign. There is no "was" price; never quote one.
 
 **Lead with Growth.** The price lock is a real reason to decide today — it does not expire tonight, it just stops applying when rates go up.
 
-Say prices as "nine-ninety-nine", "thirteen-forty-nine", "nineteen-ninety-nine" a month.
+Say prices out loud as: "three-forty-nine", "five-forty-nine", "sixteen-forty-nine" a month
+(USA/Canada, Aus/UK/NZ/Sing), or "nine-ninety-nine", "thirteen-forty-nine",
+"nineteen-ninety-nine" a month (AI Written).
 
 ## Ads pricing
 
@@ -70,7 +104,7 @@ Ad budget is always the client's, on their card, direct to the platform. Never t
 
 ## Floors
 
-**SEO: Starter at $999 is the floor** until Farhan sets a new number (the old $300 floor was set when Starter was $349). **Ads $200.** Below that, walk. Two moves only when money is the blocker: move down a package, or walk politely. **Never invent a number on a call.**
+**SEO: the floor is the Starter price for the prospect's campaign** ($349 on USA/Canada and Aus/UK/NZ/Sing, $999 on AI Written, or a lower price already quoted to them) until Farhan sets a separate number. **Ads $200.** Below that, walk. Two moves only when money is the blocker: move down a package, or walk politely. **Never invent a number on a call.**
 
 ## Guarantee
 

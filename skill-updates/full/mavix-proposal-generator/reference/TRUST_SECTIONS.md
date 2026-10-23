@@ -68,11 +68,12 @@ That sentence means nothing and every prospect has read it fifty times. Delete i
 
 **Answer five questions instead, in this order, one short paragraph each:**
 
-1. **Who we are.** A small team, not a call centre. Name Mohd Farhan and say plainly that the
-   person who wrote this proposal is the person who runs the account. That one sentence
-   answers the loudest fear a prospect has.
-2. **What we do, specifically.** Google Ads, Meta Ads and SEO. Name the actual disciplines,
-   not "full service". If a service is not on the list, say so.
+1. **Who we are.** Use the company story below. Based in Dubai, a team of 30+ people
+   employed by Mavix, one named account manager on every account, and Mohd Farhan, the
+   founder, on the first call and in every monthly review. That answers the loudest fear a
+   prospect has: being handed to someone who does not know them.
+2. **What we do, specifically.** SEO, paid ads (Google and Meta) and email. Name the actual
+   disciplines, not "full service". If a service is not on the list, say so.
 3. **Who we work with.** The kinds of businesses Mavix actually serves. Small and mid sized
    companies who need the phone to ring, not brands with a media department. Say the size of
    business honestly, because a prospect who is too big or too small should know now.
@@ -85,8 +86,23 @@ That sentence means nothing and every prospect has read it fifty times. Delete i
 Keep the Google Partner block, the credential circles and the client logo wall exactly as they
 are. Those are the proof. The words above are the context.
 
-Do not claim a team size, a founding year, a client count, an office or an award unless Farhan
-has stated it. An unverifiable number here poisons a document whose whole job is trust.
+Do not claim anything beyond the company story: no client count, no award, no office or
+founding story it does not name. An unverifiable number here poisons a document whose whole job
+is trust. Never write "small team", "Farhan runs your account himself" or "there is nobody behind
+him": they contradict the call kit and the website.
+
+### The company story (October 2026)
+
+Facts from mavixmarketing.com (about page and home page, read 23 October 2026) plus Farhan's
+confirmation of Dubai and 30+ people. Shorten to fit; never add to it.
+
+> Mavix Marketing is based in Dubai, with a team of 30+ people across Dubai, Los Angeles and
+> New Delhi. Everyone who does the work is employed by Mavix, not subcontracted. We do SEO, paid
+> ads and email, and have done since 2019. On search we are not a traditional SEO agency: we get
+> businesses found on Google, Google Maps, and in AI answers such as Google's AI Overviews and
+> ChatGPT. Every account has one named account manager for the day to day. Our founder, Mohd
+> Farhan, takes the first call with every new client and joins every monthly review. Reports
+> lead with enquiries, and every number comes from the client's own accounts.
 
 ---
 
@@ -94,15 +110,19 @@ has stated it. An unverifiable number here poisons a document whose whole job is
 
 **Where it goes:** replaces the scope of work section, same slot.
 
-Keep the four scope groups. Add two things that are not currently there, and they matter more
-than the groups do.
+**In an SEO or Both document this page is "What we will work on":** seven plain-English work
+areas, each with what we do and what it means for them (their website, Google rankings and
+keyword research, blogs and helpful content, links and PR, Google Maps and reviews, Google's AI
+Overviews and AI Mode, and ChatGPT, Perplexity and Gemini), and no prices. In an ads document
+keep the scope groups. Either way, add two things, and they matter as much as the groups do.
 
 **1. What is not included.** Say it plainly, in its own short list. This is the single best
 defence against the complaint that agencies spring costs later.
 
 - Ad budget. It is paid by the client, in the client's own account, and it never passes
   through Mavix.
-- Publisher and placement fees on SEO, paid by the client directly, at no markup.
+- Publisher and placement fees on SEO, paid by the client directly, at no markup. No number
+  in an SEO document: the usual range goes with the price, after the yes.
 - A website rebuild, unless it is written into the scope.
 - Photography and video production, unless it is written into the scope.
 - Software the client already pays for, such as a CRM or an email platform.
@@ -134,7 +154,7 @@ line to close. Keep every cell to one or two lines. Ten tight rows fit a page. T
 
 | What usually goes wrong | How this works instead |
 |---|---|
-| You meet someone impressive, sign, and then get handed to a junior you never met | The person who wrote this proposal runs the account. There is nobody behind him to be handed to |
+| You meet someone impressive, sign, and then get handed to a junior you never met | One named account manager from day one, and the founder, Mohd Farhan, joins every monthly review |
 | You cannot get hold of anyone when you need them | One channel, agreed on day one, and an answer on the same working day |
 | Everything is "we are working on it" and you never see what that means | A written plan with named deliverables, and a monthly report showing what was actually done |
 | Reports full of impressions, clicks and followers, none of which pay wages | We report leads, cost per lead, sales and return. Traffic numbers are context, never the headline |
@@ -175,7 +195,8 @@ ownership, and an `alert` for the exit.
 | Reporting | One written report every month, plus a call to go through it |
 | Anything urgent | The same WhatsApp group. There is no ticket queue to get lost in |
 
-Then one line naming who they deal with. Not a role, a person. And the response commitment
+Then one line naming who they deal with: their named account manager (by name once one is
+assigned), with Mohd Farhan in every monthly review. And the response commitment
 from the scope section, repeated here in one sentence.
 
 ### Who owns what
@@ -230,10 +251,14 @@ needs longer, for example because a website has to be fixed first or access take
 arrive, say the longer number here rather than the tidy one. A missed first promise is worse
 than a slower first promise.
 
-**Then the close.** The page after this one (or, in the SEO proposal, instead of it) is "Your
-plan, your price. Reply yes to start.": the recommended plan and its monthly price, the 90-day
-target, the first three things we do, and two ways to say yes: reply "yes" to the email, or book
-a 15-minute walkthrough at https://cal.id/mavixmarketing/strategy-call.
+**Then the close.** The page after this one (or, in the SEO proposal, instead of it) is the
+close page. In an ads proposal it is "Your plan, your price. Reply yes to start.": the
+recommended plan and its monthly fee, the first-90-days milestones, the first three things we
+do, and two ways to say yes. **In an SEO or Both document it is "Your plan, and how to start"
+with no price at all:** the recommended plan of work, the 90-day target we would agree, the
+first three things we do, and two ways to move forward: reply "yes" to the email and we send the
+plan and the personalised price, or book a 15-minute walkthrough at
+https://cal.id/mavixmarketing/strategy-call.
 
 **The onboarding form is a real deliverable.** If it does not exist yet, it has to be built
 before this page is sent to anyone, because the page promises it inside 48 hours.

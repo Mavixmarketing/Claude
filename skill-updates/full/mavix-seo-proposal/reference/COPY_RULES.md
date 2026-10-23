@@ -201,6 +201,7 @@ may appear, each with its source printed beside it:
 - A Pew Research study (July 2025) found people clicked a normal search result on 8% of
   searches that showed an AI summary, against 15% without one.
 
+The AI places to name are Google's AI Overviews and AI Mode, ChatGPT, Perplexity and Gemini.
 No other AI statistics, no "X% of buyers now use ChatGPT", no forecasts. Never promise a
 client will appear in an AI answer.
 
@@ -209,16 +210,32 @@ client will appear in an AI answer.
 - Anything that tells the owner they are misleading people (a credential "reads like a medical
   degree", "a careful reader may feel misled"). Raise it on a call, gently, or leave it.
 - A ranking promise with a date ("rank by New Year").
+- An overstated Google Partner line ("Partner status means Google audits the accounts we run").
+  Say "Google Partner" and stop.
+- A "Google Ads" chip on the cover or a Google ad credit line in an SEO audit.
 - Paste-ready fixes the owner can do alone in 15 minutes.
 - "TBC", "to confirm" or any placeholder.
 - A broken lead line. Read the first sentence of every page aloud before sending.
+- **Any price.** The audit is free and is not a quote. No fee, no "from" price, no "/ month",
+  no publisher fee range. The only money figure is the guarantee's "plus $1,000".
+- **An unconfirmed company or role for a real person.** A testimonial prints only what Farhan
+  has confirmed. No confirmed company means "Business owner". Never invent one.
+- **The old team story.** Never "small team", "Farhan runs your account himself" or "there is
+  nobody behind him". Use the company story in SKILL.md.
 
 ## Verify before delivering
 
-Run this on the finished PDF, not the source:
+Run the full checker on the finished PDF, not the source. It covers everything below plus
+prices, placeholders, the old team story, ranking promises, DIY fixes and both close-page links:
 
 ```bash
-python3 - <<'EOF'
+python3 build/check_pdf.py out/Client_SEO_Proposal.pdf 18
+```
+
+The short version, for the dashes and banned words only:
+
+```bash
+python3 - out/Client_SEO_Proposal.pdf <<'EOF'
 import fitz, sys
 BANNED = ["leverage","robust","seamless","elevate","unlock","delve","foster","tapestry",
  "testament","cutting-edge","bespoke","synergy","meticulous","myriad","plethora","holistic",

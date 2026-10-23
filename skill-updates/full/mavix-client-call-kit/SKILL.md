@@ -62,7 +62,7 @@ Run `references/checks.md` and show the pass/fail table. Fix failures first.
 
 **Mavix is not a traditional SEO agency.** On a search call and in the SEO review, say it gets businesses found on Google, Google Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT. Use only the two AI facts in `facts.md`, with their sources. Never promise a spot in an AI answer.
 
-**Search prices are $999 (Starter, no guarantee), $1,349 (Growth, recommended) and $1,999 (Premium).** Growth and Premium carry the 90-day money-back guarantee: everything back plus $1,000 if the 90-day target agreed in writing up front is missed. No long contract: the agreement has no time limit and only ties Mavix, to deliver. `facts.md` is the source; never quote an old price or a "was" price.
+**Search prices depend on the campaign the prospect came from.** USA/Canada and Aus/UK/NZ/Sing campaigns: Starter $349, Growth $549 (recommended), Premium $1,649. AI Written campaign: Starter $999, Growth $1,349 (recommended), Premium $1,999. **If a price was already quoted to the prospect, honour it.** If the campaign is not clear from what Farhan pasted, ask him before building. Growth and Premium carry the 90-day money-back guarantee: everything back plus $1,000 if the 90-day target agreed in writing up front is missed; Starter has none. No long contract: the agreement has no time limit and only ties Mavix, to deliver. `facts.md` is the source; never quote an old price, a "was" price, or another campaign's price. (The emailed SEO audit from the proposal skills carries no price; prices are said on the call.)
 
 **Case studies are the real ones from mavixmarketing.com/case-studies.** Name the client exactly the way the website names it, use the website's numbers and timeframe exactly, and put the case study's URL in the document and in the CTA. Never invent a client name, city, staff count, baseline number or execution detail that is not on the website case study; where it is thin, fetch the live page or write in general terms true of how Mavix works. Brother Filtration stays a named reference, cleared for a live screen share of its Search Console and Analytics.
 
@@ -96,7 +96,7 @@ Never bury the deliverables under a long explanation. The documents are the answ
 - `references/mechanics.md` — what 39 live calls and 17 sales books taught, and what is banned
 - `references/review-pdf.md` — the SEO review PDF, page by page
 - `references/case-library.md` — the real website case studies, their URLs and matched dashboards, how to pick three, how to build them
-- `references/facts.md` — pricing, guarantee, terms, intro, floors, capacity
+- `references/facts.md` — the company story, campaign pricing, guarantee, terms, intro, floors, capacity
 - `references/voice.md` — how everything is written, and the ban-list
 - `references/build.md` — how to use the packaged design toolkit
 - `references/checks.md` — the pass/fail table to run before delivering
