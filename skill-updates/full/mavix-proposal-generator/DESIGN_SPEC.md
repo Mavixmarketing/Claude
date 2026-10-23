@@ -159,20 +159,20 @@ def circle_avatar(src, out, size=440):
 
 ## 4. PAGE STRUCTURE — THE FULL SECTION ORDER
 
-Build the PDF in **exactly this order**. Sections 1–8 map to your content skill's 8-section argument; the **★ sections are new** and defined in §8 of this spec. (For an SEO proposal, drop any paid-ads pricing — keep one service's pricing per document; never show two pricing systems in one proposal.)
+Build the PDF in **exactly this order**. Sections 1–8 map to your content skill's 8-section argument; the **★ sections are new** and defined in §8 of this spec. **An SEO or Both document carries no prices at all (October 2026): no investment page, no price on the close page.** Ads-only proposals keep their four-phase fee page.
 
 1. **Cover** (full-bleed gradient)
 2. **01 · The Short Version** — the whole story on one page for a phone reader: stat cards, three findings, the plan in three lines, the 90-day target and guarantee. No price
 3. **02 · The Revenue Gap** — traffic bar chart + keyword ranking chart + lime pull-quote
-4. **03 · The Opportunity** — 12-month projection line chart + stat cards
+4. **03 · The Opportunity** — stat cards on the monthly gap (the 12-month projection chart is cut: the October audit review listed it as a page to drop)
 5. **★ Found on Google, Maps and AI answers** (SEO and Both only) — two sourced stat cards (AI Overviews reach over 2 billion people a month, Alphabet, July 2025; Pew Research, July 2025: 8% vs 15% clicks on a normal result with and without an AI summary), a table of where customers look against what we do, one honest neon line. Replaces the old "Why Invest in SEO" benefit cards, whose statistics had no sources
 6. **04 · Competitor Analysis** — two-column Problem/Fix + competitor table + backlink donut + red alert
 7. **05 · The Strategy** — Gantt timeline (3 phases) + numbered first-month step boxes
-8. **06 · The Fix, Measured** — scorecard grid (current → target)
-9. **★ Who We Are** — intro + Google Partner feature + honest credential circles + client logo wall (see §8)
-10. **★ What Our Clients Say** — 3 testimonials with real photos/names/titles (see §8)
-11. **07 · Your Investment** — premium pricing page: three tiers, the recommended one is the dark card with the lime badge, terms strip, guarantee banner
-12. **08 · Your Plan, Your Price** — the close: recommended plan and price, the 90-day target, the first three things we do, and two ways to say yes (reply "yes", or book a 15-minute walkthrough at https://cal.id/mavixmarketing/strategy-call)
+8. **★ What We Will Work On** (SEO and Both) — seven numbered work areas, each with what we do and "For you:" what it means for them: website, Google rankings and keyword research, blogs and content, links and PR, Google Maps and reviews, Google's AI Overviews and AI Mode, ChatGPT, Perplexity and Gemini. Then not included and what we need from you. No prices
+9. **06 · The Fix, Measured** — scorecard grid (current → target)
+10. **★ Who We Are** — the company story + Google Partner feature + honest credential circles + client logo wall (see §8)
+11. **★ What Our Clients Say** — 4 confirmed testimonials (2x2) with real photos, names and only confirmed companies or roles (see §8)
+12. **07 · Your Plan, and How to Start** — the close, no price: the recommended plan of work, the 90-day target we would agree, the first three things we do, and two ways to move forward (reply "yes" and we send the plan and the personalised price, or book a 15-minute walkthrough at https://cal.id/mavixmarketing/strategy-call). Ads-only proposals put their fee page before this and name the fee here
 
 > Section numbering shown to the reader restarts cleanly (01…08) and the ★ sections get their own numbers in sequence — i.e., number every section 01, 02, 03… in the order above. Keep the kicker label descriptive ("WHY INVEST IN SEO", "WHO WE ARE", "WHAT CLIENTS SAY").
 
@@ -444,7 +444,7 @@ table.tb tr:nth-child(even) td { background:#FAFBFD; }
 ```
 
 **Component notes:**
-- **Cover** — white Mavix logo top-left; green star in the eyebrow; two-tone title (bold + `.thin` weight-300 span); one-sentence subtitle; client block with name, meta line, and up-to-4 service chips (mark the relevant ones `.on` = lime). Footer line: "Prepared by [Name] · Mavix Marketing" left, date + "Valid 14 days" right.
+- **Cover** — white Mavix logo top-left; green star in the eyebrow; two-tone title (bold + `.thin` weight-300 span); one-sentence subtitle; client block with name, meta line, and up-to-4 service chips (mark the relevant ones `.on` = lime). Footer line: "Prepared by [Name] · Mavix Marketing" left, date right ("Checked on [date]" in an SEO or Both audit, which is not a quote; "Valid 14 days" only on an ads proposal with a fee).
 - **Kicker** — start every section with it. Blue star + zero-padded number + line + uppercase label.
 - **Pull quote** — centered, italic, **no bold inside it**, small star on top. Use one per section max, on the single sentence you want to land. (Blue star + `.soft` bg, or green star + `.lime` bg.)
 - **Stat cards** — a row of 3–4. Numbers coloured blue by default; use `.ink` for neutral, `.red` for a "bad/current" number.
@@ -455,9 +455,9 @@ table.tb tr:nth-child(even) td { background:#FAFBFD; }
 - **Gantt** — 3 phase bars (navy → blue → light-blue) across a month scale.
 - **Step boxes** — numbered, for the first-month plan or the next-steps sequence.
 - **Scorecards** — 6-up grid, each "current (red) → target (blue)" with a gradient progress bar.
-- **Pricing (premium)** — 3 tiers side by side; the recommended one gets `.reco`: the dark ink-to-blue card, lime tier name, white 30pt price, lime "Recommended for you" `.badge`, a little taller than its neighbours (negative margin). Each card: `.ptier`, `.pfit` (one line on who it suits), `.pamt` with "/ month", a `.pg` guarantee tag (`.pg.none` "No money-back guarantee" on Starter), then bullets. Under the cards a `.terms` strip of four ticks, then the guarantee banner. **No box-shadow** (WeasyPrint draws stray lines), **no crossed-out "was" price**. **One pricing system per proposal.**
+- **Pricing (premium)** — not used in SEO or Both documents any more (they carry no prices). Kept for reference only: 3 tiers side by side; the recommended one gets `.reco`: the dark ink-to-blue card, lime tier name, white 30pt price, lime "Recommended for you" `.badge`, a little taller than its neighbours (negative margin). Each card: `.ptier`, `.pfit` (one line on who it suits), `.pamt` with "/ month", a `.pg` guarantee tag (`.pg.none` "No money-back guarantee" on Starter), then bullets. Under the cards a `.terms` strip of four ticks, then the guarantee banner. **No box-shadow** (WeasyPrint draws stray lines), **no crossed-out "was" price**. **One pricing system per proposal.**
 - **Guarantee banner** — dark gradient, lime headline, the refund + $1,000 promise.
-- **Close page** — `.cl-hero` (plan left, lime price right), `.cl-row` with `.cl-target` and `.cl-first` (three numbered first steps), then "Two ways to say yes": `.cl-way.a` (lime, "Reply yes" mailto button) and `.cl-way.b` (blue outline, "Book a 15-minute walkthrough" button linking to https://cal.id/mavixmarketing/strategy-call, short URL printed under it). Both buttons are real `<a href>` links.
+- **Close page** — SEO or Both: no price. `.cl-hero` holds the plan of work and the guarantee on the left and an "Every month" list on the right (the mavix-seo-proposal skill's `close_page` builds it). Ads-only: `.cl-hero` (plan left, lime fee right), `.cl-row` with `.cl-target` and `.cl-first` (three numbered first steps), then "Two ways to say yes": `.cl-way.a` (lime, "Reply yes" mailto button) and `.cl-way.b` (blue outline, "Book a 15-minute walkthrough" button linking to https://cal.id/mavixmarketing/strategy-call, short URL printed under it). Both buttons are real `<a href>` links.
 
 ---
 
@@ -542,16 +542,17 @@ Close with a centered italic pull-quote: *"There are thousands of people in [cit
 
 ### ★ WHO WE ARE
 Purpose: establish credibility **honestly** (see §10). Structure:
-1. Kicker "WHO WE ARE" + two-part headline (e.g. *"A specialist team, working **directly with you.**"*).
-2. One paragraph: what Mavix is, since **2019**, the industries served (home services, legal, fashion, e-commerce, B2B).
-3. **Google Partner feature** (`.gpwrap`): the Google Partner image + a short blurb ("Google's official stamp on our expertise… direct support line to Google on your behalf").
-4. One paragraph on the model: **deliberately lean — you work directly with the people doing the work, not junior account managers**; dedicated strategist; weekly plain-English reporting; month-to-month, no lock-in.
-5. **Credential circles** (`.cstats`) — honest values only, e.g. `7yrs` (since 2019), `5` core industries, `1:1` direct access, `100%` transparent reporting.
+1. Kicker "WHO WE ARE" + two-part headline (e.g. *"Based in Dubai, 30+ people. **One named person on your account.**"*).
+2. One paragraph, the company story: based in Dubai, a team of 30+ people across Dubai, Los Angeles and New Delhi, all employed by Mavix, not subcontracted; SEO, paid ads and email since **2019**; not a traditional SEO agency (found on Google, Google Maps, AI Overviews and assistants like ChatGPT).
+3. **Google Partner feature** (`.gpwrap`): the Google Partner image + a short, plain blurb ("Google Partner. We work inside Google's tools every day, and every account we set up is created in your name."). Never overstate what Partner status means (no "Google audits the accounts we run").
+4. One paragraph on the model: **one named account manager for the day to day, and the founder, Mohd Farhan, on the first call and in every monthly review**; reports lead with enquiries; every number from the client's own accounts; no long contract (no time limit, it only ties Mavix, to deliver). Never "small team" or "Farhan runs your account himself".
+5. **Credential circles** (`.cstats`) — honest values only, e.g. `30+` people employed by us, `1` named account manager, `2019` working since, `100%` your accounts, your data.
 6. **Logo wall** (`.wall`) of the **real client logos** with the caption "— A few of the brands we've partnered with —". *This is the real credibility engine.*
 
 ### ★ WHAT OUR CLIENTS SAY
-Purpose: social proof. **At least 3 testimonials**, each a `.tcard`: circular avatar + 5 gold stars + italic quote + name (bold) + "Title, Company".
+Purpose: social proof. **Confirmed testimonials only, 4 in a 2x2 grid**, each a `.tcard`: circular avatar + 5 gold stars + italic quote + name (bold) + the confirmed "Title, Company".
 - Pull the **name / title / company from each photo's filename** and use them verbatim.
+- **Never print an unconfirmed company or role.** If the company is not confirmed, print "Business owner" (or "Business owner, [city]" with a confirmed city). Never invent one. Mohammed Ahmed is "Business owner". Never print "to confirm".
 - Write each quote **tailored to that client's real business** (industrial B2B reads differently from an art shop).
 - See §10 for the approval rule on testimonial wording.
 
@@ -564,8 +565,8 @@ Purpose: social proof. **At least 3 testimonials**, each a `.tcard`: circular av
 - **Plain English, no jargon.** Translate technical findings into business consequences (e.g. "9.5s mobile load — most visitors leave before the page appears").
 - **Pull quotes:** centered, italic, no bold, one per section, on the most important sentence.
 - **One highlight** (`.hl` lime underline) per page, max.
-- **The final page is "Your plan, your price. Reply yes to start."** It makes the yes one tap: the recommended plan and its price, the 90-day target, the first three things we do, and **two ways to say yes: reply "yes" to the email, or book a 15-minute walkthrough** at https://cal.id/mavixmarketing/strategy-call. (This replaces the October 2026 rule that banned a call link: prospects who had small questions had no easy way to ask them.)
-- **One pricing system per proposal.** An SEO proposal shows SEO tiers only; never show SEO and Ads pricing together.
+- **The final page of an SEO or Both document is "Your plan, and how to start", with no price.** It makes the next step one tap: the recommended plan of work, the 90-day target we would agree, the first three things we do, and **two ways to move forward: reply "yes" to the email (we send the plan and the personalised price), or book a 15-minute walkthrough** at https://cal.id/mavixmarketing/strategy-call. Ads-only proposals call it "Your plan, your price" and name the phase fee.
+- **No prices in SEO or Both documents.** Only an ads-only proposal shows a fee page.
 - **Numbers with meaning:** every stat should imply money or leads for this specific client.
 
 ---
@@ -574,9 +575,9 @@ Purpose: social proof. **At least 3 testimonials**, each a `.tcard`: circular av
 
 These protect the client relationship and Mavix's reputation. Follow them even if asked otherwise; if the user insists, make the change only in an obvious, editable spot and flag it.
 
-- **No fabricated track-record numbers.** Do **not** state "150+ clients", "50+ professionals", "$10M+ generated", or "over a decade" as fact — Mavix is a **lean team founded in 2019**. Use **real proof instead**: the actual client logos, Google Partner status, "7 years / since 2019", and the "you work directly with us" advantage. This is more convincing than inflated figures and can't be exposed by a prospect asking for references.
+- **No fabricated track-record numbers.** Do **not** state "150+ clients", "$10M+ generated", or "over a decade" as fact. Use the **company story** (Dubai, 30+ people employed by Mavix across Dubai, Los Angeles and New Delhi, since 2019, one named account manager, the founder on the first call and every monthly review) and **real proof**: the actual client logos, Google Partner status, and the real case studies. This is more convincing than inflated figures and can't be exposed by a prospect asking for references.
 - **Real logos = real credibility.** The logo wall does the heavy lifting; lean on it.
-- **Testimonials must be truthful.** Use the real client's name/title/company from the filename. If you draft the quote wording, treat it as a **draft to be approved by that client** before sending — tell the user to get a quick thumbs-up (or swap in the client's actual words). Never publish a glowing quote under a real person's name without their sign-off.
+- **Testimonials must be truthful.** Use the real client's name/title/company from the filename, and only what is confirmed: no confirmed company means "Business owner". If you draft the quote wording, treat it as a **draft to be approved by that client** before sending — tell the user to get a quick thumbs-up (or swap in the client's actual words). Never publish a glowing quote under a real person's name without their sign-off.
 - **Case studies are the real ones from mavixmarketing.com/case-studies.** Name the client the way the website does, use the website's numbers and timeframe exactly, and put the case study URL on the page and in the CTA. Never invent a client name, city, staff count, baseline number or execution detail; where the website summary is thin, fetch the live page or write in general terms true of how Mavix works.
 
 ---
@@ -598,10 +599,11 @@ These protect the client relationship and Mavix's reputation. Follow them even i
 - [ ] **Benefit-card icons are SVG line-icons in blue** — not tiny/black/missing (the emoji failure mode).
 - [ ] Pull quotes are **centered, italic, un-bolded**, one per section, star on top.
 - [ ] Logo wall: 5 uniform white tiles, logos contained and centred.
-- [ ] Testimonials: 3+ cards, circular avatars, gold stars, real names/titles/companies from filenames.
-- [ ] Pricing: $999 / $1,349 / $1,999, Growth is the dark recommended card with the lime badge, no "was" price, terms strip present; **only one pricing system**.
-- [ ] Guarantee banner present (everything back plus $1,000 if the agreed 90-day target is missed; Growth and Premium only).
-- [ ] Last page = "Your plan, your price" close with both links (reply yes, 15-minute walkthrough) clickable.
+- [ ] Testimonials: 4 confirmed cards (2x2), circular avatars, gold stars, real names, only confirmed companies or roles ("Business owner" otherwise), never "to confirm".
+- [ ] **SEO or Both: no price anywhere** (no investment page, no fee on the close page, no publisher fee range). The only money figure is the guarantee's "$1,000".
+- [ ] SEO or Both: the "What we will work on" page lists all seven work areas, each with what it means for them.
+- [ ] The guarantee is worded the same everywhere (everything back plus $1,000 if the agreed 90-day target is missed; Growth and Premium only).
+- [ ] Last page = the close with both links (reply yes, 15-minute walkthrough) clickable; SEO or Both shows no price on it.
 - [ ] No "TBC", "to confirm", DIY-fix instructions or ranking promises anywhere.
 - [ ] Footer + page numbers on every content page; cover has none.
 - [ ] No inflated client/team/revenue numbers (§10).

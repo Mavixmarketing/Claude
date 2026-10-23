@@ -324,15 +324,34 @@ table.tb td.win { color:var(--green); font-weight:500; }
 .cta .cp { font-size:9.6pt; color:#D2DDF5; max-width:118mm; margin:6pt auto 0; line-height:1.48; }
 .cta .cbtn { display:inline-block; margin-top:12pt; background:var(--lime); color:var(--ink); font-size:10.5pt; font-weight:700; padding:9pt 28pt; border-radius:40px; }
 .cta .cc { font-size:8.6pt; color:#B9C8EC; margin-top:11pt; }
-/* ---------- FINAL CLOSE: your plan, your price, reply yes ---------- */
+/* ---------- FINAL CLOSE: your plan, and how to start (no price) ---------- */
 .cl-hero { margin-top:6pt; padding:20pt 22pt; border-radius:18px; color:white; display:flex; justify-content:space-between; align-items:center; gap:16pt;
   background:radial-gradient(120% 120% at 90% -30%, rgba(180,255,36,0.20), rgba(180,255,36,0) 55%), linear-gradient(150deg,#0A0E27,#071A6E 70%,#005AFF); }
 .cl-hero .k { font-size:8.2pt; font-weight:700; letter-spacing:2.2px; text-transform:uppercase; color:var(--lime); }
 .cl-hero .n { font-size:21pt; font-weight:700; letter-spacing:-0.6px; margin-top:4pt; line-height:1.1; }
 .cl-hero .g { font-size:9.2pt; color:#C9D6F5; margin-top:6pt; line-height:1.45; max-width:92mm; }
-.cl-hero .pr { text-align:right; flex-shrink:0; }
-.cl-hero .pr .v { font-size:34pt; font-weight:700; letter-spacing:-1.5px; color:var(--lime); line-height:1; }
-.cl-hero .pr .u { font-size:8.8pt; color:#B9C8EC; margin-top:4pt; }
+/* No price on the close page any more (October 2026). The hero holds the plan of work
+   on the left and "every month" on the right. */
+.cl-hero { align-items:stretch; }
+.cl-hl { flex:1.1; }
+.cl-hero .gu { display:flex; gap:7pt; align-items:flex-start; margin-top:10pt; font-size:8.8pt; line-height:1.4; color:var(--lime); font-weight:500; }
+.cl-hero .gu svg { width:14pt; height:14pt; flex-shrink:0; }
+.cl-work { flex:1; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); border-radius:12px; padding:11pt 13pt; }
+.cl-work .h { font-size:8.2pt; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:#B9C8EC; margin-bottom:5pt; }
+.cl-work ul { list-style:none; }
+.cl-work li { position:relative; padding-left:12pt; font-size:8.8pt; line-height:1.4; margin-bottom:4pt; color:#E3EAFB; }
+.cl-work li:before { content:''; position:absolute; left:0; top:4pt; width:5pt; height:5pt; border-radius:2px; background:var(--lime); }
+/* ---------- WHAT WE WILL WORK ON (scope page) ---------- */
+.work { margin:10pt 0 8pt; border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.wa { display:flex; gap:10pt; padding:8.5pt 13pt; border-bottom:1px solid var(--border); }
+.wa:nth-child(even) { background:#FAFBFE; }
+.wa:last-child { border-bottom:none; }
+.wn { width:18pt; height:18pt; border-radius:5px; background:var(--blue); color:white; font-size:8.8pt; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1pt; }
+.wb { flex:1; }
+.wt { font-size:9.8pt; font-weight:700; color:var(--ink); line-height:1.3; }
+.wd { font-size:8.8pt; color:#28304A; line-height:1.42; margin-top:1.5pt; }
+.wm { font-size:8.8pt; color:var(--green); line-height:1.42; margin-top:2pt; }
+.wm b { color:var(--green); }
 .cl-row { display:flex; gap:10pt; margin-top:12pt; }
 .cl-target { flex:1; background:var(--soft); border-radius:14px; padding:15pt 16pt; }
 .cl-target .h, .cl-first .h { font-size:8.2pt; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--blue); margin-bottom:6pt; }

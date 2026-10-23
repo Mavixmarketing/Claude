@@ -79,13 +79,13 @@ Three zones, and the third is pinned to the bottom of the page, not floated in t
   weight-300 span), one-sentence subtitle. This block sits at the TOP of the page, not centred.
 - **Bottom, absolutely positioned 18mm from the page edge:** "PREPARED FOR", client name,
   meta line, up to four service chips with the relevant ones marked `.on`, then the footer
-  line (prepared by / date / valid 14 days).
+  line (prepared by / "Checked on" date). No "valid 14 days": the audit is not a quote.
 
 ## Layout discipline
 
 **Every content section is exactly one page.** After every build, render the pages and check
-the page count equals the number of blocks (the cover is one block). The SEO proposal is 19
-pages: cover plus 18 sections. There is no contents page. If a section spills, cut copy. Do not
+the page count equals the number of blocks (the cover is one block). The SEO audit is 18
+pages: cover plus 17 sections. There is no contents page and no pricing page. If a section spills, cut copy. Do not
 shrink type, and do not let a component split across a break.
 
 Charts are height-capped. A single-chart page can use `.chart.big`.
@@ -95,48 +95,46 @@ Charts are height-capped. A single-chart page can use `.chart.big`.
 Call these, do not rebuild them.
 
 `kicker` `section` `pull` `neon` `stats` `chart` `table` `bullets` `two_col` `alert` `gantt`
-`steps` `scorecards` `scope_groups` `faqs` `guarantee` `cover` `who_we_are` `testimonials`
-`pricing_seo` `close_page` `case_study`
+`steps` `scorecards` `work_areas` `faqs` `cover` `who_we_are` `testimonials` `close_page`
+`case_study`
 
-Still in the code but not used by the SEO proposal any more: `contents`, `benefit_cards`,
-`next_steps`, `reporting`, `pricing_ads`.
+Still in the code but not used by the SEO audit any more: `contents`, `benefit_cards`,
+`next_steps`, `reporting`, `pricing_ads`, `pricing_seo`, `guarantee`, `scope_groups`.
+`pricing_seo` must never be called: the audit carries no prices.
 
-## The pricing page (premium)
+## The scope page (section 08)
 
-The price went up, so this page has to look like it. `pricing_seo` builds it and the CSS is
-set; do not restyle it.
-
-- **The recommended card is the dark card**: ink to blue gradient, lime tier name, white price
-  at 30pt, lime "Recommended for you" badge, and it sits a little taller than its neighbours.
-  Starter and Premium are white cards with a hairline border.
-- Each card: tier name, one-line fit, price with "/ month", a guarantee tag (lime on the dark
-  card, soft blue on Premium, plain grey "No money-back guarantee" on Starter), then bullets.
-- Under the cards: a four-item terms strip with lime ticks, then the guarantee banner.
-- **No box-shadow** anywhere on this page. WeasyPrint draws it as stray grey lines.
-- **No crossed-out "was" price.** No paragraph of small print between the cards and the banner.
-- Prices are `$999`, `$1,349`, `$1,999`.
+`work_areas` builds "What we will work on": seven numbered rows in one bordered block, each
+with a bold area name, one or two lines on what we do, and a green "For you:" line on what it
+means for them. Under it, one small note: not included, and what we need from them. No prices,
+no tier table.
 
 ## The close page
 
-`close_page` builds the last page: a dark hero panel (plan name left, lime price right), then
-two cards side by side (the 90-day target on soft blue, the first three things as numbered
-rows), then "Two ways to say yes" as two cards: a lime card with a "Reply yes" button (a
-mailto link) and a blue-outlined card with a "Book a 15-minute walkthrough" button linking to
-https://cal.id/mavixmarketing/strategy-call, with the short URL printed under it so it still
-works on paper. Contact line underneath.
+`close_page` builds the last page, "Your plan, and how to start", with **no price**: a dark hero
+panel (plan name, one line on the plan and the guarantee with a lime shield on the left, an
+"Every month" list of the work on the right), then two cards side by side (the 90-day target
+we would agree on soft blue, the first three things as numbered rows), then "Two ways to move
+forward" as two cards: a lime card with a "Reply yes" button (a mailto link; we send the plan
+and the personalised price) and a blue-outlined card with a "Book a 15-minute walkthrough"
+button linking to https://cal.id/mavixmarketing/strategy-call, with the short URL printed under
+it so it still works on paper. Contact line underneath. `close_page` raises an error if it is
+given a price.
 
 Rules that were broken before and must not be broken again:
 
 - **Testimonials are two per row, confirmed names only.** Four confirmed cards (2 by 2), or six
-  when six are confirmed. Never three per row. Never a card that says "to confirm".
-- **Pricing deliverables are bullet lists inside the card.** Never a paragraph.
+  when six are confirmed. Never three per row. Never a card that says "to confirm", and never a
+  company or role that is not confirmed ("Business owner" when the company is unknown).
+  `testimonials()` stops the build on a placeholder.
+- **No prices anywhere in the SEO audit.**
 - **FAQs are numbered and fill the page.** Eight questions, every one specific to this
   prospect's industry and situation. Never generic filler.
 - **Icons are inline SVG in Mavix blue.** Emoji render tiny and misaligned in WeasyPrint.
 - **The donut legend sits to the right of the chart** with the value and percentage on each
   row. Never a small legend underneath.
 - **Pull quotes are centred, italic, unbolded**, with a small star above, one per section.
-- **One pricing system per document.** An SEO proposal shows SEO tiers only.
+- **No pricing system at all in the SEO audit.** The price is sent after the yes.
 
 ## The results panel: never fabricate proof
 
@@ -176,8 +174,9 @@ Optimize SEO" zone. Say so in the panel note.
 ## Honesty guardrails
 
 - **No fabricated track record.** Not "150+ clients", not "$10M generated", not "over a
-  decade". Mavix is a small team founded in 2019. Use the real logo wall, Google Partner
-  status, "7 years / since 2019", and direct access.
+  decade". Use the company story in SKILL.md (Dubai, 30+ people employed by Mavix, since 2019,
+  one named account manager, Farhan on the first call and every monthly review), the real logo
+  wall and Google Partner. Never "small team".
 - **Case studies are the real ones from mavixmarketing.com/case-studies**, three different
   industries, matched to the objection in the room. The client is named exactly the way the
   website names it, the numbers and timeframe are the website's, and the case study's URL is on
@@ -191,17 +190,18 @@ Optimize SEO" zone. Say so in the panel note.
 ## Build and QA
 
 ```python
-parts = [cover(P), contents(TOC, DOCTITLE), s01, ..., sNN]
+parts = [cover(P), s01, ..., s17]   # no contents page
 HTML(string=build_html(CSS, parts, DOCTITLE)).write_pdf("Client_Type_Proposal.pdf")
 ```
 
 Then, every time:
 
-1. Page count is 19 for the SEO proposal. If not, a section spilled. Cut copy.
-2. Render to PNG at dpi 85 and **actually look at every page**.
-3. Run the banned-word and dash check in `reference/COPY_RULES.md` on the PDF text.
-4. Confirm every case study shows a real screenshot, not a chart.
-5. Confirm testimonials are confirmed names only, numbered FAQs fill the page, pricing is
-   bulleted, the recommended card is the dark one, and the close page shows both links.
+1. Run `python3 build/check_pdf.py <pdf> 18`. It must say ALL PASS (page count 18, no prices,
+   no placeholders, no dashes or banned words, both close-page links, and the rest).
+2. Render to PNG at dpi 85 and **actually look at every page**, hardest at page 2, the scope
+   page and the close page.
+3. Confirm every case study shows a real screenshot, not a chart.
+4. Confirm testimonials are confirmed names and roles only, numbered FAQs fill the page, and
+   the close page shows both links and no price.
 
 File name: `[Client]_[Type]_Proposal.pdf`.

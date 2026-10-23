@@ -6,7 +6,7 @@ The reasoning behind every move below — which mechanics actually work, which f
 
 ## The header, before any script
 
-1. **Ground rules** — the call format, pricing, floor, capacity, terms, closing, tone. Lifted from `facts.md`, trimmed to this prospect.
+1. **Ground rules** — the call format, **which campaign they came from and so which prices apply** (or the price already quoted to them), floor, capacity, terms, closing, tone. Lifted from `facts.md`, trimmed to this prospect.
 2. **The prospect in ten lines** — who they are, who owns it, how long, what is excellent about them, what is broken. Plus a "do not say" line for anything the research found that is wrong or unverified.
 3. **Tabs to open** — one numbered list of real clickable URLs in call order. Then a short "how to use them" note: which pairs go side by side, which one stings, which stays shut unless they push on price.
 4. **Check yourself before you dial** — the four or five things research could not reach. Their phone on mobile. Whether a new review has landed. Whether the map box has moved. His real client count this month.
@@ -80,7 +80,7 @@ Then risk removed: no setup fee, no long contract with no time limit (it only ti
 
 *"Based on everything we've talked about — does this sound like the kind of thing you're looking for?"* **Never price into a maybe.**
 
-Then the three packages, Growth recommended, said slowly: nine-ninety-nine, thirteen-forty-nine, nineteen-ninety-nine. **Then stop and count to ten.**
+Then the three packages for **this prospect's campaign** (`facts.md`), Growth recommended, said slowly. USA/Canada and Aus/UK/NZ/Sing campaigns: three-forty-nine, five-forty-nine, sixteen-forty-nine. AI Written campaign: nine-ninety-nine, thirteen-forty-nine, nineteen-ninety-nine. If a price was already quoted to them, say that one. **Then stop and count to ten.**
 
 Then set the price against one job of theirs. Then the Clutch comparison only if they flinch.
 

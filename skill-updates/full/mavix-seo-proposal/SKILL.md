@@ -1,17 +1,22 @@
 ---
 name: mavix-seo-proposal
-description: "Build a branded Mavix Marketing SEO proposal, audit or search strategy document as a print-ready PDF. Trigger when Farhan gives prospect details (a conversation, DM thread, notes, business info, SEO metrics, PageSpeed or backlink data) and asks to create, write, draft or generate an SEO proposal, an SEO audit, a search strategy, an organic growth plan, or asks what to send a prospect who needs rankings, organic traffic or Google visibility. Produces a 19-page document (cover plus 18 one-page sections): a one-page short version up front, a page on being found on Google, Google Maps and AI answers, three real Search Console case studies, confirmed testimonials, premium three-tier SEO pricing, the trust sections that answer a prospect's unspoken questions, and a final 'your plan, your price, reply yes' page with a 15-minute walkthrough link, plus a cold outreach email printed in chat. Use the paid-media skill instead when the prospect wants Google Ads or Meta Ads."
+description: "Build a branded Mavix Marketing SEO proposal, audit or search strategy document as a print-ready PDF. Trigger when Farhan gives prospect details (a conversation, DM thread, notes, business info, SEO metrics, PageSpeed or backlink data) and asks to create, write, draft or generate an SEO proposal, an SEO audit, a search strategy, an organic growth plan, or asks what to send a prospect who needs rankings, organic traffic or Google visibility. Produces an 18-page free audit and strategy (cover plus 17 one-page sections) with no prices anywhere: a one-page short version up front, a page on being found on Google, Google Maps and AI answers, a 'what we will work on' scope page covering the website, rankings, content, links and PR, Google Maps and reviews, AI Overviews and AI Mode, and ChatGPT, Perplexity and Gemini, three real Search Console case studies, confirmed testimonials, the trust sections that answer a prospect's unspoken questions, and a final 'your plan, and how to start' page (reply yes for the plan and personalised price, or book a 15-minute walkthrough), plus a cold outreach email printed in chat. Use the paid-media skill instead when the prospect wants Google Ads or Meta Ads."
 ---
 
 # Mavix SEO proposal
 
-Builds a print-ready, branded SEO proposal PDF plus a cold outreach email.
+Builds a print-ready, branded SEO audit and strategy PDF plus a cold outreach email.
+
+**This document is a free audit and strategy, not a quote. It carries no prices at all**
+(Farhan, October 2026). The plan and the personalised price go to the prospect after they
+reply "yes" or book the 15-minute walkthrough. The only money figure allowed anywhere is the
+guarantee's "plus $1,000".
 
 ## Step 0: load the rules first
 
 Read **`reference/COPY_RULES.md` before writing a single sentence**,
 **`reference/DESIGN_SPEC.md` before writing any build code**, and
-**`reference/TRUST_SECTIONS.md` before writing sections 02, 08, 10, 17 or 18.** The copy
+**`reference/TRUST_SECTIONS.md` before writing sections 02, 08, 10, 16 or 17.** The copy
 rules do not work as a cleanup pass. Then:
 
 ```bash
@@ -38,7 +43,7 @@ the **company name** or the **industry** is genuinely absent.
 | What is in the way | Their problems, not a list of services they lack |
 | Current organic position | Assume early stage |
 | Competitors | Name 2 or 3 typical ones for that industry and market |
-| Any past agency experience | If they described a bad one, answer it in the FAQs (section 16) and in section 17 |
+| Any past agency experience | If they described a bad one, answer it in the FAQs (section 15) and in section 16 |
 
 **Track every assumption as you go.** Section 02 has a box that lists them out loud. A number
 that was estimated must never appear anywhere in the document as if the prospect supplied it.
@@ -48,41 +53,48 @@ want both, build this one and note that a paid-media document follows.
 
 ## Step 2: the section order
 
-A cover, then **eighteen one-page sections. Nineteen pages.** No contents page: on a phone it
-is a wasted swipe before any value. This order is fixed.
+A cover, then **seventeen one-page sections. Eighteen pages.** No contents page and no
+pricing page. This order is fixed.
 
-The reader is a busy owner on a phone. Page 2 has to give them the whole story, and the last
-page has to make saying yes easy. Everything in between is the proof.
+The reader is a busy owner on a phone. Page 2 has to give them the whole story, the scope
+page has to show everything we would do for them, and the last page has to make the next step
+easy. Everything in between is the proof.
 
 | # | Section | What it does |
 |---|---|---|
-| 01 | The short version | Four stat cards, three findings, three plan lines, the 90-day target and guarantee in one neon box, and "your plan and price are on the last page". No price here |
+| 01 | The short version | Four stat cards, three findings, three plan lines, the 90-day target and guarantee in one neon box, and "your plan and how to start are on the last page" |
 | 02 | What we know about your business | Table of what they told us, plus the honest assumptions box. See `TRUST_SECTIONS.md` |
 | 03 | Where you stand | Their reality: a short table of area, what we found, what it costs them. One pull quote |
 | 04 | The search gap | Search volume, capture rate, average value, monthly gap. Competitor traffic bar chart |
-| 05 | Google, Maps and AI | The AI search page. Mavix is not a traditional SEO agency. See "AI search positioning" below |
+| 05 | Google, Maps and AI | The AI search page: the two allowed facts, then what each place shows for them today. See "AI search positioning" below |
 | 06 | Competitor analysis | Competitor table, backlink donut, red alert on the biggest problem |
-| 07 | The plan | Neon callout, three-phase Gantt across 90 days, four numbered first-month steps |
-| 08 | Exactly what you get | Four scope groups, then **what is not included**, then who does what. See `TRUST_SECTIONS.md` |
+| 07 | The plan | Neon callout, three-phase Gantt across 90 days, then "Your first 30 days": four numbered steps, week 1 to week 4, specific to them |
+| 08 | What we will work on | The seven work areas, each with what we do and what it means for them, then what is not included and what we need from them. See Step 3b |
 | 09 | The targets | The 90-day target the guarantee covers, then six scorecards with month-six goals |
-| 10 | Who we are | Five questions answered, AI positioning line, Google Partner block, credential circles, logo wall. See `TRUST_SECTIONS.md` |
+| 10 | Who we are | The company story (below), Google Partner block, credential circles, logo wall. See `TRUST_SECTIONS.md` |
 | 11 | What clients say | **Confirmed testimonials only**, 2 per row. See Step 5 |
 | 12 | Case study 01 | Construction management firm, `seo3` |
 | 13 | Case study 02 | HR software company, `seo2` |
 | 14 | Case study 03 | Online home goods store, `seo1` |
-| 15 | Investment | Premium pricing page: three tiers, Growth recommended, terms strip, guarantee banner |
-| 16 | Questions | **Eight numbered FAQs, filling the page.** Always include "Would Google Ads be faster?" and "Will I show up in ChatGPT or Google's AI answers?" |
-| 17 | How we work together | Channels and reporting table, who owns what, and what happens if you leave. See `TRUST_SECTIONS.md` |
-| 18 | Your plan, your price | The close: recommended plan, its monthly price, the 90-day target, the first three things we do, two ways to say yes. See Step 7b |
+| 15 | Questions | **Eight numbered FAQs, filling the page.** Always include "Would Google Ads be faster?", "Will I show up in ChatGPT or Google's AI answers?" and "What does it cost?" (answer: it depends on the plan and the site; reply "yes" or book the walkthrough for the personalised price; no setup fee) |
+| 16 | How we work together | Channels and reporting table, who owns what, and what happens if you leave. See `TRUST_SECTIONS.md` |
+| 17 | Your plan, and how to start | The close: the recommended plan of work (no price), the 90-day target, the first three things we do, two ways to move forward. See Step 7b |
 
-Drop section 15 entirely if Farhan says "no pricing". Page count then becomes 18, and the
-close page shows the plan and target without a price.
+**No prices, anywhere.** No pricing or investment page, no price on the close page, no price
+in the FAQs, the scope page, the email or the file name. No "$999", no "/ month", no "from".
+Publisher fees are named as a cost the client pays directly, without a number ("we tell you the
+usual range with your price"). The only money figure allowed is the guarantee's "plus $1,000".
+If Farhan asks for a quote, that is a separate document, sent after the prospect says yes.
 
-**Cut on purpose, do not bring back:** the contents page, the twelve-month projection page,
-a "quick wins" or "fix it yourself" page, the "what usually goes wrong with agencies" page,
-a separate reporting page and a separate "after you say yes" page. The useful parts of those
-live in sections 01, 16, 17 and 18. They were cut because the October audits ran to 22 and 29
-pages and repeated the same promises four or five times.
+**Cut on purpose, do not bring back:** the contents page, the pricing or investment page, the
+twelve-month projection page, a "quick wins" or "fix it yourself" page, the "what usually goes
+wrong with agencies" page, a separate reporting page and a separate "after you say yes" page.
+The useful parts of those live in sections 01, 15, 16 and 17. They were cut because the October
+audits ran to 22 and 29 pages and repeated the same promises four or five times.
+
+**No page repeats another.** Section 05 says what each place shows for them today. Section 08
+says the work. Section 16 says how we work together. The close page adds nothing new. If a line
+already sits on an earlier page, do not print it again.
 
 **Never hand over the fix.** Findings say what is wrong and what it costs them. They do not
 include paste-ready text, DNS records, settings paths or "do this yourself in 15 minutes"
@@ -90,11 +102,11 @@ instructions. If Farhan wants to give something away, it is one small tip in the
 the call, never a page.
 
 **Never write a ranking promise outside the guarantee.** No "rank by New Year", no "be found
-before budgets are set". Say what will be live by a date ("the new pages are live before the
-January rush"), never where it will rank.
+before budgets are set", no "you will appear in AI answers". Say what will be live by a date
+("the new pages are live before the January rush"), never where it will rank.
 
-**No placeholders ship.** No "TBC", no "to confirm", no "[ASK FARHAN]" in the PDF. Fill the
-gap or cut the line.
+**No placeholders ship.** No "TBC", "to confirm", "[ASK FARHAN]" in the PDF. Fill the gap or cut
+the line.
 
 Never use the paid-media sections here. No campaign roadmap, no account health table, no
 four-phase pricing. No "Google Ads" chip on the cover and no Google ad credit line: they
@@ -104,7 +116,8 @@ the FAQs.
 ## AI search positioning (section 05, and one line in section 10)
 
 Mavix is not a traditional SEO agency. It gets businesses found on Google, Google Maps,
-Google's AI Overviews and AI Mode, and AI assistants like ChatGPT. Say that plainly.
+Google's AI Overviews and AI Mode, and AI assistants like ChatGPT, Perplexity and Gemini. Say
+that plainly.
 
 **The only two outside facts allowed. No other numbers about AI search, ever:**
 
@@ -116,18 +129,22 @@ Always print the source next to the figure.
 
 **How we help, true work only:** answer-style pages for the questions customers ask,
 structured data, Google Business Profile and reviews, mentions and links on trusted sites,
-and technical fixes. Do not add anything else (no "llms.txt fixes guarantee citations", no
-"AI ranking" products).
+consistent business details across the web, and technical fixes. Do not add anything else (no
+"llms.txt fixes guarantee citations", no "AI ranking" products).
 
-**Never promise that the client will appear in an AI answer.** Say that nobody can promise
-it, Google included, and that the work makes them the clearest, best-sourced answer.
+**Never promise that the client will appear in an AI answer, or a ranking by a date.** Say that
+nobody can promise it, Google included, and that the work makes them the clearest,
+best-sourced answer.
 
-Build section 05 as: lead paragraph, `stats` with the two facts, a `table` of where customers
-look against what we do, and a `neon` with the honest line.
+Build section 05 as: lead paragraph, `stats` with the two facts, a `table` of **where customers
+look against what we found for them on the build date** (Google search, Google Maps, AI
+Overviews and AI Mode, ChatGPT, Perplexity and Gemini), and a `neon` with the honest line. Only
+print what you actually checked. If you could not check a row, write "Not checked yet. We check
+it in week one and show you what it says." The work itself goes on section 08, not here.
 
 ## Step 3: the trust sections
 
-Sections 02, 08, 10, 17 and 18 exist to answer the questions a prospect has in their head
+Sections 02, 08, 10, 16 and 17 exist to answer the questions a prospect has in their head
 and does not ask. **`reference/TRUST_SECTIONS.md` is the authority on all of them.** Read it
 before writing any of those pages.
 
@@ -135,8 +152,33 @@ The rule that outranks everything in that file: **never write something Mavix ca
 a detail is not true for this client, cut the line rather than softening it.
 
 One SEO specific addition to section 08's "what is not included" list: publisher and placement
-fees for PR and guest posts are paid by the client directly, usually 100 to 300 USD a month,
-at no markup. Say the range. A client who discovers it later feels sold to.
+fees for PR and guest posts are paid by the client directly, at no markup. Say that it exists,
+with no number in this document ("we tell you the usual range with your price"). The range goes
+in the price Farhan sends after the yes, so nobody discovers it later.
+
+## Step 3b: What we will work on (section 08)
+
+Farhan wants every prospect to see all the work Mavix does, in plain words, and what each
+part means for them. Build it with `work_areas`: seven numbered rows, each with what we do (one
+line or two) and "For you:" (one line on what changes for their business). Use their trade's
+words ("patients", "treatments", "jobs"), not ours.
+
+| # | Area | What it covers |
+|---|---|---|
+| 1 | Your website | Speed, a clear structure, a page for each service and each area they serve, technical fixes |
+| 2 | Google rankings and keyword research | The searches their customers type, how many people make them, which to win first |
+| 3 | Blogs and helpful content | Articles that answer the questions customers ask before they buy, written by a person, approved by them |
+| 4 | Links, PR and mentions | Links and mentions on trusted sites, PR placements |
+| 5 | Google Maps and reviews | Google Business Profile kept full and active, a simple way to ask for reviews |
+| 6 | Google's AI Overviews and AI Mode | Answer-style pages and the labels Google reads (structured data), so it can understand and quote them |
+| 7 | ChatGPT, Perplexity and Gemini | The same business details everywhere online, mentions on the sites these assistants read |
+
+Rows 6 and 7 always carry the honest line: nobody can promise a place in an AI answer. Under the
+rows, one short note: **not included** (publisher fees paid directly at no markup, with no
+number; a website rebuild; photography and video; anything else is quoted before it starts) and
+**what we need from you** (access in week one, a quick read of each page). How much of each area
+happens every month depends on the plan, and that detail goes with the price after the yes.
+Never print prices, quantities per price, or tier tables on this page.
 
 ## Step 4: case studies, which are mandatory
 
@@ -191,105 +233,123 @@ overlap.
 
 ## Step 5: testimonials
 
-**Confirmed names only.** Print a testimonial only when Farhan has confirmed the person's name
-and company. Never print "client name to confirm", "company to confirm" or anything like it.
-Two of the six cards in the October audits said that, which made a careful reader doubt every
-other page.
+**Confirmed names only, and only the company or role Farhan has confirmed.** Never print
+"client name to confirm", "company to confirm" or anything like it. Two of the six cards in the
+October audits said that, which made a careful reader doubt every other page.
 
-Real photos available: `t1` Jonathan Jones, `t2` Lisa Wrake, `t3` Judy Li, `t4` Mohammed
-Ahmed, Managing Director (as printed in the October audits; ask Farhan for his company).
-Four confirmed cards make a clean 2 by 2 grid. Use six only when six are confirmed. Write each
-quote to that client's real business, then tell Farhan the drafted quotes need sign-off before
-sending.
+**Never print an unconfirmed company or role for a real person.** If the company is not
+confirmed, the card says "Business owner" (or "Business owner, [city]" when the city is
+confirmed). Never invent a company name or a job title. `testimonials()` refuses any card with a
+placeholder or an empty role and stops the build.
 
-## Step 6: pricing
+Real photos available: `t1` Jonathan Jones, Sales Director, Carpenter and Paterson Asia Ltd;
+`t2` Lisa Wrake, Founder, Run Wrake; `t3` Judy Li, Founder and CEO, Brother Filtration
+Equipment Co; `t4` **Mohammed Ahmed, Business owner** (no confirmed company or city: print
+exactly that until Farhan confirms more). Four confirmed cards make a clean 2 by 2 grid. Use
+six only when six are confirmed. Write each quote to that client's real business, then tell
+Farhan the drafted quotes need sign-off before sending.
 
-Three tiers, deliverables as **bullet lists inside the card**, never a paragraph. Prices are
-written as `$999`, `$1,349`, `$1,999` with "/ month".
+## Step 6: no prices, and the guarantee
 
-- **Starter $999/mo, no money-back guarantee:** keyword and competitor research, 2 blogs a
-  month, directory and profile listings, social bookmarking and Q&A, monthly report and call.
-- **Growth $1,349/mo, marked recommended, 90-day money-back guarantee:** everything in
-  Starter, 3 to 4 blogs, 2 guest posts, 1 PR placement, Google Business Profile management,
+**There are no prices in this document.** No pricing page, no price on the close page, no
+"from" price in the FAQs. The plan names (Starter, Growth, Premium) may appear, and the close
+page lists the work in the recommended plan, but never a fee. Prices depend on the campaign the
+prospect came from and are sent after the yes (see the call kit's `facts.md` for the current
+numbers).
+
+What each plan does, for the close page's "every month" list only (no prices):
+
+- **Starter, no money-back guarantee:** keyword and competitor research, 2 blogs a month,
+  directory and profile listings, social bookmarking and Q&A, monthly report and call.
+- **Growth, usually the one we recommend, 90-day money-back guarantee:** everything in Starter,
+  3 to 4 blogs, 2 guest posts, 1 PR placement, Google Business Profile management,
   infographics.
-- **Premium $1,999/mo, 90-day money-back guarantee:** everything in Growth, 8 or more blogs
-  and guest posts, full on-page audit and fixes, technical SEO, quarterly competitor gap
-  analysis, priority calls.
+- **Premium, 90-day money-back guarantee:** everything in Growth, 8 or more blogs and guest
+  posts, full on-page audit and fixes, technical SEO, quarterly competitor gap analysis,
+  priority calls.
 
-There is no "was" price any more. Never print a crossed-out price or a discount.
+**The guarantee, worded the same way everywhere (sections 01, 09, 15 and 17):** on our main
+plans (Growth and Premium), we agree a 90-day target with the client in writing before they
+start. If we miss it, they get everything they paid back, plus $1,000. Starter has none. The
+month-six scorecards are goals, not the guarantee. The target is a real, checkable number (for
+example "page one on Google for 2 of 10 searches we agree before you start"), never "TBC".
 
-**The guarantee, worded the same way everywhere:** on Growth and Premium, we agree a 90-day
-target with the client in writing before they start. If we miss it, they get everything they
-paid back, plus 1,000 USD. Starter has none. The month-six scorecards are goals, not the
-guarantee. The target is a real, checkable number (for example "page one on Google for 2 of 10
-searches we agree before you start"), never "TBC".
-
-**No long contract:** the agreement has no time limit and only ties Mavix, to deliver. No
-setup fee. Publishers are paid directly by the client for PR and backlinks, usually 100 to 300
-USD a month, at no markup.
-
-**The investment page is the premium page.** `pricing_seo` lays it out: the recommended card
-is the dark ink-to-blue card with the lime "Recommended for you" badge, a little taller than
-the other two, with a white price; Starter and Premium are clean white cards. Each card has a
-one-line "fit" under the tier name (who it suits). Under the cards sits a four-item terms
-strip (`P["terms"]`), then the guarantee banner. Do not add a paragraph of small print
-between them: the page works because it is calm and has room.
-
-Whatever is said about notice and cancellation here must match section 17 and the actual
-contract. If the three disagree, the contract wins and the other two change.
+**No long contract:** the agreement has no time limit and only ties Mavix, to deliver. No setup
+fee. Whatever is said about notice and cancellation must match section 16 and the actual
+contract. If they disagree, the contract wins and the document changes.
 
 ## Step 7: build
 
 Copy `sample_seo.py` and replace the content. Do not write CSS or chart code. The trust
-sections need no new components: section 02 is `table` plus `alert`, section 17 is `table`
-plus `two_col` plus `alert`. Section 15 is `pricing_seo` and section 18 is `close_page`.
+sections need no new components: section 02 is `table` plus `alert`, section 08 is
+`work_areas` plus a note, section 16 is `table` plus `two_col` plus `alert`, section 17 is
+`close_page`. `pricing_seo` is retired: never call it in this document.
 
 ```bash
-python3 build_proposal.py     # your copy of sample_seo.py
+python3 build_proposal.py                                  # your copy of sample_seo.py
+python3 build/check_pdf.py out/Client_SEO_Proposal.pdf 18  # must say ALL PASS
 ```
 
-## Step 7b: the close page (section 18)
+## Step 7b: the close page (section 17)
 
-Title: "Your plan, your price. Reply yes to start." Built with `close_page`. It holds:
+Title: "Your plan, and how to start." Built with `close_page`. It holds:
 
-1. **The recommended plan for them** and its monthly price, in the dark hero panel, with the
-   guarantee in one line (Growth or Premium only; if Starter is the recommendation, say it has
-   no guarantee).
-2. **The 90-day target**, the same words as section 09, and how it is checked.
+1. **The recommended plan of work for them, with no price**: the plan name, one line on what it
+   is for them, three to five "every month" lines of work, and the guarantee in one line (Growth
+   or Premium; if Starter is the recommendation, say it has no guarantee).
+2. **The 90-day target we would agree**, the same words as section 09, and how it is checked.
 3. **The first three things we do**, specific to this prospect (from section 07).
-4. **Two ways to say yes:** reply "yes" to the email, or book a 15-minute walkthrough at
+4. **Two ways to move forward:** reply "yes" to the email and we send the plan and their
+   personalised price, or book a 15-minute walkthrough at
    https://cal.id/mavixmarketing/strategy-call. Both are tappable links in the PDF.
 
-Nothing else goes on this page. No new information, no extra plans, no fine print.
+Nothing else goes on this page. No price, no new information, no extra plans, no fine print.
+`close_page` refuses a `close_price` key and any price in the plan lines.
 
 ## Step 8: check before showing anyone
 
-1. **Page count is 19** (cover + 18 sections), or 18 with no pricing. More means a section
-   spilled. Cut copy, never type size.
-2. Render every page to PNG and look at them. Look hardest at page 2, the pricing page and
-   the close page: the recommended card stands out, nothing wraps badly, both links show.
-3. Run the verification script in `reference/COPY_RULES.md` on the PDF. Zero dashes, zero
-   curly quotes, zero banned words.
+1. **Run `python3 build/check_pdf.py <pdf> 18`. It must say ALL PASS.** It checks the page
+   count, dashes, curly quotes, banned words, placeholders, prices, the old team story, ranking
+   promises, DIY fixes, cut pages, old terms, "monthly" used for a total, the cover chips, the
+   AI fact sources, the case study URLs, the scope page and both links on the close page.
+2. **Page count is 18** (cover + 17 sections). More means a section spilled. Cut copy, never
+   type size.
+3. Render every page to PNG and look at them. Look hardest at page 2, the scope page (section
+   08) and the close page: nothing wraps badly, both links show, no price anywhere.
 4. Every case study shows a real screenshot, names the client the way the website does,
    uses the website's numbers and timeframe, and carries its mavixmarketing.com URL. A total
    for a period is never called "monthly".
-5. Testimonials: confirmed names only, no "to confirm" anywhere. Eight numbered FAQs filling
-   the page. Bulleted pricing cards.
+5. Testimonials: confirmed names only, and only a confirmed company or role. Mohammed Ahmed is
+   "Business owner". Eight numbered FAQs filling the page, including "What does it cost?".
 6. **Section 02 has an assumptions box**, and every estimated figure in the document appears
    in it. Nothing invented is presented as something the prospect said.
-7. **Section 10 does not contain the banned agency sentence**, and claims no team size,
-   founding year, client count or award that Farhan has not stated.
-8. **Section 05 uses only the two allowed AI facts**, each with its source, and promises no
-   place in an AI answer.
-9. **Section 17, the pricing section and the FAQs agree** on the terms: no long contract, no
-   time limit, the agreement only ties Mavix.
-10. **Publisher fees appear in section 08** as a cost the client pays directly.
-11. **Prices are $999, $1,349 and $1,999.** No "was" price. The guarantee is worded the same in
-    sections 01, 09, 15, 16 and 18.
-12. **No placeholders, no DIY fixes, no ranking promises** outside the guarantee. Search the
-    PDF text for "TBC", "confirm", "do this", "rank by".
-13. **The close page** shows the plan, the price, the 90-day target, three first steps, and
-    both ways to say yes with working links.
+7. **Section 10 uses the company story below**, does not contain the banned agency sentence,
+   and claims no client count, award or anything else not in the story.
+8. **Section 05 uses only the two allowed AI facts**, each with its source, prints only what was
+   actually checked, and promises no place in an AI answer.
+9. **Section 08 lists all seven work areas**, each with what it means for them.
+10. **Section 16 and the FAQs agree** on the terms: no long contract, no time limit, the
+    agreement only ties Mavix.
+11. **The guarantee is worded the same** in sections 01, 09, 15 and 17.
+12. **The close page** shows the plan of work (no price), the 90-day target, three first steps,
+    and both ways to move forward with working links.
+
+## Who we are: the company story (section 10)
+
+Use this, shortened to fit, and nothing beyond it. The facts come from
+mavixmarketing.com (about page and home page, read on 23 October 2026), plus Farhan's confirmation of
+Dubai and 30+ people. The full text is in the call kit's `references/facts.md`.
+
+> Mavix Marketing is based in Dubai, with a team of 30+ people across Dubai, Los Angeles and
+> New Delhi. Everyone who does the work is employed by Mavix, not subcontracted. We do SEO, paid
+> ads and email, and have done since 2019. On search we are not a traditional SEO agency: we get
+> businesses found on Google, Google Maps, and in AI answers such as Google's AI Overviews and
+> ChatGPT. Every account has one named account manager for the day to day. Our founder, Mohd
+> Farhan, takes the first call with every new client and joins every monthly review. Reports
+> lead with enquiries, and every number comes from the client's own accounts.
+
+Never write "small team", "Farhan runs your account himself" or "there is nobody behind him".
+Never add a client count, a founding story, an award or an office the story does not name.
 
 ## Step 9: deliver
 
@@ -297,8 +357,10 @@ Nothing else goes on this page. No new information, no extra plans, no fine prin
 One line of summary, then print the outreach email in chat.
 
 Tell Farhan in chat, every time, which lines in the document are commitments he now has to
-keep: the response time, the 90-day target, the first three things on the close page, and the
-handover. If any of them is not true yet, say so plainly before he sends it.
+keep: the response time, the 90-day target, the first three things on the close page, the
+named account manager, and the handover. If any of them is not true yet, say so plainly before
+he sends it. Then tell him which plan and which campaign price the prospect should get when they
+reply "yes".
 
 ## Step 10: the outreach email
 
@@ -308,9 +370,10 @@ Plain text in chat only. **Never inside the PDF.** Four to six short lines.
 2. One pain point they feel.
 3. One outcome, not a service list.
 4. A soft ask to open the attached audit.
-5. **The 15-minute walkthrough offer, with the link written out in full:** for example
+5. **The 15-minute walkthrough offer, once, with the link written out in full:** for example
    "If it's easier, I can walk you through it in 15 minutes:
-   https://cal.id/mavixmarketing/strategy-call". This is the only link in the email.
+   https://cal.id/mavixmarketing/strategy-call". Say it once only, and this is the only link in
+   the email.
 6. `Mohd Farhan` on its own. No title, no company, no phone, no link in the sign-off.
 
 Zero dashes, straight quotes only, no "I hope this email finds you well", no "Best regards".

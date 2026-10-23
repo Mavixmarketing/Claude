@@ -1,8 +1,8 @@
 # The trust sections
 
-**Where they sit in the SEO proposal (October 2026 order):** What we know (section 02),
-Exactly what you get (08), Who we are (10), How we work together (17) and the close page,
-Your plan, your price (18). The "what usually goes wrong with agencies" page and the separate
+**Where they sit in the SEO audit (October 2026 order):** What we know (section 02),
+What we will work on (08), Who we are (10), How we work together (16) and the close page,
+Your plan, and how to start (17). The audit carries no prices anywhere. The "what usually goes wrong with agencies" page and the separate
 "after you say yes" page were cut: in the audits that went out they repeated the same promises
 four or five times and pushed the ask to page 22 and 29. Their content lives on as described
 under each heading below.
@@ -75,11 +75,12 @@ That sentence means nothing and every prospect has read it fifty times. Delete i
 
 **Answer five questions instead, in this order, one short paragraph each:**
 
-1. **Who we are.** A small team, not a call centre. Name Mohd Farhan and say plainly that the
-   person who wrote this proposal is the person who runs the account. That one sentence
-   answers the loudest fear a prospect has.
-2. **What we do, specifically.** Google Ads, Meta Ads and SEO. Name the actual disciplines,
-   not "full service". If a service is not on the list, say so.
+1. **Who we are.** Use the company story below. Based in Dubai, a team of 30+ people
+   employed by Mavix, one named account manager on every account, and Mohd Farhan, the
+   founder, on the first call and in every monthly review. That answers the loudest fear a
+   prospect has: being handed to someone who does not know them.
+2. **What we do, specifically.** SEO, paid ads (Google and Meta) and email. Name the actual
+   disciplines, not "full service". If a service is not on the list, say so.
 3. **Who we work with.** The kinds of businesses Mavix actually serves. Small and mid sized
    companies who need the phone to ring, not brands with a media department. Say the size of
    business honestly, because a prospect who is too big or too small should know now.
@@ -92,24 +93,43 @@ That sentence means nothing and every prospect has read it fifty times. Delete i
 Keep the Google Partner block, the credential circles and the client logo wall exactly as they
 are. Those are the proof. The words above are the context.
 
-Do not claim a team size, a founding year, a client count, an office or an award unless Farhan
-has stated it. An unverifiable number here poisons a document whose whole job is trust.
+Do not claim anything beyond the company story: no client count, no award, no office or
+founding story it does not name. An unverifiable number here poisons a document whose whole job
+is trust. Never write "small team", "Farhan runs your account himself" or "there is nobody behind
+him": they contradict the call kit and the website.
+
+### The company story (October 2026)
+
+Facts from mavixmarketing.com (about page and home page, read 23 October 2026) plus Farhan's
+confirmation of Dubai and 30+ people. Shorten to fit; never add to it.
+
+> Mavix Marketing is based in Dubai, with a team of 30+ people across Dubai, Los Angeles and
+> New Delhi. Everyone who does the work is employed by Mavix, not subcontracted. We do SEO, paid
+> ads and email, and have done since 2019. On search we are not a traditional SEO agency: we get
+> businesses found on Google, Google Maps, and in AI answers such as Google's AI Overviews and
+> ChatGPT. Every account has one named account manager for the day to day. Our founder, Mohd
+> Farhan, takes the first call with every new client and joins every monthly review. Reports
+> lead with enquiries, and every number comes from the client's own accounts.
 
 ---
 
-## Section: Exactly what you get
+## Section: What we will work on (was "Exactly what you get")
 
-**Where it goes:** replaces the scope of work section, same slot.
+**Where it goes:** section 08, the scope page.
 
-Keep the four scope groups. Add two things that are not currently there, and they matter more
-than the groups do.
+**The seven work areas come first** (`work_areas`, see SKILL.md Step 3b): their website,
+Google rankings and keyword research, blogs and helpful content, links and PR, Google Maps and
+reviews, Google's AI Overviews and AI Mode, and ChatGPT, Perplexity and Gemini. Each row says
+what we do and what it means for them, in plain words. Then two short things that matter as
+much as the rows. No prices on this page.
 
 **1. What is not included.** Say it plainly, in its own short list. This is the single best
 defence against the complaint that agencies spring costs later.
 
 - Ad budget. It is paid by the client, in the client's own account, and it never passes
   through Mavix.
-- Publisher and placement fees on SEO, paid by the client directly, at no markup.
+- Publisher and placement fees on SEO, paid by the client directly, at no markup. No number
+  in the audit: the usual range goes with the price, after the yes.
 - A website rebuild, unless it is written into the scope.
 - Photography and video production, unless it is written into the scope.
 - Software the client already pays for, such as a CRM or an email platform.
@@ -130,7 +150,7 @@ day. Anything larger than a quick change gets a date rather than a maybe." Never
 ## Section: What usually goes wrong with agencies, and how we handle it
 
 **Where it goes in the SEO proposal: not as its own page any more.** Use the rows below as
-the source for FAQ answers (section 16) and for the lines on the How we work together page.
+the source for FAQ answers (section 15) and for the lines on the How we work together page.
 If the prospect described a bad agency experience, answer that row as one of the eight FAQs,
 in their words. The full table is kept here for the call kit and for other documents.
 
@@ -143,7 +163,7 @@ line to close. Keep every cell to one or two lines. Ten tight rows fit a page. T
 
 | What usually goes wrong | How this works instead |
 |---|---|
-| You meet someone impressive, sign, and then get handed to a junior you never met | The person who wrote this proposal runs the account. There is nobody behind him to be handed to |
+| You meet someone impressive, sign, and then get handed to a junior you never met | One named account manager from day one, and the founder, Mohd Farhan, joins every monthly review |
 | You cannot get hold of anyone when you need them | One channel, agreed on day one, and an answer on the same working day |
 | Everything is "we are working on it" and you never see what that means | A written plan with named deliverables, and a monthly report showing what was actually done |
 | Reports full of impressions, clicks and followers, none of which pay wages | We report leads, cost per lead, sales and return. Traffic numbers are context, never the headline |
@@ -185,7 +205,8 @@ shows the machinery.
 | Reporting | One written report every month, plus a call to go through it |
 | Anything urgent | The same WhatsApp group. There is no ticket queue to get lost in |
 
-Then one line naming who they deal with. Not a role, a person. And the response commitment
+Then one line naming who they deal with: their named account manager (by name once one is
+assigned), with Mohd Farhan in every monthly review. And the response commitment
 from the scope section, repeated here in one sentence.
 
 ### Who owns what
@@ -213,22 +234,26 @@ match it. The two documents must never disagree.
 
 ---
 
-## Section: Your plan, your price (the close page)
+## Section: Your plan, and how to start (the close page)
 
-**Where it goes:** the final page, section 18. It replaces the old "after you say yes" page
-and the old final CTA block.
+**Where it goes:** the final page, section 17. It replaces the old "after you say yes" page,
+the old final CTA block and, since October 2026, the price.
 
 **Why it works:** the last thing standing between a prospect and a yes is usually not price.
 It is not knowing exactly what they are saying yes to, and what happens tomorrow. The October
 audits ended with "Reply with a plan", which made the prospect go back, compare three plans
-and decide alone. This page decides for them and makes the yes one tap.
+and decide alone. This page decides for them and makes the next step one tap. The price is
+personal, so it comes after the yes.
 
 **Build it with `close_page`.** It holds four things and nothing else:
 
-1. **The recommended plan** for this prospect and its monthly price.
-2. **The 90-day target**, in the same words as the targets page, and how it is checked.
+1. **The recommended plan of work** for this prospect: the plan name, one line on what it is
+   for them, three to five "every month" lines, and the guarantee in one line. **No price.**
+2. **The 90-day target we would agree**, in the same words as the targets page, and how it is
+   checked.
 3. **The first three things we do**, specific to this prospect, each one line.
-4. **Two ways to say yes:** reply "yes" to the email, or book a 15-minute walkthrough at
+4. **Two ways to move forward:** reply "yes" to the email and we send the plan and their
+   personalised price, or book a 15-minute walkthrough at
    https://cal.id/mavixmarketing/strategy-call.
 
 **On the first three things.** Only list work that really happens in the first weeks. If a

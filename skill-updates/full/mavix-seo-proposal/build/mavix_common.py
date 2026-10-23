@@ -164,6 +164,19 @@ def scope_groups(groups, wide_last=False):
     return f'<div class="scope">{out}</div>'
 
 
+def work_areas(items):
+    """The scope page, "What we will work on".
+    items: [(area, what_we_do, what_it_means_for_you)], seven rows in the SEO audit:
+    website, Google rankings and keyword research, content, links and PR, Google Maps
+    and reviews, Google's AI Overviews and AI Mode, other AI assistants."""
+    rows = "".join(
+        f'<div class="wa"><div class="wn">{i+1}</div><div class="wb">'
+        f'<div class="wt">{esc(a)}</div><div class="wd">{d}</div>'
+        f'<div class="wm"><b>For you:</b> {m}</div></div></div>'
+        for i, (a, d, m) in enumerate(items))
+    return f'<div class="work">{rows}</div>'
+
+
 def faqs(items):
     body = "".join(
         f'<div class="fq"><div class="fn">{i+1}</div><div>'
@@ -198,7 +211,7 @@ def cover(P):
     </div>
     <div class="c-foot">
       <div>Prepared by <b>Mohd Farhan</b> &#183; Mavix Marketing</div>
-      <div>{esc(P["date"])} &#183; Valid 14 days</div>
+      <div>Checked on {esc(P["date"])}</div>
     </div>
   </div>
 </div></div>'''
@@ -221,8 +234,9 @@ def who_we_are(num, P):
         f'<div class="ct">{esc(l)}</div></div>' for v, l, c in P["credentials"])
     wall = "".join(f'<div class="ltile"><img src="{img(f"client_logo_{i}")}"></div>'
                    for i in range(1, 6))
-    return section(num, "Who We Are",
-        'A small team, <span class="accent">working directly with you.</span>', f'''
+    title = P.get("who_title", 'Based in Dubai, 30+ people. '
+                  '<span class="accent">One named person on your account.</span>')
+    return section(num, "Who We Are", title, f'''
   <p class="lead">{esc(P["who_intro"])}</p>
   <div class="gpwrap"><img src="{img('google_partner')}">
     <div class="gpx"><b>Google Partner</b>
@@ -233,9 +247,33 @@ def who_we_are(num, P):
   <div class="wall">{wall}</div>''')
 
 
+BANNED_TESTIMONIAL_TEXT = ("confirm", "tbc", "tbd", "[", "ask farhan", "placeholder", "xxx")
+
+
+def check_testimonials(entries):
+    """Refuse any card that is not confirmed. A card prints only the name and the
+    company or role Farhan has confirmed. If the company is not confirmed, the role is
+    a plain description such as "business owner" (or "business owner, Dubai" when the
+    city is confirmed). Never invent a company or a job title for a real person."""
+    for e in entries:
+        for k in ("name", "role", "quote"):
+            v = str(e.get(k, "")).strip()
+            if not v:
+                raise ValueError(f"testimonial {e.get('name')!r}: '{k}' is empty")
+            if any(b in v.lower() for b in BANNED_TESTIMONIAL_TEXT):
+                raise ValueError(f"testimonial {e.get('name')!r}: '{k}' holds a placeholder: {v!r}")
+        if e.get("unconfirmed"):
+            raise ValueError(f"testimonial {e['name']!r} is marked unconfirmed. Cut it.")
+    if len(entries) not in (2, 4, 6):
+        raise ValueError("testimonials print 2 per row: pass 2, 4 or 6 confirmed cards")
+
+
 def testimonials(num, entries):
-    """entries: 6 dicts. Real photo -> {"img": key, "name":, "role":, "quote":}
-    Initials avatar -> {"initials": "SM", "name":, "role":, "quote":}"""
+    """entries: 2, 4 or 6 confirmed dicts, two per row.
+    Real photo -> {"img": key, "name":, "role":, "quote":}
+    Initials avatar -> {"initials": "SM", "name":, "role":, "quote":}
+    "role" is only what is confirmed. No confirmed company means "business owner"."""
+    check_testimonials(entries)
     cards = ""
     for i, e in enumerate(entries):
         if e.get("img"):
@@ -263,7 +301,10 @@ CALL_URL_SHORT = "cal.id/mavixmarketing/strategy-call"
 
 
 def pricing_seo(num, P):
-    """Premium pricing page.
+    """RETIRED for the SEO audit (October 2026): the audit and strategy document carries
+    no prices at all. The plan and the personalised price are sent after the prospect
+    replies "yes" or books the walkthrough. Kept only so older builds still import.
+    Premium pricing page.
     P["seo_tiers"]: three dicts with name, price (e.g. "$1,349"), fit (one short line on
     who the plan suits), guarantee (bool), points (bullets), reco (True on exactly one).
     P["terms"]: four short terms for the strip under the cards.
@@ -292,47 +333,74 @@ def pricing_seo(num, P):
                    'What it costs, <span class="accent">and what protects you.</span>', body)
 
 
+PRICE_PATTERN = r"(\$\s?\d|\d[\d,.]*\s?(USD|AED|GBP|EUR)\b|/\s?mo(nth)?\b|per month)"
+
+
 def close_page(num, P):
-    """The last page: your plan, your price, reply yes to start.
-    P keys: client, close_plan ("Growth"), close_price ("$1,349"), close_guarantee (one
-    line), close_target (the 90-day target, one sentence, real numbers, never "TBC"),
-    close_target_note (how it is measured), close_first (three (title, text) pairs: the
-    first three things we do), optional contact_email.
-    Two ways to say yes: reply "yes" to the email, or book a 15-minute walkthrough."""
+    """The last page: your plan, and how to start. NO PRICE on this page or anywhere in
+    the audit. The price is personal and is sent after they reply "yes" or book a call.
+    P keys:
+      client
+      close_plan        the plan we recommend, by name ("Growth")
+      close_plan_line   one line on what that plan of work is for them
+      close_work        3 to 5 short lines: the work they get each month (no prices)
+      close_guarantee   one line (Growth or Premium); for Starter say it has none
+      close_target      the 90-day target, one sentence, real numbers, never "TBC"
+      close_target_note how it is picked and checked
+      close_first       three (title, text) pairs: the first three things we do
+      contact_email     optional
+    Two ways to move forward: reply "yes" (we send the plan and the personalised price),
+    or book a 15-minute walkthrough."""
+    import re as _re
+    if "close_price" in P:
+        raise ValueError("close_page: the audit carries no price. Remove close_price.")
+    for k in ("close_plan", "close_plan_line", "close_guarantee", "close_target",
+              "close_target_note"):
+        v = str(P.get(k, ""))
+        if not v.strip() or "tbc" in v.lower() or "confirm" in v.lower():
+            raise ValueError(f"close_page: '{k}' is empty or a placeholder")
+    for line in [P["close_plan_line"]] + list(P.get("close_work", [])):
+        if _re.search(PRICE_PATTERN, line, _re.I):
+            raise ValueError(f"close_page: a price slipped in: {line!r}")
+    if len(P["close_first"]) != 3:
+        raise ValueError("close_page: exactly three first things")
     first = "".join(
         f'<div class="it"><div class="nb">{i+1}</div><div class="tx"><b>{esc(t)}</b>'
         f'<span>{esc(d)}</span></div></div>' for i, (t, d) in enumerate(P["close_first"]))
+    work = "".join(f"<li>{esc(x)}</li>" for x in P.get("close_work", []))
     mail = P.get("contact_email", "mavixmarketing@gmail.com")
     body = (
         '<div class="cl-hero">'
-        f'<div><div class="k">Recommended for {esc(P["client"])}</div>'
-        f'<div class="n">{esc(P["close_plan"])} plan</div>'
-        f'<div class="g">{esc(P["close_guarantee"])}</div></div>'
-        f'<div class="pr"><div class="v">{esc(P["close_price"])}</div>'
-        '<div class="u">a month, no setup fee</div></div></div>'
+        f'<div class="cl-hl"><div class="k">Recommended for {esc(P["client"])}</div>'
+        f'<div class="n">The {esc(P["close_plan"])} plan</div>'
+        f'<div class="g">{esc(P["close_plan_line"])}</div>'
+        f'<div class="gu">{SHIELD_SVG}<span>{esc(P["close_guarantee"])}</span></div></div>'
+        + (f'<div class="cl-work"><div class="h">Every month</div><ul>{work}</ul></div>'
+           if work else "")
+        + '</div>'
         '<div class="cl-row">'
-        '<div class="cl-target"><div class="h">Your 90-day target</div>'
+        '<div class="cl-target"><div class="h">The 90-day target we would agree</div>'
         f'<div class="t">{esc(P["close_target"])}</div>'
         f'<div class="s">{esc(P["close_target_note"])}</div></div>'
         f'<div class="cl-first"><div class="h">The first three things we do</div>{first}</div>'
         '</div>'
-        '<div class="cl-yes-h">Two ways to say yes</div>'
+        '<div class="cl-yes-h">Two ways to move forward</div>'
         '<div class="cl-yes">'
         '<div class="cl-way a"><div class="w">Ready now</div>'
         '<div class="t">Reply "yes"</div>'
-        '<p>Reply "yes" to the email this came with. We send the one-page agreement the '
-        'same day and start the work that week.</p>'
-        f'<a class="btn" href="mailto:{esc(mail)}?subject=Yes%2C%20let%27s%20start">Reply yes</a></div>'
+        '<p>Reply "yes" to the email this came with. We send you this plan in full and '
+        'your personalised price. Nothing starts until you have seen both.</p>'
+        f'<a class="btn" href="mailto:{esc(mail)}?subject=Yes%2C%20send%20my%20plan%20and%20price">Reply yes</a></div>'
         '<div class="cl-way b"><div class="w">Want to talk first</div>'
         '<div class="t">Book 15 minutes</div>'
-        '<p>We walk you through this audit on a short call and answer your questions. '
-        'No slides, no pressure.</p>'
+        '<p>We walk you through this audit, answer your questions and give you your '
+        'price on the call. No slides, no pressure.</p>'
         f'<a class="btn" href="{CALL_URL}">Book a 15-minute walkthrough</a>'
         f'<div class="url">{CALL_URL_SHORT}</div></div>'
         '</div>'
         f'<div class="cl-foot"><b>Mohd Farhan</b> &#183; Mavix Marketing &#183; {esc(mail)}</div>')
     return section(num, "Your Plan",
-                   'Your plan, your price. <span class="accent">Reply yes to start.</span>', body)
+                   'Your plan, <span class="accent">and how to start.</span>', body)
 
 
 def pricing_ads(num, P):

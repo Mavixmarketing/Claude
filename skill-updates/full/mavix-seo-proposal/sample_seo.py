@@ -1,7 +1,8 @@
 """Worked sample of the SEO proposal. Copy this file and replace the content.
 
-The order is the one in SKILL.md Step 2: cover, then eighteen one-page sections, ending on
-the "Your plan, your price" close. Nineteen pages in total. There is no contents page.
+The order is the one in SKILL.md Step 2: cover, then seventeen one-page sections, ending on
+the "Your plan, and how to start" close. Eighteen pages in total. There is no contents page
+and no price anywhere: this is a free audit and strategy, not a quote.
 Lumiere Dental Studio is a made-up prospect used only for this sample.
 """
 import sys, os
@@ -12,8 +13,8 @@ from mavix_css import CSS
 import mavix_charts as ch
 from mavix_common import (cover, section, pull, neon, stats, chart, table,
                           bullets, two_col, alert, gantt, steps, scorecards,
-                          scope_groups, faqs, who_we_are, testimonials,
-                          pricing_seo, close_page, build_html)
+                          work_areas, faqs, who_we_are, testimonials,
+                          close_page, build_html)
 from mavix_cases import case_study
 
 CLIENT = "Lumiere Dental Studio"
@@ -57,8 +58,8 @@ behind these lines.</p>
  "answers have reasons to pick you.",
 ], lime=True)
  + neon('The 90-day target: <strong class="hl">page one on Google for 2 of 10 searches we agree '
-        'with you before you start.</strong> Miss it on Growth or Premium and you get every fee '
-        'back plus 1,000 USD. Your plan, the price and how to say yes are on the last page.'))
+        'with you before you start.</strong> On our main plans, miss it and you get everything you '
+        'paid back, plus $1,000. Your plan and how to start are on the last page.'))
 
 # 02 ------------------------------------------------------------- what we know
 s02 = section("02", "What We Know",
@@ -110,17 +111,16 @@ either number and the total moves with it.</p>''')
 s05 = section("05", "Google, Maps and AI",
   'People now ask Google and ChatGPT.<br><span class="accent">Both need to find you.</span>', '''
 <p class="lead">Mavix is not a traditional SEO agency. We get businesses found on Google, Google
-Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT. Search has changed,
-and the work has changed with it.</p>
+Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT, Perplexity and
+Gemini. Here is what each of them shows for you today.</p>
 ''' + stats([("2 billion+","People a month reached by AI Overviews. Source: Google (Alphabet), July 2025","ink"),
              ("8% vs 15%","Searches ending in a click on a normal result, with an AI summary against without. Source: Pew Research, July 2025","red")])
- + table(["Where patients look", "What we do so you can be found"], [
- ["Google search", "A clear page for each treatment, answering what patients ask before they book"],
- ["Google Maps", "A complete Google Business Profile, and a steady flow of real reviews"],
- ["AI Overviews and AI Mode", "Answer-style pages and structured data, so Google can read and quote your answers"],
- ["ChatGPT and other assistants", "Mentions and links on trusted sites, so your name comes up as a source"],
- ["All of them", "Technical fixes: speed, a clean site structure, and no spam links"],
-], win_col=1)
+ + table(["Where patients look", "What we found for Lumiere on 22 October"], [
+ ["Google search", "Three clinics show above you for \"veneers dubai marina\". You show for your own name only"],
+ ["Google Maps", "You appear, but the profile has no treatments listed and 11 questions sit unanswered"],
+ ["AI Overviews and AI Mode", "The AI summary for \"best dentist dubai marina\" names two other clinics, not you"],
+ ["ChatGPT, Perplexity, Gemini", "Not checked yet. We check all three in week one and show you what they say"],
+])
  + neon('Nobody can promise you a place in an AI answer, Google included, and we will not. '
         'What we can do is make your clinic <strong class="hl">the clearest, best-sourced answer</strong> '
         'for the treatments you sell.'))
@@ -150,7 +150,7 @@ s07 = section("07", "The Plan",
           ("Build", "p2", "Treatment pages, answers, structured data"),
           ("Grow", "p3", "Reviews, local links, trusted mentions")],
          ["Day 1", "Day 20", "Day 45", "Day 70", "Day 90"])
- + steps([
+ + '<h2 class="sub">Your first 30 days</h2>' + steps([
  ("Week 1: speed and spam links", "Compress images, remove what slows the page, deal with the 87 spam links. Target under 2.5 seconds on a phone."),
  ("Week 2: your Google profile", "Full service list, booking link, the 11 questions answered, weekly posts."),
  ("Weeks 3 to 4: the first treatment pages", "Veneers and implants first, written around the questions patients ask."),
@@ -158,26 +158,38 @@ s07 = section("07", "The Plan",
 ]) + '''<p class="note">Google needs time to recrawl each fix and trust each new page. Local
 searches move faster than city-wide ones, which is why the 90-day target aims at them.</p>''')
 
-# 08 ------------------------------------------------------------- what you get
-s08 = section("08", "Exactly What You Get",
-  'What we do, <span class="accent">and what we do not.</span>', '''
-<p class="lead">Every item below is done by a person, checked by you before it goes live.</p>
-''' + scope_groups([
- ("On the website", ["Speed and mobile fixes", "Structured data for reviews, treatments and FAQs",
-   "Internal links so new pages get found"]),
- ("Content", ["A page for each treatment you sell", "Answers to the questions patients ask first",
-   "Rewrites of thin pages that exist today"]),
- ("Maps and authority", ["Google Business Profile, posts and questions", "Review requests to past patients",
-   "Links and mentions on trusted local sites"]),
- ("Working with you", ["One person, Mohd Farhan", "Monthly report and a 30 minute call",
-   "Everything in your own accounts"]),
-]) + '''<p class="note"><b>Not included.</b> Publisher fees for PR and guest posts on Growth and
-Premium, which you pay directly at no markup, usually 100 to 300 USD a month. A website rebuild.
-Photography and video. Anything else is quoted before it starts, never after.</p>'''
- + two_col("What we need from you",
-   ["Website and Google profile access in week one.", "A read of each page before it goes live."],
-   "What we do", ["The fixes, the pages, the profile and the links.",
-   "We answer on the same working day. Anything bigger than a quick change gets a date, not a maybe."]))
+# 08 ------------------------------------------------------------- what we will work on
+s08 = section("08", "What We Will Work On",
+  'Everything we would work on, <span class="accent">and what it means for you.</span>', '''
+<p class="lead">Seven areas, all done by people on our team and checked by you before anything
+goes live. How much of each happens every month depends on the plan you pick.</p>
+''' + work_areas([
+ ("Your website",
+  "Speed, a clear structure Google can follow, a page for each treatment and each area you serve, and the technical fixes behind the scenes.",
+  "visitors stay instead of leaving, and Google has a page to show for every treatment you sell."),
+ ("Google rankings and keyword research",
+  "We find the searches patients actually type, how many people make them, and which ones you can win first.",
+  "the work goes into searches that bring bookings, not just visits."),
+ ("Blogs and helpful content",
+  "Articles that answer the questions patients ask before they book, written by a person and approved by you.",
+  "people find you while they are still deciding, and arrive already trusting you."),
+ ("Links, PR and mentions",
+  "Links and mentions on trusted sites: local guides, health and news sites, and PR placements.",
+  "other sites vouching for you, which is a big part of what Google and AI tools look at."),
+ ("Google Maps and reviews",
+  "Your Google Business Profile kept full and active, and an easy way to ask happy patients for a review.",
+  "more calls and more people asking for directions, straight from the map."),
+ ("Google's AI Overviews and AI Mode",
+  "Clear question-and-answer pages and the behind-the-scenes labels Google reads, so it can understand and quote you.",
+  "a better chance of being named in the AI summary at the top of Google. Nobody can promise a place, us included."),
+ ("ChatGPT, Perplexity and Gemini",
+  "The same details about you everywhere online, and mentions on the sites these assistants read.",
+  "when someone asks an assistant for a dentist in Marina, you are a clear, well-sourced name to suggest."),
+]) + '''<p class="note"><b>Not included.</b> Publisher fees for PR and guest posts, which you pay
+directly at no markup (we tell you the usual range with your price). A website rebuild.
+Photography and video. Anything else is quoted before it starts, never after.
+<b>What we need from you:</b> access to your website and Google profile in week one, and a quick
+read of each page before it goes live.</p>''')
 
 # 09 ------------------------------------------------------------- targets
 s09 = section("09", "The Targets",
@@ -195,22 +207,24 @@ starting figures are close rather than exact. We confirm them in week one.</p>''
 
 # 10 ------------------------------------------------------------- who we are
 P.update({
- "who_intro": "Mavix is not a traditional SEO agency. We get businesses found on Google, Google "
-   "Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT. Mohd Farhan wrote "
-   "this audit and runs your account himself. Working since 2019, mostly with small and mid sized "
-   "businesses in the US, UK and UAE.",
+ "who_intro": "Mavix Marketing is based in Dubai, with a team of 30+ people across Dubai, Los "
+   "Angeles and New Delhi, all employed by us, not subcontracted. We do SEO, paid ads and email, "
+   "and have done since 2019. On search we are not a traditional SEO agency: we get businesses "
+   "found on Google, Google Maps, Google's AI Overviews and AI Mode, and AI assistants like ChatGPT.",
  "gp_text": "Google Partner. We work inside Google's tools every day, and every account we set up "
    "is created in your name.",
- "who_model": "You will not be handed to a junior account manager. The person who writes your "
-   "plan is the person who does the work and the person who picks up the phone.",
- "credentials": [("7yrs","Working since 2019","ink"),("1","Person on your account","blue"),
-                 ("1:1","Direct access, no layers","lime"),("100%","Your accounts, your data","ink")],
+ "who_model": "You get one named account manager for the day to day, so you never write to a "
+   "shared inbox. Our founder, Mohd Farhan, takes the first call and joins every monthly review. "
+   "Reports lead with enquiries, and every number comes from your own accounts.",
+ "credentials": [("30+","People, employed by us","ink"),("1","Named account manager","blue"),
+                 ("2019","Working since","lime"),("100%","Your accounts, your data","ink")],
 })
 s10 = who_we_are("10", P)
 
 # 11 ------------------------------------------------------------- testimonials
-# Only confirmed names and companies. Four confirmed cards (2 by 2) beat six with
-# placeholders. Never print "client name to confirm".
+# Only confirmed names, and only the company or role Farhan has confirmed. Four confirmed
+# cards (2 by 2) beat six with placeholders. Mohammed Ahmed has no confirmed company, so he
+# is "Business owner": never invent a company or job title for a real person.
 TESTIMONIALS = [
  {"img":"t1","name":"Jonathan Jones","role":"Sales Director, Carpenter and Paterson Asia Ltd",
   "quote":"Farhan learned what we actually sell before writing a word. Website enquiries went from "
@@ -221,7 +235,7 @@ TESTIMONIALS = [
  {"img":"t3","name":"Judy Li","role":"Founder and CEO, Brother Filtration Equipment Co",
   "quote":"Filtration is a slow, technical sale. We now rank for the exact problems our buyers "
           "search at 2am, and the enquiries already know what they need."},
- {"img":"t4","name":"Mohammed Ahmed","role":"Managing Director",
+ {"img":"t4","name":"Mohammed Ahmed","role":"Business owner",
   "quote":"Three agencies before this and none of them ever showed me a number I could check. "
           "This one does, every month."},
 ]
@@ -248,7 +262,7 @@ cs1 = case_study("12", {
    "Earned links and mentions on relevant sites."],
  "timeline": "Seven months to the figures shown. Daily clicks from Google roughly doubled.",
  "obstacles": "Search work compounds slowly, so results build over months, not weeks. The "
-   "answer is holding the plan rather than chasing quick wins.",
+   "answer is holding the plan rather than chasing shortcuts.",
  "takeaways": "Steady work on the pages that matter, measured in the client's own Search "
    "Console. Nothing clever, done properly.",
  "shot": "seo3", "highlight": 0,
@@ -317,31 +331,8 @@ cs3 = case_study("14", {
  "cta_btn": "Read the full case study",
 })
 
-# 15 ------------------------------------------------------------- investment
-P.update({
- "seo_tiers": [
-  {"name":"Starter","price":"$999","fit":"The basics, done properly","guarantee":False,"points":[
-    "Keyword and competitor research","2 blog articles a month","Directory and profile listings",
-    "Social bookmarking and Q&A","Monthly report and call"]},
-  {"name":"Growth","price":"$1,349","fit":"Pages, Maps and links for Lumiere","guarantee":True,
-   "reco":True,"points":[
-    "Everything in Starter","3 to 4 blog articles a month","2 guest posts a month",
-    "1 PR placement a month","Google Business Profile management","Infographics and PDF assets"]},
-  {"name":"Premium","price":"$1,999","fit":"The most work, every month","guarantee":True,"points":[
-    "Everything in Growth","8 or more blogs and guest posts","Full on-page audit and the fixes",
-    "Technical SEO: speed, schema, links","Quarterly competitor gap analysis",
-    "Priority support and strategy calls"]},
- ],
- "terms": ["No long contract, no time limit", "No setup fee", "Every account in your name",
-           "Publisher fees paid direct, no markup"],
- "guarantee_title": "90-day money-back guarantee, Growth and Premium",
- "guarantee_text": "We agree the 90-day target with you in writing before you start. If we miss it, "
-   "you get everything you paid back, plus 1,000 USD. Starter has no guarantee.",
-})
-s15 = pricing_seo("15", P)
-
-# 16 ------------------------------------------------------------- questions
-s16 = section("16", "Questions",
+# 15 ------------------------------------------------------------- questions
+s15 = section("15", "Questions",
   'The ones dentists <span class="accent">actually ask.</span>',
   faqs([
  ("How long before I see a booking that came from this?",
@@ -356,19 +347,20 @@ s16 = section("16", "Questions",
  ("Who writes the content? Is it AI?",
   "A person, and you sign off every page before it goes live. For dental content they work from "
   "your own treatment notes."),
- ("Can I keep the work if I leave?",
-  "Yes. Everything sits in your own Google accounts, your hosting and your domain."),
+ ("What does it cost?",
+  "It depends on the plan and on how much your site needs. Reply \"yes\" and we send your plan "
+  "and your personalised price, or ask us on the 15-minute walkthrough. No setup fee either way."),
  ("Is there a contract?",
   "No long contract. The agreement has no time limit and only ties us, to deliver. No setup fee."),
  ("What exactly is the guarantee?",
-  "On Growth or Premium: hit the 90-day target we agree in writing, or you get everything you "
-  "paid back plus 1,000 USD. Starter has no guarantee."),
+  "On our main plans, Growth and Premium: we agree the 90-day target in writing before you "
+  "start. Miss it and you get everything you paid back, plus $1,000. Starter has no guarantee."),
  ("How much of my time does this take?",
   "About an hour in week one, then a 30 minute call a month and a quick read of each new page."),
 ]))
 
-# 17 ------------------------------------------------------------- how we work together
-s17 = section("17", "How We Work Together",
+# 16 ------------------------------------------------------------- how we work together
+s16 = section("16", "How We Work Together",
   'How the day to day <span class="accent">actually works.</span>',
   table(["For", "We use"], [
    ["Day to day", "Email or WhatsApp, whichever you prefer"],
@@ -376,8 +368,9 @@ s17 = section("17", "How We Work Together",
    ["Reporting", "One written report a month you can read in five minutes, plus a 30 minute call"],
    ["Anytime", "A live dashboard on your own Search Console and Analytics"],
   ])
- + '''<p>You deal with Mohd Farhan, not a role. We answer on the same working day, and anything
-bigger than a quick change gets a date rather than a maybe.</p>'''
+ + '''<p>You deal with one named account manager, not a shared inbox, and Mohd Farhan joins every
+monthly review. We answer on the same working day, and anything bigger than a quick change gets
+a date rather than a maybe.</p>'''
  + two_col("Yours, always",
    ["Your domain, your website and everything on it.",
     "Search Console, Analytics and your Google Business Profile.",
@@ -390,12 +383,16 @@ bigger than a quick change gets a date rather than a maybe.</p>'''
          'accounts, pages and reporting history stay where they are, and you get a final report '
          'and everything we built.'))
 
-# 18 ------------------------------------------------------------- the close
+# 17 ------------------------------------------------------------- the close
+# No price on this page or anywhere else. Reply "yes" gets them the plan and the price.
 P.update({
  "close_plan": "Growth",
- "close_price": "$1,349",
- "close_guarantee": "Includes the 90-day money-back guarantee: miss the target and you get "
-   "everything back, plus 1,000 USD.",
+ "close_plan_line": "Treatment pages, your Google profile and trusted links, built up month by "
+   "month for Lumiere.",
+ "close_work": ["3 to 4 treatment pages or articles", "2 guest posts and 1 PR placement",
+                "Google Business Profile and review requests", "A written report and a 30 minute call"],
+ "close_guarantee": "90-day money-back guarantee: miss the target and you get everything you "
+   "paid back, plus $1,000.",
  "close_target": "Page one on Google for 2 of 10 searches we agree with you before you start.",
  "close_target_note": "Picked together from searches within reach, such as \"veneers dubai "
    "marina\". Checked in your own Search Console on day 90.",
@@ -405,10 +402,10 @@ P.update({
   ("Veneers and implants pages", "The first two treatment pages, ready for you to read and approve."),
  ],
 })
-s18 = close_page("18", P)
+s17 = close_page("17", P)
 
 parts = [cover(P), s01, s02, s03, s04, s05, s06, s07, s08, s09,
-         s10, s11, cs1, cs2, cs3, s15, s16, s17, s18]
+         s10, s11, cs1, cs2, cs3, s15, s16, s17]
 OUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
 os.makedirs(OUT_DIR, exist_ok=True)
 out = os.path.join(OUT_DIR, "Lumiere_Dental_SEO_Proposal.pdf")

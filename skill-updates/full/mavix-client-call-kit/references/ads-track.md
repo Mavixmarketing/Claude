@@ -111,7 +111,7 @@ Structure, section order and minute markers stay exactly as `script.md`. Only th
 
 ### The header
 
-- Ground rules carry the **ads ladder** from `facts.md`, not the three search packages. Floor is **$200**, not $300.
+- Ground rules carry the **ads ladder** from `facts.md`, not the three search packages. Floor is **$200**, not the search floor.
 - Tabs list is reordered: their site first, then the ad they are running or the one they are not, then **the Ad Library on the competitor** (this is the one that stings), then the competitor's landing page beside their own, then the Google search showing who is paying, then the case study. Ad Library and the two landing pages go side by side.
 - "Check yourself before you dial" gains one line: **reload the Ad Library that morning.** Ads go up and come down daily. A count from yesterday can be wrong today.
 
