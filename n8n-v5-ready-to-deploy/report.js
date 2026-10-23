@@ -126,7 +126,12 @@ function owed(list, history) {
   if (deliveredRow > promiseRow && promiseRow >= 0) return null;
   if (promiseAt < 0 && /(^|\n\n)FARHAN/.test(String(history || ''))) return null;
   if (promiseRow < 0 && deliveredRow >= 0) return null;
-  if (promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b))) return null;
+  // a promise written in the note of the newest row (added by hand, for example after a call) counts until Farhan's
+  // next hand-sent message is logged on that row (Log Hand-sent moves its handled_at past its creation time)
+  const newest = list[list.length - 1] || {};
+  const nn = String(newest.note || '');
+  const noteOwed = PROMISE_NOTE.test(nn) && !WAITING.test(nn) && !DELIVERED_NOTE.test(nn) && !(t(newest.handled_at) > t(newest.createdAt) + 10 * 60000);
+  if (!noteOwed && promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b))) return null;
   // we are waiting on them, not the other way round: a note says so (our own follow-ups never count)
   if (list.some(r => Number(r.id) >= promiseRow && WAITING.test(String(r.note || '')))) return null;
   const since = list.filter(r => Number(r.id) === promiseRow).map(r => t(r.createdAt))[0];

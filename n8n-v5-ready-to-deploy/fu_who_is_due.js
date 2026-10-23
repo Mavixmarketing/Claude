@@ -119,6 +119,12 @@ function auditOwed(rowsOfPerson, history) {
   if (promiseRow < 0 && deliveredRow >= 0) return false;
   // we are waiting on them, not the other way round: a note says so
   if (rowsOfPerson.some(r => Number(r.id) >= promiseRow && WAITING.test(String(r.note || '')))) return false;
+  // a promise written in the note of the newest row (added by hand, for example after a call: "prepare the audit: ...")
+  // counts until Farhan's next hand-sent message is logged on that row: Log Hand-sent then moves the row's
+  // handled_at past the time the row was made (23 Oct, ryan@willoughbycpa.net)
+  const newest = rowsOfPerson[rowsOfPerson.length - 1] || {};
+  const nn = String(newest.note || '');
+  if (PROMISE_NOTE.test(nn) && !WAITING.test(nn) && !DELIVERED_NOTE.test(nn) && !(Date.parse(newest.handled_at || '') > Date.parse(newest.createdAt || '') + 10 * 60000)) return true;
   // anything Farhan sent, or anything they wrote, after the promise in the conversation
   return !(promiseAt >= 0 && blocks.slice(promiseAt + 1).some(b => /^(FARHAN|THEM)/.test(b)));
 }
