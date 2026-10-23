@@ -92,6 +92,11 @@ return $input.all().map((it, i) => {
   const priceSeen = SET.concat(QUOTED).some(d => new RegExp('\\$\\s*' + amount(d) + '\\b').test(convo));
   const rangeGiven = new RegExp('\\$\\s*' + amount(SET[0]) + '\\s*(to|and|-|–)\\s*\\$\\s*' + amount(SET[2])).test(t);
   for (const d of new Set(dollars)) if (KNOWN_PRICES.includes(d) && !OURS.includes(d)) problems.push('a price from the other price list (' + money(d) + '); this conversation uses ' + SET.map(money).join(', ') + (QUOTED.length ? ' (already quoted: ' + QUOTED.map(money).join(', ') + ')' : ''));
+  // STARTER HAS NO MONEY BACK GUARANTEE (23 Oct, septic.ca): hold a message that names this conversation's Starter
+  // price and also talks about the guarantee or the $1,000, unless it says Starter has none or points to Growth for it
+  const STARTER = [SET[0]].concat(QUOTED.filter(d => d === 349 || d === 999));
+  const DOLLARS_T = (t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
+  if (DOLLARS_T.some(d => STARTER.includes(d)) && /money[- ]?back|guarantee|refund|\$\s*1,?000\b/i.test(t) && !/starter[^.?!]{0,80}\b(no|without|doesn't|does not|isn't|is not)\b[^.?!]{0,40}(guarantee|money[- ]?back)|\b(no|without)\b[^.?!]{0,30}(guarantee|money[- ]?back)[^.?!]{0,60}starter|growth[^.?!]{0,100}(guarantee|money[- ]?back)|(guarantee|money[- ]?back)[^.?!]{0,100}growth/i.test(t)) problems.push('promises the money back guarantee next to the Starter price (only Growth and Premium have it)');
   // a sentence about our plans may only carry our own numbers (rough job values sit in other sentences)
   for (const sent of t.split(/(?<=[.?])\s+/)) {
     if (!/(a|per) month|\bplans?\b|our (price|fee)|we charge/i.test(sent) || /worth|job|customer|booking|install|patient|client|often around|roughly|typical|usually around/i.test(sent)) continue;

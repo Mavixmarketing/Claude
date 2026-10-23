@@ -86,6 +86,11 @@ return $input.all().map((it, i) => {
   const OURS = SET.concat([1000], QUOTED);
   const money = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
   for (const d of new Set((t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, ''))))) if (KNOWN_PRICES.includes(d) && !OURS.includes(d)) problems.push('a price from the other price list (' + money(d) + '); this conversation uses ' + SET.map(money).join(', ') + (QUOTED.length ? ' (already quoted: ' + QUOTED.map(money).join(', ') + ')' : ''));
+  // STARTER HAS NO MONEY BACK GUARANTEE (23 Oct, septic.ca): hold a message that names this conversation's Starter
+  // price and also talks about the guarantee or the $1,000, unless it says Starter has none or points to Growth for it
+  const STARTER = [SET[0]].concat(QUOTED.filter(d => d === 349 || d === 999));
+  const DOLLARS_T = (t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
+  if (DOLLARS_T.some(d => STARTER.includes(d)) && /money[- ]?back|guarantee|refund|\$\s*1,?000\b/i.test(t) && !/starter[^.?!]{0,80}\b(no|without|doesn't|does not|isn't|is not)\b[^.?!]{0,40}(guarantee|money[- ]?back)|\b(no|without)\b[^.?!]{0,30}(guarantee|money[- ]?back)[^.?!]{0,60}starter|growth[^.?!]{0,100}(guarantee|money[- ]?back)|(guarantee|money[- ]?back)[^.?!]{0,100}growth/i.test(t)) problems.push('promises the money back guarantee next to the Starter price (only Growth and Premium have it)');
   // FOLLOW-UPS NEVER GUESS MONEY SUMS ("$52,000 a year", "£2,500 a job"): only our own plan prices may appear
   for (const m of t.match(/[$£€]\s*[\d,]+(\.\d+)?\s*(k\b)?|\b[\d,]+(\.\d+)?\s*(dollars|pounds|euros|usd|cad|aud|gbp|nzd)\b/gi) || []) {
     const d = Number(m.replace(/[^\d.]/g, ''));
