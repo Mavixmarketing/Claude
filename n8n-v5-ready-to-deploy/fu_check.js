@@ -4,7 +4,7 @@ const ctx = $('Follow-up Request').all();
 const ALLOWED = ["https://mavixmarketing.com/case-studies", "https://mavixmarketing.com/case-studies/all-dogs-rock", "https://mavixmarketing.com/case-studies/construction-management-seo", "https://mavixmarketing.com/case-studies/dental-clinic-seo", "https://mavixmarketing.com/case-studies/edtech-software-seo", "https://mavixmarketing.com/case-studies/exam-prep-platform-seo", "https://mavixmarketing.com/case-studies/financial-advisers-seo", "https://mavixmarketing.com/case-studies/freight-forwarding-seo", "https://mavixmarketing.com/case-studies/home-goods-retailer-seo", "https://mavixmarketing.com/case-studies/hr-software-seo", "https://mavixmarketing.com/case-studies/la-vela-coffee", "https://mavixmarketing.com/case-studies/lead-gen-volume", "https://mavixmarketing.com/case-studies/martial-arts-academy-seo", "https://mavixmarketing.com/case-studies/meta-lead-gen", "https://mavixmarketing.com/case-studies/my-favorite-therapists", "https://mavixmarketing.com/case-studies/news-portal-seo", "https://mavixmarketing.com/case-studies/online-pharmacy-seo", "https://mavixmarketing.com/case-studies/orthopaedic-clinic-seo", "https://mavixmarketing.com/case-studies/plumbing-company-seo", "https://mavixmarketing.com/case-studies/property-classifieds-seo", "https://mavixmarketing.com/case-studies/real-estate-brokerage-seo", "https://mavixmarketing.com/case-studies/skincare-brand-seo", "https://mavixmarketing.com/seo-pricing", "https://mavixmarketing.com"];
 const BOOKING = 'https://cal.id/mavixmarketing/strategy-call'; // allowed only in the first follow-up after the audit
 // AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
-// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema; AEO is allowed, explained the first time), the study numbers are
 // never called Google's, and we never promise a spot in AI answers. A number already in the conversation
 // (a business name like "719 Cleaning", a town, our own cold email) is not an invented AI number (23 Oct).
 function aiProblems(text, known) {
@@ -23,9 +23,12 @@ function aiProblems(text, known) {
       out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
     }
     if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
-    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
   }
   if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  // AEO (24 Oct) is allowed: it is included in every plan at no extra cost. The first time it comes up in a conversation
+  // the same sentence says what it is (getting named in AI answers like Google's AI Overviews or ChatGPT).
+  if (!/\bAEO\b/i.test(String(known || ''))) for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\bAEO\b/i.test(sent) && !/\b(ai (answers?|overviews?|search|mode|results?|summar(y|ies))|chatgpt|answer engine|perplexity|gemini)\b/i.test(sent)) { out.push('mentions AEO without saying in the same sentence what it is (getting named in AI answers like ChatGPT)'); break; }
   return [...new Set(out)];
 }
 const words0 = x => String(x || '').split(/\s+/).filter(Boolean).length;
@@ -64,6 +67,12 @@ return $input.all().map((it, i) => {
     BUMP.lastIndex = 0;
     const rest = t.replace(BUMP, ' ').split(/\s+/).filter(Boolean).length;
     if (Number(c.number) !== 4 || c.date_followup || c.farhan_note || c.has_someone || c.audit_nudge || rest < 10) problems.push('only chases, says nothing new');
+  }
+  // FOLLOW-UP 5 IS SIMPLY THE LAST EMAIL (24 Oct, Farhan): no "for a while", "for now" or any hint that we will write
+  // again. The common slip ("my last email for a while") is fixed; anything else like it is held.
+  if (Number(c.number) === 5 && !c.date_followup && !c.farhan_note) {
+    t = t.replace(/\b(last (email|message|note|one)( from (me|us|our side))?),? (for a while|for now|for the time being|for the moment)\b/gi, '$1');
+    if (/\bfor (a while|now|the time being|the moment|a bit)\b|\b(until|till) (later|next time)\b|\b(i'?ll|i will|we'?ll|we will) (check|circle|reach|come) back\b|\b(write|email|reach out|be in touch|get in touch|try) (again )?(later|soon|another time|in a (few|couple))\b/i.test(t)) problems.push('follow-up 5 hints that we will write again (for a while, for now); it is simply the last email');
   }
   // the light check-ins (6 to 8) come after "this is my last email": they never say it again
   if (Number(c.number) >= 6 && !c.farhan_note && /\blast (email|message|note|one)\b|close (your|the) file/i.test(t)) problems.push('a check-in that says last email or close your file');

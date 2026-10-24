@@ -13,5 +13,5 @@ return [{ json: {
   SLACK_CHANNEL: 'C0BL2Q14QH5',
   BOOKING_LINK: 'https://cal.id/mavixmarketing/strategy-call',
   // HANDS OFF: people Farhan handles himself (whatsapp, calls). The agent never replies to them. Lower case.
-  HANDS_OFF: ['arihantkothari93@gmail.com'],
+  HANDS_OFF: ['arihantkothari93@gmail.com', 'fellinlovewithslovenia@gmail.com'], // 24 oct: slovenia is on whatsapp with Farhan
 } }];

@@ -5,7 +5,7 @@ const cfg = $('Settings').first().json;
 const ctx = $('Opus Request').all();
 const ALLOWED = ["https://mavixmarketing.com/case-studies", "https://mavixmarketing.com/case-studies/all-dogs-rock", "https://mavixmarketing.com/case-studies/construction-management-seo", "https://mavixmarketing.com/case-studies/dental-clinic-seo", "https://mavixmarketing.com/case-studies/edtech-software-seo", "https://mavixmarketing.com/case-studies/exam-prep-platform-seo", "https://mavixmarketing.com/case-studies/financial-advisers-seo", "https://mavixmarketing.com/case-studies/freight-forwarding-seo", "https://mavixmarketing.com/case-studies/home-goods-retailer-seo", "https://mavixmarketing.com/case-studies/hr-software-seo", "https://mavixmarketing.com/case-studies/la-vela-coffee", "https://mavixmarketing.com/case-studies/lead-gen-volume", "https://mavixmarketing.com/case-studies/martial-arts-academy-seo", "https://mavixmarketing.com/case-studies/meta-lead-gen", "https://mavixmarketing.com/case-studies/my-favorite-therapists", "https://mavixmarketing.com/case-studies/news-portal-seo", "https://mavixmarketing.com/case-studies/online-pharmacy-seo", "https://mavixmarketing.com/case-studies/orthopaedic-clinic-seo", "https://mavixmarketing.com/case-studies/plumbing-company-seo", "https://mavixmarketing.com/case-studies/property-classifieds-seo", "https://mavixmarketing.com/case-studies/real-estate-brokerage-seo", "https://mavixmarketing.com/case-studies/skincare-brand-seo", "https://mavixmarketing.com/seo-pricing", "https://mavixmarketing.com/ads-pricing", "https://mavixmarketing.com", cfg.BOOKING_LINK];
 // AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
-// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema; AEO is allowed, explained the first time), the study numbers are
 // never called Google's, and we never promise a spot in AI answers. A number already in the conversation
 // (a business name like "719 Cleaning", a town, our own cold email) is not an invented AI number (23 Oct).
 function aiProblems(text, known) {
@@ -24,9 +24,12 @@ function aiProblems(text, known) {
       out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
     }
     if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
-    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
   }
   if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  // AEO (24 Oct) is allowed: it is included in every plan at no extra cost. The first time it comes up in a conversation
+  // the same sentence says what it is (getting named in AI answers like Google's AI Overviews or ChatGPT).
+  if (!/\bAEO\b/i.test(String(known || ''))) for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\bAEO\b/i.test(sent) && !/\b(ai (answers?|overviews?|search|mode|results?|summar(y|ies))|chatgpt|answer engine|perplexity|gemini)\b/i.test(sent)) { out.push('mentions AEO without saying in the same sentence what it is (getting named in AI answers like ChatGPT)'); break; }
   return [...new Set(out)];
 }
 const linkify = p => p.replace(/(https?:\/\/[^\s<]+?)([.,;:]?)(?=\s|$)/g, '<a href="$1">$1</a>$2');

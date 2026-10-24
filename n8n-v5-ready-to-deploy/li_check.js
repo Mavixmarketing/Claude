@@ -5,9 +5,9 @@ const cfg = $('Settings').first().json;
 const ctx = $('Opus Request').all();
 const ALLOWED = cfg.ALLOWED_LINKS;
 // AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
-// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema), the study numbers are
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema; AEO is allowed, explained the first time), the study numbers are
 // never called Google's, and we never promise a spot in AI answers.
-function aiProblems(text) {
+function aiProblems(text, known) {
   const out = [];
   const plainText = String(text || '').replace(/https?:\/\/\S+/g, ' ');
   for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) {
@@ -21,9 +21,12 @@ function aiProblems(text) {
       out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
     }
     if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
-    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|be (featured|mentioned|cited|quoted|listed|picked|recommended))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
   }
   if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
+  // AEO (24 Oct) is allowed: it is included in every plan at no extra cost. The first time it comes up in a conversation
+  // the same sentence says what it is (getting named in AI answers like Google's AI Overviews or ChatGPT).
+  if (!/\bAEO\b/i.test(String(known || ''))) for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\bAEO\b/i.test(sent) && !/\b(ai (answers?|overviews?|search|mode|results?|summar(y|ies))|chatgpt|answer engine|perplexity|gemini)\b/i.test(sent)) { out.push('mentions AEO without saying in the same sentence what it is (getting named in AI answers like ChatGPT)'); break; }
   return [...new Set(out)];
 }
 // one long block: break it into paragraphs of at most two sentences
@@ -94,7 +97,7 @@ return $input.all().map((it, i) => {
   const asked = (t.match(/\?/g) || []).length;
   if (asked > 2) problems.push('asks ' + asked + ' questions');
   if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
-  problems.push(...aiProblems(t));
+  problems.push(...aiProblems(t, convo));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
   // NEVER PAY ON RESULTS: hold any reply that offers pay per lead / per call, pay only for results, or ads as a way round it
