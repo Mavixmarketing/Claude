@@ -71,7 +71,7 @@ return $input.all().map((it, i) => {
   t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
   if (!c.website_known && /prepare the audit/.test(String(r.flag || '')) && !/website not known/.test(String(r.flag || ''))) r.flag = (String(r.flag || '').trim() ? String(r.flag).trim() + '; ' : '') + 'website not known, please find it';
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
-  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
+  { const bw = t.replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...)
   problems.push(...aiProblems(t, String((ctx[i] && ctx[i].json.transcript) || '') + ' ' + String(c.email || '')));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');

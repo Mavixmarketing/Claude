@@ -54,7 +54,7 @@ return $input.all().map((it, i) => {
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
   if (new Set(links).size > 1) problems.push('more than one link');
   if (/[{}\[\]]/.test(t)) problems.push('has an unfilled blank such as {site}');
-  if (/\b(ai|automated|automation|scheduled)\b/i.test(t.replace(/\b(google'?s )?ai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?)\b/gi, ''))) problems.push('uses a banned word');
+  { const bw = t.replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...)
   problems.push(...aiProblems(t, String((ctx[i] && ctx[i].json.transcript) || '')));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|which (website|site) should/i.test(t)) problems.push('asks for the website');
