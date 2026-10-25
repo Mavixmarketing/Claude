@@ -40,6 +40,29 @@ if (cfg.TEST) {
   return samples.map((x, k) => ({ json: { site_notes: '', email: x.email, messageId: 'test', sequence: x.seq || '', number: x.n || NUM[k], days_quiet: x.q || QUIET[k], history: x.history, transcript: x.history, handled_at: new Date(now - 86400000).toISOString() } }));
 }
 
+// CATCH-UP AFTER A MISSED HOURLY RUN (25 Oct): a run can fail when the server is overloaded (24 Oct 22:00 and
+// 25 Oct 02:00 UTC). Everyone due in a failed hour would then slip a whole day, because only people whose send
+// hour is this hour are picked. The live run remembers the last hour that ran (workflow static data, which n8n
+// only saves when the run succeeds, so a failed run leaves the older hour). When the hour before this one did
+// not run, people whose send hour fell in the missed hours (at most 3 back) are due now too. Only real
+// follow-ups are caught up (not the quiet looks at a thread), weekend and daytime rules still apply, and
+// anyone whose row changed since the missed hours began (handled_at, for example already followed up) is left alone.
+const bucketNow = Math.floor(now / 3600000);
+const missedHours = [];
+let missedFrom = Infinity;
+try {
+  const sd = $getWorkflowStaticData('global');
+  const prev = Number(sd.lastHourBucket);
+  if (isFinite(prev) && prev > 0 && prev < bucketNow - 1) {
+    const first = Math.max(prev + 1, bucketNow - 3);
+    for (let b = first; b < bucketNow; b++) missedHours.push(b % 24);
+    missedFrom = first * 3600000;
+  }
+  if (!(prev >= bucketNow)) sd.lastHourBucket = bucketNow;
+} catch (e) { /* no static data: no catch-up */ }
+const caughtUp = h => h !== hourNow && missedHours.includes(h);
+const isMyHour = h => h === hourNow || caughtUp(h);
+
 // 1. Real reply times from SalesBlink: each person's own reply hours, and each list's busiest hour.
 const REGION_OFFSET = { uk: 0, usa: -5, canada: -5, aus: 10, nz: 12, sing: 8 };
 function regionOf(seq, email) {
@@ -177,9 +200,10 @@ for (const key of Object.keys(latest)) {
     const at = Date.parse(j.handled_at || j.createdAt);
     const due = at + 80 * 86400000;
     const em1 = String(j.email).toLowerCase();
-    if (!isFinite(at) || now < due || now > due + 30 * 86400000 || sendHour(em1) !== hourNow || localSunday(em1)) continue;
+    if (!isFinite(at) || now < due || now > due + 30 * 86400000 || !isMyHour(sendHour(em1)) || localSunday(em1)) continue;
+    if (caughtUp(sendHour(em1)) && at >= missedFrom) continue;
     const h = String(j.history || ('THEM: ' + said));
-    out.push({ json: { ...(personSeq[em1] || {}), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: hourNow, number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
+    out.push({ json: { ...(personSeq[em1] || {}), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: h, transcript: h, site_notes: String(j.site_notes || ''), handled_at: new Date(at).toISOString(), send_hour_utc: sendHour(em1), catch_up: caughtUp(sendHour(em1)), number: 8, days_quiet: Math.round((now - at) / 86400000), date_followup: true, follow_up_on: new Date(due).toISOString().slice(0, 10), farhan_note: 'About three months ago they said not right now. One short, friendly check-in: ask how things are going and whether now is a better time to look at the free audit. No pressure, no link.' } });
     continue;
   }
   if (!['replied', 'followed_up'].includes(String(j.status)) || !j.message_id) continue;
@@ -191,12 +215,14 @@ for (const key of Object.keys(latest)) {
   const n = Number(j.followups || 0);
   const last = Date.parse(j.handled_at || j.updatedAt || j.createdAt);
   if (!isFinite(last)) continue;
-  const base = { ...(personSeq[em] || {}), row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, farhan_note: plan ? String(plan.note || '') : '' };
+  const base = { ...(personSeq[em] || {}), row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, catch_up: caughtUp(hour), farhan_note: plan ? String(plan.note || '') : '' };
   const days = (now - last) / 86400000;
+  // this hour, or a missed hour being caught up, unless their row changed since the missed hours began (no double send)
+  const myHour = hour === hourNow || (caughtUp(hour) && last < missedFrom);
   const fu = plan ? Date.parse(plan.from) : (j.follow_up_on ? Date.parse(j.follow_up_on) : NaN);
   if (isFinite(fu)) {
     if (fu > now) continue; // they asked us to wait until this date
-    if (fu > last) { if (hour === hourNow) out.push({ json: { ...base, number: n + 1, date_followup: true, follow_up_on: new Date(fu).toISOString().slice(0, 10), days_quiet: Math.round(days) } }); continue; }
+    if (fu > last) { if (myHour) out.push({ json: { ...base, number: n + 1, date_followup: true, follow_up_on: new Date(fu).toISOString().slice(0, 10), days_quiet: Math.round(days) } }); continue; }
   }
   // we owe them the audit: no follow-up, only a look at the thread at their hour for a hand-sent audit
   if (auditOwed(byPerson[key] || [j], j.history)) {
@@ -213,21 +239,21 @@ for (const key of Object.keys(latest)) {
   if (/\n\nUS \(follow-up 8\)/.test(String(j.history || ''))) continue; // the last check-in has gone
   if (!plan && n >= 2 && hasSomeone(j.history)) {
     if (n >= 8) continue; // the 3-month check-in has gone
-    if (hour !== hourNow) continue;
-    if (days < 90 - 0.5) { if (days < 100) out.push({ json: { ...base, number: 8, days_quiet: Math.round(days), not_due: true, has_someone: true } }); continue; }
+    if (!myHour) continue;
+    if (days < 90 - 0.5) { if (hour === hourNow && days < 100) out.push({ json: { ...base, number: 8, days_quiet: Math.round(days), not_due: true, has_someone: true } }); continue; }
     out.push({ json: { ...base, number: 8, days_quiet: Math.round(days), has_someone: true } });
     continue;
   }
   if (n === 0) { // follow-up 1: four hours after our email, in their daytime (after the first day, once a day at their hour)
     const fresh = days < 1;
-    if (days >= GAP_DAYS[0] && (fresh ? localDaytime(em) : hour === hourNow)) out.push({ json: { ...base, number: 1, days_quiet: Math.round(days) } });
+    if (days >= GAP_DAYS[0] && (fresh ? localDaytime(em) : myHour)) out.push({ json: { ...base, number: 1, days_quiet: Math.round(days) } });
     else if (hour === hourNow && days < 100) out.push({ json: { ...base, number: 1, days_quiet: Math.round(days), not_due: true } });
     continue;
   }
-  if (hour !== hourNow) continue; // from follow-up 2 on: their time of day
+  if (!myHour) continue; // from follow-up 2 on: their time of day (or a missed hour, caught up)
   const need = n === 1 ? GAP_DAYS[1] : GAP_DAYS[n] - 0.5; // half a day of slack: the first time their hour comes round after the gap
   if (days < need) {
-    if (days < 100) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true } });
+    if (hour === hourNow && days < 100) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true } });
     continue;
   }
   out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days) } });

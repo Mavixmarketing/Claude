@@ -7,7 +7,8 @@
 // before it (answered_already, nobody gets two answers), while a message they send during those
 // minutes is newer than our reply and gets its own answer. pending_until is the latest send time of
 // our replies still waiting to go, so a second reply is never sent before the first.
-// The campaign (SalesBlink sequence id) goes on to the writer, which picks the price list by it.
+// The campaign (SalesBlink sequence id, and its name from the reply events) goes on to the writer, which picks
+// the price list by it (25 Oct: every campaign with "ai written" in its name has the new prices).
 const NL = '\n';
 const s = v => (v === null || v === undefined) ? '' : String(v);
 function toText(html) {
@@ -54,6 +55,19 @@ const isOurs = m => {
 const FREE = /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|live|msn|icloud|me|aol|comcast|att|verizon|proton|protonmail|gmx|mail|zoho|yandex)\./i;
 const picked = {};
 if ($('Pick Thread').isExecuted) for (const p of $('Pick Thread').all()) picked[p.json.messageId] = p.json;
+// campaign names from the reply events: by sequence id, and by email for a thread without one
+const seqName = {}, emailSeqName = {};
+try {
+  if ($('Read Reply Events').isExecuted) for (const i of $('Read Reply Events').all()) {
+    const list = Array.isArray(i.json.data) ? i.json.data : (Array.isArray(i.json.result) ? i.json.result : [i.json]);
+    for (const e of list) {
+      if (!e || !e.sequence_name) continue;
+      if (e.sequence && !seqName[e.sequence]) seqName[String(e.sequence)] = String(e.sequence_name);
+      const em = s(e.email).toLowerCase();
+      if (em && !emailSeqName[em]) emailSeqName[em] = String(e.sequence_name);
+    }
+  }
+} catch (err) { /* no names: the writer still knows every AI Written campaign by its id */ }
 const out = [];
 for (const it of $input.all()) {
   const raw = Array.isArray(it.json.data) ? it.json.data : [];
@@ -89,6 +103,7 @@ for (const it of $input.all()) {
     website_guess: domain && !FREE.test(domain) ? domain : '',
     replies_from_us: msgs.filter(m => m.ours).length - 1,
     sequence,
+    sequence_name: seqName[sequence] || emailSeqName[email] || '',
     pending_until: pendingUntil,
     transcript: transcript.slice(-14000),
   } });

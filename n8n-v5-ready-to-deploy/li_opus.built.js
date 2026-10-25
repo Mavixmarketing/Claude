@@ -32,12 +32,26 @@ function pickCases(text, n) {
 const caseLines = list => list.map(c => '- ' + c.t + ' ' + c.u).join('\n');
 const caseSent = text => /mavixmarketing\.com\/case-studies\/[a-z]/.test(String(text || '')) || /lnkd\.in\/p\/gMHV49kf/.test(String(text || ''));
 
-// PRICES BY CAMPAIGN (23 Oct). The AI Written campaign has the new prices; every other campaign
+// PRICES BY CAMPAIGN (23 Oct). Every AI Written campaign has the new prices; every other campaign
 // (USA/Canada, Aus/UK/NZ/Sing and the older lists) and LinkedIn keep the old prices. A price we already
 // quoted to someone earlier in the conversation is always honoured: if our earlier messages show a
 // price from one list, the whole conversation stays on that list. Keep this block the same in
 // email_opus_request.built.js, fu_request.built.js and li_opus.built.js; the checkers use the same rules.
-const AI_WRITTEN_SEQUENCES = ['38eb9458-6fd2-48e8-be34-fd88e328a183'];
+// 25 Oct: EVERY AI Written campaign has the new prices, old and archived ones too. A campaign counts as AI Written
+// when its id is in this list (all of them in SalesBlink on 25 Oct) OR its name has "ai written" in it (any case).
+const AI_WRITTEN_SEQUENCES = [
+  '38eb9458-6fd2-48e8-be34-fd88e328a183', // Ai Written - | State = Email Body | City = Subject Line | Mon - Wed - Fri
+  '8aff816b-160b-4d86-8b2d-fc82d869958d', // AI Written Email USA
+  'eb4c854b-ecaa-4119-a6c2-4b463c073784', // SEO | Ai Written
+  '9a70eae6-ea80-4599-8e4e-88223e7e9788', // SEO | AI Written
+  '4ac77a36-c3a6-44bd-9865-74d3c7786c36', // AI Written Email Canada
+  'c014f62a-e4d6-44ac-9c82-0105e50c12ac', // AI Written Email UK
+  '127730cc-429e-449e-9d0c-49035c033046', // AI Written Email Australia
+  'd40c29d0-5108-46b6-b431-3ec8ca561fa4', // AI Written Email Europe
+  '1483e867-0c22-45ce-b18d-999454da91e3', // Ai Written E-mails
+];
+const AI_WRITTEN_NAME = /\bai[\s_-]*written\b/i;
+const isAiWritten = (id, name) => AI_WRITTEN_SEQUENCES.includes(String(id || '').trim()) || AI_WRITTEN_NAME.test(String(name || ''));
 const PRICE_SETS = {
   old: { name: 'old', starter: '$349', growth: '$549', premium: '$1,649', nums: [349, 549, 1649] },
   new: { name: 'new', starter: '$999', growth: '$1,349', premium: '$1,999', nums: [999, 1349, 1999] },
@@ -67,8 +81,7 @@ function pricesFor(sequence, sequenceName, transcript, forceOld) {
   if (hits('old') || hits('new')) set = hits('new') > hits('old') ? PRICE_SETS.new : PRICE_SETS.old;
   else if (forceOld) set = PRICE_SETS.old;
   else {
-    const id = String(sequence || '').trim();
-    set = (id ? AI_WRITTEN_SEQUENCES.includes(id) : /^\s*ai written/i.test(String(sequenceName || ''))) ? PRICE_SETS.new : PRICE_SETS.old;
+    set = isAiWritten(sequence, sequenceName) ? PRICE_SETS.new : PRICE_SETS.old;
   }
   const fmt = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
   const lines = ['PRICES FOR THIS CONVERSATION (US dollars a month; prices depend on the campaign this person came from, so use only these numbers):',
@@ -103,8 +116,8 @@ HOW SEARCH WORKS NOW (we sound like a team that is ahead of where search is goin
 - Why it matters. Use ONLY these two facts and never any other number about AI or search: (1) Google says AI Overviews are used by over 2 billion people a month (Alphabet, July 2025). (2) One study (Pew Research, July 2025) found people clicked a normal search result on 8% of searches that showed an AI summary, against 15% when there was none. Always say "one study found" for the 8% and 15%; never call them Google's numbers.
 - How we help, only this real work: clear pages that directly answer the questions their customers ask, so AI answers can quote them; behind-the-scenes labels on the site so Google understands exactly what the business does and where; a strong Google Business Profile and reviews; mentions and links on trusted sites (PR, guest posts) so AI tools treat them as a trusted source; technical fixes so Google can read the site properly.
 - Never promise they will appear in AI Overviews, AI Mode or ChatGPT answers. Say things like "set you up to be the business AI answers pick" or "give you the best chance to be the one they mention".
-- AEO IS INCLUDED (24 Oct): we offer AEO (answer engine optimisation) as part of our SEO work, in every plan at no extra cost. It is the work that helps a business get named in AI answers such as Google's AI Overviews, ChatGPT, Perplexity and Gemini (the "how we help" work above). Bring it up only where it adds value, in one sentence that counts toward the one or two sentences on AI search. The first time AEO comes up in a conversation, explain it in plain words in the same sentence, for example "AEO, which means getting your business named in AI answers like Google's AI Overviews and ChatGPT, is included in every plan at no extra cost." Once it has been explained, "AEO" alone is fine. Never promise a spot in AI answers through it.
-- Plain words only. Never write "GEO", "LLM", "entity", "schema" or "structured data"; say "AI answers", "AI search", "Google's AI Overviews", "ChatGPT". AEO is the one allowed term, explained the first time as above.
+- AI ANSWERS ARE PART OF THE WORK (25 Oct, keep it subtle): helping the business get named in AI answers (Google's AI Overviews, ChatGPT, Perplexity, Gemini) is part of the work in every plan, like everything else we do (the "how we help" work above). We never list what is included, the same way we never tell people "we do on-page and off-page". Bring it up ONLY when it fits: they ask about AI, ChatGPT or AI Overviews; they ask what is included; they say they already rank #1, are already on page one or already have SEO; or it clearly helps the point you are making. Otherwise leave it out. When you do, say it simply as part of the work, in one plain sentence that counts toward the one or two sentences on AI search, for example "showing up in AI answers like ChatGPT is part of what we do" or "getting you named in Google's AI answers is part of the work too". Never say "at no extra cost", "free", "bonus" or "included at no charge" about it, and never turn it into a list of features or services. Use the word "AEO" only if they used it first, and then add a few plain words on what it means (getting named in AI answers like ChatGPT). Never promise a spot in AI answers.
+- Plain words only. Never write "GEO", "LLM", "entity", "schema" or "structured data"; say "AI answers", "AI search", "Google's AI Overviews", "ChatGPT". Write "AEO" only if they used the word first.
 - At most one or two sentences on this in a message, and only where it adds value. It is strongest in follow-ups, and when someone says "we already rank #1", "we're already on page one" or "we already have SEO": agree that ranking first is great, then say that AI answers now sit above the first result, so the next step is being the business those answers pick.`;
 
 const SYSTEM = `You reply on LinkedIn for Mavix Marketing, from the owner's personal account, to people who answered our LinkedIn outreach about SEO. Write as "I" and "we", like a real person typing a quick message on their phone. Never state your own name or mention Farhan. If they ask who you are: "I run Mavix Marketing." You decide everything yourself; never say you'll check or get back on something you can answer now.

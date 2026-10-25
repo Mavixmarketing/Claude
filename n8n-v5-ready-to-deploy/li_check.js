@@ -5,7 +5,7 @@ const cfg = $('Settings').first().json;
 const ctx = $('Opus Request').all();
 const ALLOWED = cfg.ALLOWED_LINKS;
 // AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
-// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema; AEO is allowed, explained the first time), the study numbers are
+// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema; AEO is allowed), the study numbers are
 // never called Google's, and we never promise a spot in AI answers.
 function aiProblems(text, known) {
   const out = [];
@@ -24,9 +24,9 @@ function aiProblems(text, known) {
     if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
   }
   if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
-  // AEO (24 Oct) is allowed: it is included in every plan at no extra cost. The first time it comes up in a conversation
-  // the same sentence says what it is (getting named in AI answers like Google's AI Overviews or ChatGPT).
-  if (!/\bAEO\b/i.test(String(known || ''))) for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\bAEO\b/i.test(sent) && !/\b(ai (answers?|overviews?|search|mode|results?|summar(y|ies))|chatgpt|answer engine|perplexity|gemini)\b/i.test(sent)) { out.push('mentions AEO without saying in the same sentence what it is (getting named in AI answers like ChatGPT)'); break; }
+  // AI answers (25 Oct): getting named in AI answers is simply part of the work. "AEO" is allowed (the writer uses it only if
+  // they used it first). It is never sold as an extra: "at no extra cost" / "bonus" next to AI answers or AEO is held.
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\b(AEO|ai (answers?|overviews?|search|mode|results?)|chatgpt|perplexity|gemini)\b/i.test(sent) && /\b(no (extra|additional) (cost|charge|fee)|at no (cost|charge)|free of charge|bonus)\b/i.test(sent)) { out.push('sells AI answers as an extra ("at no extra cost", "bonus"); say it is simply part of the work'); break; }
   return [...new Set(out)];
 }
 // one long block: break it into paragraphs of at most two sentences
