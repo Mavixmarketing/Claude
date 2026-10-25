@@ -23,12 +23,12 @@ function aiProblems(text, known) {
       out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
     }
     if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
-    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named))\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named)|(get|put) (you|your business|your name) (in|into|inside))\b|\b(guarantee|promise)[sd]?\b[^.?!]{0,30}\b(spot|place|mention|position)\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
   }
   if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
-  // AI answers (25 Oct): getting named in AI answers is simply part of the work. "AEO" is allowed (the writer uses it only if
-  // they used it first). It is never sold as an extra: "at no extra cost" / "bonus" next to AI answers or AEO is held.
-  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\b(AEO|ai (answers?|overviews?|search|mode|results?)|chatgpt|perplexity|gemini)\b/i.test(sent) && /\b(no (extra|additional) (cost|charge|fee)|at no (cost|charge)|free of charge|bonus)\b/i.test(sent)) { out.push('sells AI answers as an extra ("at no extra cost", "bonus"); say it is simply part of the work'); break; }
+  // AI answers (25 Oct): getting named in AI answers is simply part of the work. Gemini, "AI tools" and "local search" are fine (25 Oct, Farhan's approved wording). "AEO" is allowed (the writer uses it only if
+  // they used it first, or when they ask what we do). It is never sold as an extra: "at no extra cost" / "bonus" next to AI answers or AEO is held.
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\b(AEO|ai (answers?|overviews?|search|mode|results?|tools?|assistants?|summar(y|ies)|apps?)|google'?s ai|chatgpt|perplexity|gemini)\b/i.test(sent) && /\b(no (extra|additional) (cost|charge|fee)|at no (cost|charge)|free of charge|bonus)\b/i.test(sent)) { out.push('sells AI answers as an extra ("at no extra cost", "bonus"); say it is simply part of the work'); break; }
   return [...new Set(out)];
 }
 const words0 = x => String(x || '').split(/\s+/).filter(Boolean).length;
@@ -57,7 +57,7 @@ return $input.all().map((it, i) => {
   t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/') && !(c.audit_nudge && (u === BOOKING || u === BOOKING + '/'))) problems.push('link not allowed: ' + u);
   if (links.length > 2) problems.push('more than two links');
-  { const bw = t.replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...)
+  { const bw = t.replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?|apps?|side|like|such as)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...)
   problems.push(...aiProblems(t, String((ctx[i] && ctx[i].json.transcript) || c.history || '') + ' ' + String(c.email || '')));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
