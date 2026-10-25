@@ -33,6 +33,19 @@ function aiProblems(text, known) {
 }
 const words0 = x => String(x || '').split(/\s+/).filter(Boolean).length;
 const linkify = p => p.replace(/(https?:\/\/[^\s<]+?)([.,;:]?)(?=\s|$)/g, '<a href="$1">$1</a>$2');
+// CASE STUDIES (25 Oct, Farhan): used at more stages now, but never the same one twice in a conversation. A case-study
+// link that one of our earlier messages already sent is held (theirs do not count). The firm in Dublin's LinkedIn post
+// (lnkd.in/p/gMHV49kf) is the construction management case study.
+const caseSlug = u => { const s = String(u || '').toLowerCase(); const m = s.match(/mavixmarketing\.com\/case-studies\/([a-z0-9-]+)/); return m ? m[1] : /lnkd\.in\/p\/gmhv49kf/.test(s) ? 'construction-management-seo' : ''; };
+function casesSent(transcript) {
+  const out = new Set();
+  for (const b of String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/)) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const u of b.match(/https?:\/\/[^\s)<>"]+|lnkd\.in\/p\/\w+/gi) || []) { const k = caseSlug(u); if (k) out.add(k); }
+  }
+  return out;
+}
+const repeatCases = (links, transcript) => { const sent = casesSent(transcript); return [...new Set(links.map(caseSlug).filter(k => k && sent.has(k)))]; };
 return $input.all().map((it, i) => {
   const { opus_body, transcript, site_notes, ...c } = ctx[i] ? ctx[i].json : {};
   let r = {};
@@ -57,6 +70,7 @@ return $input.all().map((it, i) => {
   t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/') && !(c.audit_nudge && (u === BOOKING || u === BOOKING + '/'))) problems.push('link not allowed: ' + u);
   if (links.length > 2) problems.push('more than two links');
+  for (const k of repeatCases(links, String((ctx[i] && ctx[i].json.transcript) || c.history || ''))) problems.push('sends a case study already sent in this conversation (' + k + '); use a different one');
   { const bw = t.replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?|apps?|side|like|such as)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...)
   problems.push(...aiProblems(t, String((ctx[i] && ctx[i].json.transcript) || c.history || '') + ' ' + String(c.email || '')));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');

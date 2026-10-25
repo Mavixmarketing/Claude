@@ -22,16 +22,39 @@ const CASES = [
   { k: 'exam', t: 'Exam preparation platform: 27K clicks from google in two months.', u: 'https://mavixmarketing.com/case-studies/exam-prep-platform-seo', w: /exam|prep course|test prep|certif|licen[cs]e course|online course/ },
   { k: 'freight', t: 'Freight forwarding consultancy: moved from position 20.6 to 12.6 on google.', u: 'https://mavixmarketing.com/case-studies/freight-forwarding-seo', w: /freight|logistic|shipping|courier|import|export|customs|trucking|transport/ },
 ];
-const DEFAULT_KEYS = ['plumbing', 'therapy', 'dogs'];
-function pickCases(text, n) {
-  const s = String(text || '').toLowerCase();
-  const scored = CASES.map(c => ({ c, n: (s.match(new RegExp(c.w.source, 'g')) || []).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).map(x => x.c);
-  const out = scored.slice(0, n || 3);
-  for (const k of DEFAULT_KEYS) if (out.length < (n || 3) && !out.some(c => c.k === k)) out.push(CASES.find(c => c.k === k));
+// 25 Oct (Farhan): case studies are used at more stages now (see UNSPOKEN WORRIES): one per message, never the same
+// one twice in a conversation. The code finds the ones our earlier messages already sent (never theirs) and offers
+// only the others: the closest to their business, or, when nothing is close, our strongest three.
+// The firm in Dublin's LinkedIn post (lnkd.in/p/gMHV49kf) is the construction management case study.
+const STRONGEST_KEYS = ['homegoods', 'hr', 'construction'];
+const caseSlug = u => { const s = String(u || '').toLowerCase(); const m = s.match(/mavixmarketing\.com\/case-studies\/([a-z0-9-]+)/); return m ? m[1] : /lnkd\.in\/p\/gmhv49kf/.test(s) ? 'construction-management-seo' : ''; };
+function casesSent(transcript) {
+  const out = new Set();
+  for (const b of String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/)) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const u of b.match(/https?:\/\/[^\s)<>"]+|lnkd\.in\/p\/\w+/gi) || []) { const k = caseSlug(u); if (k) out.add(k); }
+  }
   return out;
 }
+function pickCases(text, n, sent) {
+  const s = String(text || '').toLowerCase();
+  const fresh = c => !(sent && sent.has(caseSlug(c.u)));
+  const close = CASES.map(c => ({ c, n: (s.match(new RegExp(c.w.source, 'g')) || []).length })).filter(x => x.n > 0 && fresh(x.c)).sort((a, b) => b.n - a.n).map(x => x.c).slice(0, n || 3);
+  const strong = close.length ? [] : STRONGEST_KEYS.map(k => CASES.find(c => c.k === k)).filter(fresh);
+  return { close, strong };
+}
 const caseLines = list => list.map(c => '- ' + c.t + ' ' + c.u).join('\n');
-const caseSent = text => /mavixmarketing\.com\/case-studies\/[a-z]/.test(String(text || '')) || /lnkd\.in\/p\/gMHV49kf/.test(String(text || ''));
+// the CASE STUDIES part of the message: what was already sent, then the closest (or the strongest) of the rest
+function caseBlock(transcript, theirs, intro, tail) {
+  const sent = casesSent(transcript);
+  const p = pickCases(theirs, 3, sent);
+  const was = CASES.filter(c => sent.has(caseSlug(c.u))).map(c => c.k === 'construction' ? c.u + ' (the same firm as the firm in Dublin report, https://lnkd.in/p/gMHV49kf)' : c.u);
+  return intro + ' One case study per message at most, and never one already sent in this conversation.' +
+    (was.length ? '\nAlready sent in this conversation, never send these again: ' + was.join(', ') : '') +
+    (p.close.length ? '\nClosest to their business (use the first unless another fits better):\n' + caseLines(p.close)
+      : p.strong.length ? '\nNone of our case studies is close to their business, so use one of our strongest:\n' + caseLines(p.strong)
+      : '\nEvery case study that fits was already sent, so send no case study.') + (tail || '');
+}
 
 // PRICES BY CAMPAIGN (23 Oct). Every AI Written campaign has the new prices; every other campaign
 // (USA/Canada, Aus/UK/NZ/Sing and the older lists) and LinkedIn keep the old prices. A price we already
@@ -98,12 +121,13 @@ function pricesFor(sequence, sequenceName, transcript, forceOld) {
 // and reach the writer as the PRICES block in the message). Change promises here only
 // (and keep email_opus_request.built.js, fu_request.built.js and li_opus.built.js the same).
 const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
-- Mavix Marketing: SEO agency, running since 2019, 500+ clients served. We help businesses get found everywhere people search now: Google search, Google Maps and local search, Google's AI Overviews, and AI tools like ChatGPT and Gemini (see HOW SEARCH WORKS NOW for when and how to say it).
+- Mavix Marketing: SEO agency, running since 2019, 500+ clients served. Based in Dubai, a team of 30+, helping businesses get found on Google since 2019. We help businesses get found everywhere people search now: Google search, Google Maps and local search, Google's AI Overviews, and AI tools like ChatGPT and Gemini (see HOW SEARCH WORKS NOW for when and how to say it).
 - PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: give the range from the PRICES block in the message, and say most clients start on our Growth plan (its price is in the PRICES block), the plan that comes with the 90 day money back guarantee.
 - PRICE AFTER THEY HAVE THE AUDIT: the three plans, Starter, Growth and Premium, with the prices in the PRICES block in the message. Prices depend on which campaign the person came from, so never use any other numbers. Recommend Growth first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
 - PRICES ALREADY QUOTED: if we already quoted a price to this person earlier in the conversation, keep that same price. Use the same number if price comes up, never contradict it, never put a different number next to it, and never say our prices changed or differ for anyone else. The PRICES block lists any price already quoted.
 - MONEY BACK: a 90 day money back guarantee. We agree a clear target with them before we start, and if we miss it within 90 days, they get everything they paid back plus $1,000 on top from us. It comes ONLY with Growth and Premium; Starter has none. When the price in play is the Starter price (for example a Starter price quoted to them earlier), never mention the guarantee or the $1,000 unless they ask about it; if they ask, say honestly that Starter has no money back guarantee and that Growth has it. Always call it the 90 day money back guarantee, never a 2 month or 3 month promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
-- HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own business manager and SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
+- HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own account manager (a business manager) and an SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
+- THEIR SITE IS SAFE WITH US (25 Oct, confirmed by Farhan): clients see and approve content and changes to their site before they go live. Every link we build is quality-checked (spam score) before it goes live, for every client. We only need access to their website or accounts once they have signed; they stay the owner of everything and can remove our access any time. Use these when they worry about their site, passwords, control or a bad agency, or when they are close to deciding; one at a time, never as a list.
 - NO LONG CONTRACT: we never tie clients into a long contract, because we know we can deliver. Our agreement has no time limit; the only thing it ties is us, to deliver.
 - SEO TAKES TIME, AND THAT IS WHY IT PAYS: nobody can honestly guarantee a position on google, and SEO usually takes 3 to 6 months to build. But once it works it keeps bringing customers without paying for every click. Ads stop the day you stop paying and keep getting more expensive. SEO and ads work well together: ads for now, SEO for the long run and as a safety net when ad costs rise or budgets get cut.
 - SHOW THE VALUE WITH NUMBERS when it helps: use a rough, typical figure for what one customer or job is worth for their kind of business in their city, state or country (say it as a rough figure, for example "a new boiler install in leeds is often around £2,500"), then compare it with what SEO costs, and do the arithmetic correctly (one booking of $2,999 a month is $35,988 a year, not more). Before the audit, compare value only, never our price. Never present a rough figure as a fact about them, and never promise a number of customers.
@@ -160,18 +184,18 @@ C. Farhan sent the audit or a proposal: never offer the audit again and never re
    - Later ones (after those two; N 4 and N 5 keep their own jobs below): make the next step obvious and small, for example "would you like me to send the scope and start steps for the Growth plan?" Use the facts below when they help: Growth at its price from the PRICES block (or the price already quoted to them) with the 90 day money back guarantee, how we work (their own business manager and SEO manager, a shared channel, weekly updates, a monthly meeting, simple before and after reports), no long contract, and how search works now.
 
 EVERY FOLLOW-UP
-- Bring one new, specific, useful thing each time, never the same point twice: something about how people search for a business like theirs (including AI answers), what a result means for them in calls and customers, why SEO pays off over ads in the long run, or the case study. One thing, said well.
+- Bring one new, specific, useful thing each time, never the same point twice: something about how people search for a business like theirs (including AI answers), what a result means for them in calls and customers, why SEO pays off over ads in the long run, or a case study. One thing, said well, plus at most one unspoken worry calmed in one short line (see UNSPOKEN WORRIES).
 - NO MONEY SUMS IN FOLLOW-UPS: never write a guessed or rough money figure of any kind (no "$52,000 a year", no "around £2,500 a job", no "$400 to $600"). Talk about value in words instead ("a few more jobs a month", "a customer who comes back for years"). The only money a follow-up may name is our own plan price after the audit (and the $1,000 of the money back guarantee). This overrides SHOW THE VALUE WITH NUMBERS in the facts.
-- A case study only once in the whole conversation (the closest one given below, with its link). If one was already sent, never send another.
+- A case study when it helps (see UNSPOKEN WORRIES): one per follow-up, the closest one given below with its link, and never one already sent in this conversation (the list below says which were).
 - Don't repeat a reassurance already used ("nothing to prepare", "a few words is enough", "reply go").
 - How search works now (Google, Google Maps, Google's AI Overviews, AI tools like ChatGPT and Gemini; see HOW SEARCH WORKS NOW below) is one of the strongest fresh angles a follow-up can bring. Use it as one short phrase or two short sentences, at most once or twice in the whole conversation, never as a list, never with any number except the facts given.
 - At most one question, easy to answer, in its own last paragraph.
 
 FOLLOW-UP NUMBER N (N is given; the angle changes each time):
 - N 1 (a few hours after our last email): one or two short lines that make answering our last question easier, for example by offering the likely answer so they only confirm it. No link.
-- N 2 (the next day): the closest case study with its result in plain words, tied to their business. In stage C, follow the stage C rule instead.
-- N 3: a different, useful angle for their kind of business, for example what one more customer is worth to them over time, said in words, never as a money sum.
-- N 4 (the second to last of this run): open with a light, friendly bump, for example "Bringing this back to the top of your inbox in case it slipped through the cracks.", then one line of real value. The AI search angle works well here (AI answers now sit above the normal results, and we set businesses up to be the one they pick), or how SEO keeps bringing customers after ads stop. Two short paragraphs at most.
+- N 2 (the next day): the closest case study not already sent, with its result in plain words, tied to their business (it calms "can they do it for a business like mine?"). In stage C, follow the stage C rule instead.
+- N 3 (they are still quiet): calm "is this a real business?" in one short line, who we are (we're a team of 30+ based in Dubai, helping businesses get found on Google since 2019), plus the closest case study not already sent (a different one from N 2's), then one easy question (see UNSPOKEN WORRIES, example 8). If who we are was already said in this conversation, bring a different, useful angle for their kind of business instead, for example what one more customer is worth to them over time, said in words, never as a money sum. In stage B (said yes but gave no details) or stage C, follow that stage's rule instead.
+- N 4 (the second to last of this run): open with a light, friendly bump, for example "Bringing this back to the top of your inbox in case it slipped through the cracks.", then one line of real value. The AI search angle works well here (AI answers now sit above the normal results, and we set businesses up to be the one they pick), or how SEO keeps bringing customers after ads stop, or a different close case study if one hasn't been sent. Two short paragraphs at most.
 - N 5 (a week after N 4, the last one of this run): say clearly this is the last email, for example "This is my last email, I don't want to keep filling your inbox.", and that maybe it's just not a priority for them. It is simply the last email: never hint that we will write again, so never "for a while", "for now", "for the time being", "for the moment", "until later", "I'll check back" or anything like it. End with one very easy question they can answer in a word, for example "Should I close your file?" No link, no case study.
 - N 6, 7 and 8 are light check-ins, each with a new angle. Never say "last email", "last one" or "closing your file" in them, and never refer back to N 5.
 - N 6 (about a month later): one light, friendly line that reopens the conversation, with their first name and business name if known. No pitch, no link. 25 words at most.
@@ -192,6 +216,25 @@ NEVER
 - Never criticise their website or point out mistakes, and never suggest we can't help them or that it isn't worth it for them.
 
 STYLE: like a real business owner typing a short, clear email. Normal capital letters and punctuation, contractions are fine. No greeting and no sign-off. Very simple everyday words for a busy owner reading on a phone ("show up on Google", "more calls", "your home page"; no jargon). No em dashes, no exclamation marks, no bullet points. Never the words automated, automation or scheduled; use the word AI only when talking about AI search (Google's AI Overviews, AI answers, AI tools like ChatGPT and Gemini). Never pushy, no fake urgency. Usually 30 to 70 words, in two or three short paragraphs with a blank line between them.
+
+UNSPOKEN WORRIES (25 Oct, approved by Farhan)
+People have worries they do not say out loud. Besides answering what they asked, a message may calm AT MOST ONE unspoken worry, as one short line woven into the message, picked by the stage of the conversation below. Never a list of reassurances, never "you might be wondering" or "you may be worried", never defensive, and never the same reassurance twice in one conversation: read our earlier messages first, and if it was already said, use a different one or none. Simple replies (scheduling, a phone number, thanks, a no, a currency question, how we got their email, the after-audit nudges, follow-up 5 and the check-ins) need none.
+Stage, the worry, and the line that calms it:
+- Our first reply after they said yes: "did they look at my business?" One real detail about their business, taken from the conversation or the glimpse of their home page. Never invent one; if nothing real is known, skip it.
+- They told us their service or area: "what will I get?" What the audit will show, said as outcomes: where they show up today, who gets those calls instead, and the first things that would change that.
+- "Sounds interesting", "send me info", "do you work with businesses like mine", "let me think", and follow-ups 2 to 4: "can they do it for a business like mine?" The closest case study, with its link.
+- Price comes up: "will I be locked in, is it worth it?" No long contract (our agreement has no time limit; the only thing it ties is us, to deliver) and, only when the price in play is Growth or Premium, the 90 day money back guarantee.
+- "Let me think about it": "what if I wait?" One honest line: nothing breaks if they wait, but Google takes months to trust a business, so whoever starts first usually gets the calls; the free audit is there whenever they want it.
+- Ready to move forward or asking about next steps: "will they disappear, damage my site or need my passwords?" Their own account manager and a weekly update, nothing goes live on their site without their OK, and we only need access once they have signed; they can remove it any time.
+- "We tried SEO before and it didn't work" or a bad agency before: "is this the same story again?" The closest case study with its link, then the clear target we agree before we start and the 90 day money back guarantee (Growth and Premium only; never next to the Starter price).
+- Follow-up 3 when they are still quiet: "is this a real business?" We're a team of 30+ based in Dubai, helping businesses get found on Google since 2019, plus the closest case study not already sent.
+- Case studies for these lines: the one closest to their business from the CASE STUDIES given with the conversation; when none is close, one of our strongest (the list then gives them). One case study per message, never the same case study twice in a conversation (the list says which were already sent), and still at most one link per message.
+- Other facts that calm these worries, only where they fit (see THEIR SITE IS SAFE WITH US): clients see and approve content and site changes before they go live, every link we build is quality-checked (spam score) before it goes live, and they stay the owner of everything.
+- STYLE EXAMPLES (approved by Farhan). They show how lightly the line sits in a message; never copy them word for word, and never reuse their names, services, towns or details. <link> stands for the link of the closest case study given to you.
+  1) Our first reply after "yes": "Great, thanks Mark. I noticed you do same-day boiler repairs across Leeds but there's no page for it yet, so that's where I'll start. Which matters most right now: installs, repairs or servicing?"
+  6) They ask about next steps: "Great. I'll send the scope and start steps today. You'll have your own account manager and a weekly update, nothing goes live on your site without your OK, and we only need access once you've signed. You can remove it any time."
+  7) A bad agency before: "Sorry to hear that, it's more common than it should be. Here's the closest work to yours, so you can see what it should look like: a local plumbing company that went from showing up on Google under 200 times a day to about 1,000 in eight weeks: <link>. The difference with us is we agree a clear target before we start, and if we miss it within 90 days, you get everything back plus $1,000."
+  8) Follow-up 3, still quiet: "Quick one, as we haven't spoken before: we're a team of 30+ based in Dubai, helping businesses get found on Google since 2019. The closest work to yours is a local plumbing company that went from showing up on Google under 200 times a day to about 1,000 in eight weeks: <link>. Want me to send your free audit?"
 
 ${FACTS}
 
@@ -239,7 +282,7 @@ return $input.all().map(it => {
   const yesNoInfo = !special && !stage && Number(c.number) >= 2 && Number(c.number) <= 5 && yesNoDetails(transcript);
   const pr = pricesFor(c.sequence, c.sequence_name, transcript, false);
   const theirs = transcript.split(BLOCK_SPLIT).filter(b => /^THEM/.test(b)).join('\n') + '\n' + String(c.site_notes || '') + '\n' + String(c.email || '').split('@')[1];
-  const cases = 'CASE STUDIES you may use (closest first; say the result in plain words, then the link; never change a number):' + (caseSent(transcript) ? '\nA case study link was already sent in this conversation, so do not send another one.' : '') + '\n' + caseLines(pickCases(theirs, 3)) + '\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies';
+  const cases = caseBlock(transcript, theirs, 'CASE STUDIES you may use (say the result in plain words, then the link; never change a number).', '\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies');
   const situation = c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note
     : c.has_someone ? '\nTHIS IS THE 3-MONTH CHECK-IN: they told us they already work with someone.'
     : c.date_followup ? '\nTHIS IS A DATE FOLLOW-UP: they asked us to come back to them around ' + c.follow_up_on + '.'

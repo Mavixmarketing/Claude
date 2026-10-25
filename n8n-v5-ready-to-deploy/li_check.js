@@ -38,6 +38,19 @@ function paragraphs(t) {
   for (let k = 0; k < sentences.length; k += 2) out.push(sentences.slice(k, k + 2).join(' ').replace(/\s+/g, ' ').trim());
   return out.join('\n\n');
 }
+// CASE STUDIES (25 Oct, Farhan): used at more stages now, but never the same one twice in a conversation. A case-study
+// link that one of our earlier messages already sent is held (theirs do not count). The firm in Dublin's LinkedIn post
+// (lnkd.in/p/gMHV49kf) is the construction management case study.
+const caseSlug = u => { const s = String(u || '').toLowerCase(); const m = s.match(/mavixmarketing\.com\/case-studies\/([a-z0-9-]+)/); return m ? m[1] : /lnkd\.in\/p\/gmhv49kf/.test(s) ? 'construction-management-seo' : ''; };
+function casesSent(transcript) {
+  const out = new Set();
+  for (const b of String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/)) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const u of b.match(/https?:\/\/[^\s)<>"]+|lnkd\.in\/p\/\w+/gi) || []) { const k = caseSlug(u); if (k) out.add(k); }
+  }
+  return out;
+}
+const repeatCases = (links, transcript) => { const sent = casesSent(transcript); return [...new Set(links.map(caseSlug).filter(k => k && sent.has(k)))]; };
 return $input.all().map((it, i) => {
   const { opus_body, transcript, ...c } = ctx[i] ? ctx[i].json : {};
   let r = {};
@@ -93,6 +106,7 @@ return $input.all().map((it, i) => {
   }
   for (const u of links) if (!ALLOWED.some(a => u === a || u === a + '/')) problems.push('link not allowed: ' + u);
   if (new Set(links).size > 1) problems.push('more than one link');
+  for (const k of repeatCases(links, String((ctx[i] && ctx[i].json.transcript) || ''))) problems.push('sends a case study already sent in this conversation (' + k + '); use a different one');
   if (/[{}\[\]]/.test(t)) problems.push('has an unfilled blank such as {site}');
   const asked = (t.match(/\?/g) || []).length;
   if (asked > 2) problems.push('asks ' + asked + ' questions');

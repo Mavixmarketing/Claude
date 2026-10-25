@@ -21,16 +21,39 @@ const CASES = [
   { k: 'exam', t: 'Exam preparation platform: 27K clicks from google in two months.', u: 'https://mavixmarketing.com/case-studies/exam-prep-platform-seo', w: /exam|prep course|test prep|certif|licen[cs]e course|online course/ },
   { k: 'freight', t: 'Freight forwarding consultancy: moved from position 20.6 to 12.6 on google.', u: 'https://mavixmarketing.com/case-studies/freight-forwarding-seo', w: /freight|logistic|shipping|courier|import|export|customs|trucking|transport/ },
 ];
-const DEFAULT_KEYS = ['plumbing', 'therapy', 'dogs'];
-function pickCases(text, n) {
-  const s = String(text || '').toLowerCase();
-  const scored = CASES.map(c => ({ c, n: (s.match(new RegExp(c.w.source, 'g')) || []).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).map(x => x.c);
-  const out = scored.slice(0, n || 3);
-  for (const k of DEFAULT_KEYS) if (out.length < (n || 3) && !out.some(c => c.k === k)) out.push(CASES.find(c => c.k === k));
+// 25 Oct (Farhan): case studies are used at more stages now (see UNSPOKEN WORRIES): one per message, never the same
+// one twice in a conversation. The code finds the ones our earlier messages already sent (never theirs) and offers
+// only the others: the closest to their business, or, when nothing is close, our strongest three.
+// The firm in Dublin's LinkedIn post (lnkd.in/p/gMHV49kf) is the construction management case study.
+const STRONGEST_KEYS = ['homegoods', 'hr', 'construction'];
+const caseSlug = u => { const s = String(u || '').toLowerCase(); const m = s.match(/mavixmarketing\.com\/case-studies\/([a-z0-9-]+)/); return m ? m[1] : /lnkd\.in\/p\/gmhv49kf/.test(s) ? 'construction-management-seo' : ''; };
+function casesSent(transcript) {
+  const out = new Set();
+  for (const b of String(transcript || '').split(/\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/)) {
+    if (/^\s*THEM/.test(b)) continue;
+    for (const u of b.match(/https?:\/\/[^\s)<>"]+|lnkd\.in\/p\/\w+/gi) || []) { const k = caseSlug(u); if (k) out.add(k); }
+  }
   return out;
 }
+function pickCases(text, n, sent) {
+  const s = String(text || '').toLowerCase();
+  const fresh = c => !(sent && sent.has(caseSlug(c.u)));
+  const close = CASES.map(c => ({ c, n: (s.match(new RegExp(c.w.source, 'g')) || []).length })).filter(x => x.n > 0 && fresh(x.c)).sort((a, b) => b.n - a.n).map(x => x.c).slice(0, n || 3);
+  const strong = close.length ? [] : STRONGEST_KEYS.map(k => CASES.find(c => c.k === k)).filter(fresh);
+  return { close, strong };
+}
 const caseLines = list => list.map(c => '- ' + c.t + ' ' + c.u).join('\n');
-const caseSent = text => /mavixmarketing\.com\/case-studies\/[a-z]/.test(String(text || '')) || /lnkd\.in\/p\/gMHV49kf/.test(String(text || ''));
+// the CASE STUDIES part of the message: what was already sent, then the closest (or the strongest) of the rest
+function caseBlock(transcript, theirs, intro, tail) {
+  const sent = casesSent(transcript);
+  const p = pickCases(theirs, 3, sent);
+  const was = CASES.filter(c => sent.has(caseSlug(c.u))).map(c => c.k === 'construction' ? c.u + ' (the same firm as the firm in Dublin report, https://lnkd.in/p/gMHV49kf)' : c.u);
+  return intro + ' One case study per message at most, and never one already sent in this conversation.' +
+    (was.length ? '\nAlready sent in this conversation, never send these again: ' + was.join(', ') : '') +
+    (p.close.length ? '\nClosest to their business (use the first unless another fits better):\n' + caseLines(p.close)
+      : p.strong.length ? '\nNone of our case studies is close to their business, so use one of our strongest:\n' + caseLines(p.strong)
+      : '\nEvery case study that fits was already sent, so send no case study.') + (tail || '');
+}
 
 // PRICES BY CAMPAIGN (23 Oct). Every AI Written campaign has the new prices; every other campaign
 // (USA/Canada, Aus/UK/NZ/Sing and the older lists) and LinkedIn keep the old prices. A price we already
@@ -97,12 +120,13 @@ function pricesFor(sequence, sequenceName, transcript, forceOld) {
 // and reach the writer as the PRICES block in the message). Change promises here only
 // (and keep email_opus_request.built.js, fu_request.built.js and li_opus.built.js the same).
 const FACTS = `FACTS YOU MAY USE (only these; never invent anything else)
-- Mavix Marketing: SEO agency, running since 2019, 500+ clients served. We help businesses get found everywhere people search now: Google search, Google Maps and local search, Google's AI Overviews, and AI tools like ChatGPT and Gemini (see HOW SEARCH WORKS NOW for when and how to say it).
+- Mavix Marketing: SEO agency, running since 2019, 500+ clients served. Based in Dubai, a team of 30+, helping businesses get found on Google since 2019. We help businesses get found everywhere people search now: Google search, Google Maps and local search, Google's AI Overviews, and AI tools like ChatGPT and Gemini (see HOW SEARCH WORKS NOW for when and how to say it).
 - PRICE BEFORE THEY HAVE THE AUDIT: our price is personalised. It depends on how much work their site needs, what they need and their end goal. Farhan sets it after assessing their site in the audit, and the price comes with the free audit, so they know it before they decide anything. No setup fee and no long contract. Only if they ask again or insist on a number: give the range from the PRICES block in the message, and say most clients start on our Growth plan (its price is in the PRICES block), the plan that comes with the 90 day money back guarantee.
 - PRICE AFTER THEY HAVE THE AUDIT: the three plans, Starter, Growth and Premium, with the prices in the PRICES block in the message. Prices depend on which campaign the person came from, so never use any other numbers. Recommend Growth first: it is the plan we recommend, it comes with the 90 day money back guarantee, and it is where most clients start. Mention Starter only if money is clearly tight, and if you do, be honest that Starter has no money back guarantee.
 - PRICES ALREADY QUOTED: if we already quoted a price to this person earlier in the conversation, keep that same price. Use the same number if price comes up, never contradict it, never put a different number next to it, and never say our prices changed or differ for anyone else. The PRICES block lists any price already quoted.
 - MONEY BACK: a 90 day money back guarantee. We agree a clear target with them before we start, and if we miss it within 90 days, they get everything they paid back plus $1,000 on top from us. It comes ONLY with Growth and Premium; Starter has none. When the price in play is the Starter price (for example a Starter price quoted to them earlier), never mention the guarantee or the $1,000 unless they ask about it; if they ask, say honestly that Starter has no money back guarantee and that Growth has it. Always call it the 90 day money back guarantee, never a 2 month or 3 month promise. Use this when they worry about risk, results or wasting money, or when it helps them decide.
-- HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own business manager and SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
+- HOW WE WORK (use when they ask how it works, worry about agencies, or are close to deciding): they get their own account manager (a business manager) and an SEO manager, a shared channel between their team and ours, a weekly update and a monthly meeting, so nothing gets missed. Reports are simple: before, after, and what it brought them. No confusing reports.
+- THEIR SITE IS SAFE WITH US (25 Oct, confirmed by Farhan): clients see and approve content and changes to their site before they go live. Every link we build is quality-checked (spam score) before it goes live, for every client. We only need access to their website or accounts once they have signed; they stay the owner of everything and can remove our access any time. Use these when they worry about their site, passwords, control or a bad agency, or when they are close to deciding; one at a time, never as a list.
 - NO LONG CONTRACT: we never tie clients into a long contract, because we know we can deliver. Our agreement has no time limit; the only thing it ties is us, to deliver.
 - SEO TAKES TIME, AND THAT IS WHY IT PAYS: nobody can honestly guarantee a position on google, and SEO usually takes 3 to 6 months to build. But once it works it keeps bringing customers without paying for every click. Ads stop the day you stop paying and keep getting more expensive. SEO and ads work well together: ads for now, SEO for the long run and as a safety net when ad costs rise or budgets get cut.
 - SHOW THE VALUE WITH NUMBERS when it helps: use a rough, typical figure for what one customer or job is worth for their kind of business in their city, state or country (say it as a rough figure, for example "a new boiler install in leeds is often around £2,500"), then compare it with what SEO costs, and do the arithmetic correctly (one booking of $2,999 a month is $35,988 a year, not more). Before the audit, compare value only, never our price. Never present a rough figure as a fact about them, and never promise a number of customers.
@@ -153,7 +177,7 @@ BY SITUATION (write your own words)
 - "We already rank #1", "we're on page one" or "we already have SEO": agree that's great, then one short line that Google's AI answers now often sit above that first result, so being the name those answers give is part of how we work now (see HOW SEARCH WORKS NOW, example b). Offer the free check as the way to see where they stand.
 - They have someone: that's fine, never criticise. Offer the free check once as a second opinion they can hand to their team; it also looks at how they come up in Google's AI Overviews and ChatGPT. If they decline again: one warm line of thanks and stop.
 - "No" or "not really" to message 1: ask lightly whether it hasn't been a priority or didn't work before.
-- "Tried it, didn't work": offer a free look and the first thing we'd fix; mention we agree a clear target up front and the money back promise if it fits.
+- "Tried it, didn't work" or a bad agency: offer a free look; the closest case study not already sent, with its link, and we agree a clear target up front, with the money back promise if it fits (see UNSPOKEN WORRIES).
 - "seo", "yes, take a look", "interested": ask which services they want more enquiries for (offer likely options). Never ask for their website.
 - They told us the services: "Great, I'll start on the audit and send it over when it's ready." Offer the booking link {{BOOKING}} once, as an option, saying it's not a pitch. Flag "prepare the audit for <website, or 'website not known, please find it'>, focus <services>".
 - Price, results, guarantee, "later" or "next year", "how does it work", "can't afford it", "fully booked": follow the facts below (personalised price, range only if they insist, Growth at its price from the PRICES block after the audit, keep any price already quoted, money back plus $1,000, how we work, no long contract, SEO vs ads, value with rough numbers, never say no). For "later": give one solid reason waiting costs them and offer the free check now; put any date in the flag.
@@ -168,7 +192,19 @@ WHEN NOT TO WRITE (send false, reply "", reason in the flag)
 - They ask whether this is a bot or written by a person: flag "asked if this is a bot".
 - Nothing useful can be said.
 
-NEVER: ask for their website or a link; invent clients, numbers or results; change a price or promise; send a link already sent in the chat; more than one link per message (only links given to you); mention the Dublin firm's name (say "the firm in Dublin"; it's a construction management firm only if they ask).
+NEVER: ask for their website or a link; invent clients, numbers or results; change a price or promise; send a link or a case study already sent in the chat; more than one link per message (only links given to you); mention the Dublin firm's name (say "the firm in Dublin"; it's a construction management firm only if they ask).
+
+UNSPOKEN WORRIES (25 Oct, approved by Farhan; the short LinkedIn version)
+People have worries they don't say. Besides answering, a message may calm AT MOST ONE, in a few words woven in, picked by the stage. Never a list, never "you might be wondering", never defensive, never the same reassurance twice in the chat (read our earlier messages). Simple replies (scheduling, a number, thanks, a no) need none. Stay within 45 words.
+- First reply after a yes: one real detail about their business from what you're given (never invent; skip if nothing is known).
+- They gave their services or area: what the check will show (where they show up, who gets those calls instead, the first things that would change that).
+- "Interesting", "send info", "do you work with businesses like mine", "let me think": the closest case study not already sent, with its link.
+- Price: no long contract (the agreement has no time limit; it only ties us, to deliver) and, for Growth or Premium only, the 90 day money back guarantee.
+- "Let me think about it": nothing breaks if they wait, but Google takes months to trust a business, so whoever starts first usually gets the calls; the free check is there whenever they want it.
+- Ready to go ahead or next steps: their own account manager and a weekly update, nothing goes live without their OK, and we only need access once they've signed (they can remove it any time).
+- Tried SEO before or a bad agency: the closest case study with its link, then the clear target we agree before we start and the money back guarantee (Growth and Premium).
+- One case study per message, never one already sent in the chat (the list says which), at most one link. If nothing is close, use one of the strongest the list gives.
+- Example (approved; show the tone only, never copy it, say it in fewer words): "Great. I'll send the scope and start steps today. You'll have your own account manager and a weekly update, nothing goes live on your site without your OK, and we only need access once you've signed."
 
 ${FACTS}
 
@@ -178,7 +214,8 @@ return $input.all().map(it => {
   const c = it.json;
   const about = [c.job_title, c.company, c.headline, c.bio, c.company_overview, c.site_summary].filter(Boolean).join('\n');
   const theirs = String(c.transcript || '').split(/\n\n(?=(?:THEM|US)[ (:])/).filter(b => /^THEM/.test(b)).join('\n') + '\n' + about;
-  const cases = 'CASE STUDIES you may use (closest first; say the result in plain words, then the link; never change a number):' + (caseSent(c.transcript) ? '\nA case study link was already sent in this chat, so do not send another one.' : '') + '\n' + caseLines(pickCases(theirs, 3)) + '\nThe firm in Dublin (construction management): about 406,000 times shown on Google and 9,940 clicks in about five months, no ads. https://lnkd.in/p/gMHV49kf\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies';
+  const dublinSent = casesSent(c.transcript).has('construction-management-seo');
+  const cases = caseBlock(c.transcript, theirs, 'CASE STUDIES you may use (say the result in plain words, then the link; never change a number).', (dublinSent ? '' : '\nThe firm in Dublin (construction management): about 406,000 times shown on Google and 9,940 clicks in about five months, no ads. https://lnkd.in/p/gMHV49kf') + '\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies');
   const pr = pricesFor('', '', c.transcript, true); // LinkedIn always uses the old prices (or a price already quoted)
   const user = pr.prices_block + '\n\nTheir linkedin profile: ' + c.lead_url + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + (c.job_title ? '\nTheir job: ' + c.job_title : '') + (c.company ? '\nTheir company: ' + c.company : '') + (c.website_guess ? '\nTheir website (from their profile): ' + c.website_guess : '\nTheir website: not known (never ask for it; flag it instead)') + (c.headline ? '\nTheir linkedin headline: ' + c.headline : '') + (c.bio ? '\nTheir linkedin about section: ' + c.bio : '') + (c.company_overview ? '\nAbout their company: ' + c.company_overview : '') + (c.site_summary ? '\nWhat their website home page says:\n' + c.site_summary : '') +
     (c.campaign ? '\nProsp campaign: ' + c.campaign : '') +
