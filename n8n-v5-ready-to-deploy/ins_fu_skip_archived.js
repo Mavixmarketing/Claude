@@ -25,6 +25,12 @@ const bodyOf = m => { const b = m.body || {}; return s(b.text).trim() || s(b.htm
 const OUR_DOMAIN = /^(mavix|maavix|mavex|mavvix|maviks|mavixx)[a-z0-9-]*\./i;
 const isOurs = m => Number(m.ue_type) !== 2 || OUR_DOMAIN.test(s(m.from_address_email).toLowerCase().split('@')[1] || '');
 const when = m => { const t = Date.parse(m.timestamp_email || m.timestamp_created || ''); return isFinite(t) ? t : 0; };
+// 26 Oct, later: a follow-up only goes into a thread that belongs to an Instantly campaign (some email in it carries a
+// campaign_id) and never from one of Farhan's own inboxes (IGNORE_MAILBOXES in the Platform node, ins_platform.js).
+// Anything else is skipped silently (it is SalesBlink's or Farhan's conversation, not ours).
+let IGNORE = ['mavixmarketing@gmail.com', 'hello@mavixmarketing.com', 'team@mavixmarketing.com', 'farhan@mavixmarketing.com'];
+try { const l = $('Platform').first().json.IGNORE_MAILBOXES; if (Array.isArray(l)) IGNORE = l.map(x => s(x).toLowerCase().trim()).filter(Boolean); } catch (e) { /* default list */ }
+const ignored = new Set(IGNORE);
 const camp = {};
 try { for (const it of $('Read Campaigns').all()) for (const c of (it.json.items || [])) if (c && c.id) camp[String(c.id)] = s(c.name); } catch (e) { /* no names */ }
 const rowCampaign = {};
@@ -37,7 +43,9 @@ $input.all().forEach((it, i) => {
   const thread = it.json.items.filter(m => m && m.id && Number(m.ue_type) !== 4).sort((a, b) => when(a) - when(b));
   const theirs = thread.filter(m => !isOurs(m));
   if (!thread.length || !theirs.length) return; // nothing of theirs to answer to: never send blind
+  if (!thread.some(m => s(m.campaign_id))) return; // not an Instantly campaign thread
   const newestTheirs = theirs[theirs.length - 1];
+  if (ignored.has(s(newestTheirs.eaccount).toLowerCase().trim())) return; // Farhan's own inbox
   d.reply_to_uuid = s(newestTheirs.id);
   d.eaccount = s(newestTheirs.eaccount);
   const subj = s(newestTheirs.subject).trim();
