@@ -1,4 +1,7 @@
-// BUILD THE MORNING REPORT from the reply log (seo_reply_log) and SalesBlink's daily numbers.
+// BUILD THE MORNING REPORT from the reply log (seo_reply_log), SalesBlink's daily numbers and (26 Oct) Instantly's
+// campaign analytics. One report for both tools: the sending numbers are shown as totals plus a short
+// "SalesBlink:" and "Instantly:" line; every count that comes from the log (sorted, replies, follow-ups, audits,
+// flags, unanswered, reminders, coming up) already includes Instantly rows (platform "instantly").
 // Days are India days (IST). Every morning: yesterday only. Mondays: a separate weekly post (last week,
 // Monday to Sunday). The 1st of the month: a separate monthly post, next to the usual cold email standards.
 // Test runs show all three so you can see them.
@@ -56,7 +59,7 @@ function logStats(w) {
   for (const j of replies) {
     const k = kind(j);
     if (k && inW(t(j.createdAt), w)) { o[k] = (o[k] || 0) + 1; o.total++; }
-    if (['replied', 'followed_up', 'farhan_handling'].includes(String(j.status)) && inW(t(j.createdAt), w)) o.answered++;
+    if (['replied', 'followed_up', 'farhan_handling', 'scheduled', 'sending'].includes(String(j.status)) && inW(t(j.createdAt), w)) o.answered++; // scheduled/sending: an Instantly reply about to go
     if (String(j.status) === 'followed_up' && inW(t(j.handled_at), w)) o.followups++;
   }
   return o;
@@ -77,16 +80,39 @@ function sbStats(w) {
 }
 const pct = (a, b) => b ? (100 * a / b).toFixed(2) + '%' : '-';
 
+// INSTANTLY numbers (26 Oct): GET /api/v2/campaigns/analytics/overview for the same three windows (IST days),
+// all campaigns: emails_sent_count, reply_count_unique (people who replied; Instantly leaves out automatic
+// replies), bounced_count, unsubscribed_count. Each window is its own HTTP node that continues on error, so a
+// missing answer only shows "not available" here.
+const INST_NODE = { Yesterday: 'Instantly Yesterday', 'Last week': 'Instantly Last Week', 'Last month': 'Instantly Last Month' };
+function instStats(w) {
+  try {
+    const j = $(INST_NODE[w[0]]).first().json || {};
+    if (j.error || j.emails_sent_count === undefined) return null;
+    return { sent: Number(j.emails_sent_count || 0), replies: Number(j.reply_count_unique || 0), bounces: Number(j.bounced_count || 0), unsubscribes: Number(j.unsubscribed_count || 0) };
+  } catch (e) { return null; }
+}
+const toolLine = x => 'sent ' + x.sent + ' · replies ' + x.replies + ' · bounces ' + x.bounces + ' · unsubscribes ' + x.unsubscribes;
+function sendStats(w) {
+  const a = sbStats(w), b = instStats(w);
+  if (!a && !b) return null;
+  const o = { sent: 0, replies: 0, bounces: 0, unsubscribes: 0 };
+  for (const x of [a, b]) if (x) for (const k of Object.keys(o)) o[k] += Number(x[k] || 0);
+  return { ...o, sb: a, inst: b };
+}
+
 // one block of numbers for a period: plain sentences, no columns
 function block(w, withRate) {
   const L = [];
-  const s = sbStats(w);
+  const s = sendStats(w);
   const m = logStats(w);
   if (s) {
     L.push('Sent: ' + s.sent + ' · replies: ' + s.replies + ' (' + pct(s.replies, s.sent) + ')');
     L.push('Bounces: ' + s.bounces + ' (' + pct(s.bounces, s.sent) + ')');
     L.push('Unsubscribes: ' + s.unsubscribes + ' (' + pct(s.unsubscribes, s.sent) + ')');
-  } else L.push('SalesBlink sending numbers were not available.');
+    L.push('SalesBlink: ' + (s.sb ? toolLine(s.sb) : 'numbers not available'));
+    L.push('Instantly: ' + (s.inst ? toolLine(s.inst) : 'numbers not available'));
+  } else L.push('Sending numbers were not available (SalesBlink and Instantly).');
   L.push('');
   L.push('Replies sorted by the agent: ' + m.total);
   L.push('Asked a question & interested: ' + ((m.question || 0) + (m.interested || 0)));
@@ -233,7 +259,7 @@ const stuck = Object.values(latest).filter(j => {
   const st = String(j.status || '');
   const c = t(j.createdAt);
   if (!inW(c, YESTERDAY)) return false;
-  return ['send_failed', 'held', 'gave_up', 'not_in_inbox'].includes(st) || (st === 'working' && now - c > 3600000);
+  return ['send_failed', 'held', 'gave_up', 'not_in_inbox'].includes(st) || ((st === 'working' || st === 'sending') && now - c > 3600000);
 });
 L.push('*Emails from yesterday still not answered*');
 if (stuck.length) for (const j of stuck) L.push(j.email + ': ' + short(j.their_message || j.note, 160)); else L.push('none');
@@ -327,8 +353,39 @@ function worstMailboxes() {
   return L;
 }
 
+// INSTANTLY MAILBOXES DOING WORST (26 Oct, monthly post): "Instantly Mailbox Stats" (GET
+// /api/v2/accounts/analytics/daily for the last 30 days, every mailbox from "Instantly Accounts") added up per
+// mailbox. Same rule as SalesBlink: at least 100 sent, 0 replies first, then the lowest replies per 100 sent, up to 10,
+// with bounces. Then every Instantly mailbox with a connection, soft bounce or sending error, or warm-up banned or
+// suspended (from the account list). If Instantly did not answer, the section says so.
+function worstInstantlyMailboxes() {
+  const L = ['*Instantly mailboxes doing worst (last 30 days)*'];
+  let days = null, accounts = null;
+  try { const raw = $('Instantly Mailbox Stats').all().map(i => i.json); const list = raw.length === 1 && Array.isArray(raw[0]) ? raw[0] : raw; if (list.length && list[0] && list[0].email_account !== undefined) days = list; else if (list.length && !list[0].error && !Object.keys(list[0]).length) days = []; } catch (e) { days = null; }
+  try { const raw = $('Instantly Accounts').first().json || {}; if (Array.isArray(raw.items)) accounts = raw.items; } catch (e) { accounts = null; }
+  if (!days) L.push('Instantly mailbox numbers were not available.');
+  else {
+    const by = {};
+    for (const d of days) { const k = String(d.email_account || ''); if (!k) continue; const x = by[k] || (by[k] = { email: k, sent: 0, replies: 0, bounced: 0 }); x.sent += Number(d.sent || 0); x.replies += Number(d.unique_replies || 0); x.bounced += Number(d.bounced || 0); }
+    const boxes = Object.values(by).filter(m => m.sent >= 100).map(m => ({ ...m, rate: 100 * m.replies / m.sent })).sort((a, b) => a.rate - b.rate || b.sent - a.sent);
+    if (!boxes.length) L.push('No Instantly mailbox sent 100 or more emails.');
+    for (const m of boxes.slice(0, 10)) L.push(m.email + ': ' + m.replies + ' ' + (m.replies === 1 ? 'reply' : 'replies') + ' from ' + m.sent + ' sent, ' + m.bounced + ' bounced');
+    const zero = boxes.filter(m => m.replies === 0).length;
+    if (zero > 10) L.push('(' + zero + ' Instantly mailboxes in all had 0 replies from 100 or more sent)');
+  }
+  if (!accounts) L.push('Could not check Instantly for mailbox errors.');
+  else {
+    const STATUS = { '-1': 'connection error', '-2': 'soft bounce error', '-3': 'sending error' };
+    const WARM = { '-1': 'warm-up banned', '-2': 'warm-up spam folder unknown', '-3': 'warm-up permanently suspended' };
+    const bad = accounts.filter(a => Number(a.status) < 0 || Number(a.warmup_status) < 0);
+    if (bad.length) { L.push('Mailbox problems in Instantly:'); for (const a of bad) L.push(String(a.email) + ': ' + [STATUS[String(a.status)], WARM[String(a.warmup_status)]].filter(Boolean).join(', ')); }
+    else L.push('No Instantly mailbox shows an error.');
+  }
+  return L;
+}
+
 if (showMonthly) {
-  const s = sbStats(LAST_MONTH);
+  const s = sendStats(LAST_MONTH);
   const name = new Date(LAST_MONTH[1] + IST).toLocaleString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
   const M = ['*Monthly report: ' + name + '*', ''];
   M.push(...block(LAST_MONTH, true));
@@ -342,6 +399,7 @@ if (showMonthly) {
     M.push('Unsubscribes: no reliable public standard. More unsubscribes than replies is a warning sign.');
   }
   M.push('', ...worstMailboxes());
+  M.push('', ...worstInstantlyMailboxes());
   posts.push({ json: { text: M.join('\n').trim() } });
 }
 return posts;

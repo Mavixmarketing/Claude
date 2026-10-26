@@ -16,12 +16,16 @@ const CUTOFF = Date.parse('2026-09-30T07:40:00Z');
 const cfg = $('Settings').first().json;
 const now = Date.now();
 const pre = cfg.TEST ? 'test:' : '';
+// 26 Oct: each agent only counts its own log rows (SalesBlink rows have no platform, Instantly rows say "instantly"),
+// so a reply handled on one platform never marks a message on the other as handled, busy or done.
+const PLATFORM = cfg.PLATFORM === 'instantly' ? 'instantly' : 'salesblink';
+const platformOf = j => String(j.platform || '').toLowerCase() === 'instantly' ? 'instantly' : 'salesblink';
 const info = {};
 const busyEmail = {};
 const doneEmail = {};
 for (const r of $('Read Log').all()) {
   const j = r.json || {};
-  if (!j.event_id) continue;
+  if (!j.event_id || platformOf(j) !== PLATFORM) continue;
   const k = String(j.event_id);
   const em = String(j.email || '').toLowerCase();
   const x = info[k] || (info[k] = { final: false, touched: 0, first: Infinity });

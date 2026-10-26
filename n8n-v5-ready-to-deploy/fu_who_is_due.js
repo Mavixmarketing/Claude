@@ -158,6 +158,12 @@ const HAS_SOMEONE = /\b(already|currently)\s+(have|has|got|use|using|work(ing)? 
 const hasSomeone = history => String(history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).some(b => /^THEM/.test(b) && HAS_SOMEONE.test(b));
 
 // 3. Who is due this hour.
+// PLATFORM (26 Oct): this code runs in the SalesBlink follow-ups and in the Instantly follow-ups (Settings.PLATFORM).
+// Rows with no platform are SalesBlink, rows with platform "instantly" are Instantly (message_id is then the
+// Instantly thread id). A person is followed up only by the workflow of the platform of their NEWEST row, and only
+// conversations (message_id) of that platform are used, so nobody is ever followed up twice or in the wrong tool.
+const PLATFORM = cfg.PLATFORM === 'instantly' ? 'instantly' : 'salesblink';
+const platformOf = r => String((r && r.platform) || '').toLowerCase() === 'instantly' ? 'instantly' : 'salesblink';
 const latest = {};
 const lastThread = {}; // newest row per person that still has a conversation (message_id)
 const byPerson = {};
@@ -167,7 +173,7 @@ for (const r of $('Read Log').all()) {
   const k = String(j.email).toLowerCase();
   (byPerson[k] = byPerson[k] || []).push(j);
   if (!latest[k] || Number(j.id) > Number(latest[k].id)) latest[k] = j;
-  if (j.message_id && ['replied', 'followed_up'].includes(String(j.status)) && (!lastThread[k] || Number(j.id) > Number(lastThread[k].id))) lastThread[k] = j;
+  if (j.message_id && platformOf(j) === PLATFORM && ['replied', 'followed_up'].includes(String(j.status)) && (!lastThread[k] || Number(j.id) > Number(lastThread[k].id))) lastThread[k] = j;
 }
 for (const k of Object.keys(byPerson)) byPerson[k].sort((a, b) => Number(a.id) - Number(b.id));
 // the newest row we logged for each person (every row is made when one of their messages is handled, or by hand):
@@ -178,6 +184,7 @@ const STOP = (cfg.STOP || []).map(e => String(e).toLowerCase());
 const PLAN = cfg.PLAN || {};
 for (const key of Object.keys(latest)) {
   if (STOP.includes(key)) continue;
+  if (platformOf(latest[key]) !== PLATFORM) continue; // their newest row belongs to the other tool's workflow
   const plan = PLAN[key];
   // a plan works from their last real conversation, even if their newest row is a "no"
   const j = plan && lastThread[key] && !['replied', 'followed_up'].includes(String(latest[key].status)) ? lastThread[key] : latest[key];

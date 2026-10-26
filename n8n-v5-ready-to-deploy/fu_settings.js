@@ -2,7 +2,14 @@
 // and uses three sample conversations from this week so you can read the drafts.
 // No booking link here on purpose: follow-ups never suggest a call.
 const test = $execution.mode !== 'production';
+// PLATFORM (26 Oct): the same Settings code runs in the SalesBlink follow-ups and in the Instantly follow-ups.
+// The Instantly workflow puts a small "Platform" node ({ PLATFORM: 'instantly' }) in front of this node; the
+// SalesBlink workflow has only its triggers in front, so it stays 'salesblink'. Who Is Due only follows up
+// people whose newest log row is on this platform (rows with no platform are SalesBlink). STOP and PLAN apply to both.
+let PLATFORM = 'salesblink';
+try { const p = String((($input.first() || {}).json || {}).PLATFORM || '').toLowerCase(); if (p === 'instantly') PLATFORM = 'instantly'; } catch (e) { /* no input: salesblink */ }
 return [{ json: {
+  PLATFORM,
   SEND_FOR_REAL: !test,
   TEST: test,
   WRITE_MODEL: 'anthropic/claude-opus-5.5',

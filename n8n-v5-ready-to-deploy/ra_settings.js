@@ -3,7 +3,13 @@
 // Any run that is not the live schedule (editor, API test, "Test On Last 7 Days")
 // is a test: it looks back 7 days, never sends, and its log rows start with "test:".
 const manual = $execution.mode !== 'production';
+// PLATFORM (26 Oct): the same Settings code runs in the SalesBlink reply agent and in the Instantly reply agent.
+// The Instantly workflow puts a small "Platform" node ({ PLATFORM: 'instantly' }) in front of this node; the
+// SalesBlink workflow has only its triggers in front, so it stays 'salesblink'. Each agent only looks at its own log rows.
+let PLATFORM = 'salesblink';
+try { const p = String((($input.first() || {}).json || {}).PLATFORM || '').toLowerCase(); if (p === 'instantly') PLATFORM = 'instantly'; } catch (e) { /* no input: salesblink */ }
 return [{ json: {
+  PLATFORM,
   SEND_FOR_REAL: manual ? false : true,
   TEST: manual,
   LOOKBACK_HOURS: manual ? 168 : 48,

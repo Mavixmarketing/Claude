@@ -1,7 +1,7 @@
 [
  {
   "workflowId": "W8ou5vT7aQu8q8zO",
-  "activeVersionId": "704fde26-7806-432f-957e-eb3e78c42173",
+  "activeVersionId": "9b1d1112-a85f-45c9-8bca-11e3bce17a30",
   "nodes": {
    "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
    "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
@@ -9,12 +9,14 @@
    "Build Conversation": "n8n-v5-ready-to-deploy/ra_build_conversation.js",
    "Slack Card": "n8n-v5-ready-to-deploy/ra_slack_card.js",
    "Pick New Replies": "n8n-v5-ready-to-deploy/ra_pick_new_replies.js",
-   "Settings": "n8n-v5-ready-to-deploy/ra_settings.js"
+   "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
+   "Read Sort": "n8n-v5-ready-to-deploy/ra_read_sort.js",
+   "Quick Look": "n8n-v5-ready-to-deploy/ra_quick_look.js"
   }
  },
  {
   "workflowId": "KMRwc4kovheNY2zI",
-  "activeVersionId": "4ad44248-052a-40c9-895d-70bec3c443d1",
+  "activeVersionId": "4a83b10a-d891-4f48-b958-3bd0920e621e",
   "nodes": {
    "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
@@ -26,9 +28,10 @@
  },
  {
   "workflowId": "4jvATMqNUMchMEc5",
-  "activeVersionId": "7940d367-b63d-4767-af9b-d631d588519b",
+  "activeVersionId": "108e3fc1-0311-4eb2-b169-69a0560251f8",
   "nodes": {
-   "Build Report": "n8n-v5-ready-to-deploy/report.js"
+   "Build Report": "n8n-v5-ready-to-deploy/report.js",
+   "Instantly Windows": "n8n-v5-ready-to-deploy/ins_report_windows.js"
   }
  },
  {
@@ -47,6 +50,47 @@
    "Follow-up Request": "n8n-v5-ready-to-deploy/lifu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/lifu_check.js",
    "Settings": "n8n-v5-ready-to-deploy/lifu_settings.js"
+  }
+ },
+ {
+  "workflowId": "V2gVO6nM7FGJfhoo",
+  "activeVersionId": null,
+  "draftVersionId": "23537079-ad79-493d-85da-c1d194f8673f",
+  "note": "Instantly reply agent: not published yet (needs the Instantly API credential).",
+  "nodes": {
+   "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
+   "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
+   "Test Threads": "n8n-v5-ready-to-deploy/ins_test_threads.js",
+   "Due Sends": "n8n-v5-ready-to-deploy/ins_due_sends.js",
+   "Read Reply Events": "n8n-v5-ready-to-deploy/ins_read_reply_events.js",
+   "Read Inbox": "n8n-v5-ready-to-deploy/ins_read_inbox_stub.js",
+   "Pick New Replies": "n8n-v5-ready-to-deploy/ra_pick_new_replies.js",
+   "Pick Thread": "n8n-v5-ready-to-deploy/ins_pick_thread.js",
+   "Build Conversation": "n8n-v5-ready-to-deploy/ins_build_conversation.js",
+   "Luna Request": "n8n-v5-ready-to-deploy/ra_luna_request.js",
+   "Read Sort": "n8n-v5-ready-to-deploy/ra_read_sort.js",
+   "Quick Look": "n8n-v5-ready-to-deploy/ra_quick_look.js",
+   "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
+   "Reply Request": "n8n-v5-ready-to-deploy/ins_reply_request.js",
+   "Slack Card": "n8n-v5-ready-to-deploy/ra_slack_card.js",
+   "Connection Result": "n8n-v5-ready-to-deploy/ins_connection_result.js"
+  }
+ },
+ {
+  "workflowId": "Ci4rx6b8avCHLNjX",
+  "activeVersionId": null,
+  "draftVersionId": "bfba01c0-6748-4d8d-96f0-2f3cbe267d06",
+  "note": "Instantly follow-ups: not published yet (needs the Instantly API credential).",
+  "nodes": {
+   "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
+   "Settings": "n8n-v5-ready-to-deploy/fu_settings.js",
+   "Read Reply Times": "n8n-v5-ready-to-deploy/ins_fu_reply_times.js",
+   "Who Is Due": "n8n-v5-ready-to-deploy/fu_who_is_due.js",
+   "Skip Archived": "n8n-v5-ready-to-deploy/ins_fu_skip_archived.js",
+   "Due List": "n8n-v5-ready-to-deploy/fu_due_list.js",
+   "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js"
   }
  }
 ]
