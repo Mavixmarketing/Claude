@@ -174,6 +174,7 @@ const byPerson = {};
 for (const r of $('Read Log').all()) {
   const j = r.json || {};
   if (!j.email || String(j.event_id || '').startsWith('test:')) continue;
+  if (String(j.event_id || '').startsWith('context:') || String(j.status || '') === 'context') continue; // earlier conversation kept only as context for the writers: never changes who is due
   const k = String(j.email).toLowerCase();
   (byPerson[k] = byPerson[k] || []).push(j);
   if (j.message_id && platformOf(j) === PLATFORM && ['replied', 'followed_up'].includes(String(j.status)) && (!lastThread[k] || Number(j.id) > Number(lastThread[k].id))) lastThread[k] = j;

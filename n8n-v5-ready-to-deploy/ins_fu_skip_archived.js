@@ -35,6 +35,12 @@ const camp = {};
 try { for (const it of $('Read Campaigns').all()) for (const c of (it.json.items || [])) if (c && c.id) camp[String(c.id)] = s(c.name); } catch (e) { /* no names */ }
 const rowCampaign = {};
 try { for (const r of $('Read Log').all()) { const j = r.json || {}; if (j.event_id && j.campaign_name) rowCampaign[String(j.event_id)] = String(j.campaign_name); if (j.message_id && j.campaign_name) rowCampaign['thread:' + j.message_id] = String(j.campaign_name); } } catch (e) { /* none */ }
+// 28 Oct: an earlier conversation from Farhan's own mailbox (log row event_id "context:<email>", status "context",
+// platform instantly) is put in front of the follow-up writer's transcript as its own block (newest such row). The
+// row history that is written back to the log is left as it is.
+const contextByEmail = {};
+try { for (const r of $('Read Log').all()) { const j = r.json || {}; if (!(String(j.event_id || '').startsWith('context:') || String(j.status || '') === 'context') || String(j.platform || '') !== 'instantly' || !s(j.history).trim()) continue; const em = s(j.email).toLowerCase().trim(); if (em && (!contextByEmail[em] || Number(j.id) > Number(contextByEmail[em].id))) contextByEmail[em] = j; } } catch (e) { /* none */ }
+const withContext = d => { const j = contextByEmail[s(d.email).toLowerCase().trim()]; if (j) d.transcript = 'NOTE: EARLIER CONVERSATION, SENT FROM FARHAN\'S OWN MAILBOX (not in Instantly). Oldest first. Everything after the next line is the conversation logged for Instantly and is newer.\n\n' + s(j.history).trim().slice(-10000) + '\n\n---\n\n' + s(d.transcript); return d; };
 const out = [];
 $input.all().forEach((it, i) => {
   const d = due[i] ? { ...due[i].json } : null;
@@ -56,7 +62,7 @@ $input.all().forEach((it, i) => {
   const name = camp[s(d.sequence)] || rowCampaign[s(d.row_event_id)] || rowCampaign['thread:' + s(d.messageId)] || s(d.sequence_name);
   if (name) d.sequence_name = name;
   const newest = thread[thread.length - 1];
-  if (!isOurs(newest)) { if (d.date_followup) out.push({ json: d }); return; } // they wrote last
+  if (!isOurs(newest)) { if (d.date_followup) out.push({ json: withContext(d) }); return; } // they wrote last
   // 3. a reply from them hidden behind one of our later emails
   const loggedAt = Date.parse(d.them_logged_at || '');
   if (isFinite(loggedAt)) {
@@ -86,6 +92,6 @@ $input.all().forEach((it, i) => {
     }
   }
   if (d.not_due) return;
-  out.push({ json: d });
+  out.push({ json: withContext(d) });
 });
 return out;

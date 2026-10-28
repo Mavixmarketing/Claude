@@ -66,6 +66,27 @@ try {
     (pendingByThread[String(j.message_id)] = pendingByThread[String(j.message_id)] || []).push(j);
   }
 } catch (e) { /* no log */ }
+// EARLIER CONVERSATION FROM FARHAN'S OWN MAILBOX (28 Oct, Allen Spindel): when Farhan talked to someone outside
+// Instantly (for example he sent the audit by hand from Gmail), a log row with event_id "context:<email>" (status
+// "context", platform instantly) holds that conversation in its history (THEM / US / FARHAN blocks). The newest such
+// row for the person is put in front of the transcript as its own block, so the writer and checker see it (prices and
+// case studies in its US / FARHAN blocks count as already sent). It is never a message to answer: only the Instantly
+// thread below decides whether they wrote last.
+const contextByEmail = {};
+try {
+  if ($('Read Log').isExecuted) for (const r of $('Read Log').all()) {
+    const j = r.json || {};
+    if (!(String(j.event_id || '').startsWith('context:') || String(j.status || '') === 'context')) continue;
+    if (String(j.platform || '') !== 'instantly' || !s(j.history).trim()) continue;
+    const em = s(j.email).toLowerCase().trim();
+    if (em && (!contextByEmail[em] || Number(j.id) > Number(contextByEmail[em].id))) contextByEmail[em] = j;
+  }
+} catch (e) { /* no log */ }
+const contextBlock = em => {
+  const j = contextByEmail[s(em).toLowerCase().trim()];
+  if (!j) return '';
+  return 'NOTE: EARLIER CONVERSATION, SENT FROM FARHAN\'S OWN MAILBOX (not in Instantly). Oldest first. Everything after the next line comes from Instantly and is newer.' + NL + NL + s(j.history).trim().slice(-10000) + NL + NL + '---' + NL + NL;
+};
 const out = [];
 for (const it of $input.all()) {
   const raw = (Array.isArray(it.json.items) ? it.json.items : []).filter(m => m && m.id);
@@ -122,7 +143,7 @@ for (const it of $input.all()) {
     sequence_name: name,
     campaign_name: name,
     pending_until: pendingUntil,
-    transcript: transcript.slice(-14000),
+    transcript: contextBlock(email) + transcript.slice(-14000),
     platform: 'instantly',
     reply_to_uuid: s(newestTheirs.id),
     eaccount: s(newestTheirs.eaccount),

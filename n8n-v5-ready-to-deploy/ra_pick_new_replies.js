@@ -32,12 +32,15 @@ const pre = cfg.TEST ? 'test:' : '';
 // so a reply handled on one platform never marks a message on the other as handled, busy or done.
 const PLATFORM = cfg.PLATFORM === 'instantly' ? 'instantly' : 'salesblink';
 const platformOf = j => String(j.platform || '').toLowerCase() === 'instantly' ? 'instantly' : 'salesblink';
+// 28 Oct: "context" rows (event_id "context:<email>", status "context": an earlier conversation from Farhan's own
+// mailbox, added by hand for the Instantly writer) are never a reply, never an outcome and never busy: ignored here.
+const isContext = j => String(j.event_id || '').startsWith('context:') || String(j.status || '') === 'context';
 const info = {};
 const busyEmail = {};
 const doneEmail = {};
 for (const r of $('Read Log').all()) {
   const j = r.json || {};
-  if (!j.event_id || platformOf(j) !== PLATFORM) continue;
+  if (!j.event_id || platformOf(j) !== PLATFORM || isContext(j)) continue;
   const k = String(j.event_id);
   const em = String(j.email || '').toLowerCase();
   const x = info[k] || (info[k] = { final: false, touched: 0, first: Infinity });
@@ -59,7 +62,7 @@ const newestReal = {}; // email -> newest real row (any platform), to know where
 for (const r of $('Read Log').all()) {
   const j = r.json || {};
   const em = String(j.email || '').toLowerCase();
-  if (!em || !j.event_id || String(j.event_id).startsWith('test:')) continue;
+  if (!em || !j.event_id || String(j.event_id).startsWith('test:') || isContext(j)) continue;
   if (!isGuardRow(j) && (!newestReal[em] || Number(j.id) > Number(newestReal[em].id))) newestReal[em] = j;
   if (platformOf(j) === PLATFORM) continue;
   const st = String(j.status || '');
