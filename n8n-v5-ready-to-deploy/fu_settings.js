@@ -17,7 +17,10 @@ return [{ json: {
   // STOP: never send these people a follow-up.
   // 24 oct: slovenia is talking with Farhan on whatsapp. camille wrote "please don't contact me again" on 8 oct
   // (after a new campaign emailed her), so her 1 feb date follow-up is off unless Farhan takes her off this list.
-  STOP: ['andrei@brite.live', 'arihantkothari93@gmail.com', 'fellinlovewithslovenia@gmail.com', 'camillechapline@gmail.com'],
+  // 28 oct: kitchen wrap direct only answers with an auto-reply bot that says they never buy marketing (our follow-ups
+  // kept triggering it); david2gagjon is David Gagnon of Vision Bleu, who wrote "Stop" from david@visionbleu.com;
+  // dracuherbs@mail.com now bounces. All three are on the Instantly block list too, which SalesBlink sends ignore.
+  STOP: ['andrei@brite.live', 'arihantkothari93@gmail.com', 'fellinlovewithslovenia@gmail.com', 'camillechapline@gmail.com', 'contact@kitchenwrapdirect.com', 'david2gagjon@gmail.com', 'dracuherbs@mail.com'],
   // PLAN: nothing before the date, then one follow-up that follows his note, then light monthly check-ins.
   PLAN: {
     'anne.thomson@mymts.net': { from: '2026-11-16', note: 'On 15 oct Anne said she already has a provider and we wished her well. Farhan still wants to stay in touch: one short, kind check-in with one useful idea about getting her m prep course back to the first page of google. Never criticise her provider and never offer the audit again (she has it).' },
