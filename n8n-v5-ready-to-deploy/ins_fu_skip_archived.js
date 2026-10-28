@@ -37,10 +37,10 @@ const rowCampaign = {};
 try { for (const r of $('Read Log').all()) { const j = r.json || {}; if (j.event_id && j.campaign_name) rowCampaign[String(j.event_id)] = String(j.campaign_name); if (j.message_id && j.campaign_name) rowCampaign['thread:' + j.message_id] = String(j.campaign_name); } } catch (e) { /* none */ }
 // 28 Oct: an earlier conversation from Farhan's own mailbox (log row event_id "context:<email>", status "context",
 // platform instantly) is put in front of the follow-up writer's transcript as its own block (newest such row). The
-// row history that is written back to the log is left as it is.
+// row history that is written back to the log is left as it is. Not added again when the logged history already holds it.
 const contextByEmail = {};
 try { for (const r of $('Read Log').all()) { const j = r.json || {}; if (!(String(j.event_id || '').startsWith('context:') || String(j.status || '') === 'context') || String(j.platform || '') !== 'instantly' || !s(j.history).trim()) continue; const em = s(j.email).toLowerCase().trim(); if (em && (!contextByEmail[em] || Number(j.id) > Number(contextByEmail[em].id))) contextByEmail[em] = j; } } catch (e) { /* none */ }
-const withContext = d => { const j = contextByEmail[s(d.email).toLowerCase().trim()]; if (j) d.transcript = 'NOTE: EARLIER CONVERSATION, SENT FROM FARHAN\'S OWN MAILBOX (not in Instantly). Oldest first. Everything after the next line is the conversation logged for Instantly and is newer.\n\n' + s(j.history).trim().slice(-10000) + '\n\n---\n\n' + s(d.transcript); return d; };
+const withContext = d => { const j = contextByEmail[s(d.email).toLowerCase().trim()]; if (j && !norm(d.transcript).includes(norm(j.history).slice(0, 300))) d.transcript = 'NOTE: EARLIER CONVERSATION, SENT FROM FARHAN\'S OWN MAILBOX (not in Instantly). Oldest first. Everything after the next line is the conversation logged for Instantly and is newer.\n\n' + s(j.history).trim().slice(-10000) + '\n\n---\n\n' + s(d.transcript); return d; };
 const out = [];
 $input.all().forEach((it, i) => {
   const d = due[i] ? { ...due[i].json } : null;

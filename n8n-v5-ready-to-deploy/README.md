@@ -77,7 +77,8 @@ To switch Instantly on:
 4. In Instantly: campaigns set to stop on reply, AI Written campaigns have "ai written" in their name, UK / Australia / Canada campaigns have that word in their name, all sending mailboxes in the same workspace as the key.
 5. Publish both Instantly workflows.
 
-## 28 Oct changes: Instantly safe sending finished, block list, cross-platform guard
+## 28 Oct changes: Instantly safe sending finished, block list, cross-platform guard (published 28 Oct about 13:57 UTC after test runs)
+Active versions: Instantly reply agent ce68897d, Instantly follow-ups a32952c1, SalesBlink reply agent 29f21ee4, SalesBlink follow-ups 52a64cad. Versions before this change (to go back): ba12daf2, 1bff1355, b22ea22f, 6b78355c.
 Finishes the 26 Oct "safety fixes (in progress)". Started from the published versions of 28 Oct (Instantly reply agent ba12daf2 with the campaign-only filter and the case-study fix).
 
 - Instantly reply agent (V2gVO6nM7FGJfhoo), sending: `Due Sends` (`ins_due_sends.js`) → `Send Now?` → `Claim Send` (scheduled → sending, only if still scheduled) → `Check Thread` (GET /api/v2/emails?search=thread:<id>) → `Ready To Send` (`ins_ready_to_send.js`) → `Go?` → `Send Reply` (no retries inside the node) → `Send Result` (`ins_send_result.js`) → `Log Send Result` / `Gave Up Sending?` → `Alert Send Failed` / `Block Goodbye?` → `Block After Goodbye`. Rows Due Sends updates without sending go `Send Now?` false → `Requeue Or Fail` (and `Stuck Failed?` → `Alert Send Problem` when there is an alert).
