@@ -164,6 +164,10 @@ const hasSomeone = history => String(history || '').split(/\n\n(?=(?:THEM|US|FAR
 // conversations (message_id) of that platform are used, so nobody is ever followed up twice or in the wrong tool.
 const PLATFORM = cfg.PLATFORM === 'instantly' ? 'instantly' : 'salesblink';
 const platformOf = r => String((r && r.platform) || '').toLowerCase() === 'instantly' ? 'instantly' : 'salesblink';
+// 28 Oct: a row that only says "answered_already" with no reply of ours, made by the OTHER platform than the row
+// before it (the cross-platform guard in Pick New Replies, or row 1143 for Howard), does not move the person's
+// conversation to that platform: it is left out when finding their newest row, so the platform that really answered
+// keeps following them up. Same-platform rows are treated exactly as before.
 const latest = {};
 const lastThread = {}; // newest row per person that still has a conversation (message_id)
 const byPerson = {};
@@ -172,10 +176,15 @@ for (const r of $('Read Log').all()) {
   if (!j.email || String(j.event_id || '').startsWith('test:')) continue;
   const k = String(j.email).toLowerCase();
   (byPerson[k] = byPerson[k] || []).push(j);
-  if (!latest[k] || Number(j.id) > Number(latest[k].id)) latest[k] = j;
   if (j.message_id && platformOf(j) === PLATFORM && ['replied', 'followed_up'].includes(String(j.status)) && (!lastThread[k] || Number(j.id) > Number(lastThread[k].id))) lastThread[k] = j;
 }
-for (const k of Object.keys(byPerson)) byPerson[k].sort((a, b) => Number(a.id) - Number(b.id));
+for (const k of Object.keys(byPerson)) {
+  byPerson[k].sort((a, b) => Number(a.id) - Number(b.id));
+  for (const j of byPerson[k]) {
+    const crossGuard = latest[k] && String(j.status) === 'answered_already' && !String(j.our_reply || '').trim() && platformOf(j) !== platformOf(latest[k]);
+    if (!crossGuard) latest[k] = j;
+  }
+}
 // the newest row we logged for each person (every row is made when one of their messages is handled, or by hand):
 // a message from them in the thread newer than this has not been seen by the reply agent (Skip Archived checks)
 const loggedAt = k => new Date(Math.max(...(byPerson[k] || []).map(r => Date.parse(r.createdAt || '')).filter(isFinite), 0)).toISOString();

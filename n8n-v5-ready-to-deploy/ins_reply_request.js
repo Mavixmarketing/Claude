@@ -7,13 +7,17 @@
 // "Due Sends" sends it on the first run after send_at, with safe retries. Test runs only show it here.
 // 26 Oct, later: a draft is never sent from one of Farhan's own inboxes (IGNORE_MAILBOXES, Platform node).
 // BLOCK AFTER THE GOODBYE: when they say no a second time, the writer sends one short, warm goodbye (no question, a
-// "take care / all the best" line). If their message is a hard no (not a polite "not right now", and not "we already
-// have someone"), block_after is set: the goodbye goes out first, and only after Instantly accepted it does
-// "Block After Goodbye" add them to Instantly's block list, so no campaign ever emails them again.
+// "take care / all the best" line). If their message is a hard no, block_after is set: the goodbye goes out first,
+// and only after Instantly accepted it does "Block After Goodbye" add their full email address (never the domain) to
+// Instantly's block list, so no campaign ever emails them again.
+// 28 Oct (Farhan's rule): a no is SOFT only when it is about timing ("not right now", "maybe later", "at the moment",
+// "for now", "this year", "currently", "not yet", "in the future" and the like) and has no stop / remove / never
+// words; a soft no is never blocked. Every other no is HARD (the same rule as "Block This One?" for a plain no).
 const SOFT_NO = /\b(at this (time|moment|stage|point)|right now|at the moment|for now|not now|this year|currently|not yet|maybe later|in the future|down the (road|line))\b/i;
 const HARD_NO = /\b(stop|remove|unsubscribe|do not (contact|email)|don'?t (contact|email)|never|leave (me|us) alone|spam)\b/i;
-const HAS_SOMEONE = /\b(already|currently)\s+(have|has|got|use|using|work(ing)? with|employ)\b|\b(another|other|current|existing) (seo )?(company|agency|firm|provider|team|arrangements?)\b|\bin[- ]house\b|\bwe (have|use) (an? |our own )?(seo|marketing|web) (company|agency|team|person|guy|firm)\b|\bhappy with (our|my|the) (current|existing)/i;
-const NO_WORDS = /\b(no|nope|not interested|no thanks|no thank you|not for (us|me)|pass|stop|remove|unsubscribe|don'?t|do not|never|leave (me|us) alone|spam|jerk)\b/i;
+// A real refusal (28 Oct, tighter: a bare "pass", "don't" or "no" inside other words no longer counts, so "I'll pass
+// this to my partner", "I don't know" or "no worries" are never taken for a no).
+const NO_WORDS = /^\s*(no|nope|nah)\b(?!\s+(worries|problem|rush|pressure|need|doubt))|\b(no thanks|no thank you|not interested|not for (us|me)|(we|i)('ll| will) pass\b(?! (it|this|that|your|you|along|on to|it on))|pass on this|please (stop|remove)|stop (emailing|contacting|sending|messaging)|remove (me|us|my|our)|unsubscribe|do not (contact|email)|don'?t (contact|email|need|want)|never (contact|email|again)|leave (me|us) alone|spam|not (looking|needed|necessary|required|something we need)|(we|i)('re| are|'m| am) (good|fine|all set|covered|not looking))\b/im;
 const GOODBYE = /(all the best|best of luck|wish(ing)? you|take care|good luck|won'?t (contact|email|bother) you|will not (contact|email))/i;
 let IGNORE = ['mavixmarketing@gmail.com', 'hello@mavixmarketing.com', 'team@mavixmarketing.com', 'farhan@mavixmarketing.com'];
 try { const l = $('Platform').first().json.IGNORE_MAILBOXES; if (Array.isArray(l)) IGNORE = l.map(x => String(x).toLowerCase().trim()); } catch (e) { /* default list */ }
@@ -26,7 +30,7 @@ return $input.all().map(it => {
   const said = String(c.their_latest || '').slice(0, 1500);
   const reply = String(c.reply || '');
   const softNo = SOFT_NO.test(said) && !HARD_NO.test(said);
-  const block_after = !!(reply && !/\?/.test(reply) && GOODBYE.test(reply) && NO_WORDS.test(said) && !softNo && !HAS_SOMEONE.test(said));
+  const block_after = !!(reply && !/\?/.test(reply) && GOODBYE.test(reply) && NO_WORDS.test(said) && !softNo);
   const instantly_pending = { request: instantly_request, tries: 0, kind: 'reply', block_after };
   return { json: { ...c, instantly_request, instantly_pending, block_after, ok: !!c.ok && ready, problems: c.ok && !ready ? (own ? 'it would go from one of Farhan\'s own inboxes' : 'no Instantly mailbox or email to reply to') : c.problems } };
 });

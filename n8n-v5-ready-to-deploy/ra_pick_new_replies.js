@@ -12,6 +12,18 @@
 // count from then. Only one message per prospect per run, and never a prospect
 // that another run touched in the last 3 minutes, so nobody gets two replies.
 // Gave-up items go LAST so the first items stay in step with the searches.
+// CROSS-PLATFORM GUARD (28 Oct): a mailbox can be connected to SalesBlink and Instantly, and a lead can be in both
+// (26 Oct: 422 people got cold emails from both), so the same reply can reach both agents. Before a message from
+// someone is answered here, the log is checked for a row of THE OTHER platform for the same email that shows a
+// reply actually sent (our_reply not empty and status replied, followed_up or answered_already) or one being
+// handled (working, scheduled, sending), made or changed at or after the message time minus 30 minutes. If there is
+// one, the message is not answered here: it is logged answered_already with a short "cross-platform guard" note
+// (our_reply stays empty, so this row never counts as an answer for the other agent). Each agent's own
+// handled/busy bookkeeping above still uses only its own platform's rows; the guard is an extra check on top.
+// HOME PLATFORM: when the person's newest real log row is on the other platform (their conversation lives there),
+// a new message is left for 5 minutes first, so the other agent, which owns the conversation, gets to it first
+// (then the guard stops this one). If the other agent has not taken it by then, it is answered here.
+// Guarded items go after the picked ones and before the gave-up ones.
 const CUTOFF = Date.parse('2026-09-30T07:40:00Z');
 const cfg = $('Settings').first().json;
 const now = Date.now();
@@ -39,6 +51,30 @@ for (const r of $('Read Log').all()) {
   if (isFinite(cr)) x.first = Math.min(x.first, cr);
   if (j.status === 'working' && isFinite(up) && now - up < 3 * 60000 && em && (pre ? k.startsWith(pre) : !k.startsWith('test:'))) busyEmail[em] = true;
 }
+// the other platform's rows (test rows never count: nothing was sent in a test)
+const OTHER_NAME = PLATFORM === 'instantly' ? 'SalesBlink' : 'Instantly';
+const isGuardRow = j => String(j.status || '') === 'answered_already' && !String(j.our_reply || '').trim();
+const otherActive = {}; // email -> rows of the other platform with a reply sent or being handled
+const newestReal = {}; // email -> newest real row (any platform), to know where their conversation lives
+for (const r of $('Read Log').all()) {
+  const j = r.json || {};
+  const em = String(j.email || '').toLowerCase();
+  if (!em || !j.event_id || String(j.event_id).startsWith('test:')) continue;
+  if (!isGuardRow(j) && (!newestReal[em] || Number(j.id) > Number(newestReal[em].id))) newestReal[em] = j;
+  if (platformOf(j) === PLATFORM) continue;
+  const st = String(j.status || '');
+  const sent = !!String(j.our_reply || '').trim() && ['replied', 'followed_up', 'answered_already'].includes(st);
+  const busy = ['working', 'scheduled', 'sending'].includes(st);
+  if (!sent && !busy) continue;
+  const at = Math.max(Date.parse(j.createdAt || '') || 0, Date.parse(j.updatedAt || '') || 0);
+  if (at) (otherActive[em] = otherActive[em] || []).push({ at, id: j.id, st });
+}
+const guardFor = c => {
+  const hits = (otherActive[c.email] || []).filter(o => o.at >= c.time - 30 * 60000).sort((a, b) => b.at - a.at);
+  return hits[0] || null;
+};
+const guardNote = g => 'cross-platform guard: not answered here, ' + (['working', 'scheduled', 'sending'].includes(g.st) ? 'the ' + OTHER_NAME + ' agent is already answering it' : 'already answered on ' + OTHER_NAME) + ' (row ' + g.id + ', ' + new Date(g.at).toISOString().slice(0, 16).replace('T', ' ') + ' UTC)';
+const homeIsOther = em => !!newestReal[em] && platformOf(newestReal[em]) !== PLATFORM;
 const candidates = [];
 const since = now - cfg.LOOKBACK_HOURS * 3600000;
 for (const i of $('Read Reply Events').all()) {
@@ -74,12 +110,27 @@ for (const c of candidates) {
   }
   if (!latest[c.email] || latest[c.email].time < c.time) latest[c.email] = c;
 }
-const picked = Object.values(latest).sort((a, b) => b.time - a.time).slice(0, cfg.MAX_PER_RUN);
-return picked.concat(gaveUp).map(c => ({ json: {
+const guarded = [];
+const ready = [];
+for (const c of Object.values(latest)) {
+  const g = guardFor(c);
+  if (g) { guarded.push({ ...c, status: 'answered_already', campaign_name: c.note, note: guardNote(g) }); continue; }
+  if (homeIsOther(c.email) && now - c.time < 5 * 60000) continue; // their conversation lives on the other platform: give that agent the first go
+  ready.push(c);
+}
+const gaveUpLeft = [];
+for (const c of gaveUp) {
+  const g = guardFor(c);
+  if (g) guarded.push({ ...c, status: 'answered_already', campaign_name: c.note, note: guardNote(g) });
+  else gaveUpLeft.push(c);
+}
+const picked = ready.sort((a, b) => b.time - a.time).slice(0, cfg.MAX_PER_RUN);
+return picked.concat(guarded, gaveUpLeft).map(c => ({ json: {
   event_id: c.key,
   email: c.email,
   status: c.status || 'working',
   note: c.note,
+  ...(c.campaign_name !== undefined ? { campaign_name: c.campaign_name } : {}),
   msg_time: c.time,
   handled_at: new Date().toISOString(),
 } }));

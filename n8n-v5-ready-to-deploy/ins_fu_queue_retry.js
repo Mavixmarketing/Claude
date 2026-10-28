@@ -7,6 +7,10 @@
 // Farhan on Slack, once. On success the row becomes "followed_up" with the follow-up number and history, exactly as
 // "Log Follow-up" would have written it.
 // If no row can be found for the thread (should not happen), Farhan is told on Slack right away (can_queue false).
+// 28 Oct: restore_status keeps the row's status before it was queued (replied / followed_up): if the retry is skipped
+// (not a campaign thread, own inbox, or the cross-platform guard), the row gets it back, so later follow-ups still come.
+// If all tries fail, the follow-up is counted as done (followed_up, number and history as if sent) and Farhan gets
+// one Slack message with the draft, so the timetable goes on and a copy he sends by hand is recognised.
 let P = {};
 try { P = $('Platform').first().json || {}; } catch (e) { P = {}; }
 const GAPS = Array.isArray(P.RETRY_MINUTES) && P.RETRY_MINUTES.length ? P.RETRY_MINUTES.map(Number) : [3, 5];
@@ -29,7 +33,7 @@ $input.all().forEach((it, i) => {
   }
   const pending = {
     request: { eaccount: s(f.eaccount), reply_to_uuid: s(f.reply_to_uuid), subject: s(f.reply_subject), body: { html: s(f.reply_html), text } },
-    tries: 1, first_try_at: new Date(now - 120000).toISOString(), last_error: why, kind: 'followup', block_after: false,
+    tries: 1, first_try_at: new Date(now - 120000).toISOString(), last_error: why, kind: 'followup', block_after: false, restore_status: s(target.status),
     on_success: { followups: f.date_followup ? 5 : Number(f.number), history: s(f.history) + '\n\nUS (follow-up ' + f.number + '): ' + text },
   };
   out.push({ json: { can_queue: true, event_id: s(target.event_id), from_status: s(target.status), email: f.email, send_at: new Date(now + (GAPS[0] || 3) * 60000).toISOString(), pending_send: JSON.stringify(pending) } });
