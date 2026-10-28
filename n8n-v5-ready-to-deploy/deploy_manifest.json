@@ -11,7 +11,8 @@
    "Pick New Replies": "n8n-v5-ready-to-deploy/ra_pick_new_replies.js",
    "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
    "Read Sort": "n8n-v5-ready-to-deploy/ra_read_sort.js",
-   "Quick Look": "n8n-v5-ready-to-deploy/ra_quick_look.js"
+   "Quick Look": "n8n-v5-ready-to-deploy/ra_quick_look.js",
+   "Pick Thread": "n8n-v5-ready-to-deploy/ra_pick_thread.js"
   }
  },
  {
@@ -55,8 +56,6 @@
  {
   "workflowId": "V2gVO6nM7FGJfhoo",
   "activeVersionId": null,
-  "draftVersionId": "23537079-ad79-493d-85da-c1d194f8673f",
-  "note": "Instantly reply agent: not published yet (needs the Instantly API credential).",
   "nodes": {
    "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
    "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
@@ -74,14 +73,14 @@
    "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
    "Reply Request": "n8n-v5-ready-to-deploy/ins_reply_request.js",
    "Slack Card": "n8n-v5-ready-to-deploy/ra_slack_card.js",
-   "Connection Result": "n8n-v5-ready-to-deploy/ins_connection_result.js"
+   "Connection Result": "n8n-v5-ready-to-deploy/ins_connection_result.js",
+   "Ready To Send": "n8n-v5-ready-to-deploy/ins_ready_to_send.js",
+   "Send Result": "n8n-v5-ready-to-deploy/ins_send_result.js"
   }
  },
  {
   "workflowId": "Ci4rx6b8avCHLNjX",
   "activeVersionId": null,
-  "draftVersionId": "bfba01c0-6748-4d8d-96f0-2f3cbe267d06",
-  "note": "Instantly follow-ups: not published yet (needs the Instantly API credential).",
   "nodes": {
    "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
    "Settings": "n8n-v5-ready-to-deploy/fu_settings.js",
@@ -90,7 +89,8 @@
    "Skip Archived": "n8n-v5-ready-to-deploy/ins_fu_skip_archived.js",
    "Due List": "n8n-v5-ready-to-deploy/fu_due_list.js",
    "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
-   "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js"
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
+   "Queue Retry": "n8n-v5-ready-to-deploy/ins_fu_queue_retry.js"
   }
  }
 ]
