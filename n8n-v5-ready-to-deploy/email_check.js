@@ -94,16 +94,18 @@ return $input.all().map((it, i) => {
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|roadmap|pricing|plan)[^\n]{0,60}(attached|enclosed|pdf|docs\.google|drive\.google)|attached[^\n]{0,60}(audit|proposal|roadmap|plan)|here is (your|the) (audit|proposal|roadmap|plan)|(sent|sending) you the (audit|proposal|roadmap)/i.test(convo);
   // PRICES BY CAMPAIGN (23 Oct): the writer picked this conversation's price list (AI Written campaign: $999,
-  // $1,349, $1,999; every other campaign: $349, $549, $1,649) and found any price already quoted to this person.
+  // normally $1,349, then $1,600, $2,500; every other campaign: $349, $549, $1,649) and found any price already quoted to this person.
   // Only those, and the $1,000 of the money back guarantee, may appear; a plan price from the other list is held
   // unless it was already quoted to this person earlier in the thread. Before the audit the range and Growth
   // may appear (the writer gives the range only if they insist).
   const dollarsIn = x => (x.match(/\$\s*[\d,]+(\.\d+)?/g) || []).map(v => Number(v.replace(/[^\d.]/g, '')));
   const dollars = dollarsIn(t);
-  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999, 1600, 2500];
   const SET = Array.isArray(c.price_nums) && c.price_nums.length === 3 ? c.price_nums.map(Number) : [349, 549, 1649];
   const QUOTED = (Array.isArray(c.prices_quoted) ? c.prices_quoted : []).map(Number);
   const OURS = SET.concat([1000], QUOTED);
+  // AI Written Starter (28 Oct): "normally $1,349, for you $999" may name the full price next to the discount
+  if (SET[0] === 999 && /\$\s*999\b/.test(t) && /normally|usually|regular(ly)?|instead of|down from|discount|reduced|\bwas\b/i.test(t)) OURS.push(1349);
   const money = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
   const amount = d => money(d).slice(1).replace(',', ',?');
   const priceSeen = SET.concat(QUOTED).some(d => new RegExp('\\$\\s*' + amount(d) + '\\b').test(convo));

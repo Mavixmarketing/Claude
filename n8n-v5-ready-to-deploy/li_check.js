@@ -83,10 +83,12 @@ return $input.all().map((it, i) => {
   // PRICES (23 Oct): LinkedIn uses the old price list ($349, $549, $1,649) and the $1,000 of the money back
   // guarantee; a plan price from the other list only if it was already quoted to this person earlier in the chat.
   // Before the audit only the range ($349 to $1,649) or Growth.
-  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999, 1600, 2500];
   const SET = Array.isArray(c.price_nums) && c.price_nums.length === 3 ? c.price_nums.map(Number) : [349, 549, 1649];
   const QUOTED = (Array.isArray(c.prices_quoted) ? c.prices_quoted : []).map(Number);
   const OURS = SET.concat([1000], QUOTED);
+  // AI Written Starter (28 Oct): "normally $1,349, for you $999" may name the full price next to the discount
+  if (SET[0] === 999 && /\$\s*999\b/.test(t) && /normally|usually|regular(ly)?|instead of|down from|discount|reduced|\bwas\b/i.test(t)) OURS.push(1349);
   const money = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
   const amount = d => money(d).slice(1).replace(',', ',?');
   const priceSeen = SET.concat(QUOTED).some(d => new RegExp('\\$\\s*' + amount(d) + '\\b').test(convo));

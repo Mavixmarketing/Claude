@@ -83,14 +83,17 @@ const AI_WRITTEN_SEQUENCES = [
 ];
 const AI_WRITTEN_NAME = /\bai[\s_-]*written\b/i;
 const isAiWritten = (id, name) => AI_WRITTEN_SEQUENCES.includes(String(id || '').trim()) || AI_WRITTEN_NAME.test(String(name || ''));
+// AI Written prices (28 Oct, Farhan): Starter is normally $1,349, discounted to $999; Growth $1,600; Premium $2,500.
+// seen = the numbers that show a conversation is on this list (the 23 Oct AI Written prices $1,349 and $1,999 too).
 const PRICE_SETS = {
-  old: { name: 'old', starter: '$349', growth: '$549', premium: '$1,649', nums: [349, 549, 1649] },
-  new: { name: 'new', starter: '$999', growth: '$1,349', premium: '$1,999', nums: [999, 1349, 1999] },
+  old: { name: 'old', starter: '$349', growth: '$549', premium: '$1,649', nums: [349, 549, 1649], seen: [349, 549, 1649] },
+  new: { name: 'new', starter: '$999', starter_was: '$1,349', growth: '$1,600', premium: '$2,500', nums: [999, 1600, 2500], seen: [999, 1349, 1600, 1999, 2500] },
 };
 const PRICE_SENT = /(a|per) month|\/mo\b|monthly|\bplans?\b|our (price|fee)|we charge|(starts?|starting|ranges?) (at|from)|\b(starter|growth|premium)\b/i;
+const STRIKE = /normally|usually|regular(ly)?|instead of|down from|discount|reduced|\bwas\b|\bcut\b/i;
 const VALUE_SENT = /worth|\bjob|customer|booking|install|patient|client|often around|roughly|typical|usually around/i;
 // every plan price we have ever used: found in any sentence of ours, even next to a rough job value
-const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999];
+const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999, 1600, 2500];
 // dollar amounts in the price sentences of OUR earlier messages (never theirs, never rough job values)
 function quotedPrices(transcript) {
   const found = new Set();
@@ -100,14 +103,17 @@ function quotedPrices(transcript) {
     for (const sent of b.split(/(?<=[.?!])\s+|\n+/)) {
       if (!PRICE_SENT.test(sent)) continue;
       const value = VALUE_SENT.test(sent);
-      for (const v of sent.match(/\$\s*[\d,]+/g) || []) { const d = Number(v.replace(/[^\d]/g, '')); if (d >= 100 && d !== 1000 && (!value || KNOWN_PRICES.includes(d))) found.add(d); }
+      const ds = (sent.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
+      // "normally $1,349, for you $999": the $1,349 is the Starter's full price, not a quoted plan
+      const wasPrice = ds.includes(999) && ds.includes(1349) && STRIKE.test(sent);
+      for (const d of ds) { if (wasPrice && d === 1349) continue; if (d >= 100 && d !== 1000 && (!value || KNOWN_PRICES.includes(d))) found.add(d); }
     }
   }
   return [...found];
 }
 function pricesFor(sequence, sequenceName, transcript, forceOld) {
   const quoted = quotedPrices(transcript);
-  const hits = k => PRICE_SETS[k].nums.filter(d => quoted.includes(d)).length;
+  const hits = k => PRICE_SETS[k].seen.filter(d => quoted.includes(d)).length;
   let set;
   if (hits('old') || hits('new')) set = hits('new') > hits('old') ? PRICE_SETS.new : PRICE_SETS.old;
   else if (forceOld) set = PRICE_SETS.old;
@@ -115,12 +121,14 @@ function pricesFor(sequence, sequenceName, transcript, forceOld) {
     set = isAiWritten(sequence, sequenceName) ? PRICE_SETS.new : PRICE_SETS.old;
   }
   const fmt = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
+  const starter = set.starter_was ? set.starter + ' (normally ' + set.starter_was + ' a month, discounted to ' + set.starter + ')' : set.starter;
   const lines = ['PRICES FOR THIS CONVERSATION (US dollars a month; prices depend on the campaign this person came from, so use only these numbers):',
     '- Before they have the audit: the price is personalised (see the price rules in the facts). Only if they ask again or insist on a number: "it ranges from ' + set.starter + ' to ' + set.premium + ' a month", and most clients start on our Growth plan at ' + set.growth + ', the plan that comes with the 90 day money back guarantee.',
-    '- After they have the audit: Starter ' + set.starter + ' (no money back guarantee), Growth ' + set.growth + ' (the plan we recommend and where most clients start, with the 90 day money back guarantee), Premium ' + set.premium + ' (also with the 90 day money back guarantee).',
+    '- After they have the audit: Starter ' + starter + ' (no money back guarantee), Growth ' + set.growth + ' (the plan we recommend and where most clients start, with the 90 day money back guarantee), Premium ' + set.premium + ' (also with the 90 day money back guarantee).',
+    !set.starter_was ? '' : quoted.includes(1349) ? '- EARLIER PRICE: this person was quoted $1,349 a month before the prices changed on 28 Oct. Keep to $1,349 for them and do not bring up the newer prices.' : '- STARTER DISCOUNT: whenever you name the Starter price, say it is normally ' + set.starter_was + ' a month and they get it at ' + set.starter + ' a month. ' + set.starter_was + ' is never the Growth price here: Growth is ' + set.growth + ' and Premium is ' + set.premium + '.',
     '- MONEY BACK GUARANTEE: only Growth and Premium come with it. Starter (' + set.starter + ') has none. When the price in play is the Starter price (for example ' + set.starter + ' was quoted to them), never mention the guarantee or the $1,000 unless they ask about it; if they ask, say honestly that Starter has no money back guarantee and that Growth (' + set.growth + ') has it.',
     quoted.length ? '- ALREADY QUOTED to this person earlier in the conversation: ' + quoted.map(fmt).join(', ') + '. Keep to it: use the same number if price comes up, never contradict it, never put a different price next to it, and never say our prices changed or differ for anyone else.' : '- No price has been quoted to this person yet.'];
-  return { price_set: set.name, price_nums: set.nums, prices_quoted: quoted, prices_block: lines.join('\n') };
+  return { price_set: set.name, price_nums: set.nums, prices_quoted: quoted, prices_block: lines.filter(Boolean).join('\n') };
 }
 
 // FACTS AND SELLING RULES shared by every writer (email replies, email follow-ups, LinkedIn).
