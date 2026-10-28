@@ -3,9 +3,9 @@
 // send_at about 3 minutes from now, pending_send = the exact request with kind "followup", tries 1 and what the row
 // must say once it has gone). The reply agent's every-minute "Due Sends" then retries it with the same safe steps
 // as a reply: it reads the Instantly thread first and does not resend if the follow-up is already there, tries up to
-// SEND_TRIES times in all (Platform node), and only after the last failure marks the row send_failed and tells
-// Farhan on Slack, once. On success the row becomes "followed_up" with the follow-up number and history, exactly as
-// "Log Follow-up" would have written it.
+// SEND_TRIES times in all (Platform node), and after the last failure tells Farhan on Slack, once, with the draft.
+// On success the row becomes "followed_up" with the follow-up number and history, exactly as "Log Follow-up" would
+// have written it.
 // If no row can be found for the thread (should not happen), Farhan is told on Slack right away (can_queue false).
 // 28 Oct: restore_status keeps the row's status before it was queued (replied / followed_up): if the retry is skipped
 // (not a campaign thread, own inbox, or the cross-platform guard), the row gets it back, so later follow-ups still come.
