@@ -1,0 +1,96 @@
+[
+ {
+  "workflowId": "W8ou5vT7aQu8q8zO",
+  "activeVersionId": "572a300c-8f66-4cb6-b176-b9d593cb465f",
+  "nodes": {
+   "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
+   "Luna Request": "n8n-v5-ready-to-deploy/ra_luna_request.js",
+   "Build Conversation": "n8n-v5-ready-to-deploy/ra_build_conversation.js",
+   "Slack Card": "n8n-v5-ready-to-deploy/ra_slack_card.js",
+   "Pick New Replies": "n8n-v5-ready-to-deploy/ra_pick_new_replies.js",
+   "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
+   "Read Sort": "n8n-v5-ready-to-deploy/ra_read_sort.js",
+   "Quick Look": "n8n-v5-ready-to-deploy/ra_quick_look.js",
+   "Pick Thread": "n8n-v5-ready-to-deploy/ra_pick_thread.js"
+  }
+ },
+ {
+  "workflowId": "KMRwc4kovheNY2zI",
+  "activeVersionId": "d56fe6e0-266f-49d8-8bda-b2e5c68a0639",
+  "nodes": {
+   "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
+   "Who Is Due": "n8n-v5-ready-to-deploy/fu_who_is_due.js",
+   "Skip Archived": "n8n-v5-ready-to-deploy/fu_skip_archived.js",
+   "Due List": "n8n-v5-ready-to-deploy/fu_due_list.js",
+   "Settings": "n8n-v5-ready-to-deploy/fu_settings.js"
+  }
+ },
+ {
+  "workflowId": "4jvATMqNUMchMEc5",
+  "activeVersionId": "108e3fc1-0311-4eb2-b169-69a0560251f8",
+  "nodes": {
+   "Build Report": "n8n-v5-ready-to-deploy/report.js",
+   "Instantly Windows": "n8n-v5-ready-to-deploy/ins_report_windows.js"
+  }
+ },
+ {
+  "workflowId": "WNHqMnyuHz2n42sL",
+  "activeVersionId": "15250deb-5b5a-4d8b-8360-d897f1199863",
+  "nodes": {
+   "Opus Request": "n8n-v5-ready-to-deploy/li_opus.built.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/li_check.js",
+   "Settings": "n8n-v5-ready-to-deploy/li_settings.js"
+  }
+ },
+ {
+  "workflowId": "G0THBksF367XBBXb",
+  "activeVersionId": "0abdce20-4df7-422e-b264-85c69d75b7b2",
+  "nodes": {
+   "Follow-up Request": "n8n-v5-ready-to-deploy/lifu_request.built.js",
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/lifu_check.js",
+   "Settings": "n8n-v5-ready-to-deploy/lifu_settings.js"
+  }
+ },
+ {
+  "workflowId": "V2gVO6nM7FGJfhoo",
+  "activeVersionId": "772c0969-ca62-43dd-82f7-541ab3e49297",
+  "nodes": {
+   "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
+   "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
+   "Test Threads": "n8n-v5-ready-to-deploy/ins_test_threads.js",
+   "Due Sends": "n8n-v5-ready-to-deploy/ins_due_sends.js",
+   "Read Reply Events": "n8n-v5-ready-to-deploy/ins_read_reply_events.js",
+   "Read Inbox": "n8n-v5-ready-to-deploy/ins_read_inbox_stub.js",
+   "Pick New Replies": "n8n-v5-ready-to-deploy/ra_pick_new_replies.js",
+   "Pick Thread": "n8n-v5-ready-to-deploy/ins_pick_thread.js",
+   "Build Conversation": "n8n-v5-ready-to-deploy/ins_build_conversation.js",
+   "Luna Request": "n8n-v5-ready-to-deploy/ra_luna_request.js",
+   "Read Sort": "n8n-v5-ready-to-deploy/ra_read_sort.js",
+   "Quick Look": "n8n-v5-ready-to-deploy/ra_quick_look.js",
+   "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
+   "Reply Request": "n8n-v5-ready-to-deploy/ins_reply_request.js",
+   "Slack Card": "n8n-v5-ready-to-deploy/ra_slack_card.js",
+   "Connection Result": "n8n-v5-ready-to-deploy/ins_connection_result.js",
+   "Ready To Send": "n8n-v5-ready-to-deploy/ins_ready_to_send.js",
+   "Send Result": "n8n-v5-ready-to-deploy/ins_send_result.js"
+  }
+ },
+ {
+  "workflowId": "Ci4rx6b8avCHLNjX",
+  "activeVersionId": "c527fbcc-a2b1-417f-ab83-30204c3653e8",
+  "nodes": {
+   "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
+   "Settings": "n8n-v5-ready-to-deploy/fu_settings.js",
+   "Read Reply Times": "n8n-v5-ready-to-deploy/ins_fu_reply_times.js",
+   "Who Is Due": "n8n-v5-ready-to-deploy/fu_who_is_due.js",
+   "Skip Archived": "n8n-v5-ready-to-deploy/ins_fu_skip_archived.js",
+   "Due List": "n8n-v5-ready-to-deploy/fu_due_list.js",
+   "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
+   "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
+   "Queue Retry": "n8n-v5-ready-to-deploy/ins_fu_queue_retry.js"
+  }
+ }
+]
