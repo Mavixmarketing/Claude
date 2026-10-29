@@ -129,8 +129,9 @@ return $input.all().map((it, i) => {
   }
   const words = t.split(/\s+/).filter(Boolean).length;
   if (send && words < 4) problems.push('too short');
-  // the booking link and talk of a call only when THEY asked to talk
-  const askedToTalk = /\b(call|calls|phone|talk|speak|meet|meeting|zoom|teams|chat|whatsapp|calendar|schedule)\b/i.test(String(c.their_latest || ''));
+  // the booking link and talk of a call only when THEY asked to talk. 29 Oct: covers every word the writer's
+  // wantsTalk uses ("number", "ring me", "contact details"), so asking for our contact number is never held
+  const askedToTalk = /\b(call|calls|phone|number|talk|speak|meet|meeting|zoom|teams|chat|whatsapp|calendar|schedule|ring me|contact details|reach you)\b/i.test(String(c.their_latest || ''));
   // the one exception: the "i will start preparing your audit" email may offer the link as an option
   const auditEmail = /start (preparing|on|working on) (your|the) (free )?audit/i.test(t) || (/\baudit\b/i.test(t) && /not (a|going to be a) (sales )?pitch/i.test(t));
   if (!askedToTalk && !auditEmail && (t.includes(cfg.BOOKING_LINK) || /cal\.id|calendly|(grab|book|schedule) a (time|call)|(short|quick) (call|chat)|hop on a call/i.test(t))) problems.push('suggests a call they did not ask for');
