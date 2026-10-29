@@ -82,7 +82,7 @@ What I read from this:
 
 This is a small sample (49 chats over 3 weeks), so treat these as strong signals, not proof. I also can't see who became a paying client: the system doesn't record it. If you tell me who signed, I can show which path they took.
 
-The 15 longest chats are in a separate file (`2026-10-17-15-longest-conversations.md`). It's ready to paste into another AI. Email addresses and phone numbers are removed.
+The 15 longest chats were exported to a separate file on 17 Oct. It was taken out of the repo on 29 Oct because it holds real conversations, and the repo keeps no conversation data.
 
 ---
 
