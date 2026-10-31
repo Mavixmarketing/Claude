@@ -83,12 +83,17 @@ return $input.all().map((it, i) => {
   // PRICES (23 Oct): LinkedIn uses the old price list ($349, $549, $1,649) and the $1,000 of the money back
   // guarantee; a plan price from the other list only if it was already quoted to this person earlier in the chat.
   // Before the audit only the range ($349 to $1,649) or Growth.
-  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999, 1600, 2500];
-  const SET = Array.isArray(c.price_nums) && c.price_nums.length === 3 ? c.price_nums.map(Number) : [349, 549, 1649];
+  const KNOWN_PRICES = [349, 549, 799, 1099, 1649, 1699, 999, 1349, 1999, 1600, 2500, 749, 1049, 1800];
+  const SET = Array.isArray(c.price_nums) && c.price_nums.length === 3 ? c.price_nums.map(Number) : [749, 1800, 2500];
   const QUOTED = (Array.isArray(c.prices_quoted) ? c.prices_quoted : []).map(Number);
   const OURS = SET.concat([1000], QUOTED);
   // AI Written Starter (28 Oct): "normally $1,349, for you $999" may name the full price next to the discount
   if (SET[0] === 999 && /\$\s*999\b/.test(t) && /normally|usually|regular(ly)?|instead of|down from|discount|reduced|\bwas\b/i.test(t)) OURS.push(1349);
+  // v3 Starter (1 Nov): "normally $1,049, for you $749" may name the full price next to the discount
+  if (SET[0] === 749 && /\$\s*749\b/.test(t) && /normally|usually|regular(ly)?|instead of|down from|discount|reduced|\bwas\b/i.test(t)) OURS.push(1049);
+  // THE GUARANTEE (1 Nov): on the new terms (180 days, refund or free work) the old $1,000 and 90 days are held
+  if (String(c.guarantee || '') === 'new' && /\$\s*1,?000\b|one thousand dollars/i.test(t)) problems.push('mentions the old $1,000 guarantee (this conversation has the new guarantee: 180 days, refund or free work)');
+  if (String(c.guarantee || '') === 'new' && /\b(90|ninety)[- ]?days?\b[^.?!\n]{0,60}\b(money[- ]?back|refund|guarantee)|\b(money[- ]?back|refund|guarantee)\b[^.?!\n]{0,60}\b(90|ninety)[- ]?days?\b/i.test(t)) problems.push('calls the guarantee 90 days (the new guarantee is 180 days)');
   const money = d => '$' + String(d).replace(/(\d)(\d{3})$/, '$1,$2');
   const amount = d => money(d).slice(1).replace(',', ',?');
   const priceSeen = SET.concat(QUOTED).some(d => new RegExp('\\$\\s*' + amount(d) + '\\b').test(convo));
@@ -96,7 +101,7 @@ return $input.all().map((it, i) => {
   for (const d of new Set((t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, ''))))) if (KNOWN_PRICES.includes(d) && !OURS.includes(d)) problems.push('a price from the other price list (' + money(d) + '); LinkedIn uses ' + SET.map(money).join(', '));
   // STARTER HAS NO MONEY BACK GUARANTEE (23 Oct, septic.ca): hold a message that names this conversation's Starter
   // price and also talks about the guarantee or the $1,000, unless it says Starter has none or points to Growth for it
-  const STARTER = [SET[0]].concat(QUOTED.filter(d => d === 349 || d === 999));
+  const STARTER = [SET[0]].concat(QUOTED.filter(d => d === 349 || d === 999 || d === 749));
   const DOLLARS_T = (t.match(/\$\s*[\d,]+/g) || []).map(v => Number(v.replace(/[^\d]/g, '')));
   if (DOLLARS_T.some(d => STARTER.includes(d)) && /money[- ]?back|guarantee|refund|\$\s*1,?000\b/i.test(t) && !/starter[^.?!]{0,80}\b(no|without|doesn't|does not|isn't|is not)\b[^.?!]{0,40}(guarantee|money[- ]?back)|\b(no|without)\b[^.?!]{0,30}(guarantee|money[- ]?back)[^.?!]{0,60}starter|growth[^.?!]{0,100}(guarantee|money[- ]?back)|(guarantee|money[- ]?back)[^.?!]{0,100}growth/i.test(t)) problems.push('promises the money back guarantee next to the Starter price (only Growth and Premium have it)');
   for (const sent of t.split(/(?<=[.?])\s+/)) {
@@ -112,7 +117,7 @@ return $input.all().map((it, i) => {
   if (/[{}\[\]]/.test(t)) problems.push('has an unfilled blank such as {site}');
   const asked = (t.match(/\?/g) || []).length;
   if (asked > 2) problems.push('asks ' + asked + ' questions');
-  { const bw = t.replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?|apps?|side|like|such as)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...)
+  { const _known = (convo).toLowerCase(); const bw = t.replace(/[a-z0-9&'.-]*\bai\b[a-z0-9&'.-]*|\b(automated|automation|scheduled)\b/gi, m => (m.length > 2 && new RegExp('(^|[^a-z0-9])' + m.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^a-z0-9])').test(_known)) ? ' ' : m).replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?|apps?|side|like|such as)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...). 1 Nov: a word already in the conversation (a business name like "AI-Innovate" or "Automation Pros") is not ours, so it never counts
   problems.push(...aiProblems(t, convo));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
