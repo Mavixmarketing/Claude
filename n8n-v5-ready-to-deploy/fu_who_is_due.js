@@ -249,7 +249,8 @@ for (const key of Object.keys(latest)) {
   if (n >= GAP_DAYS.length) continue;
   // Farhan's hand-sent message (written back to the log by Skip Archived) is the newest thing and went out
   // less than 18 hours ago: the follow-up about it waits for the next day's run
-  if (/^FARHAN/.test(String(j.history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).pop()) && days < 0.75) {
+  const handSentLast = /^FARHAN/.test(String(j.history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).pop());
+  if (handSentLast && days < 0.75) {
     if (hour === hourNow) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true } });
     continue;
   }
@@ -268,7 +269,10 @@ for (const key of Object.keys(latest)) {
     continue;
   }
   if (!myHour) continue; // from follow-up 2 on: their time of day (or a missed hour, caught up)
-  const need = n === 1 ? GAP_DAYS[1] : GAP_DAYS[n] - 0.5; // half a day of slack: the first time their hour comes round after the gap
+  // half a day of slack: the first time their hour comes round after the gap. The follow-up about Farhan's
+  // hand-sent message (the audit, for example) goes on the next day's run whatever its number (30 Oct: Iurie's
+  // after-audit follow-up was held for the 2.5-day gap of follow-up 3, then a weekend)
+  const need = handSentLast ? 0.75 : n === 1 ? GAP_DAYS[1] : GAP_DAYS[n] - 0.5;
   if (days < need) {
     if (hour === hourNow && days < 100) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true } });
     continue;

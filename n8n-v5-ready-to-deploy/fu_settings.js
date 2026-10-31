@@ -20,7 +20,9 @@ return [{ json: {
   // 28 oct: kitchen wrap direct only answers with an auto-reply bot that says they never buy marketing (our follow-ups
   // kept triggering it); david2gagjon is David Gagnon of Vision Bleu, who wrote "Stop" from david@visionbleu.com;
   // dracuherbs@mail.com now bounces. All three are on the Instantly block list too, which SalesBlink sends ignore.
-  STOP: ['andrei@brite.live', 'arihantkothari93@gmail.com', 'fellinlovewithslovenia@gmail.com', 'camillechapline@gmail.com', 'contact@kitchenwrapdirect.com', 'david2gagjon@gmail.com', 'dracuherbs@mail.com'],
+  // 30 oct: darandyturks wrote twice that they don't understand our emails; Farhan said stop there (not a "no",
+  // so not on the block list: the reply agent still answers if they write).
+  STOP: ['andrei@brite.live', 'arihantkothari93@gmail.com', 'fellinlovewithslovenia@gmail.com', 'camillechapline@gmail.com', 'contact@kitchenwrapdirect.com', 'david2gagjon@gmail.com', 'dracuherbs@mail.com', 'darandyturks@yahoo.com'],
   // PLAN: nothing before the date, then one follow-up that follows his note, then light monthly check-ins.
   PLAN: {
     'anne.thomson@mymts.net': { from: '2026-11-16', note: 'On 15 oct Anne said she already has a provider and we wished her well. Farhan still wants to stay in touch: one short, kind check-in with one useful idea about getting her m prep course back to the first page of google. Never criticise her provider and never offer the audit again (she has it).' },
