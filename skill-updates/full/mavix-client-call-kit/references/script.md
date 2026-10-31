@@ -6,7 +6,7 @@ The reasoning behind every move below — which mechanics actually work, which f
 
 ## The header, before any script
 
-1. **Ground rules** — the call format, **which campaign they came from and so which prices apply** (or the price already quoted to them), floor, capacity, terms, closing, tone. Lifted from `facts.md`, trimmed to this prospect.
+1. **Ground rules** — the call format, **the prices** (the one price list in `facts.md`, or the price already quoted to them: check the conversation), floor, capacity, terms, closing, tone. Lifted from `facts.md`, trimmed to this prospect.
 2. **The prospect in ten lines** — who they are, who owns it, how long, what is excellent about them, what is broken. Plus a "do not say" line for anything the research found that is wrong or unverified.
 3. **Tabs to open** — one numbered list of real clickable URLs in call order. Then a short "how to use them" note: which pairs go side by side, which one stings, which stays shut unless they push on price.
 4. **Check yourself before you dial** — the four or five things research could not reach. Their phone on mobile. Whether a new review has landed. Whether the map box has moved. His real client count this month.
@@ -72,7 +72,7 @@ The plan in plain words. **The timeline as a table** — week 1, weeks 2-4, mont
 
 **The offer as five answers:** what are we doing, how, what do you get, how long, what does it cost.
 
-Then risk removed: no setup fee, no long contract with no time limit (it only ties Mavix, to deliver), accounts in their name, and on Growth and Premium the guarantee: everything back plus $1,000 if we miss the 90-day target agreed in writing.
+Then risk removed: no setup fee, no long contract with no time limit (it only ties Mavix, to deliver), accounts in their name, and on Growth and Premium our money back guarantee: if we have not hit the target agreed in writing within 180 days, they choose everything back or we keep working for free until we hit it (or the old terms, if they were already given them).
 
 **Optional: the hiring comparison.** Salary, insurance, payroll, recruiting, training, and the risk they leave — against a whole team with no long contract. Qualitative, no invented salary figures.
 
@@ -80,7 +80,7 @@ Then risk removed: no setup fee, no long contract with no time limit (it only ti
 
 *"Based on everything we've talked about — does this sound like the kind of thing you're looking for?"* **Never price into a maybe.**
 
-Then the three packages for **this prospect's campaign** (`facts.md`), Growth recommended, said slowly. USA/Canada and Aus/UK/NZ/Sing campaigns: three-forty-nine, five-forty-nine, sixteen-forty-nine. AI Written campaign: nine-ninety-nine, thirteen-forty-nine, nineteen-ninety-nine. If a price was already quoted to them, say that one. **Then stop and count to ten.**
+Then the three packages (`facts.md`), Growth recommended, said slowly: seven-forty-nine (normally ten-forty-nine), eighteen hundred, twenty-five hundred. If a price was already quoted to them, say that one. **Then stop and count to ten.**
 
 Then set the price against one job of theirs. Then the Clutch comparison only if they flinch.
 

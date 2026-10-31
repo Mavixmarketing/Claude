@@ -113,8 +113,8 @@ no tier table.
 
 `close_page` builds the last page, "Your plan, and how to start", with **no price**: a dark hero
 panel (plan name, one line on the plan and the guarantee with a lime shield on the left, an
-"Every month" list of the work on the right), then two cards side by side (the 90-day target
-we would agree on soft blue, the first three things as numbered rows), then "Two ways to move
+"Every month" list of the work on the right), then two cards side by side (the target
+we would agree in writing on soft blue, the first three things as numbered rows), then "Two ways to move
 forward" as two cards: a lime card with a "Reply yes" button (a mailto link; we send the plan
 and the personalised price) and a blue-outlined card with a "Book a 15-minute walkthrough"
 button linking to https://cal.id/mavixmarketing/strategy-call, with the short URL printed under

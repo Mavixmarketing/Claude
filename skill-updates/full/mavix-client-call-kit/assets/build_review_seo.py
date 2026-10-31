@@ -15,16 +15,14 @@ CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
 CLIENT = "The Creative Kitchen Co."
 OUT_PDF = os.path.join(ROOT, "Mavix-SEO-Review.pdf")  # rename per client
 
-# Search prices depend on the SalesBlink campaign the prospect came from (facts.md).
-# Set CAMPAIGN for this prospect. If a price was already quoted to them, put it in
-# QUOTED and it wins over the table. Never mix two campaigns' prices.
-CAMPAIGN_PRICES = {
-    "usa_canada":      {"Starter": "$349", "Growth": "$549",   "Premium": "$1,649"},
-    "aus_uk_nz_sing":  {"Starter": "$349", "Growth": "$549",   "Premium": "$1,649"},
-    "ai_written":      {"Starter": "$999", "Growth": "$1,349", "Premium": "$1,999"},
-}
-CAMPAIGN = "usa_canada"
-QUOTED = {}   # e.g. {"Growth": "$499"} when that number was already quoted to them
+# One search price list for every new prospect, in US dollars (facts.md, 1 November 2026).
+# Check the conversation first. If a price was already quoted to them, put it in QUOTED
+# and it wins over the table. If they were given the old guarantee (90 days, everything
+# back plus $1,000), set OLD_GUARANTEE = True and they keep it.
+PRICES = {"Starter": "$749", "Growth": "$1,800", "Premium": "$2,500"}
+STARTER_WAS = "$1,049"   # the only "was" price allowed, Starter only
+QUOTED = {}   # e.g. {"Growth": "$549"} when that number was already quoted to them
+OLD_GUARANTEE = False
 
 IC = {
  "map": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11a7 7 0 10-14 0c0 4.7 7 11 7 11z" stroke="#005AFF" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="#005AFF" stroke-width="1.8"/></svg>',
@@ -400,24 +398,30 @@ def p12_howwework():
 
 
 def p13_pricing():
-    if CAMPAIGN not in CAMPAIGN_PRICES:
-        raise ValueError(f"unknown campaign {CAMPAIGN!r}: ask Farhan which campaign")
-    pr = dict(CAMPAIGN_PRICES[CAMPAIGN], **QUOTED)
-    ts = [("Starter", pr["Starter"], "a month", "No money-back guarantee on this one.", False, None),
+    pr = dict(PRICES, **QUOTED)
+    starter_per = "a month" if "Starter" in QUOTED else f"a month, normally {STARTER_WAS}"
+    g_note = ("90-day money-back guarantee." if OLD_GUARANTEE
+              else "Our money back guarantee, 180 days.")
+    ts = [("Starter", pr["Starter"], starter_per, "No money-back guarantee on this one.", False, None),
           ("Growth", pr["Growth"], "a month, locked for life",
-           "90-day money-back guarantee.", True, "What we would pick"),
-          ("Premium", pr["Premium"], "a month", "90-day money-back guarantee.", False, None)]
+           g_note, True, "What we would pick"),
+          ("Premium", pr["Premium"], "a month", g_note, False, None)]
+    if OLD_GUARANTEE:
+        g_text = ("Before we start, we agree a 90-day target with you in writing. Miss it on "
+                  "Growth or Premium and you get back everything you paid, plus a $1,000 "
+                  "cheque from Farhan. Starter has no guarantee.")
+    else:
+        g_text = ("Before we start, we agree a clear target with you in writing, one we can both "
+                  "measure. If we have not hit it within 180 days on Growth or Premium, you "
+                  "choose: everything you paid back, or we keep working for free until we hit "
+                  "it. Starter has no guarantee.")
     terms = ["No setup fee", "No long contract", "No time limit", "Every account in your name"]
     return (head_block("WHAT IT COSTS", 'Three ways to run this, <em>one we would pick</em>',
                        "The only difference between these three is how much work we do each month. "
                        "We work that out on the call, once you tell us where you want to start.")
             + '<div class="gap"></div>' + tiers(ts)
             + '<div class="gap"></div>'
-            + callout("The guarantee",
-                      "Before we start, we agree a 90-day target with you in writing. Miss it on "
-                      "Growth or Premium and you get back everything you paid, plus a $1,000 "
-                      "cheque from Farhan. Starter has no guarantee.",
-                      blue=True)
+            + callout("Our money back guarantee", g_text, blue=True)
             + '<div class="gap"></div>' + strip("The terms, in full", terms)
             + '<div class="gap-s"></div>'
             + '<div class="tnote">We are not promising you a spot on Google, and we are not promising '

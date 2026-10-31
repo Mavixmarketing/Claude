@@ -255,7 +255,7 @@ than a slower first promise.
 close page. In an ads proposal it is "Your plan, your price. Reply yes to start.": the
 recommended plan and its monthly fee, the first-90-days milestones, the first three things we
 do, and two ways to say yes. **In an SEO or Both document it is "Your plan, and how to start"
-with no price at all:** the recommended plan of work, the 90-day target we would agree, the
+with no price at all:** the recommended plan of work, the target we would agree in writing, the
 first three things we do, and two ways to move forward: reply "yes" to the email and we send the
 plan and the personalised price, or book a 15-minute walkthrough at
 https://cal.id/mavixmarketing/strategy-call.

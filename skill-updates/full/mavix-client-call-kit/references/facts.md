@@ -48,7 +48,7 @@ another, so it is not used), awards, and anything else the website does not say.
 
 **On an SEO call, Growth or Premium:**
 
-> I want founders sleeping properly instead of lying awake worrying about their marketing. That's why the guarantee is in writing. Before you start, we agree a 90-day target together, in writing. If I miss it, you get back everything you paid, plus a thousand-dollar cheque out of my own pocket. The financial risk sits on my shoulders, not yours.
+> I want founders sleeping properly instead of lying awake worrying about their marketing. That's why the guarantee is in writing. Before you start, we agree a clear target together, in writing, one we can both measure. If I have not hit it within 180 days, you choose: everything you paid back, or I keep working for free until we hit it. The financial risk sits on my shoulders, not yours.
 
 **On an SEO call where Starter is the likely package** — Starter carries no guarantee, so promising one in minute three and withdrawing it in minute twenty-five is a lie you tell yourself:
 
@@ -58,37 +58,39 @@ another, so it is not used), awards, and anything else the website does not say.
 
 > I want founders sleeping properly instead of lying awake worrying about their marketing. That's why there's no contract, no setup fee, and thirty days' notice. Your ad budget stays on your own card, going straight to Google or Meta — it never comes through me. And every account, every pixel, every bit of the history stays in your name. If you walk, you walk with all of it. The risk of me being wrong sits on my shoulders, not yours.
 
-## SEO pricing: it depends on the campaign
+## SEO pricing: one price list for everyone new
 
 The emailed SEO audit carries no price. Prices are said on the call, shown on the review PDF's
-pricing page, and sent after a "yes". **Which prices apply depends on the SalesBlink campaign
-the prospect came from.** Read it from the thread or Farhan's notes. If it is not clear, ask
-Farhan before building: `[ASK FARHAN] which campaign`. Never mix the two sets.
+pricing page, and sent after a "yes". **There is one price list for every new prospect**, in
+US dollars, whichever campaign they came from (Farhan, 1 November 2026):
 
-| Campaign | Starter | Growth (recommended) | Premium |
-|---|---|---|---|
-| **USA/Canada** and **Aus/UK/NZ/Sing** | **$349/mo** | **$549/mo** | **$1,649/mo** |
-| **AI Written** | **$999/mo** | **$1,349/mo** | **$1,999/mo** |
+| Starter | Growth (recommended) | Premium |
+|---|---|---|
+| **$749/mo** (normally $1,049) | **$1,800/mo** | **$2,500/mo** |
 
-**If a price was already quoted to this prospect, honour it.** Use the quoted number on the
-call, in the script and on the review PDF, even if the table above has changed since.
+Growth is where most clients start.
 
-What is in each package (the same on every campaign):
+**If a price was already quoted to this prospect, honour it.** Check the conversation first.
+Anyone who was already sent an audit and told a price keeps the price they were told, and the
+guarantee they were told. Use the quoted number on the call, in the script and on the review
+PDF, even though the table above has changed since.
+
+What is in each package:
 
 | Package | What's in it |
 |---|---|
 | **Starter** | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report · **no money-back guarantee** |
-| **Growth** ⭐ recommended | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **90-day money-back guarantee** · **price locked for life** |
-| **Premium** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **90-day money-back guarantee** |
+| **Growth** ⭐ recommended | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **our money back guarantee** (180 days) · **price locked for life** |
+| **Premium** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **our money back guarantee** (180 days) |
 
-Starter has **no money-back guarantee** on any campaign. Growth and Premium carry the same
-90-day guarantee on every campaign. There is no "was" price; never quote one.
+Starter has **no money-back guarantee**. Growth and Premium carry our money back guarantee
+(below). The only "was" price allowed is Starter's: normally $1,049, now $749. Never quote a
+"was" price for Growth or Premium.
 
 **Lead with Growth.** The price lock is a real reason to decide today — it does not expire tonight, it just stops applying when rates go up.
 
-Say prices out loud as: "three-forty-nine", "five-forty-nine", "sixteen-forty-nine" a month
-(USA/Canada, Aus/UK/NZ/Sing), or "nine-ninety-nine", "thirteen-forty-nine",
-"nineteen-ninety-nine" a month (AI Written).
+Say prices out loud as: "seven-forty-nine" (normally ten-forty-nine), "eighteen hundred",
+"twenty-five hundred" a month.
 
 ## Ads pricing
 
@@ -104,11 +106,11 @@ Ad budget is always the client's, on their card, direct to the platform. Never t
 
 ## Floors
 
-**SEO: the floor is the Starter price for the prospect's campaign** ($349 on USA/Canada and Aus/UK/NZ/Sing, $999 on AI Written, or a lower price already quoted to them) until Farhan sets a separate number. **Ads $200.** Below that, walk. Two moves only when money is the blocker: move down a package, or walk politely. **Never invent a number on a call.**
+**SEO: the floor is the Starter price** ($749, or a lower price already quoted to them) until Farhan sets a separate number. **Ads $200.** Below that, walk. Two moves only when money is the blocker: move down a package, or walk politely. **Never invent a number on a call.**
 
 ## Guarantee
 
-**Growth and Premium only.** Before the work starts, we agree a 90-day target with the client in writing (for example, a set of agreed searches on page one of Google). If we miss it, the client gets back everything they paid, plus $1,000. **Starter has none — never imply otherwise, including in the intro.** Say "the target we agree in writing", never a target nobody has agreed yet.
+**Our money back guarantee. Growth and Premium only.** Before the work starts, we agree a clear, measurable target with the client in writing (for example, a set of agreed searches on page one of Google). If we have not hit it within 180 days, the client chooses: everything they paid back, or we keep working for free until we hit it. There is no "plus $1,000" and it is not 90 days any more. **Anyone already given the old terms** (90 days, everything back plus $1,000) keeps them: check the conversation. **Starter has none — never imply otherwise, including in the intro.** Say "the target we agree in writing", never a target nobody has agreed yet.
 
 **This guarantee is for search work only.** It is about search results. It has no meaning on an ads deal and must never appear in an ads document or an ads call.
 

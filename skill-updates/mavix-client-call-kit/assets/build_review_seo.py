@@ -387,21 +387,23 @@ def p12_howwework():
 
 
 def p13_pricing():
-    ts = [("Starter", "$349", "a month", "No guarantee on this one.", False, None),
-          ("Growth", "$549", "a month, locked for life",
-           "90-day money-back guarantee. Normally $799.", True, "What we would pick"),
-          ("Premium", "$1,649", "a month", "90-day money-back guarantee.", False, None)]
+    # One price list for every new prospect (facts.md, 1 November 2026). If a price or the
+    # old guarantee was already given to this prospect, use what they were told instead.
+    ts = [("Starter", "$749", "a month, normally $1,049", "No guarantee on this one.", False, None),
+          ("Growth", "$1,800", "a month, locked for life",
+           "Our money back guarantee, 180 days.", True, "What we would pick"),
+          ("Premium", "$2,500", "a month", "Our money back guarantee, 180 days.", False, None)]
     terms = ["No setup fee", "No long contract", "No time limit", "Every account in your name"]
     return (head_block("WHAT IT COSTS", 'Three ways to run this, <em>one we would pick</em>',
                        "The only difference between these three is how much work we do each month. "
                        "We work that out on the call, once you tell us where you want to start.")
             + '<div class="gap"></div>' + tiers(ts)
             + '<div class="gap"></div>'
-            + callout("The guarantee",
-                      "50% more traffic, rankings and visitors, or you get your money back. That "
-                      "runs for 90 days on Growth and Premium. Starter has no "
-                      "guarantee. On top of the refund, Farhan writes you a $1,000 cheque out of "
-                      "his own pocket.",
+            + callout("Our money back guarantee",
+                      "Before we start, we agree a clear target with you in writing, one we can both "
+                      "measure. If we have not hit it within 180 days on Growth or Premium, you "
+                      "choose: everything you paid back, or we keep working for free until we hit "
+                      "it. Starter has no guarantee.",
                       blue=True)
             + '<div class="gap"></div>' + strip("The terms, in full", terms)
             + '<div class="gap-s"></div>'

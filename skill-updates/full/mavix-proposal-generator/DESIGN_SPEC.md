@@ -162,7 +162,7 @@ def circle_avatar(src, out, size=440):
 Build the PDF in **exactly this order**. Sections 1–8 map to your content skill's 8-section argument; the **★ sections are new** and defined in §8 of this spec. **An SEO or Both document carries no prices at all (October 2026): no investment page, no price on the close page.** Ads-only proposals keep their four-phase fee page.
 
 1. **Cover** (full-bleed gradient)
-2. **01 · The Short Version** — the whole story on one page for a phone reader: stat cards, three findings, the plan in three lines, the 90-day target and guarantee. No price
+2. **01 · The Short Version** — the whole story on one page for a phone reader: stat cards, three findings, the plan in three lines, the target we agree in writing and the guarantee. No price
 3. **02 · The Revenue Gap** — traffic bar chart + keyword ranking chart + lime pull-quote
 4. **03 · The Opportunity** — stat cards on the monthly gap (the 12-month projection chart is cut: the October audit review listed it as a page to drop)
 5. **★ Found on Google, Maps and AI answers** (SEO and Both only) — two sourced stat cards (AI Overviews reach over 2 billion people a month, Alphabet, July 2025; Pew Research, July 2025: 8% vs 15% clicks on a normal result with and without an AI summary), a table of where customers look against what we do, one honest neon line. Replaces the old "Why Invest in SEO" benefit cards, whose statistics had no sources
@@ -172,7 +172,7 @@ Build the PDF in **exactly this order**. Sections 1–8 map to your content skil
 9. **06 · The Fix, Measured** — scorecard grid (current → target)
 10. **★ Who We Are** — the company story + Google Partner feature + honest credential circles + client logo wall (see §8)
 11. **★ What Our Clients Say** — 4 confirmed testimonials (2x2) with real photos, names and only confirmed companies or roles (see §8)
-12. **07 · Your Plan, and How to Start** — the close, no price: the recommended plan of work, the 90-day target we would agree, the first three things we do, and two ways to move forward (reply "yes" and we send the plan and the personalised price, or book a 15-minute walkthrough at https://cal.id/mavixmarketing/strategy-call). Ads-only proposals put their fee page before this and name the fee here
+12. **07 · Your Plan, and How to Start** — the close, no price: the recommended plan of work, the target we would agree in writing, the first three things we do, and two ways to move forward (reply "yes" and we send the plan and the personalised price, or book a 15-minute walkthrough at https://cal.id/mavixmarketing/strategy-call). Ads-only proposals put their fee page before this and name the fee here
 
 > Section numbering shown to the reader restarts cleanly (01…08) and the ★ sections get their own numbers in sequence — i.e., number every section 01, 02, 03… in the order above. Keep the kicker label descriptive ("WHY INVEST IN SEO", "WHO WE ARE", "WHAT CLIENTS SAY").
 
@@ -456,7 +456,7 @@ table.tb tr:nth-child(even) td { background:#FAFBFD; }
 - **Step boxes** — numbered, for the first-month plan or the next-steps sequence.
 - **Scorecards** — 6-up grid, each "current (red) → target (blue)" with a gradient progress bar.
 - **Pricing (premium)** — not used in SEO or Both documents any more (they carry no prices). Kept for reference only: 3 tiers side by side; the recommended one gets `.reco`: the dark ink-to-blue card, lime tier name, white 30pt price, lime "Recommended for you" `.badge`, a little taller than its neighbours (negative margin). Each card: `.ptier`, `.pfit` (one line on who it suits), `.pamt` with "/ month", a `.pg` guarantee tag (`.pg.none` "No money-back guarantee" on Starter), then bullets. Under the cards a `.terms` strip of four ticks, then the guarantee banner. **No box-shadow** (WeasyPrint draws stray lines), **no crossed-out "was" price**. **One pricing system per proposal.**
-- **Guarantee banner** — dark gradient, lime headline, the refund + $1,000 promise.
+- **Guarantee banner** — dark gradient, lime headline, our money back guarantee: a target agreed in writing, and if it is not hit within 180 days the client chooses everything back or free work until it is hit. No "$1,000" unless the prospect already has the old terms.
 - **Close page** — SEO or Both: no price. `.cl-hero` holds the plan of work and the guarantee on the left and an "Every month" list on the right (the mavix-seo-proposal skill's `close_page` builds it). Ads-only: `.cl-hero` (plan left, lime fee right), `.cl-row` with `.cl-target` and `.cl-first` (three numbered first steps), then "Two ways to say yes": `.cl-way.a` (lime, "Reply yes" mailto button) and `.cl-way.b` (blue outline, "Book a 15-minute walkthrough" button linking to https://cal.id/mavixmarketing/strategy-call, short URL printed under it). Both buttons are real `<a href>` links.
 
 ---
@@ -565,7 +565,7 @@ Purpose: social proof. **Confirmed testimonials only, 4 in a 2x2 grid**, each a 
 - **Plain English, no jargon.** Translate technical findings into business consequences (e.g. "9.5s mobile load — most visitors leave before the page appears").
 - **Pull quotes:** centered, italic, no bold, one per section, on the most important sentence.
 - **One highlight** (`.hl` lime underline) per page, max.
-- **The final page of an SEO or Both document is "Your plan, and how to start", with no price.** It makes the next step one tap: the recommended plan of work, the 90-day target we would agree, the first three things we do, and **two ways to move forward: reply "yes" to the email (we send the plan and the personalised price), or book a 15-minute walkthrough** at https://cal.id/mavixmarketing/strategy-call. Ads-only proposals call it "Your plan, your price" and name the phase fee.
+- **The final page of an SEO or Both document is "Your plan, and how to start", with no price.** It makes the next step one tap: the recommended plan of work, the target we would agree in writing, the first three things we do, and **two ways to move forward: reply "yes" to the email (we send the plan and the personalised price), or book a 15-minute walkthrough** at https://cal.id/mavixmarketing/strategy-call. Ads-only proposals call it "Your plan, your price" and name the phase fee.
 - **No prices in SEO or Both documents.** Only an ads-only proposal shows a fee page.
 - **Numbers with meaning:** every stat should imply money or leads for this specific client.
 
@@ -600,9 +600,9 @@ These protect the client relationship and Mavix's reputation. Follow them even i
 - [ ] Pull quotes are **centered, italic, un-bolded**, one per section, star on top.
 - [ ] Logo wall: 5 uniform white tiles, logos contained and centred.
 - [ ] Testimonials: 4 confirmed cards (2x2), circular avatars, gold stars, real names, only confirmed companies or roles ("Business owner" otherwise), never "to confirm".
-- [ ] **SEO or Both: no price anywhere** (no investment page, no fee on the close page, no publisher fee range). The only money figure is the guarantee's "$1,000".
+- [ ] **SEO or Both: no price anywhere** (no investment page, no fee on the close page, no publisher fee range). No money figure at all, unless the prospect already has the old "$1,000" guarantee.
 - [ ] SEO or Both: the "What we will work on" page lists all seven work areas, each with what it means for them.
-- [ ] The guarantee is worded the same everywhere (everything back plus $1,000 if the agreed 90-day target is missed; Growth and Premium only).
+- [ ] The guarantee is worded the same everywhere (our money back guarantee: if the target agreed in writing is not hit within 180 days, the client chooses everything back or free work until it is hit; Growth and Premium only; old terms only for someone already given them).
 - [ ] Last page = the close with both links (reply yes, 15-minute walkthrough) clickable; SEO or Both shows no price on it.
 - [ ] No "TBC", "to confirm", DIY-fix instructions or ranking promises anywhere.
 - [ ] Footer + page numbers on every content page; cover has none.

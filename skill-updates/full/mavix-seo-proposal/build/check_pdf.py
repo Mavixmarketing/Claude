@@ -1,6 +1,9 @@
 """Run on the finished SEO audit PDF before anyone sees it.
 
-    python3 build/check_pdf.py out/Client_SEO_Proposal.pdf [expected_pages]
+    python3 build/check_pdf.py out/Client_SEO_Proposal.pdf [expected_pages] [--old-terms]
+
+Add --old-terms only when the prospect was already given the old guarantee (90 days,
+everything back plus $1,000). Then "$1,000" is allowed and the old wording is not flagged.
 
 Every line is a rule from SKILL.md or from the October 2026 audit review. Exit code 1 on
 any FAIL. Fix the content file and rebuild; never edit the PDF.
@@ -37,14 +40,17 @@ NEVER = {
      r"monthly clicks from google in", r"from [\d,.]+K? to [\d,.]+K? monthly"],
  "crossed-out price (finding 6)": [r"\bwas \$?\d"],
 }
+# The old guarantee (before 1 November 2026). Only for someone already given it (--old-terms).
+OLD_GUARANTEE = [r"plus \$?1,000", r"1,000 (USD|cheque)", r"90[- ]day (money[- ]back|guarantee|target)"]
 
-# No price anywhere (October 2026). The only money figure allowed is the guarantee's 1,000.
+# No price anywhere (October 2026), and no money figure at all since the guarantee lost its
+# $1,000 (1 November 2026). With --old-terms the old guarantee's 1,000 is allowed.
 PRICE = re.compile(r"(\$\s?\d[\d,]*|\b\d[\d,.]*\s?(USD|AED|GBP|EUR)\b|/\s?mo(nth)?\b|"
                    r"\bper month\b|\bsetup fee of\b)", re.I)
 ALLOWED_MONEY = re.compile(r"(\$\s?1,000|\b1,000\s?USD)\b", re.I)
 
 
-def main(path, expected=18):
+def main(path, expected=18, old_terms=False):
     d = fitz.open(path)
     pages = [p.get_text() for p in d]
     text = "\n".join(pages)
@@ -65,8 +71,12 @@ def main(path, expected=18):
     for name, pats in NEVER.items():
         bad = [m.group(0) for p in pats for m in re.finditer(p, text, re.I)]
         res(f"no {name}", not bad, ", ".join(sorted(set(bad))))
-    money = [m.group(0) for m in PRICE.finditer(ALLOWED_MONEY.sub(" ", text))]
-    res("no prices anywhere (only the guarantee's 1,000)", not money, ", ".join(sorted(set(money))))
+    money = [m.group(0) for m in PRICE.finditer(ALLOWED_MONEY.sub(" ", text) if old_terms else text)]
+    res("no prices or money figures anywhere", not money, ", ".join(sorted(set(money))))
+    if not old_terms:
+        bad = [m.group(0) for p in OLD_GUARANTEE for m in re.finditer(p, text, re.I)]
+        res("no old guarantee (90 days, plus $1,000)", not bad, ", ".join(sorted(set(bad))))
+        res("guarantee says 180 days", "180 days" in text)
     res("no 'Google Ads' chip on the cover", "google ads" not in pages[0].lower())
     res("AI facts carry their sources",
         ("2 billion" not in low or "alphabet" in low) and ("8%" not in text or "pew" in low))
@@ -77,8 +87,8 @@ def main(path, expected=18):
     res("close page: walkthrough link is tappable",
         any("cal.id/mavixmarketing/strategy-call" in u for u in links), str(links))
     res("close page: reply-yes link is tappable", any(u.startswith("mailto:") for u in links))
-    res("close page: 90-day target and first three things",
-        "90-day target" in last and "first three things" in last)
+    res("close page: the target and first three things",
+        "target we would agree" in last and "first three things" in last)
     res("every case study carries its URL", low.count("mavixmarketing.com/case-studies/") >= 3)
     res("scope page lists AI assistants",
         all(w in low for w in ("chatgpt", "perplexity", "gemini", "ai overviews", "ai mode")))
@@ -92,4 +102,6 @@ def main(path, expected=18):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 18))
+    old = "--old-terms" in sys.argv
+    args = [a for a in sys.argv[1:] if a != "--old-terms"]
+    sys.exit(main(args[0], int(args[1]) if len(args) > 1 else 18, old))

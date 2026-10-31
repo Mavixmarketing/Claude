@@ -87,10 +87,10 @@ prepared-for, info table); running header/footer.
 - Full guidance in `reference/TRUST_SECTIONS.md`.
 
 ### Section 01 — The Short Version (The Hook)
-- A busy owner reads this on a phone and may read nothing else. One page: four stat cards, the three findings that matter, the plan in three lines, and the 90-day target with the guarantee. End with "Your plan and how to start are on the last page." No Mavix intro yet, no price here.
+- A busy owner reads this on a phone and may read nothing else. One page: four stat cards, the three findings that matter, the plan in three lines, and the target we agree in writing with the guarantee. End with "Your plan and how to start are on the last page." No Mavix intro yet, no price here.
 
 ### No prices in SEO and Both documents (Farhan, October 2026)
-- **An SEO or Both document is a free audit and strategy, not a quote.** No pricing or investment page, no price on the close page, no "from" price in the FAQs, no publisher fee range. The only money figure allowed is the guarantee's "plus $1,000". The plan and the personalised price are sent after the prospect replies "yes" or books the 15-minute walkthrough. Prices depend on the campaign the prospect came from (the call kit's `references/facts.md` holds them).
+- **An SEO or Both document is a free audit and strategy, not a quote.** No pricing or investment page, no price on the close page, no "from" price in the FAQs, no publisher fee range. No money figure is allowed at all (the guarantee has no "$1,000" any more), unless the prospect was already given the old guarantee. The plan and the personalised price are sent after the prospect replies "yes" or books the 15-minute walkthrough. There is one price list for every new prospect (the call kit's `references/facts.md` holds it); check the conversation first, and if a price was already quoted, use that one.
 - **Ads-only proposals keep their four-phase fee page** (unchanged in this update). In a Both document, the ads fees also go with the personalised price after the yes, so the document has one rule: no prices.
 - FAQs include "What does it cost?": it depends on the plan and the work the site needs; reply "yes" or book the walkthrough for the personalised price; no setup fee.
 
@@ -226,7 +226,7 @@ section, bridge on the shared problem, and offer a reference call.
 ### Section 06 — Investment (ads-only proposals; never in SEO or Both documents)
 - **SEO and Both documents have no investment page and no prices** (see "No prices in SEO and Both documents" above). Skip this section for them.
 - **Ads pricing (4 phases, low-to-high on purpose):** Phase 1 & 2 (Setup + Warm up) **249 USD/mo**, Phase 3 (Convert, when sales start) **349 USD/mo**, Phase 4 (Scale) **449 USD/mo**. Always explain the rationale: ads need spend before sales arrive, so the client is already funding ad budget; the fee starts low so their money goes into ad spend, and rises only once results show. The 249 simply covers our costs. Ad budget is separate and always the client's; 1,000 USD Google ad credit included.
-- **SEO pricing: retired from the documents.** No SEO price cards, no SEO prices. What each SEO plan does is still used, without prices, for the close page's "every month" list. Starter: keyword and competitor research, 2 blogs a month, directory and profile listings, social bookmarking and Q&A, monthly report. Growth (usually recommended): everything in Starter + 3-4 blogs a month, 2 guest posts, 1 PR placement, Google Business Profile management, infographics. Premium: everything in Growth + 8+ blogs and guest posts, full on-page audit and fixes, technical SEO, competitor gap analysis, priority calls. **Guarantee (Growth and Premium only, worded the same everywhere):** we agree a 90-day target with the client in writing before they start; if we miss it, they get everything they paid back plus $1,000. Starter has none. **No long contract:** the agreement has no time limit and only ties Mavix, to deliver. No setup fee.
+- **SEO pricing: retired from the documents.** No SEO price cards, no SEO prices. What each SEO plan does is still used, without prices, for the close page's "every month" list. Starter: keyword and competitor research, 2 blogs a month, directory and profile listings, social bookmarking and Q&A, monthly report. Growth (usually recommended): everything in Starter + 3-4 blogs a month, 2 guest posts, 1 PR placement, Google Business Profile management, infographics. Premium: everything in Growth + 8+ blogs and guest posts, full on-page audit and fixes, technical SEO, competitor gap analysis, priority calls. **Our money back guarantee (Growth and Premium only, worded the same everywhere):** before they start we agree a clear, measurable target with the client in writing; if we have not hit it within 180 days, the client chooses: everything they paid back, or we keep working for free until we hit it. Starter has none. Anyone already given the old terms (90 days, everything back plus $1,000) keeps them. **No long contract:** the agreement has no time limit and only ties Mavix, to deliver. No setup fee.
 - Ads proposals end this page with the guarantee banner and the Google Partner 1,000 USD ad credit line; **SEO-only proposals do not** (it belongs to a different deal and blurs the offer), and an SEO-only cover never shows a "Google Ads" chip.
 - **If the user says "no pricing" on an ads proposal:** omit this section entirely.
 
@@ -265,7 +265,7 @@ section, bridge on the shared problem, and offer a reference call.
 ### Section 08 — The close (always the last page)
 - **SEO and Both documents: "Your plan, and how to start." No price.** One page, four things only:
   1. **The recommended plan of work for them**: the plan name, one line on what it is for them, three to five "every month" lines of work, and the guarantee in one line. No price.
-  2. **The 90-day target we would agree**, the same words used earlier in the document, and how it is checked.
+  2. **The target we would agree in writing** (the one the guarantee covers, 180 days), the same words used earlier in the document, and how it is checked.
   3. **The first three things we do**, specific to this prospect, one line each.
   4. **Two ways to move forward:** reply "yes" to the email and we send the plan and their personalised price, or book a 15-minute walkthrough at https://cal.id/mavixmarketing/strategy-call. Both are tappable links in the PDF.
 - **Ads-only proposals: "Your plan, your price. Reply yes to start."** The recommended phase and its monthly fee, the first-90-days milestones, the first three things we do, and the same two ways to say yes.
@@ -319,7 +319,7 @@ Read the document by eye for rule-of-three lists, duplicated paragraphs, and pro
 
 ## Step 5: Pricing Reference
 
-**SEO and Both documents: no prices at all.** Name the plan of work and the guarantee, never a fee. The personalised price is sent after the yes, using the campaign prices in the call kit's `references/facts.md` (they depend on the campaign the prospect came from). Publisher fees for PR and backlinks are paid by the client directly at no markup; the usual range goes with the price, not in the document.
+**SEO and Both documents: no prices at all.** Name the plan of work and the guarantee, never a fee. The personalised price is sent after the yes, using the one price list in the call kit's `references/facts.md`, or the price already quoted to them if the conversation shows one. Publisher fees for PR and backlinks are paid by the client directly at no markup; the usual range goes with the price, not in the document.
 
 **Ads-only proposals (4 phases, unchanged):** Phase 1 & 2 (Setup + Warm up) 249 USD/mo · Phase 3 (Convert) 349 USD/mo · Phase 4 (Scale) 449 USD/mo. Fee starts low so client budget goes to ad spend; rises only once results show. 1,000 USD Google ad credit included. Budget guide: Awareness 10–20 USD/day/platform + Lead Gen 30–50 USD/day/platform.
 
@@ -330,8 +330,8 @@ Build the branded document (PDF via the Mavix pipeline, or .docx if explicitly r
 Case studies are assembled with the reusable builders in Section 05. Verify: zero em/en dashes
 and curly quotes in prose; every content section on one page; the mandatory case-study section
 present; the last page is the close with both links working; **an SEO or Both document has no
-price anywhere** (search the PDF text for "$", "USD", "/mo", "/ month", "per month": the only
-hit allowed is the guarantee's "$1,000"); the SEO scope page lists all seven work areas; no
+price anywhere** (search the PDF text for "$", "USD", "/mo", "/ month", "per month": there
+should be no hit at all, unless the prospect was already given the old "$1,000" guarantee); the SEO scope page lists all seven work areas; no
 "TBC", "to confirm" or DIY-fix text anywhere; testimonials carry only confirmed companies or
 roles ("Business owner" otherwise); the AI page (SEO) uses only the two allowed facts and
 promises no place in an AI answer; the Who We Are page uses the company story. For an SEO

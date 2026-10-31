@@ -9,8 +9,9 @@ Builds a print-ready, branded SEO audit and strategy PDF plus a cold outreach em
 
 **This document is a free audit and strategy, not a quote. It carries no prices at all**
 (Farhan, October 2026). The plan and the personalised price go to the prospect after they
-reply "yes" or book the 15-minute walkthrough. The only money figure allowed anywhere is the
-guarantee's "plus $1,000".
+reply "yes" or book the 15-minute walkthrough. No money figure is allowed anywhere, not even
+in the guarantee (it has no "$1,000" any more). The one exception: a prospect already given the
+old guarantee (90 days, everything back plus $1,000) keeps it, and then "plus $1,000" may appear.
 
 ## Step 0: load the rules first
 
@@ -62,7 +63,7 @@ easy. Everything in between is the proof.
 
 | # | Section | What it does |
 |---|---|---|
-| 01 | The short version | Four stat cards, three findings, three plan lines, the 90-day target and guarantee in one neon box, and "your plan and how to start are on the last page" |
+| 01 | The short version | Four stat cards, three findings, three plan lines, the target we agree in writing and the guarantee in one neon box, and "your plan and how to start are on the last page" |
 | 02 | What we know about your business | Table of what they told us, plus the honest assumptions box. See `TRUST_SECTIONS.md` |
 | 03 | Where you stand | Their reality: a short table of area, what we found, what it costs them. One pull quote |
 | 04 | The search gap | Search volume, capture rate, average value, monthly gap. Competitor traffic bar chart |
@@ -70,7 +71,7 @@ easy. Everything in between is the proof.
 | 06 | Competitor analysis | Competitor table, backlink donut, red alert on the biggest problem |
 | 07 | The plan | Neon callout, three-phase Gantt across 90 days, then "Your first 30 days": four numbered steps, week 1 to week 4, specific to them |
 | 08 | What we will work on | The seven work areas, each with what we do and what it means for them, then what is not included and what we need from them. See Step 3b |
-| 09 | The targets | The 90-day target the guarantee covers, then six scorecards with month-six goals |
+| 09 | The targets | The target we agree in writing, which the guarantee covers (180 days), then six scorecards with month-six goals |
 | 10 | Who we are | The company story (below), Google Partner block, credential circles, logo wall. See `TRUST_SECTIONS.md` |
 | 11 | What clients say | **Confirmed testimonials only**, 2 per row. See Step 5 |
 | 12 | Case study 01 | Construction management firm, `seo3` |
@@ -78,13 +79,13 @@ easy. Everything in between is the proof.
 | 14 | Case study 03 | Online home goods store, `seo1` |
 | 15 | Questions | **Eight numbered FAQs, filling the page.** Always include "Would Google Ads be faster?", "Will I show up in ChatGPT or Google's AI answers?" and "What does it cost?" (answer: it depends on the plan and the site; reply "yes" or book the walkthrough for the personalised price; no setup fee) |
 | 16 | How we work together | Channels and reporting table, who owns what, and what happens if you leave. See `TRUST_SECTIONS.md` |
-| 17 | Your plan, and how to start | The close: the recommended plan of work (no price), the 90-day target, the first three things we do, two ways to move forward. See Step 7b |
+| 17 | Your plan, and how to start | The close: the recommended plan of work (no price), the target we would agree in writing, the first three things we do, two ways to move forward. See Step 7b |
 
 **No prices, anywhere.** No pricing or investment page, no price on the close page, no price
-in the FAQs, the scope page, the email or the file name. No "$999", no "/ month", no "from".
+in the FAQs, the scope page, the email or the file name. No "$1,800", no "/ month", no "from".
 Publisher fees are named as a cost the client pays directly, without a number ("we tell you the
-usual range with your price"). The only money figure allowed is the guarantee's "plus $1,000".
-If Farhan asks for a quote, that is a separate document, sent after the prospect says yes.
+usual range with your price"). No money figure is allowed at all, unless the prospect was
+already given the old guarantee with its "plus $1,000". If Farhan asks for a quote, that is a separate document, sent after the prospect says yes.
 
 **Cut on purpose, do not bring back:** the contents page, the pricing or investment page, the
 twelve-month projection page, a "quick wins" or "fix it yourself" page, the "what usually goes
@@ -253,24 +254,28 @@ Farhan the drafted quotes need sign-off before sending.
 
 **There are no prices in this document.** No pricing page, no price on the close page, no
 "from" price in the FAQs. The plan names (Starter, Growth, Premium) may appear, and the close
-page lists the work in the recommended plan, but never a fee. Prices depend on the campaign the
-prospect came from and are sent after the yes (see the call kit's `facts.md` for the current
-numbers).
+page lists the work in the recommended plan, but never a fee. Prices are sent after the yes:
+one price list for every new prospect (see the call kit's `facts.md` for the current numbers),
+or the price already quoted to them if the conversation shows one.
 
 What each plan does, for the close page's "every month" list only (no prices):
 
 - **Starter, no money-back guarantee:** keyword and competitor research, 2 blogs a month,
   directory and profile listings, social bookmarking and Q&A, monthly report and call.
-- **Growth, usually the one we recommend, 90-day money-back guarantee:** everything in Starter,
+- **Growth, usually the one we recommend, our money back guarantee:** everything in Starter,
   3 to 4 blogs, 2 guest posts, 1 PR placement, Google Business Profile management,
   infographics.
-- **Premium, 90-day money-back guarantee:** everything in Growth, 8 or more blogs and guest
+- **Premium, our money back guarantee:** everything in Growth, 8 or more blogs and guest
   posts, full on-page audit and fixes, technical SEO, quarterly competitor gap analysis,
   priority calls.
 
-**The guarantee, worded the same way everywhere (sections 01, 09, 15 and 17):** on our main
-plans (Growth and Premium), we agree a 90-day target with the client in writing before they
-start. If we miss it, they get everything they paid back, plus $1,000. Starter has none. The
+**Our money back guarantee, worded the same way everywhere (sections 01, 09, 15 and 17):** on
+our main plans (Growth and Premium), we agree a clear, measurable target with the client in
+writing before they start. If we have not hit it within 180 days, they choose: everything they
+paid back, or we keep working for free until we hit it. Starter has none. No "$1,000" and no
+"90 days" in the guarantee. **Check the conversation first:** anyone already sent an audit and
+told the old terms (90 days, everything back plus $1,000) keeps them, and so does their price.
+The plan itself still runs over 90 days (section 07); only the guarantee changed. The
 month-six scorecards are goals, not the guarantee. The target is a real, checkable number (for
 example "page one on Google for 2 of 10 searches we agree before you start"), never "TBC".
 
@@ -297,7 +302,7 @@ Title: "Your plan, and how to start." Built with `close_page`. It holds:
 1. **The recommended plan of work for them, with no price**: the plan name, one line on what it
    is for them, three to five "every month" lines of work, and the guarantee in one line (Growth
    or Premium; if Starter is the recommendation, say it has no guarantee).
-2. **The 90-day target we would agree**, the same words as section 09, and how it is checked.
+2. **The target we would agree in writing**, the same words as section 09, and how it is checked.
 3. **The first three things we do**, specific to this prospect (from section 07).
 4. **Two ways to move forward:** reply "yes" to the email and we send the plan and their
    personalised price, or book a 15-minute walkthrough at
@@ -308,8 +313,9 @@ Nothing else goes on this page. No price, no new information, no extra plans, no
 
 ## Step 8: check before showing anyone
 
-1. **Run `python3 build/check_pdf.py <pdf> 18`. It must say ALL PASS.** It checks the page
-   count, dashes, curly quotes, banned words, placeholders, prices, the old team story, ranking
+1. **Run `python3 build/check_pdf.py <pdf> 18`. It must say ALL PASS.** Add `--old-terms` only
+   for a prospect already given the old guarantee. It checks the page
+   count, dashes, curly quotes, banned words, placeholders, prices, the old guarantee, the old team story, ranking
    promises, DIY fixes, cut pages, old terms, "monthly" used for a total, the cover chips, the
    AI fact sources, the case study URLs, the scope page and both links on the close page.
 2. **Page count is 18** (cover + 17 sections). More means a section spilled. Cut copy, never
@@ -331,7 +337,7 @@ Nothing else goes on this page. No price, no new information, no extra plans, no
 10. **Section 16 and the FAQs agree** on the terms: no long contract, no time limit, the
     agreement only ties Mavix.
 11. **The guarantee is worded the same** in sections 01, 09, 15 and 17.
-12. **The close page** shows the plan of work (no price), the 90-day target, three first steps,
+12. **The close page** shows the plan of work (no price), the target we would agree, three first steps,
     and both ways to move forward with working links.
 
 ## Who we are: the company story (section 10)
@@ -357,9 +363,9 @@ Never add a client count, a founding story, an award or an office the story does
 One line of summary, then print the outreach email in chat.
 
 Tell Farhan in chat, every time, which lines in the document are commitments he now has to
-keep: the response time, the 90-day target, the first three things on the close page, the
+keep: the response time, the target and the guarantee, the first three things on the close page, the
 named account manager, and the handover. If any of them is not true yet, say so plainly before
-he sends it. Then tell him which plan and which campaign price the prospect should get when they
+he sends it. Then tell him which plan and which price (the current list, or the one already quoted) the prospect should get when they
 reply "yes".
 
 ## Step 10: the outreach email

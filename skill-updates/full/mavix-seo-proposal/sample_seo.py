@@ -57,9 +57,10 @@ behind these lines.</p>
  "Weeks 9 to 12: reviews, local links and mentions on trusted sites, so Google, Maps and AI "
  "answers have reasons to pick you.",
 ], lime=True)
- + neon('The 90-day target: <strong class="hl">page one on Google for 2 of 10 searches we agree '
-        'with you before you start.</strong> On our main plans, miss it and you get everything you '
-        'paid back, plus $1,000. Your plan and how to start are on the last page.'))
+ + neon('The target, agreed in writing: <strong class="hl">page one on Google for 2 of 10 searches '
+        'we agree with you before you start.</strong> On our main plans, if we have not hit it within '
+        '180 days, you choose: everything you paid back, or we keep working for free until we hit it. '
+        'Your plan and how to start are on the last page.'))
 
 # 02 ------------------------------------------------------------- what we know
 s02 = section("02", "What We Know",
@@ -156,7 +157,7 @@ s07 = section("07", "The Plan",
  ("Weeks 3 to 4: the first treatment pages", "Veneers and implants first, written around the questions patients ask."),
  ("Week 4: reviews and stars", "A simple review request for past patients, and review markup so stars show in the results."),
 ]) + '''<p class="note">Google needs time to recrawl each fix and trust each new page. Local
-searches move faster than city-wide ones, which is why the 90-day target aims at them.</p>''')
+searches move faster than city-wide ones, which is why the target aims at them.</p>''')
 
 # 08 ------------------------------------------------------------- what we will work on
 s08 = section("08", "What We Will Work On",
@@ -193,9 +194,10 @@ read of each page before it goes live.</p>''')
 
 # 09 ------------------------------------------------------------- targets
 s09 = section("09", "The Targets",
-  'Your 90-day target, <span class="accent">and the six-month goals.</span>', '''
-<p class="lead">The 90-day target is the one the guarantee covers: page one on Google for 2 of 10
-searches we agree with you before you start, picked from ones within reach. The six-month numbers
+  'Your target, <span class="accent">and the six-month goals.</span>', '''
+<p class="lead">The target we agree in writing is the one the guarantee covers: page one on Google
+for 2 of 10 searches we agree with you before you start, picked from ones within reach. If we have
+not hit it within 180 days, you choose: your money back, or we keep working for free. The six-month numbers
 below are goals we plan against, not promises.</p>
 ''' + scorecards([
  ("Agreed searches on page one", "0 of 10", "5 of 10", 50), ("Visits a month from Google", "310", "1,450", 78),
@@ -353,8 +355,9 @@ s15 = section("15", "Questions",
  ("Is there a contract?",
   "No long contract. The agreement has no time limit and only ties us, to deliver. No setup fee."),
  ("What exactly is the guarantee?",
-  "On our main plans, Growth and Premium: we agree the 90-day target in writing before you "
-  "start. Miss it and you get everything you paid back, plus $1,000. Starter has no guarantee."),
+  "Our money back guarantee, on Growth and Premium: we agree a clear target in writing before you "
+  "start. If we have not hit it within 180 days, you choose: everything you paid back, or we keep "
+  "working for free until we hit it. Starter has no guarantee."),
  ("How much of my time does this take?",
   "About an hour in week one, then a 30 minute call a month and a quick read of each new page."),
 ]))
@@ -391,11 +394,11 @@ P.update({
    "month for Lumiere.",
  "close_work": ["3 to 4 treatment pages or articles", "2 guest posts and 1 PR placement",
                 "Google Business Profile and review requests", "A written report and a 30 minute call"],
- "close_guarantee": "90-day money-back guarantee: miss the target and you get everything you "
-   "paid back, plus $1,000.",
+ "close_guarantee": "Our money back guarantee: if we have not hit the target within 180 days, "
+   "you choose your money back or free work until we hit it.",
  "close_target": "Page one on Google for 2 of 10 searches we agree with you before you start.",
  "close_target_note": "Picked together from searches within reach, such as \"veneers dubai "
-   "marina\". Checked in your own Search Console on day 90.",
+   "marina\". Checked in your own Search Console, by day 180 at the latest.",
  "close_first": [
   ("Speed and spam links", "Your site under 2.5 seconds on a phone, the 87 spam links dealt with."),
   ("Your Google profile", "Treatments, booking link and the 11 open questions answered."),

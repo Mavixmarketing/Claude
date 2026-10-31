@@ -12,9 +12,9 @@ End of discovery, after the deeper layer and before the yes/no/maybe frame. One 
 
 > *"Before I show you anything, have you got a rough number in your head for this? I'd rather know now than build you something you were never going to spend on."*
 
-**Tells him:** whether this call ends in a package or ends warmly. Search floor is the Starter price for the prospect's campaign ($349 or $999), ads floor is $200 (see `facts.md`).
+**Tells him:** whether this call ends in a package or ends warmly. Search floor is the Starter price ($749, or a lower price already quoted to them), ads floor is $200 (see `facts.md`).
 
-**Bad answer:** "I don't know, what does it cost?" is not actually a bad answer — most people have not thought about it. Say *"Fair enough. It's a monthly fee, no setup cost. For search it starts at [their campaign's Starter: three-forty-nine, or nine-ninety-nine on the AI Written campaign] a month; for ads it starts in the low hundreds. Does that sound like the right neighbourhood or the wrong one?"* and carry on. A number below the floor is the disqualify in section 5, never a discount.
+**Bad answer:** "I don't know, what does it cost?" is not actually a bad answer — most people have not thought about it. Say *"Fair enough. It's a monthly fee, no setup cost. For search it starts at seven-forty-nine a month (or the price they were already quoted); for ads it starts in the low hundreds. Does that sound like the right neighbourhood or the wrong one?"* and carry on. A number below the floor is the disqualify in section 5, never a discount.
 
 ### Two — who actually decides
 
@@ -74,13 +74,13 @@ The answer is almost always four months and no updates. Then: *"So you didn't fi
 
 Do not soften it — the honest answer sells better than the hopeful one. *"First movement in a few weeks on things you're already close on. Real change is month three to month six, and I'd rather tell you that now than pretend it's next Tuesday."*
 
-Then: *"The 90-day money-back guarantee on Growth is there for exactly that reason. We agree the target in writing before you start, and if I miss it you get the money back. Does that timeline still work for what you're trying to do?"*
+Then: *"The money back guarantee on Growth is there for exactly that reason. We agree a clear target in writing before you start, and if I have not hit it within 180 days, you choose: your money back, or I keep working for free until we hit it. Does that timeline still work for what you're trying to do?"*
 
 ### "Can you guarantee me page one?"
 
 Say no. Saying no here wins more calls than any yes. *"No. Google's own words are that nobody can guarantee a number one ranking, and anyone who tells you otherwise is selling you something."*
 
-Then say what is actually promised: *"What's in writing is a 90-day target we agree together before you start, on Growth or Premium. Miss it and you get everything back, plus a thousand-dollar cheque out of my own pocket. That's a promise I can keep. Does that land differently?"*
+Then say what is actually promised: *"What's in writing is a clear target we agree together before you start, on Growth or Premium. If I have not hit it within 180 days, you choose: everything you paid back, or I keep working for free until we hit it. That's a promise I can keep. Does that land differently?"*
 
 ### "We've already got someone doing it."
 
@@ -114,7 +114,7 @@ Then: *"The other thing is I don't spend six weeks on strategy documents before 
 
 ### "That's more than I expected."
 
-Do not drop the price and do not defend it with a speech. Set it against their own numbers: *"Fair. You told me a [job] is worth about [their number]. [Their campaign's Growth price: five-forty-nine, or thirteen-forty-nine on the AI Written campaign] is about [fraction] of one of those a month. And on Growth, if we miss the 90-day target we agree up front, you get it all back plus a thousand. Which part feels too much, the monthly number or the risk?"* If the monthly number is the problem, offer Starter honestly, and say it has no guarantee.
+Do not drop the price and do not defend it with a speech. Set it against their own numbers: *"Fair. You told me a [job] is worth about [their number]. [The Growth price: eighteen hundred, or the price they were already quoted] is about [fraction] of one of those a month. And on Growth, if we have not hit the target we agree in writing within 180 days, you choose: it all back, or we keep working for free until we hit it. Which part feels too much, the monthly number or the risk?"* If the monthly number is the problem, offer Starter honestly, and say it has no guarantee.
 
 ### "Will this get me into ChatGPT or Google's AI answers?"
 
@@ -206,7 +206,7 @@ Number five matters most when there is no long contract, and it is the one every
 
 Ending a call early is a win. `mechanics.md` bans closing a business that has told you it cannot make rent, and the agenda already promised this at minute four: *"if I'm not right for you I'll say so."* This is him keeping that promise. Say it kindly, say it once, and never come back with a smaller package to rescue it.
 
-**Below the floor.** *"I'm going to be straight with you. What you've got to spend and what this costs aren't going to meet, and I'd rather tell you now than take your money and disappoint you in month two. Search starts at [their campaign's Starter price] a month, and below that I genuinely can't do it properly."* Then leave them with something: *"Here's what I'd do in your position for nothing — [the tip]. Come back when the numbers change, the door's open."*
+**Below the floor.** *"I'm going to be straight with you. What you've got to spend and what this costs aren't going to meet, and I'd rather tell you now than take your money and disappoint you in month two. Search starts at [the Starter price: seven-forty-nine, or the price they were already quoted] a month, and below that I genuinely can't do it properly."* Then leave them with something: *"Here's what I'd do in your position for nothing — [the tip]. Come back when the numbers change, the door's open."*
 
 **Wrong service.** *"Honestly? Search isn't your problem. You need people through the door in the next six weeks and search doesn't do that — different conversation, different day."* If ads is the right answer, book a separate call for it. Never sell both on one call.
 

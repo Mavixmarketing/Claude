@@ -32,25 +32,29 @@ Clients mostly USA and UK.
 
 **On an SEO call, Growth or Premium:**
 
-> I want founders sleeping properly instead of lying awake worrying about their marketing. That's why the guarantee is in writing — fifty percent more traffic, rankings and visitors, or you get your money back. And a thousand-dollar penalty cheque out of my own pocket on top of that. The financial risk sits on my shoulders, not yours.
+> I want founders sleeping properly instead of lying awake worrying about their marketing. That's why the guarantee is in writing. Before you start, we agree a clear target together, in writing, one we can both measure. If I have not hit it within 180 days, you choose: everything you paid back, or I keep working for free until we hit it. The financial risk sits on my shoulders, not yours.
 
 **On an SEO call where Starter is the likely package** — Starter carries no guarantee, so promising one in minute three and withdrawing it in minute twenty-five is a lie you tell yourself:
 
 > I want founders sleeping properly instead of lying awake worrying about their marketing. That's why there's no contract, no setup fee, thirty days' notice, and every account stays in your name. On the bigger packages there's a written money-back guarantee on top, and I'll walk you through exactly how that works when we get to the numbers.
 
-**On an ads call** — the written guarantee names traffic, rankings and visitors, which is search work. Never say it on an ads call:
+**On an ads call** — the written guarantee is about search results, which is search work. Never say it on an ads call:
 
 > I want founders sleeping properly instead of lying awake worrying about their marketing. That's why there's no contract, no setup fee, and thirty days' notice. Your ad budget stays on your own card, going straight to Google or Meta — it never comes through me. And every account, every pixel, every bit of the history stays in your name. If you walk, you walk with all of it. The risk of me being wrong sits on my shoulders, not yours.
 
 ## SEO pricing
 
+One price list for every new prospect, in US dollars (Farhan, 1 November 2026). **If a price was
+already quoted to this prospect, honour it.** Check the conversation first: anyone already sent
+an audit and told a price keeps the price, and the guarantee, they were told.
+
 | Package | Price | What's in it |
 |---|---|---|
-| **Starter** | **$349/mo** | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report |
-| **Growth** ⭐ | **$549/mo** (was $799) | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **90-day money-back guarantee** · **price locked for life** |
-| **Premium** | **$1,649/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **90-day money-back guarantee** |
+| **Starter** | **$749/mo** (normally $1,049) | Keyword and competitor research · 2 blogs/month · Pinterest 8 · directories 12 · social bookmarking 8 · profile creation 8 · multi-link 16 · Q&A 8 · monthly report · **no money-back guarantee** |
+| **Growth** ⭐ recommended | **$1,800/mo** | Everything in Starter, plus 3-4 blogs/month · 2 guest posts · PPT/PDF 8 · articles 8 · infographics 8 · 1 PR submission · GMB optimisation 2 · **our money back guarantee** (180 days) · **price locked for life** |
+| **Premium** | **$2,500/mo** | Everything in Growth, plus 8+ blogs · 8+ guest posts · full page-by-page audit and fixes · site speed and broken links · competitor gap analysis · priority support · **our money back guarantee** (180 days) |
 
-**Lead with Growth.** The price lock is a real reason to decide today — it does not expire tonight, it just stops applying when rates go up.
+**Lead with Growth**, it is where most clients start. The only "was" price allowed is Starter's (normally $1,049, now $749); never quote one for Growth or Premium. Say the prices out loud as "seven-forty-nine", "eighteen hundred" and "twenty-five hundred" a month. The price lock is a real reason to decide today — it does not expire tonight, it just stops applying when rates go up.
 
 ## Ads pricing
 
@@ -66,13 +70,13 @@ Ad budget is always the client's, on their card, direct to the platform. Never t
 
 ## Floors
 
-**SEO $300. Ads $200.** Below that, walk. Two moves only when money is the blocker: move down a package, or walk politely. **Never invent a number on a call.**
+**SEO: the Starter price, $749** (or a lower price already quoted to them). **Ads $200.** Below that, walk. Two moves only when money is the blocker: move down a package, or walk politely. **Never invent a number on a call.**
 
 ## Guarantee
 
-**50% more traffic, rankings and visitors, or money back.** Growth and Premium: 90 days, plus $1,000 if we miss the target. **Starter has none — never imply otherwise, including in the intro.**
+**Our money back guarantee. Growth and Premium only.** Before the work starts, we agree a clear, measurable target with the client in writing. If we have not hit it within 180 days, the client chooses: everything they paid back, or we keep working for free until we hit it. No "plus $1,000", and not 90 days any more. **Anyone already given the old terms** (90 days, everything back plus $1,000) keeps them: check the conversation. **Starter has none — never imply otherwise, including in the intro.**
 
-**This guarantee is for search work only.** It names traffic, rankings and visitors. It has no meaning on an ads deal and must never appear in an ads document or an ads call.
+**This guarantee is for search work only.** It is about search results. It has no meaning on an ads deal and must never appear in an ads document or an ads call.
 
 ## The ads offer — there is no ads guarantee
 

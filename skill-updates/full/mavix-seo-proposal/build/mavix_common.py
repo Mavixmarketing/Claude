@@ -305,11 +305,11 @@ def pricing_seo(num, P):
     no prices at all. The plan and the personalised price are sent after the prospect
     replies "yes" or books the walkthrough. Kept only so older builds still import.
     Premium pricing page.
-    P["seo_tiers"]: three dicts with name, price (e.g. "$1,349"), fit (one short line on
+    P["seo_tiers"]: three dicts with name, price (e.g. "$1,800"), fit (one short line on
     who the plan suits), guarantee (bool), points (bullets), reco (True on exactly one).
     P["terms"]: four short terms for the strip under the cards.
     P["guarantee_title"], P["guarantee_text"]: the banner. Optional P["price_lead"].
-    There is no "was" price any more. Never print a crossed-out price."""
+    The only "was" price allowed is Starter's (normally $1,049). Never print a crossed-out price."""
     tiers = ""
     for t in P["seo_tiers"]:
         reco = " reco" if t.get("reco") else ""
@@ -345,7 +345,7 @@ def close_page(num, P):
       close_plan_line   one line on what that plan of work is for them
       close_work        3 to 5 short lines: the work they get each month (no prices)
       close_guarantee   one line (Growth or Premium); for Starter say it has none
-      close_target      the 90-day target, one sentence, real numbers, never "TBC"
+      close_target      the target we agree in writing, one sentence, real numbers, never "TBC"
       close_target_note how it is picked and checked
       close_first       three (title, text) pairs: the first three things we do
       contact_email     optional
@@ -379,7 +379,7 @@ def close_page(num, P):
            if work else "")
         + '</div>'
         '<div class="cl-row">'
-        '<div class="cl-target"><div class="h">The 90-day target we would agree</div>'
+        '<div class="cl-target"><div class="h">The target we would agree in writing</div>'
         f'<div class="t">{esc(P["close_target"])}</div>'
         f'<div class="s">{esc(P["close_target_note"])}</div></div>'
         f'<div class="cl-first"><div class="h">The first three things we do</div>{first}</div>'

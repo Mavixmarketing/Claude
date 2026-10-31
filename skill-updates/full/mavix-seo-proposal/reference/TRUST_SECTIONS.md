@@ -249,7 +249,8 @@ personal, so it comes after the yes.
 
 1. **The recommended plan of work** for this prospect: the plan name, one line on what it is
    for them, three to five "every month" lines, and the guarantee in one line. **No price.**
-2. **The 90-day target we would agree**, in the same words as the targets page, and how it is
+2. **The target we would agree in writing** (the one our money back guarantee covers, 180
+   days), in the same words as the targets page, and how it is
    checked.
 3. **The first three things we do**, specific to this prospect, each one line.
 4. **Two ways to move forward:** reply "yes" to the email and we send the plan and their

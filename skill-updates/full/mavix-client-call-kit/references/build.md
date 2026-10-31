@@ -8,7 +8,7 @@ Do not design a page from scratch and do not invent new styles. Everything in `a
 |---|---|
 | `render_lib.py` | The design system. Colours, fonts, the A4 `page()` wrapper, and about twenty ready-made components |
 | `render.py` | HTML to PNG to PDF, plus the overflow check |
-| `build_review_seo.py` | A finished 14-page SEO review, end to end. **Set `CAMPAIGN` at the top** (`usa_canada`, `aus_uk_nz_sing` or `ai_written`) so the pricing page shows that campaign's prices, and put any price already quoted to the prospect in `QUOTED` |
+| `build_review_seo.py` | A finished 14-page SEO review, end to end. The pricing page shows the one price list (`PRICES` at the top). Check the conversation: put any price already quoted to the prospect in `QUOTED`, and set `OLD_GUARANTEE = True` if they were already given the old guarantee |
 | `review_charts.py` | The chart builders that review uses |
 | `case_content_seo.py` / `build_case_study_seo.py` | The nine SEO page layouts, with example content. **The example copy is retired invented content: reuse the layout, never the words.** Fill it from the live website case study page |
 | `case_content_ads.py` / `build_case_study_ads.py` | The nine ads page layouts, with example content. **The example copy is retired invented content: reuse the layout, never the words.** Fill it from the live website case study page |

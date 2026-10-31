@@ -217,7 +217,12 @@ client will appear in an AI answer.
 - "TBC", "to confirm" or any placeholder.
 - A broken lead line. Read the first sentence of every page aloud before sending.
 - **Any price.** The audit is free and is not a quote. No fee, no "from" price, no "/ month",
-  no publisher fee range. The only money figure is the guarantee's "plus $1,000".
+  no publisher fee range. No money figure at all, not even in the guarantee (our money back
+  guarantee has no "$1,000" since 1 November 2026). Only a prospect already given the old terms
+  keeps the old "plus $1,000" wording.
+- **The old guarantee for a new prospect.** No "90-day money-back guarantee" and no "plus
+  $1,000". The guarantee is: a target agreed in writing, 180 days, then the client chooses
+  everything back or free work until we hit it.
 - **An unconfirmed company or role for a real person.** A testimonial prints only what Farhan
   has confirmed. No confirmed company means "Business owner". Never invent one.
 - **The old team story.** Never "small team", "Farhan runs your account himself" or "there is
@@ -226,7 +231,7 @@ client will appear in an AI answer.
 ## Verify before delivering
 
 Run the full checker on the finished PDF, not the source. It covers everything below plus
-prices, placeholders, the old team story, ranking promises, DIY fixes and both close-page links:
+prices, the old guarantee, placeholders, the old team story, ranking promises, DIY fixes and both close-page links:
 
 ```bash
 python3 build/check_pdf.py out/Client_SEO_Proposal.pdf 18

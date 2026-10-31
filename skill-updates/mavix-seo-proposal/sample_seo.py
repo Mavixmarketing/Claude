@@ -89,7 +89,7 @@ early and steep later. Here is the shape we plan against.</p>
             "Projection based on the keyword set below and typical timelines for a single-location "
             "clinic. Not a guarantee. The guarantee is on the investment page.", c_proj, big=True)
  + stats([("Month 3","First page-one rankings","ink"),("Month 6","Traffic roughly 4x","ink"),
-          ("Month 12","Traffic roughly 11x","ink"),("90 days","Money-back window","ink")]))
+          ("Month 12","Traffic roughly 11x","ink"),("180 days","Money-back window","ink")]))
 
 s04 = section("04", "Why Invest in SEO",
   'Why this channel, <span class="accent">and not just more ads.</span>', '''
@@ -160,8 +160,8 @@ outreach at no markup, so you see the real cost.</p>''')
 
 s08 = section("08", "The Fix, Measured",
   'The numbers we <span class="accent">sign up to.</span>', '''
-<p class="lead">These are the targets for month six. The guarantee covers the 90-day target we
-agree first (see the investment page). No renegotiating after the fact.</p>
+<p class="lead">These are the targets for month six. The guarantee covers the target we agree
+in writing first, over 180 days (see the investment page). No renegotiating after the fact.</p>
 ''' + scorecards([
  ("Organic visits / mo", "310", "1,450", 78), ("Page one keywords", "0", "18", 72),
  ("Mobile load time", "9.4s", "2.4s", 85), ("Booked calls / mo", "6", "34", 68),
@@ -298,21 +298,21 @@ cs3 = case_study("13", {
 
 P.update({
  "seo_tiers": [
-  {"name":"Starter","price":"349 USD","points":[
+  {"name":"Starter","price":"749 USD","was":"was 1,049 USD","points":[
     "Keyword and competitor research","2 blog articles a month","Directory and profile listings",
     "Social bookmarking and Q&A","Monthly report and call"]},
-  {"name":"Growth","price":"549 USD","was":"was 799 USD","reco":True,"points":[
+  {"name":"Growth","price":"1,800 USD","reco":True,"points":[
     "Everything in Starter","3 to 4 blog articles a month","2 guest posts a month",
     "1 PR placement a month","Google Business Profile management","Infographics and PDF assets"]},
-  {"name":"Premium","price":"1,649 USD","points":[
+  {"name":"Premium","price":"2,500 USD","points":[
     "Everything in Growth","8 or more blogs and guest posts","Full on-page audit and the fixes",
     "Technical SEO: speed, schema, links","Quarterly competitor gap analysis",
     "Priority support and strategy calls"]},
  ],
- "guarantee_title": "90-day money-back guarantee",
- "guarantee_text": "On Growth and Premium, if we miss the 90-day target we agree with you, you get every fee "
-   "back plus 1,000 USD for the time you spent with us. We have never had to pay it and we would "
-   "rather keep it that way.",
+ "guarantee_title": "Our money back guarantee",
+ "guarantee_text": "On Growth and Premium, we agree a clear target with you in writing before we start. "
+   "If we have not hit it within 180 days, you choose: everything you paid back, or we keep working "
+   "for free until we hit it.",
 })
 s14 = pricing_seo("14", P)
 

@@ -16,7 +16,7 @@ Four jobs at once: sets expectations, takes control, positions you as someone wh
 *"Does that make sense?"* · *"Is that the kind of thing you're after?"* Small yeses make the big yes easier, and each one is a chance for an objection to surface early instead of at the price. Hormozi's rule: **never** *"do you have any questions?"* — it gets "no" and shuts the door. Ask *"what else do you want me to show you?"*
 
 **4. Money maths during discovery, out loud, slowly.**
-*"A job's worth $X, you close Y in ten, so every ten enquiries is $Z."* This is the single strongest technique in the corpus. Every finding then converts into dollars, and $549 gets compared against a number the prospect said themselves. The calls that skipped it had no answer when the price was challenged.
+*"A job's worth $X, you close Y in ten, so every ten enquiries is $Z."* This is the single strongest technique in the corpus. Every finding then converts into dollars, and $1,800 gets compared against a number the prospect said themselves. The calls that skipped it had no answer when the price was challenged.
 
 **5. Recap before you transition.**
 Play back what they said, ask *"have I missed anything?"*, get the correction. They almost always add one more thing, and it's usually the real one.
@@ -93,7 +93,7 @@ Worth knowing so the script isn't built on a coin flip.
 
 - **Rapport first vs get to the point.** Split roughly evenly across sources. Resolution used here: a *researched* ice-breaker does both — it's warm and it's evidence you did the work.
 - **Talk/listen ratio.** Sources give everything from 33% to 60% seller talk. One SaaS study found top cold callers talk *more* than average. Resolution: 30/70 in discovery, closer to 60/40 during the audit and plan, because that part is you showing them something.
-- **One-call close vs book the next meeting.** Genuinely contested. At Mavix's price points, one call is right — nobody wants two meetings for $549.
+- **One-call close vs book the next meeting.** Genuinely contested. At Mavix's price points, one call is right — nobody wants two meetings for a few hundred to a couple of thousand a month.
 - **Best time to call.** Three different answers across sources. Derive it from your own data, not theirs.
 
 **On the statistics in this space generally:** almost every number in the published sales-advice corpus is vendor self-research, uncited folklore, or a call-recording correlation restated as a causal rule. Use the structures. Don't quote the numbers.

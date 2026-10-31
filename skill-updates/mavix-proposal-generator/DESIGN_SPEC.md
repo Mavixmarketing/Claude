@@ -395,7 +395,7 @@ table.tb tr:nth-child(even) td { background:#FAFBFD; }
 - **Step boxes** — numbered, for the first-month plan or the next-steps sequence.
 - **Scorecards** — 6-up grid, each "current (red) → target (blue)" with a gradient progress bar.
 - **Pricing** — 3 tiers side by side; the middle/recommended one gets `.reco` (blue outline + shadow) and a lime `.badge`. **One pricing system per proposal.**
-- **Guarantee banner** — dark gradient, lime headline, the refund + $1,000 promise.
+- **Guarantee banner** — dark gradient, lime headline, our money back guarantee: a target agreed in writing, and if it is not hit within 180 days the client chooses everything back or free work until it is hit. No "$1,000" unless the prospect already has the old terms.
 - **Final action block** — see §8/§9: confirm-and-start, not a call.
 
 ---
@@ -539,7 +539,7 @@ These protect the client relationship and Mavix's reputation. Follow them even i
 - [ ] Logo wall: 5 uniform white tiles, logos contained and centred.
 - [ ] Testimonials: 3+ cards, circular avatars, gold stars, real names/titles/companies from filenames.
 - [ ] Pricing: 3 tiers, middle one has the lime "Recommended" badge + blue outline; **only one pricing system**.
-- [ ] Guarantee banner present (refund + $1,000).
+- [ ] Guarantee banner present (our money back guarantee: target in writing, 180 days, money back or free work, the client's choice).
 - [ ] Final block = confirm-and-start, **no "book a call"/Cal.com link**.
 - [ ] Footer + page numbers on every content page; cover has none.
 - [ ] No inflated client/team/revenue numbers (§10).

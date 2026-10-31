@@ -148,19 +148,24 @@ client's real business, then tell Farhan the drafted quotes need sign-off before
 
 ## Step 6: pricing
 
-Three tiers, deliverables as **bullet lists inside the card**, never a paragraph.
+Three tiers, deliverables as **bullet lists inside the card**, never a paragraph. One price
+list for every new prospect (Farhan, 1 November 2026). **Check the conversation first:** if a
+price was already quoted to this prospect, use that price, and the guarantee they were told.
 
-- **Starter 349 USD/mo:** keyword and competitor research, 2 blogs a month, directory and
+- **Starter 749 USD/mo, was 1,049 (the only "was" price allowed), no money-back guarantee:** keyword and competitor research, 2 blogs a month, directory and
   profile listings, social bookmarking and Q&A, monthly report and call.
-- **Growth 549 USD/mo, marked recommended, was 799:** everything in Starter, 3 to 4 blogs,
+- **Growth 1,800 USD/mo, marked recommended, where most clients start:** everything in Starter, 3 to 4 blogs,
   2 guest posts, 1 PR placement, Google Business Profile management, infographics.
-- **Premium 1,649 USD/mo:** everything in Growth, 8 or more blogs and guest posts, full
+- **Premium 2,500 USD/mo:** everything in Growth, 8 or more blogs and guest posts, full
   on-page audit and fixes, technical SEO, quarterly competitor gap analysis, priority calls.
 
 No long contract: the agreement has no time limit and only ties us, to deliver. No setup fee. Publishers are paid directly by the client for
-PR and backlinks, usually 100 to 300 USD a month, at no markup. Close with the 90-day
-money-back guarantee on Growth and Premium (Starter has none): every fee back plus 1,000 USD if
-the 90-day target we agree up front is missed. The month-six scorecards are goals, not the guarantee.
+PR and backlinks, usually 100 to 300 USD a month, at no markup. Close with our money
+back guarantee on Growth and Premium (Starter has none): before we start we agree a clear,
+measurable target with the client in writing, and if we have not hit it within 180 days the
+client chooses everything they paid back, or we keep working for free until we hit it. No
+"plus 1,000 USD" and no "90 days" in it any more, unless the prospect was already given those
+old terms. The month-six scorecards are goals, not the guarantee.
 
 Whatever is said about notice and cancellation here must match section 17 and the actual
 contract. If the three disagree, the contract wins and the other two change.
