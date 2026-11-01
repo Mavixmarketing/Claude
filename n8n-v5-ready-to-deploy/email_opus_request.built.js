@@ -264,6 +264,20 @@ send is false only when nothing useful can be said or a rule above says so (then
 
 const PHONE = `PHONE NUMBERS (they want to talk): for people in the USA or Canada it is +1 510 312 5086, calls only (never say whatsapp for it). For everyone else it is +971 56 632 0456, calls and whatsapp. If you cannot tell where they are, give both, the USA one first, and say which is calls only. Anyone who asks for whatsapp gets the +971 number. You may add the booking link as the other option. Never suggest a time yourself. If they give their own number and ask to be called, say "I'll give you a call" and flag "call <name> on <number>".`;
 
+// WEBSITE STILL NEEDED (1 Nov, Farhan, after Dewayne): when we could not find their site, Farhan (or we) asked them
+// for the website or the business name. If no website came from them since that question, the writer asks once more,
+// for the business name only, after answering them. Without this the never-ask rule made the question disappear.
+const SITE_SPLIT = /\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/;
+const SITE_Q = /\b(share|send|give|tell)\b( me| us)?( with me)? (your|the) (website|web ?site url|url|web address|business name|business's name)|\b(what('s| is)|which is) (the |your )?(website|url|web address|business name|name of (your|the) business)|\bname of (your|the) business\b[^.?\n]{0,40}\?|\bcould ?n[o']?t (find|locate) your (website|site)/i;
+function siteAsked(transcript) {
+  const b = String(transcript || '').split(SITE_SPLIT);
+  let at = -1;
+  b.forEach((x, k) => { if (!/^\s*(THEM|NOTE)/.test(x) && SITE_Q.test(x)) at = k; });
+  if (at < 0) return false;
+  return !b.slice(at + 1).some(x => /^\s*THEM/.test(x) && /\b[a-z0-9-]+\.(com|net|org|co|io|ca|uk|au|nz|us|biz|info|shop|store|de|ie|sg)\b/i.test(x.replace(/\S+@\S+/g, ' ')));
+}
+const SITE_NEEDED = 'WEBSITE STILL NEEDED: we could not find their website, we already asked them for it (or for their business name), and they have not given it yet. After answering their newest message, ask once, simply, for the name of their business, saying it is all we need to find their site and start the audit (in your own words, different from how we asked before). Ask for the business name only, never for the website or a link. This replaces the never-ask rule for this one question. If their messages since our question already give the business name, do not ask again: use it, and put it in the flag. Never say the audit is started or on its way until we have it.';
+
 const FREE_MAIL = /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|live|msn|icloud|me|aol|comcast|att|verizon|proton|protonmail|gmx|mail|zoho|yandex|sbcglobal|bellsouth|shaw|rogers|bigpond|optusnet|btinternet|sky|mymts)\./i;
 function siteFrom(c) {
   if (c.website_guess) return c.website_guess;
@@ -284,6 +298,7 @@ return $input.all().map(it => {
   const pr = pricesFor(c.sequence, c.sequence_name, transcript, false);
   const extra = [];
   extra.push(pr.prices_block);
+  if (!site && siteAsked(transcript)) extra.push(SITE_NEEDED);
   extra.push(caseBlock(transcript, theirs, 'CASE STUDIES you may use (say the result in plain words, then the link; never change a number). Proof page with all results, client videos and reviews: https://mavixmarketing.com/case-studies.'));
   if (wantsTalk) extra.push(PHONE);
   const user = 'Today is ' + new Date().toISOString().slice(0, 10) + '.\nTheir email: ' + c.email +

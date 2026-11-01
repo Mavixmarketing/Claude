@@ -126,7 +126,22 @@ const isPromise = text => String(text || '').split(/(?<=[.?!])\s+|\n+/).some(s =
 const PROMISE_NOTE = /^(prepare|resend) the audit/i;
 const DELIVERED_NOTE = /(audit|proposal|roadmap|plan)( pdf| and (the )?(proposal|pricing|lead plan))? (was |were )?(already )?sent|sent the (audit|proposal|roadmap)|hand-sent (audit|proposal)|(already )?has the audit/i;
 const WAITING = /focus not given|not given yet|no site yet|(site|website) (is )?(still )?(being built|in progress|under construction|not live)|when (it is|it's|its) live|once (they|he|she) (send|share)|never (shared|sent) the (website|link|site)|still need (their|the|his|her|a|town|website|area)|waiting (on|for) (them|their|him|her)/i;
+// WEBSITE STILL NEEDED (1 Nov, Farhan, after Dewayne): when we could not find their site, Farhan (or we) asked them
+// for the website or the business name. If no website came from them since that question, we are waiting on THEM, so
+// we do not owe the audit and the follow-ups go on (the writer then asks for the business name). Without this the never-ask rule made the question disappear.
+const SITE_SPLIT = /\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/;
+const SITE_Q = /\b(share|send|give|tell)\b( me| us)?( with me)? (your|the) (website|web ?site url|url|web address|business name|business's name)|\b(what('s| is)|which is) (the |your )?(website|url|web address|business name|name of (your|the) business)|\bname of (your|the) business\b[^.?\n]{0,40}\?|\bcould ?n[o']?t (find|locate) your (website|site)/i;
+function siteAsked(transcript) {
+  const b = String(transcript || '').split(SITE_SPLIT);
+  let at = -1;
+  b.forEach((x, k) => { if (!/^\s*(THEM|NOTE)/.test(x) && SITE_Q.test(x)) at = k; });
+  if (at < 0) return false;
+  return !b.slice(at + 1).some(x => /^\s*THEM/.test(x) && /\b[a-z0-9-]+\.(com|net|org|co|io|ca|uk|au|nz|us|biz|info|shop|store|de|ie|sg)\b/i.test(x.replace(/\S+@\S+/g, ' ')));
+}
+// every logged history of the person, oldest row first (a single row's history can miss Farhan's hand-sent messages)
+const allHistory = (rows, extra) => (rows || []).map(r => String(r.history || '')).filter(Boolean).concat(extra ? [String(extra)] : []).join('\n\n---\n\n');
 function auditOwed(rowsOfPerson, history) {
+  if (siteAsked(allHistory(rowsOfPerson, history))) return false; // 1 Nov: our website / business name question is still unanswered
   let promiseRow = -1, deliveredRow = -1;
   for (const r of rowsOfPerson) {
     const id = Number(r.id), note = String(r.note || ''), ours = String(r.our_reply || '');
@@ -206,7 +221,10 @@ for (const key of Object.keys(latest)) {
     const em0 = String(t.email).toLowerCase();
     if (sendHour(em0) !== hourNow || localSunday(em0)) continue;
     const seen = Date.parse(j.handled_at || j.createdAt);
-    out.push({ json: { ...(personSeq[em0] || {}), them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), transcript: String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim(), site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: 0, not_due: true } });
+    const h0 = String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim();
+    // 1 Nov (Dewayne): our website / business name question is still open, so a real follow-up asks for it, half a day on
+    const askSite = !String(t.site_notes || '') && siteAsked(allHistory(byPerson[key], h0)) && isFinite(seen) && now - seen >= 0.5 * 86400000 && Number(t.followups || 0) < GAP_DAYS.length;
+    out.push({ json: { ...(personSeq[em0] || {}), them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: h0, transcript: h0, site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: isFinite(seen) ? Math.round((now - seen) / 86400000) : 0, not_due: !askSite, site_needed: askSite } });
     continue;
   }
   // A POLITE "NOT RIGHT NOW" (no reason, no stop): one friendly check-in about 80 days later, before
@@ -232,7 +250,7 @@ for (const key of Object.keys(latest)) {
   const n = Number(j.followups || 0);
   const last = Date.parse(j.handled_at || j.updatedAt || j.createdAt);
   if (!isFinite(last)) continue;
-  const base = { ...(personSeq[em] || {}), row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, catch_up: caughtUp(hour), farhan_note: plan ? String(plan.note || '') : '' };
+  const base = { ...(personSeq[em] || {}), row_event_id: String(j.event_id || ''), them_logged_at: loggedAt(key), email: j.email, messageId: j.message_id, history: String(j.history || ''), transcript: String(j.history || ''), site_notes: String(j.site_notes || ''), handled_at: new Date(last).toISOString(), send_hour_utc: hour, catch_up: caughtUp(hour), farhan_note: plan ? String(plan.note || '') : '', site_needed: !String(j.site_notes || '') && siteAsked(allHistory(byPerson[key], j.history)) };
   const days = (now - last) / 86400000;
   // this hour, or a missed hour being caught up, unless their row changed since the missed hours began (no double send)
   const myHour = hour === hourNow || (caughtUp(hour) && last < missedFrom);

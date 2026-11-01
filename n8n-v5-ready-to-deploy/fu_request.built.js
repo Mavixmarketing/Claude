@@ -299,6 +299,20 @@ function yesNoDetails(transcript) {
     return YES.test(said) && !NO.test(said);
   });
 }
+// WEBSITE STILL NEEDED (1 Nov, Farhan, after Dewayne): when we could not find their site, Farhan (or we) asked them
+// for the website or the business name. If no website came from them since that question, the writer asks once more,
+// for the business name only, after answering them. Without this the never-ask rule made the question disappear.
+const SITE_SPLIT = /\n\n---\n\n|\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:·])/;
+const SITE_Q = /\b(share|send|give|tell)\b( me| us)?( with me)? (your|the) (website|web ?site url|url|web address|business name|business's name)|\b(what('s| is)|which is) (the |your )?(website|url|web address|business name|name of (your|the) business)|\bname of (your|the) business\b[^.?\n]{0,40}\?|\bcould ?n[o']?t (find|locate) your (website|site)/i;
+function siteAsked(transcript) {
+  const b = String(transcript || '').split(SITE_SPLIT);
+  let at = -1;
+  b.forEach((x, k) => { if (!/^\s*(THEM|NOTE)/.test(x) && SITE_Q.test(x)) at = k; });
+  if (at < 0) return false;
+  return !b.slice(at + 1).some(x => /^\s*THEM/.test(x) && /\b[a-z0-9-]+\.(com|net|org|co|io|ca|uk|au|nz|us|biz|info|shop|store|de|ie|sg)\b/i.test(x.replace(/\S+@\S+/g, ' ')));
+}
+const SITE_NEEDED = 'WEBSITE STILL NEEDED: we could not find their website, we already asked them for it (or for their business name), and they have not given it yet. After answering their newest message, ask once, simply, for the name of their business, saying it is all we need to find their site and start the audit (in your own words, different from how we asked before). Ask for the business name only, never for the website or a link. This replaces the never-ask rule for this one question. If their messages since our question already give the business name, do not ask again: use it, and put it in the flag. Never say the audit is started or on its way until we have it.';
+const SITE_NEEDED_FU = 'WEBSITE STILL NEEDED: we could not find their website, we already asked them for it (or for their business name), and they have not given it yet. This follow-up replaces the N job: ask once, lightly, for the name of their business, saying it is all we need to find their site and start their free audit, in different words from how we asked before. One or two short lines, no link, no case study. Ask for the business name only, never for the website or a link. This overrides the rule about not following up while we owe the audit: we cannot start it without this. If their messages since our question already give the business name, send false and say so in why.';
 return $input.all().map(it => {
   const c = it.json;
   const transcript = String(c.transcript || '');
@@ -308,6 +322,7 @@ return $input.all().map(it => {
   const auditNudge2 = stage === 2 && Number(c.number) <= 4;
   const yesNoInfo = !special && !stage && Number(c.number) >= 2 && Number(c.number) <= 5 && yesNoDetails(transcript);
   const pr = pricesFor(c.sequence, c.sequence_name, transcript, false);
+  const needSite = !special && !stage && !c.site_notes && !c.website_guess && (c.site_needed === true || siteAsked(transcript));
   const theirs = aboutBusiness(transcript) + '\n' + String(c.site_notes || '') + '\n' + String(c.email || '').split('@')[1];
   const cases = caseBlock(transcript, theirs, 'CASE STUDIES you may use (say the result in plain words, then the link; never change a number).', '\nAll results, client videos and reviews: https://mavixmarketing.com/case-studies');
   const situation = c.farhan_note ? '\nFARHAN ASKED FOR THIS FOLLOW-UP: ' + c.farhan_note
@@ -317,13 +332,13 @@ return $input.all().map(it => {
     : auditNudge2 ? '\nTHIS IS THE SECOND FOLLOW-UP AFTER THE AUDIT: they have not answered the first nudge. Ask again lightly, in different words, whether they had a chance to look at the audit; no call link (or send false if a call is already booked for a time that has not come yet). Follow-up number N = ' + c.number
     : yesNoInfo ? '\nTHEY SAID YES BUT GAVE NO DETAILS: they said yes to the free audit, our last answer asked what they want more of, and they have not answered that. Follow the stage B rule for this case: show what the free audit will include, then the low-friction ask. Follow-up number N = ' + c.number
     : '\nFollow-up number N = ' + c.number;
-  return { json: { ...c, audit_nudge: auditNudge, audit_nudge2: auditNudge2, yes_no_details: yesNoInfo, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, guarantee: pr.guarantee, opus_body: JSON.stringify({
+  return { json: { ...c, audit_nudge: auditNudge, audit_nudge2: auditNudge2, yes_no_details: yesNoInfo, site_needed: needSite, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, guarantee: pr.guarantee, opus_body: JSON.stringify({
     model: cfg.WRITE_MODEL,
     max_tokens: 3000,
     reasoning: { effort: 'medium' },
     messages: [
       { role: 'system', content: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }] },
-      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + situation + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + pr.prices_block + '\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
+      { role: 'user', content: 'Their email: ' + c.email + (c.first_name ? '\nTheir first name: ' + c.first_name : '') + situation + ' (they have been quiet ' + c.days_quiet + ' days since our last email).\n\n' + pr.prices_block + (needSite ? '\n\n' + SITE_NEEDED_FU : '') + '\n\n' + cases + '\n\nConversation so far (oldest first):\n\n' + transcript + (c.site_notes ? '\n\nA QUICK GLIMPSE OF THEIR HOME PAGE:\n' + c.site_notes : '\n\nWe have no notes on their website.') },
     ],
   }) } };
 });
