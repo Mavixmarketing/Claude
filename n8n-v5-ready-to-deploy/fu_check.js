@@ -64,7 +64,8 @@ return $input.all().map((it, i) => {
   t = t.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
   // NEVER ASK FOR THE WEBSITE (Farhan's rule): any website question is taken out, the rest stays
   const SEP = '(\\s*,\\s*and\\s+|\\s+and\\s+|\\s*,\\s*|\\s*\\?\\s*(and\\s+)?)';
-  t = t.replace(new RegExp("(what is|what's|which is) (your|the) (website|site|url|web address|link)( of [a-z0-9 -]{1,30})?" + SEP, 'gi'), '')
+  // 1 Nov (Farhan): when we could not find their site and already asked for it, the writer may ask again (site_needed)
+  if (!c.site_needed) t = t.replace(new RegExp("(what is|what's|which is) (your|the) (website|site|url|web address|link)( of [a-z0-9 -]{1,30})?" + SEP, 'gi'), '')
        .replace(new RegExp('(could you |can you |please |just )?(share|send|paste|drop)( me| over)? (your|the) (website|site|url|web address|link)( link| address)?( here)?' + SEP + '?', 'gi'), '')
        .replace(/\n{3,}/g, '\n\n').trim();
   t = t.replace(/(^|\n\n|[.?]\s+)([a-z])(?!ttps?:\/\/|ww\.)/g, (m, a, b) => a + b.toUpperCase());
@@ -74,7 +75,7 @@ return $input.all().map((it, i) => {
   { const _known = (String((ctx[i] && ctx[i].json.transcript) || c.history || '') + ' ' + String(c.email || '')).toLowerCase(); const bw = t.replace(/[a-z0-9&'.-]*\bai\b[a-z0-9&'.-]*|\b(automated|automation|scheduled)\b/gi, m => (m.length > 2 && new RegExp('(^|[^a-z0-9])' + m.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^a-z0-9])').test(_known)) ? ' ' : m).replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?|apps?|side|like|such as)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...). 1 Nov: a word already in the conversation (a business name like "AI-Innovate" or "Automation Pros") is not ours, so it never counts
   problems.push(...aiProblems(t, String((ctx[i] && ctx[i].json.transcript) || c.history || '') + ' ' + String(c.email || '')));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
-  if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
+  if (!c.site_needed && /(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
   // follow-up 4 may open with one light bump ("bringing this back to the top of your inbox..."), as long as something useful follows
   const BUMP = /[^.?\n]*(just following up|bringing this back|checking in|top of your inbox|floating this|slipped through)[^.?\n]*[.?]?/gi;
   if (BUMP.test(t)) {

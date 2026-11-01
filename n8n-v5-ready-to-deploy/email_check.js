@@ -77,7 +77,8 @@ return $input.all().map((it, i) => {
   // NEVER ASK FOR THE WEBSITE (Farhan's rule). Any website question is taken out of the email
   // (the rest of the sentence stays); if we still do not know the site, Farhan is told to find it.
   const SEP = '(\\s*,\\s*and\\s+|\\s+and\\s+|\\s*,\\s*|\\s*\\?\\s*(and\\s+)?)';
-  t = t.replace(new RegExp("(what is|what's|which is) (your|the) (website|site|url|web address|link)( of [a-z0-9 -]{1,30})?" + SEP, 'gi'), '')
+  // 1 Nov (Farhan): when we could not find their site and already asked for it, the writer may ask again (site_needed)
+  if (!c.site_needed) t = t.replace(new RegExp("(what is|what's|which is) (your|the) (website|site|url|web address|link)( of [a-z0-9 -]{1,30})?" + SEP, 'gi'), '')
        .replace(new RegExp('(could you |can you |please |just )?(share|send|paste|drop)( me| over)? (your|the) (website|site|url|web address|link)( link| address)?( here)?' + SEP + '?', 'gi'), '')
        .replace(/\n{3,}/g, '\n\n').trim();
   // a sentence that now starts mid-way gets its capital letter back (links stay as they are)
@@ -89,7 +90,7 @@ return $input.all().map((it, i) => {
   problems.push(...aiProblems(t, String((ctx[i] && ctx[i].json.transcript) || '') + ' ' + String(c.email || '')));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
-  if (/(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
+  if (!c.site_needed && /(what|which) is (your|the) (website|site|url|link)|(share|send|paste) (me )?(your|the) (website|site|url|link)|address of (your|the) (website|site)/i.test(t)) problems.push('asks for the website');
   // NO PRICE NUMBERS BEFORE THE AUDIT (pay per lead has its own price, and after the audit the plans may be named)
   const convo = String((ctx[i] && ctx[i].json.transcript) || '');
   const auditDelivered = /(audit|proposal|roadmap|pricing|plan)[^\n]{0,60}(attached|enclosed|pdf|docs\.google|drive\.google)|attached[^\n]{0,60}(audit|proposal|roadmap|plan)|here is (your|the) (audit|proposal|roadmap|plan)|(sent|sending) you the (audit|proposal|roadmap)/i.test(convo);

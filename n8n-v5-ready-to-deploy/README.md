@@ -127,3 +127,9 @@ Active versions: SalesBlink follow-ups eada52cd, Instantly follow-ups ed54282a (
 - Scheduler: such a person is never "audit owed"; a "no reply needed" row (for example "Ok, thanks") with the question still open gets a real follow-up half a day later at their hour, flagged `site_needed`.
 - Skip Archived (both versions) lets a flagged, due person through even when they wrote last. The follow-up writer replaces the normal follow-up job with a light ask for the business name, and sends nothing if they already gave it.
 - Instantly cold emails: the guarantee lines in the USA/Canada, Aus/UK/NZ/Sing and AI Written campaigns now say: target agreed in writing; if not hit within 180 days, the client chooses everything back or free work until we hit it. No more "$1,000" or "90 days". Backup of the old campaigns is in the Composio workbench (/mnt/files/ins1nov/).
+
+## 1 Nov changes (later): website link ask, auto-reply rule
+- WEBSITE STILL NEEDED now asks for the website link (Farhan's wording), with the business name as a fallback if they have no website. The reply writer passes `site_needed` to the checker, and both checkers (`email_check.js`, `fu_check.js`) keep a website question only when `site_needed` is true; otherwise the never-ask rule still removes it.
+- AUTO-REPLY RULE (`ra_read_sort.js`, both reply agents): a signature-only message (contact details, no real words) that comes within 2 minutes of our email is marked "automated": no reply and no follow-ups. A signature-only message that comes later is still treated as a person.
+- `fu_settings.js`: the signature-only auto-reply case from 26 Oct added to STOP.
+- SalesBlink templates (14, all sequences paused at the time): guarantee lines changed to the 180-day wording, no $1,000. Backup kept outside the repo.

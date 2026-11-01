@@ -276,7 +276,7 @@ function siteAsked(transcript) {
   if (at < 0) return false;
   return !b.slice(at + 1).some(x => /^\s*THEM/.test(x) && /\b[a-z0-9-]+\.(com|net|org|co|io|ca|uk|au|nz|us|biz|info|shop|store|de|ie|sg)\b/i.test(x.replace(/\S+@\S+/g, ' ')));
 }
-const SITE_NEEDED = 'WEBSITE STILL NEEDED: we could not find their website, we already asked them for it (or for their business name), and they have not given it yet. After answering their newest message, ask once, simply, for the name of their business, saying it is all we need to find their site and start the audit (in your own words, different from how we asked before). Ask for the business name only, never for the website or a link. This replaces the never-ask rule for this one question. If their messages since our question already give the business name, do not ask again: use it, and put it in the flag. Never say the audit is started or on its way until we have it.';
+const SITE_NEEDED = 'WEBSITE STILL NEEDED: we could not find their website, we already asked them for it (or for their business name), and they have not given it yet. After answering their newest message, ask once, simply, for their website link, saying we could not find it and it is all we need to start the audit; add that if they do not have a website, the name of their business is fine too (in your own words, different from how we asked before). This replaces the never-ask rule for this one question. If their messages since our question already give the website or the business name, do not ask again: use it, and put it in the flag. Never say the audit is started or on its way until we have it.';
 
 const FREE_MAIL = /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|live|msn|icloud|me|aol|comcast|att|verizon|proton|protonmail|gmx|mail|zoho|yandex|sbcglobal|bellsouth|shaw|rogers|bigpond|optusnet|btinternet|sky|mymts)\./i;
 function siteFrom(c) {
@@ -298,7 +298,8 @@ return $input.all().map(it => {
   const pr = pricesFor(c.sequence, c.sequence_name, transcript, false);
   const extra = [];
   extra.push(pr.prices_block);
-  if (!site && siteAsked(transcript)) extra.push(SITE_NEEDED);
+  const siteNeeded = !site && siteAsked(transcript);
+  if (siteNeeded) extra.push(SITE_NEEDED);
   extra.push(caseBlock(transcript, theirs, 'CASE STUDIES you may use (say the result in plain words, then the link; never change a number). Proof page with all results, client videos and reviews: https://mavixmarketing.com/case-studies.'));
   if (wantsTalk) extra.push(PHONE);
   const user = 'Today is ' + new Date().toISOString().slice(0, 10) + '.\nTheir email: ' + c.email +
@@ -308,7 +309,7 @@ return $input.all().map(it => {
     '\n\n' + extra.join('\n\n') +
     '\n\nThe whole conversation (oldest first):\n\n' + transcript +
     '\n\nWrite the reply to their newest message.';
-  return { json: { ...c, website_known: site, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, guarantee: pr.guarantee, opus_body: JSON.stringify({
+  return { json: { ...c, website_known: site, site_needed: siteNeeded, price_set: pr.price_set, price_nums: pr.price_nums, prices_quoted: pr.prices_quoted, guarantee: pr.guarantee, opus_body: JSON.stringify({
     model: cfg.WRITE_MODEL,
     max_tokens: 3000,
     reasoning: { effort: 'medium' },
