@@ -133,3 +133,8 @@ Active versions: SalesBlink follow-ups eada52cd, Instantly follow-ups ed54282a (
 - AUTO-REPLY RULE (`ra_read_sort.js`, both reply agents): a signature-only message (contact details, no real words) that comes within 2 minutes of our email is marked "automated": no reply and no follow-ups. A signature-only message that comes later is still treated as a person.
 - `fu_settings.js`: the signature-only auto-reply case from 26 Oct added to STOP.
 - SalesBlink templates (14, all sequences paused at the time): guarantee lines changed to the 180-day wording, no $1,000. Backup kept outside the repo.
+
+## 2 Nov changes: long-term chats moved to Instantly
+- Long-term conversations now get their next emails from small one-lead Instantly campaigns named "LT | <date> | <name> | <mailbox>", sent from the same mailbox the chat used, with 2 to 3 steps. Replies come back into Instantly, so the Instantly reply agent answers them.
+- Each moved person gets two log rows: "context:<email>" (status context: their earlier conversation, which the Instantly writer reads) and "moved:<email>" (status moved_to_instantly, platform instantly). The moved row is their newest row, so the SalesBlink follow-ups skip them and the Instantly follow-ups only start once they reply in Instantly. No code change was needed for this.
+- Settings (both follow-up workflows): one contact taken off STOP at Farhan's request.
