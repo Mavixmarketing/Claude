@@ -141,3 +141,4 @@ Active versions: SalesBlink follow-ups eada52cd, Instantly follow-ups ed54282a (
 
 ## 3 Nov change: every reply goes to Slack again
 - Slack Card (ra_slack_card.js, used in both reply agents) now sets notify: true for every reply, so Slack shows each incoming message with the answer we send and when it goes out. Since 21 Oct only held, important or "prepare audit" replies were posted, which is why Farhan saw nothing in Slack.
+- Both follow-up workflows (KMRw, Ci4r): "Send Failed?" false branch now also goes to "Post To Slack", so every sent follow-up posts "Follow-up N of 8 sent to: <email>" with its text. Skipped messages (no reply needed) are still not posted, by Farhan's choice.
