@@ -138,3 +138,6 @@ Active versions: SalesBlink follow-ups eada52cd, Instantly follow-ups ed54282a (
 - Long-term conversations now get their next emails from small one-lead Instantly campaigns named "LT | <date> | <name> | <mailbox>", sent from the same mailbox the chat used, with 2 to 3 steps. Replies come back into Instantly, so the Instantly reply agent answers them.
 - Each moved person gets two log rows: "context:<email>" (status context: their earlier conversation, which the Instantly writer reads) and "moved:<email>" (status moved_to_instantly, platform instantly). The moved row is their newest row, so the SalesBlink follow-ups skip them and the Instantly follow-ups only start once they reply in Instantly. No code change was needed for this.
 - Settings (both follow-up workflows): one contact taken off STOP at Farhan's request.
+
+## 3 Nov change: every reply goes to Slack again
+- Slack Card (ra_slack_card.js, used in both reply agents) now sets notify: true for every reply, so Slack shows each incoming message with the answer we send and when it goes out. Since 21 Oct only held, important or "prepare audit" replies were posted, which is why Farhan saw nothing in Slack.

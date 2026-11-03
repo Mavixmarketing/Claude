@@ -24,5 +24,6 @@ return $input.all().map(it => {
   else if (important) text += '\n\nFlag: ' + flag;
   if (c.follow_up_on) text += '\nWe write again on: ' + c.follow_up_on;
   // a card goes to Slack only when something needs you
-  return { json: { ...c, send_at, notify: !c.ok || audit || important, slack_text: text } };
+  // 3 Nov: Farhan wants every reply in Slack again (their message + our answer), not only held/important ones.
+  return { json: { ...c, send_at, notify: true, slack_text: text } };
 });
