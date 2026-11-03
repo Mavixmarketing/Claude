@@ -62,7 +62,7 @@ $input.all().forEach((it, i) => {
   const name = camp[s(d.sequence)] || rowCampaign[s(d.row_event_id)] || rowCampaign['thread:' + s(d.messageId)] || s(d.sequence_name);
   if (name) d.sequence_name = name;
   const newest = thread[thread.length - 1];
-  if (!isOurs(newest)) { if (d.date_followup || (d.site_needed && !d.not_due)) out.push({ json: withContext(d) }); return; } // they wrote last (1 Nov: or our website / business name question is still open)
+  if (!isOurs(newest)) { if (d.date_followup || ((d.site_needed || d.wait_over) && !d.not_due)) out.push({ json: withContext(d) }); return; } // they wrote last (1 Nov: or our website / business name question is still open; 4 Nov: or they asked for time and it has passed)
   // 3. a reply from them hidden behind one of our later emails
   const loggedAt = Date.parse(d.them_logged_at || '');
   if (isFinite(loggedAt)) {

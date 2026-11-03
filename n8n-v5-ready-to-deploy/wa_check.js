@@ -1,5 +1,5 @@
-// CHECK THE REPLY before anything is sent. Small slips are fixed here (markdown, dashes, extra exclamation marks,
-// emojis other than 🙂, a greeting after the first message, a sign-off, more than 3 lines). Anything risky is NOT
+// CHECK THE REPLY before anything is sent. Small slips are fixed here (markdown, dashes, exclamation marks,
+// emojis (4 Nov: none at all), a greeting after the first message, a sign-off, more than 3 lines). Anything risky is NOT
 // sent: it goes to Slack as "Held" and the bot goes silent in that chat until Farhan types "#bot".
 const s = $('Settings').first().json;
 const c = $('Build Conversation').first().json;
@@ -30,8 +30,8 @@ if (fromWriter && reply) {
   t = t.replace(/\s*[—–]\s*/g, ', ').replace(/\s+-\s+/g, ', ');
   if (c.bot_sent_count > 0) t = t.replace(/^(hi|hey|hello|dear|namaste|good (morning|afternoon|evening))\b[^\n,.!?]{0,30}[,.!]?\s*/i, '');
   t = t.replace(/\n+\s*(regards|warm regards|best|thanks|thank you|cheers|team mavix|mavix( marketing)?( team)?|[-~]\s*mavix)[^\n]{0,30}\s*$/i, '');
-  let bang = 0; t = t.replace(/!+/g, () => (++bang === 1 ? '!' : '.'));
-  t = t.replace(/(?!\u{1F642})\p{Extended_Pictographic}️?/gu, '');
+  t = t.replace(/!+/g, '.');
+  t = t.replace(/\p{Extended_Pictographic}\uFE0F?/gu, '');
   t = t.replace(/[{}]/g, '');
   let lines = t.split(/\n+/).map(x => x.replace(/[ \t]+/g, ' ').trim()).filter(Boolean);
   if (lines.length > 3) lines = [lines[0], lines[1], lines.slice(2).join(' ')];
@@ -81,6 +81,10 @@ if (send && fromWriter) {
   if (/\b(you('ll| will)|we('ll| will)( get you| make you| put you)?)\b[^.?!\n]{0,30}\b(rank (#?\s?1|first|top|number one)|be (#?\s?1|number one|on top|at the top|first on google)|top of google|first page)\b/i.test(t)) problems.push('promises a ranking');
   if (/\b(more|new|extra|get you|bring( you)?|double( your)?)\s+(\w+\s+)?patients\b/i.test(t)) problems.push('promises patients (NMC: no outcome claims for clinics)');
   if (/guarant/i.test(t) && !/target/i.test(t) && !/refund/i.test(t)) problems.push('mentions the guarantee without its terms (targets and refund)');
+  // 4 Nov: the guarantee is 180 days, full refund OR free work; the old 6-month wording (refund AND free work) is held
+  if (/\b(6|six)[- ]?(paid )?months?\b[^.?!\n]{0,80}\b(refund|guarantee)|\b(refund|guarantee)\b[^.?!\n]{0,80}\b(6|six)[- ]?(paid )?months?\b|refund[^.?!\n]{0,40}\bAND\b[^.?!\n]{0,20}free work/i.test(t)) problems.push('gives the old 6-month guarantee (now: target in writing, within 180 days a full refund OR free work)');
+  // 4 Nov (Farhan): never the word AI (a business name already in the chat, like "AI-Innovate", is not ours)
+  { const known = String(c.transcript || '') + ' ' + String(c.domain || ''); const bw = t.replace(/[a-z0-9&'.-]*\bai\b[a-z0-9&'.-]*/gi, m => (m.length > 2 && known.toLowerCase().includes(m.toLowerCase())) ? ' ' : m).match(/\bai\b/i); if (bw) problems.push('uses the word AI (say ChatGPT or the answer box at the top of Google)'); }
   // JARGON, unless they used the word first
   for (const mm of t.matchAll(/\b(GEO|AEO|LLMs?|SERPs?|E-?E-?A-?T|CTR|backlinks?|schema|structured data|entit(y|ies)|canonical|crawl\w*|index(ing|ed)|SGE|meta (tags?|descriptions?)|keyword density|domain authority|DA|DR)\b/g)) {
     if (!new RegExp('\\b' + mm[0] + '\\b', 'i').test(theirs)) { problems.push('jargon: ' + mm[0]); break; }
@@ -97,7 +101,7 @@ if (send && fromWriter) {
   if (/\bas an ai\b|language model|i('m| am) (an? )?(ai|bot|chatbot)\b/i.test(t)) problems.push('talks about being an AI');
   const context = (c.transcript || '') + ' ' + (c.audit_due || '') + ' ' + JSON.stringify(c.known || {}) + ' ' + (c.domain || '');
   const plain = t.replace(/https?:\/\/\S+/g, ' ').replace(/\b\d{1,2}(:\d{2})?\s?(am|pm)\b/gi, ' ').replace(/\b\d{1,2}\s?(to|-|–)\s?\d{1,2}\b/g, ' ').replace(/\b(19|20)\d\d\b/g, ' ');
-  const OK_NUMS = [10, 12, 13, 14, 15, 16, 17, 19, 20, 24, 28, 30, 45, 50, 55, 100, 146, 150, 470, 25000, 50000, 100000];
+  const OK_NUMS = [10, 12, 13, 14, 15, 16, 17, 19, 20, 24, 28, 30, 45, 50, 55, 100, 146, 150, 180, 470, 25000, 50000, 100000];
   for (const mm of plain.matchAll(/\d[\d,]*(\.\d+)?/g)) {
     const v = Number(mm[0].replace(/,/g, ''));
     if (v < 10 || OK_NUMS.includes(v) || context.includes(mm[0])) continue;

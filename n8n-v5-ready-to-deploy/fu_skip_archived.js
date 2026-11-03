@@ -43,7 +43,7 @@ $input.all().forEach((it, i) => {
   if (!mine.length) { if (d.date_followup) out.push({ json: d }); return; } // archived: only a date follow-up they asked for still goes out
   const m = mine.find(x => x.messageId === d.messageId) || mine[0];
   const ours = !!m.created_on;
-  if (!ours) { if (d.date_followup || (d.site_needed && !d.not_due)) out.push({ json: d }); return; } // they wrote last (1 Nov: or our website / business name question is still open)
+  if (!ours) { if (d.date_followup || ((d.site_needed || d.wait_over) && !d.not_due)) out.push({ json: d }); return; } // they wrote last (1 Nov: or our website / business name question is still open; 4 Nov: or they asked for time and it has passed)
   // 3. a reply from them hidden behind one of our later emails
   const thread = Array.isArray(it.json.data) ? it.json.data : [];
   // the campaign this conversation belongs to (prices depend on it); the thread knows it best

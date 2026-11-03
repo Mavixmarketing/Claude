@@ -172,6 +172,32 @@ const HARD_NO = /\b(stop|remove|unsubscribe|do not (contact|email)|don'?t (conta
 const HAS_SOMEONE = /\b(already|currently)\s+(have|has|got|use|using|work(ing)? with|employ)\b|\b(another|other|current|existing) (seo )?(company|agency|firm|provider|team|arrangements?)\b|\bin[- ]house\b|\bwe (have|use) (an? |our own )?(seo|marketing|web) (company|agency|team|person|guy|firm)\b|\bhappy with (our|my|the) (current|existing)/i;
 const hasSomeone = history => String(history || '').split(/\n\n(?=(?:THEM|US|FARHAN|NOTE)[ (:])/).some(b => /^THEM/.test(b) && HAS_SOMEONE.test(b));
 
+// THEY ASKED FOR TIME (4 Nov, audit 1.10 and 3.3: Chad, Anne, Angelo, Iurie, Allen, Caron, Chris, Elkan got a follow-up the
+// next day). When their newest message asks for time ("will review", "will take a look", "travelling", "busy, just email me",
+// "I'll let you know", "next year", "after the season", a month), no follow-up for 7 days after it, or until the date they
+// gave if that is later and within 6 months (a month: the 1st of it; next month / next year: the 1st of that month /
+// 1 January). A message about a call or meeting is never a request for time. Then one
+// follow-up goes: a date follow-up when they gave a date, otherwise the next normal one, told that the wait is over.
+// A date in follow_up_on (the writer's) and Farhan's PLAN still come first.
+const WAIT_WORDS = /\b(will|i'?ll|we'?ll|i will|we will|going to|gonna|let me) (review|read|look (at|into|over|through)|take a (look|peek)|go (through|over)|check (it|this|that|them))\b|\btake a look\b|\btravel(l)?ing\b|\b(on|away on) (vacation|holiday|leave)\b|\b(busy|swamped|slammed)\b|\bjust e-? ?mail\b|\b(i'?ll|we'?ll|i will|we will) (let you know|get back to you|be in touch|circle back)\b|\bnext (year|month|week|season|quarter|spring|summer|fall|autumn|winter)\b|\bafter (the|our) (season|holidays?|new year|summer|winter|busy season)\b|\b(in|after) (a )?(few|couple( of)?) (weeks|months)\b|\bmore time\b|\bwhen (i|we) (get|have) (a )?(chance|moment|minute|second|time)\b/i;
+const MONTH_RE = /\b(?:in|by|until|till|after|around|early|mid|late|end of|beginning of|start of|from|next|come)\s+(?:(?:early|mid|late)[- ])?(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b|(?<!\b(?:last|since|past|ago|this past) )\b(january|february|july|september|october|november|december)\b/i;
+const TALK = /\b(call|chat|meet|meeting|zoom|talk|speak|ring|appointment|calendar|reschedul\w*|missed|time (zone|change))\b/i; // a call being set up is not a request for time
+const MON = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+function waitAsked(text, at) {
+  const t = String(text || '');
+  if (!isFinite(at) || !t.trim()) return null;
+  const m = t.match(MONTH_RE);
+  if ((!m && !WAIT_WORDS.test(t)) || TALK.test(t)) return null;
+  const d = new Date(at), y = d.getUTCFullYear(), mo = d.getUTCMonth();
+  let date = NaN;
+  if (m) { const k = MON.indexOf(String(m[1] || m[2]).toLowerCase().slice(0, 3)); if (k >= 0) date = Date.UTC(k < mo || (k === mo && /\bnext\b/i.test(m[0])) ? y + 1 : y, k, 1); }
+  else if (/\bnext year\b|\bafter (the )?new year\b/i.test(t)) date = Date.UTC(y + 1, 0, 1);
+  else if (/\bnext month\b/i.test(t)) date = Date.UTC(mo === 11 ? y + 1 : y, (mo + 1) % 12, 1);
+  const week = at + 7 * 86400000;
+  const declined = /\b(no thanks|not interested|already|someone|somebody|another (company|agency|firm))\b/i.test(t); // "already have someone for next year" is a no, not a date
+  return isFinite(date) && !declined && date > week && date < at + 183 * 86400000 ? { until: date, dated: true, said: t.replace(/\s+/g, ' ').trim().slice(0, 160) } : { until: week, dated: false, said: t.replace(/\s+/g, ' ').trim().slice(0, 160) };
+}
+
 // 3. Who is due this hour.
 // PLATFORM (26 Oct): this code runs in the SalesBlink follow-ups and in the Instantly follow-ups (Settings.PLATFORM).
 // Rows with no platform are SalesBlink, rows with platform "instantly" are Instantly (message_id is then the
@@ -223,8 +249,13 @@ for (const key of Object.keys(latest)) {
     const seen = Date.parse(j.handled_at || j.createdAt);
     const h0 = String(t.history || '') + '\n\nTHEM: ' + String(j.their_message || '').trim();
     // 1 Nov (Dewayne): our website / business name question is still open, so a real follow-up asks for it, half a day on
-    const askSite = !String(t.site_notes || '') && siteAsked(allHistory(byPerson[key], h0)) && isFinite(seen) && now - seen >= 0.5 * 86400000 && Number(t.followups || 0) < GAP_DAYS.length;
-    out.push({ json: { ...(personSeq[em0] || {}), them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: h0, transcript: h0, site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: isFinite(seen) ? Math.round((now - seen) / 86400000) : 0, not_due: !askSite, site_needed: askSite } });
+    // 4 Nov: they asked for time ("will review", "travelling, just email me"): nothing until that time has passed, then one real
+    // follow-up (only if our thread has not been followed up since, and we do not owe them the audit)
+    const w = waitAsked(j.their_message, Date.parse(j.createdAt || j.handled_at));
+    const askSite = !String(t.site_notes || '') && siteAsked(allHistory(byPerson[key], h0)) && isFinite(seen) && now - seen >= 0.5 * 86400000 && Number(t.followups || 0) < GAP_DAYS.length && !(w && now < w.until);
+    const tLast = Date.parse(t.handled_at || t.updatedAt || t.createdAt);
+    const waitDone = !askSite && !!w && now >= w.until && !(tLast >= w.until) && Number(t.followups || 0) < GAP_DAYS.length && !auditOwed(byPerson[key] || [t], h0);
+    out.push({ json: { ...(personSeq[em0] || {}), them_logged_at: loggedAt(key), email: t.email, messageId: t.message_id, history: h0, transcript: h0, site_notes: String(t.site_notes || ''), handled_at: new Date(isFinite(seen) ? seen : Date.now()).toISOString(), send_hour_utc: hourNow, number: Number(t.followups || 0) + 1, days_quiet: isFinite(seen) ? Math.round((now - seen) / 86400000) : 0, not_due: !askSite && !waitDone, site_needed: askSite, ...(waitDone ? (w.dated ? { date_followup: true, follow_up_on: new Date(w.until).toISOString().slice(0, 10) } : { wait_over: true, wait_said: w.said }) : {}) } });
     continue;
   }
   // A POLITE "NOT RIGHT NOW" (no reason, no stop): one friendly check-in about 80 days later, before
@@ -259,6 +290,14 @@ for (const key of Object.keys(latest)) {
     if (fu > now) continue; // they asked us to wait until this date
     if (fu > last) { if (myHour) out.push({ json: { ...base, number: n + 1, date_followup: true, follow_up_on: new Date(fu).toISOString().slice(0, 10), days_quiet: Math.round(days) } }); continue; }
   }
+  // 4 Nov: their newest message asked for time: nothing until 7 days after it, or the date they gave
+  const w = plan ? null : waitAsked(j.their_message, Date.parse(j.createdAt || ''));
+  if (w && now < w.until) {
+    if (hour === hourNow && days < 100) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true, waiting_until: new Date(w.until).toISOString().slice(0, 10) } });
+    continue;
+  }
+  if (w && w.dated && w.until > last && !isFinite(fu)) { if (myHour && n < GAP_DAYS.length) out.push({ json: { ...base, number: n + 1, date_followup: true, follow_up_on: new Date(w.until).toISOString().slice(0, 10), days_quiet: Math.round(days) } }); continue; }
+  if (w && w.until > last) { base.wait_over = true; base.wait_said = w.said; }
   // we owe them the audit: no follow-up, only a look at the thread at their hour for a hand-sent audit
   if (auditOwed(byPerson[key] || [j], j.history)) {
     if (hour === hourNow && days < 100) out.push({ json: { ...base, number: n + 1, days_quiet: Math.round(days), not_due: true, audit_owed: true } });

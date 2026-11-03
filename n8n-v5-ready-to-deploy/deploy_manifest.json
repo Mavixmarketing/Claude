@@ -1,7 +1,7 @@
 [
  {
   "workflowId": "W8ou5vT7aQu8q8zO",
-  "activeVersionId": "3b6d5bdd-d997-486a-8b5c-470d0537eb8a",
+  "activeVersionId": "20dccba3-b2fb-4e98-9ea7-8470b8bcdf9a",
   "nodes": {
    "Opus Request": "n8n-v5-ready-to-deploy/email_opus_request.built.js",
    "Check The Reply": "n8n-v5-ready-to-deploy/email_check.js",
@@ -17,7 +17,7 @@
  },
  {
   "workflowId": "KMRwc4kovheNY2zI",
-  "activeVersionId": "26e3d3c6-403d-4db2-bbfa-8199e5ac04c2",
+  "activeVersionId": "05bf9aaf-42f7-4c43-8c2c-cc2cf9c65ede",
   "nodes": {
    "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
@@ -25,7 +25,9 @@
    "Skip Archived": "n8n-v5-ready-to-deploy/fu_skip_archived.js",
    "Due List": "n8n-v5-ready-to-deploy/fu_due_list.js",
    "Settings": "n8n-v5-ready-to-deploy/fu_settings.js",
-   "Skip Blocked": "n8n-v5-ready-to-deploy/fu_skip_blocked.js"
+   "Skip Blocked": "n8n-v5-ready-to-deploy/fu_skip_blocked.js",
+   "Skip Waiting": "n8n-v5-ready-to-deploy/fu_skip_waiting.js",
+   "Remember Wait": "n8n-v5-ready-to-deploy/fu_remember_wait.js"
   }
  },
  {
@@ -38,7 +40,7 @@
  },
  {
   "workflowId": "WNHqMnyuHz2n42sL",
-  "activeVersionId": "61219b13-512c-4308-9581-9b3657f7ef10",
+  "activeVersionId": "fc30e022-01fd-4573-b03d-f52201a9656f",
   "nodes": {
    "Opus Request": "n8n-v5-ready-to-deploy/li_opus.built.js",
    "Check The Reply": "n8n-v5-ready-to-deploy/li_check.js",
@@ -47,7 +49,7 @@
  },
  {
   "workflowId": "G0THBksF367XBBXb",
-  "activeVersionId": "0abdce20-4df7-422e-b264-85c69d75b7b2",
+  "activeVersionId": "77530b42-efe4-4019-bc7c-3a4343062ecc",
   "nodes": {
    "Follow-up Request": "n8n-v5-ready-to-deploy/lifu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/lifu_check.js",
@@ -56,7 +58,7 @@
  },
  {
   "workflowId": "V2gVO6nM7FGJfhoo",
-  "activeVersionId": "85c327d7-e886-42a8-b33c-b02586e4a01b",
+  "activeVersionId": "2d705b53-f7b2-4130-94a9-c000ba0fa461",
   "nodes": {
    "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
    "Settings": "n8n-v5-ready-to-deploy/ra_settings.js",
@@ -81,7 +83,7 @@
  },
  {
   "workflowId": "Ci4rx6b8avCHLNjX",
-  "activeVersionId": "09fffbe5-11e2-4677-a36c-302e6a121b13",
+  "activeVersionId": "d7c2dde6-2418-4807-880f-ef5db686ed78",
   "nodes": {
    "Platform": "n8n-v5-ready-to-deploy/ins_platform.js",
    "Settings": "n8n-v5-ready-to-deploy/fu_settings.js",
@@ -92,7 +94,9 @@
    "Follow-up Request": "n8n-v5-ready-to-deploy/fu_request.built.js",
    "Check The Follow-up": "n8n-v5-ready-to-deploy/fu_check.js",
    "Queue Retry": "n8n-v5-ready-to-deploy/ins_fu_queue_retry.js",
-   "Skip Blocked": "n8n-v5-ready-to-deploy/ins_fu_skip_blocked.js"
+   "Skip Blocked": "n8n-v5-ready-to-deploy/ins_fu_skip_blocked.js",
+   "Skip Waiting": "n8n-v5-ready-to-deploy/fu_skip_waiting.js",
+   "Remember Wait": "n8n-v5-ready-to-deploy/fu_remember_wait.js"
   }
  },
  {
@@ -100,6 +104,21 @@
   "activeVersionId": "f42769e6-ff69-429c-924e-29fd3eb4b586",
   "nodes": {
    "Find Stuck Replies": "n8n-v5-ready-to-deploy/sb_stuck_alert.js"
+  }
+ },
+ {
+  "workflowId": "GKcO2xfjX9D8q6ed",
+  "activeVersionId": "dc2fc012-96b8-4b1c-af70-508814005b59",
+  "nodes": {
+   "Opus Request": "n8n-v5-ready-to-deploy/wa_opus_request.js",
+   "Check The Reply": "n8n-v5-ready-to-deploy/wa_check.js"
+  }
+ },
+ {
+  "workflowId": "qg1sbui12WMm6mSY",
+  "activeVersionId": "d0257492-2951-4e0f-9cbb-e4556bbd534d",
+  "nodes": {
+   "Settings": "n8n-v5-ready-to-deploy/bl_settings.js"
   }
  }
 ]

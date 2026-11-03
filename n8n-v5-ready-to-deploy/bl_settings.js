@@ -22,9 +22,10 @@ return [{ json: {
     'We never pay for links, sponsored posts or placements, and we never do link exchanges or reciprocal links.',
     'A good outcome: they agree to a guest article or quote, tell us their guidelines and topics, or add our resource.',
   ].join(' '),
+  // 4 Nov (Farhan): 500+ clients is the true number, the same as the SEO agents (was "150+ businesses scaled across three countries").
   MAVIX_FACTS: [
     'Mavix Marketing: digital marketing agency, trading since 2019. Offices: Dubai (ASPIN Commercial Tower, 16th Floor, Office 12, Sheikh Zayed Road), Los Angeles (3435 Wilshire Blvd, 14th Floor) and New Delhi.',
-    'Website facts: 150+ businesses scaled across three countries, $10M+ trackable revenue driven for clients, 30+ specialists all on the payroll (no subcontractors), rated 4.9/5 from 22 published reviews.',
+    'Website facts: 500+ clients served, $10M+ trackable revenue driven for clients, 30+ specialists all on the payroll (no subcontractors), rated 4.9/5 from 22 published reviews.',
     'Partners: Google Ads Partner, Meta Business Partner, TikTok Marketing Partner, Shopify Partner, Semrush Agency Partner.',
     'Services: SEO (technical, local, ecommerce, content), Google Ads and PPC, Meta and TikTok ads, media buying, email marketing and automation, conversion optimisation, landing pages, tracking, lead generation, website builds.',
     'Principles stated on the site: no bought links, no private blog networks, no fake reviews, no mass-generated pages.',

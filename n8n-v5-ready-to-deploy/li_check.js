@@ -4,29 +4,31 @@
 const cfg = $('Settings').first().json;
 const ctx = $('Opus Request').all();
 const ALLOWED = cfg.ALLOWED_LINKS;
-// AI SEARCH FACTS (22 Oct): next to any talk of AI, the only numbers allowed are 2 billion, 8% and 15%
-// (small counts like "top 3" are fine). No jargon (GEO, LLM, entity, schema; AEO is allowed), the study numbers are
-// never called Google's, and we never promise a spot in AI answers.
+// SEARCH TALK (22 Oct; 4 Nov: Farhan's rule, never the word AI, and the 2 billion / 8% / 15% facts are gone): next to
+// any talk of ChatGPT or the answer box, no number at all unless it is already in the conversation (a business name like
+// "719 Cleaning", a town, our own cold email). No jargon (GEO, LLM, entity, schema; AEO is allowed), and we never promise
+// a spot in those answers.
 function aiProblems(text, known) {
   const out = [];
+  const seen = new Set((String(known || '').match(/\d[\d,.]*\d|\d/g) || []).map(x => x.replace(/[,.]/g, '')));
   const plainText = String(text || '').replace(/https?:\/\/\S+/g, ' ');
   for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) {
-    if (!/\b(ai|chatgpt|chat gpt|gemini|perplexity|copilot|chatbots?|llms?)\b/i.test(sent)) continue;
+    if (!/\b(ai|chatgpt|chat gpt|gemini|perplexity|copilot|chatbots?|llms?|answer box)\b/i.test(sent)) continue;
     const s = sent.replace(/\$\s*[\d,]+(\.\d+)?/g, ' ').replace(/#\s*1\b/g, ' ').replace(/\b(19|20)\d\d\b/g, ' ')
       .replace(/\b\d+\s*(to|-|–)\s*\d+\s*(months?|weeks?|days?)\b/gi, ' ').replace(/\b\d+[- ]?(minutes?|mins?|months?|weeks?|days?|hours?|years?)\b/gi, ' ');
     for (const m of s.matchAll(/(\d[\d,.]*\d|\d)\s*(%|percent\b|billion\b|million\b|thousand\b|bn\b|m\b|k\b|x\b|times\b)?/gi)) {
       const v = (m[1] + (m[2] ? ' ' + m[2] : '')).toLowerCase();
-      if (/^2 billion$/.test(v) || /^(8|15) (%|percent)$/.test(v)) continue;
       if (!m[2] && Number(m[1].replace(/,/g, '')) < 10) continue; // "top 3", "page 1"
-      out.push('a number about AI that is not one of our facts (' + v.replace(/ (%|x)$/, '$1') + ')');
+      if (seen.has(m[1].replace(/[,.]/g, ''))) continue; // already in the conversation, not invented
+      out.push('a number about ChatGPT or search answers (' + v.replace(/ (%|x)$/, '$1') + '); we use none');
     }
-    if (/\b(8|15) ?(%|percent)/i.test(sent) && /\bgoogle('s)? (says|said|found|finds|reports?|data|numbers?)\b/i.test(sent) && !/\bstudy\b/i.test(sent)) out.push("gives the study's numbers as Google's");
-    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named)|(get|put) (you|your business|your name) (in|into|inside))\b|\b(guarantee|promise)[sd]?\b[^.?!]{0,30}\b(spot|place|mention|position)\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in AI answers');
+    if (/\b(you('ll| will)|we('ll| will)|guarantee[sd]?)\b[^.?!]{0,40}\b(appear|show up|(be|get) (you |your business )?(featured|mentioned|cited|quoted|listed|picked|recommended|named)|(get|put) (you|your business|your name) (in|into|inside))\b|\b(guarantee|promise)[sd]?\b[^.?!]{0,30}\b(spot|place|mention|position)\b/i.test(sent) && !/\b(not|can't|cannot|never|no one|nobody|won't|best chance)\b/i.test(sent)) out.push('promises a spot in ChatGPT or the answer box');
   }
-  if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses AI search jargon (GEO, LLM, entity, schema)');
-  // AI answers (25 Oct): getting named in AI answers is simply part of the work. Gemini, "AI tools" and "local search" are fine (25 Oct, Farhan's approved wording). "AEO" is allowed (the writer uses it only if
-  // they used it first, or when they ask what we do). It is never sold as an extra: "at no extra cost" / "bonus" next to AI answers or AEO is held.
-  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\b(AEO|ai (answers?|overviews?|search|mode|results?|tools?|assistants?|summar(y|ies)|apps?)|google'?s ai|chatgpt|perplexity|gemini)\b/i.test(sent) && /\b(no (extra|additional) (cost|charge|fee)|at no (cost|charge)|free of charge|bonus)\b/i.test(sent)) { out.push('sells AI answers as an extra ("at no extra cost", "bonus"); say it is simply part of the work'); break; }
+  if (/\bGEO\b|\bLLMs?\b/.test(plainText) || /\b(schema|structured data|entit(y|ies))\b/i.test(plainText)) out.push('uses search jargon (GEO, LLM, entity, schema)');
+  // the old search statistics (2 billion a month, "one study found" 8% / 15%) are cut: hold them in any wording
+  if ((/\bbillions?\b/i.test(plainText) && !/\bbillions?\b/i.test(String(known || ''))) || /\b(one|a) study (found|shows?|says)\b/i.test(plainText)) out.push('uses a search statistic (the 2 billion / one study figures were cut on 4 Nov)');
+  // never sold as an extra: "at no extra cost" / "bonus" next to ChatGPT, the answer box or AEO is held
+  for (const sent of plainText.split(/(?<=[.?!])\s+|\n+/)) if (/\b(AEO|answer box|chatgpt|perplexity|gemini)\b/i.test(sent) && /\b(no (extra|additional) (cost|charge|fee)|at no (cost|charge)|free of charge|bonus)\b/i.test(sent)) { out.push('sells ChatGPT / answer-box work as an extra ("at no extra cost", "bonus"); say it is simply part of the work'); break; }
   return [...new Set(out)];
 }
 // one long block: break it into paragraphs of at most two sentences
@@ -66,7 +68,8 @@ return $input.all().map((it, i) => {
   t = t.replace(/^(hi|hey|hello|dear|good (morning|afternoon|evening))\b[^\n,]{0,40},?\s*/i, '');
   t = t.replace(/\n+\s*(best|thanks|thank you|regards|cheers|kind regards|best regards|warm regards)[^\n]{0,20}(\n+\s*farhan\.?)?\s*$/i, '');
   t = t.replace(/\n+\s*farhan\.?\s*$/i, '');
-  t = t.replace(/\s*[—–]\s*/g, ', ').replace(/\s+-\s+/g, ', ').replace(/!/g, '.');
+  t = t.replace(/\s*[—–]\s*/g, ', ').replace(/\s+-\s+/g, ', ').replace(/!/g, '.'); // 4 Nov (Farhan): no emojis, no exclamation marks
+  t = t.replace(/\p{Extended_Pictographic}\uFE0F?/gu, '').replace(/[ \t]{2,}/g, ' ');
   t = paragraphs(t);
   t = t.replace(/\u0000(\d+)\u0000/g, (_, n) => links[Number(n)]);
   t = t.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
@@ -117,7 +120,7 @@ return $input.all().map((it, i) => {
   if (/[{}\[\]]/.test(t)) problems.push('has an unfilled blank such as {site}');
   const asked = (t.match(/\?/g) || []).length;
   if (asked > 2) problems.push('asks ' + asked + ' questions');
-  { const _known = (convo).toLowerCase(); const bw = t.replace(/[a-z0-9&'.-]*\bai\b[a-z0-9&'.-]*|\b(automated|automation|scheduled)\b/gi, m => (m.length > 2 && new RegExp('(^|[^a-z0-9])' + m.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^a-z0-9])').test(_known)) ? ' ' : m).replace(/\bgoogle'?s ai\b|\bgoogle ai\b|\bai (search|results?|answers?|overviews?|mode|assistants?|tools?|summar(y|ies)|chat ?bots?|platforms?|apps?|side|like|such as)\b/gi, '').match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // "AI" only when it is about search (Google's AI, AI answers, AI Overviews...). 1 Nov: a word already in the conversation (a business name like "AI-Innovate" or "Automation Pros") is not ours, so it never counts
+  { const _known = (convo).toLowerCase(); const bw = t.replace(/[a-z0-9&'.-]*\bai\b[a-z0-9&'.-]*|\b(automated|automation|scheduled)\b/gi, m => (m.length > 2 && new RegExp('(^|[^a-z0-9])' + m.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^a-z0-9])').test(_known)) ? ' ' : m).match(/\b(ai|automated|automation|scheduled)\b/i); if (bw) problems.push('uses a banned word: "' + bw[0] + '"'); } // 4 Nov (Farhan): never the word AI, not even about search (say ChatGPT or the answer box at the top of Google). A word already in the conversation (a business name like "AI-Innovate" or "Automation Pros") is not ours, so it never counts
   problems.push(...aiProblems(t, convo));
   if (/\b(2|two|3|three|60|sixty)[- ]?(months?|days?)\b[^.?!\n]{0,40}\b(money[- ]back|refund|guarantee)|\b(money[- ]back|refund|guarantee)\b[^.?!\n]{0,40}\b(2|two|3|three)[- ]?months?\b/i.test(t)) problems.push('calls the money back guarantee 2 or 3 months (it is the 90 day money back guarantee)');
   if (/\bfarhan\b/i.test(t)) problems.push('talks about farhan in the third person');
